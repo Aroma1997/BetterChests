@@ -1,5 +1,6 @@
 package aroma1997.betterchests;
 
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -8,14 +9,12 @@ import net.minecraft.tileentity.TileEntityChest;
 
 public class TileEntityBChest extends TileEntityChest {
 	
-	private int slot;
+	private int slot = 1;
 	private ItemStack[] inventoryContent;
-	private int stackLimit;
+	private int stackLimit = 1;
 	private int MAXSLOTS = 45;
 	
 	public TileEntityBChest() {
-		slot = 1;
-		stackLimit = 1;
 		inventoryContent = new ItemStack[MAXSLOTS];
 	}
 
@@ -112,7 +111,7 @@ public class TileEntityBChest extends TileEntityChest {
 	@Override
     public void readFromNBT(NBTTagCompound par1NBTTagCompound)
     {
-        super.readFromNBT(par1NBTTagCompound);
+        //super.readFromNBT(par1NBTTagCompound);
         this.slot = par1NBTTagCompound.getInteger("slot");
         this.stackLimit = par1NBTTagCompound.getInteger("stackLimit");
         NBTTagList nbttaglist = par1NBTTagCompound.getTagList("Items");
@@ -133,7 +132,7 @@ public class TileEntityBChest extends TileEntityChest {
 	@Override
     public void writeToNBT(NBTTagCompound par1NBTTagCompound)
     {
-        super.writeToNBT(par1NBTTagCompound);
+        //super.writeToNBT(par1NBTTagCompound);
         par1NBTTagCompound.setInteger("slot", this.slot);
         par1NBTTagCompound.setInteger("stackLimit", this.stackLimit);
         NBTTagList nbttaglist = new NBTTagList();
@@ -151,5 +150,10 @@ public class TileEntityBChest extends TileEntityChest {
 
         par1NBTTagCompound.setTag("Items", nbttaglist);
     }
+	
+	@Override
+	public boolean isUseableByPlayer(EntityPlayer entityplayer) {
+		return true;
+	}
 	
 }

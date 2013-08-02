@@ -17,7 +17,7 @@ public class ContainerBChest extends Container {
 
 	@Override
 	public boolean canInteractWith(EntityPlayer entityplayer) {
-		return false;
+		return true;
 	}
 	
 	private void layoutContainer(IInventory playerInventory, IInventory inventory) {
@@ -32,7 +32,6 @@ public class ContainerBChest extends Container {
 		for (int hotbarSlot = 0; hotbarSlot < 9; hotbarSlot++) {
 			addSlotToContainer(new Slot(playerInventory, hotbarSlot, 8 + hotbarSlot * 18, 142));
 		}
-		
 		for (int chestRow = 0; chestRow < inventory.getSizeInventory() / 9; chestRow++) {
 			for (int chestColumn = 0; chestColumn < getColumnAmount(chestRow, chestColumn, inventory.getSizeInventory()); chestColumn++) {
 				addSlotToContainer(new Slot(inventory, 36, 80, 26));

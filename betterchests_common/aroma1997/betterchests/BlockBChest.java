@@ -3,6 +3,7 @@ package aroma1997.betterchests;
 import net.minecraft.block.BlockChest;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
@@ -35,5 +36,23 @@ public class BlockBChest extends BlockChest {
     {
         this.blockIcon = par1IconRegister.registerIcon(Reference.MOD_ID + ":" + "BChest");
     }
+	
+	@Override
+	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer thePlayer,
+		int s, float f1, float f2, float f3) {
+		if (thePlayer.isSneaking()) {
+			return false;
+		}
+		
+		if (world.isRemote) {
+			return true;
+		}
+		
+		TileEntity tileEntity = world.getBlockTileEntity(x, y, z);
+		if (tileEntity != null && tileEntity instanceof TileEntityBChest) {
+			thePlayer.openGui(BetterChests.instance, 1, world, x, y, z);
+		}
+		return true;
+	}
 	
 }
