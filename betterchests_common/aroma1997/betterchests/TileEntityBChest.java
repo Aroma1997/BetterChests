@@ -1,6 +1,8 @@
 package aroma1997.betterchests;
 
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntityChest;
 
 
@@ -78,6 +80,7 @@ public class TileEntityBChest extends TileEntityChest {
         }
     }
 	
+	@Override
     public void setInventorySlotContents(int i, ItemStack itemStack)
     {
         this.inventoryContent[i] = itemStack;
@@ -88,6 +91,24 @@ public class TileEntityBChest extends TileEntityChest {
         }
 
         this.onInventoryChanged();
+    }
+	
+	@Override
+    public String getInvName()
+    {
+		return "Adjustable Chest";
+    }
+	
+	@Override
+    public boolean isInvNameLocalized()
+    {
+        return false;
+    }
+	
+	@Override
+    public int getInventoryStackLimit()
+    {
+        return stackLimit;
     }
 	
 }
