@@ -28,7 +28,7 @@ public class BetterChests {
 	public static BlockBChest chest;
 	public static ItemUpgrade upgrade;
 	
-	public static CreativeTabs creativeTabBC;
+	public static CreativeTabs creativeTabBC = new CreativeTabBChest();
 	
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {

@@ -11,6 +11,7 @@ public class BlockBChest extends BlockChest {
 	public BlockBChest(int id) {
 		super(id, -1);
 		setHardness(3.0F);
+		setCreativeTab(BetterChests.creativeTabBC);
 	}
 
 	@Override
