@@ -32,6 +32,19 @@ public class ContainerBChest extends Container {
 		for (int hotbarSlot = 0; hotbarSlot < 9; hotbarSlot++) {
 			addSlotToContainer(new Slot(playerInventory, hotbarSlot, 8 + hotbarSlot * 18, 142));
 		}
+		
+		for (int chestRow = 0; chestRow < inventory.getSizeInventory() / 9; chestRow++) {
+			for (int chestColumn = 0; chestColumn < getColumnAmount(chestRow, chestColumn, inventory.getSizeInventory()); chestColumn++) {
+				addSlotToContainer(new Slot(inventory, 36, 80, 26));
+			}
+		}
+	}
+	
+	private int getColumnAmount(int row, int column, int totalSlots) {
+		if (totalSlots / 9 >= row) {
+			return 9;
+		}
+		return totalSlots % 9;
 	}
 	
 }
