@@ -11,13 +11,11 @@ public class TileEntityBChest extends TileEntityChest {
 	private int slot;
 	private ItemStack[] inventoryContent;
 	private int stackLimit;
-	private int pages;
-	private int MAXSLOTS = 1;
+	private int MAXSLOTS = 45;
 	
 	public TileEntityBChest() {
 		slot = 1;
 		stackLimit = 1;
-		pages = 1;
 		inventoryContent = new ItemStack[MAXSLOTS];
 	}
 
@@ -111,5 +109,47 @@ public class TileEntityBChest extends TileEntityChest {
         return stackLimit;
     }
 	
+	@Override
+    public void readFromNBT(NBTTagCompound par1NBTTagCompound)
+    {
+        super.readFromNBT(par1NBTTagCompound);
+        this.slot = par1NBTTagCompound.getInteger("slot");
+        this.stackLimit = par1NBTTagCompound.getInteger("stackLimit");
+        NBTTagList nbttaglist = par1NBTTagCompound.getTagList("Items");
+        this.inventoryContent = new ItemStack[this.getSizeInventory()];
+
+        for (int i = 0; i < nbttaglist.tagCount(); ++i)
+        {
+            NBTTagCompound nbttagcompound1 = (NBTTagCompound)nbttaglist.tagAt(i);
+            int j = nbttagcompound1.getByte("Slot") & 255;
+
+            if (j >= 0 && j < this.inventoryContent.length)
+            {
+                this.inventoryContent[j] = ItemStack.loadItemStackFromNBT(nbttagcompound1);
+            }
+        }
+    }
+	
+	@Override
+    public void writeToNBT(NBTTagCompound par1NBTTagCompound)
+    {
+        super.writeToNBT(par1NBTTagCompound);
+        par1NBTTagCompound.setInteger("slot", this.slot);
+        par1NBTTagCompound.setInteger("stackLimit", this.stackLimit);
+        NBTTagList nbttaglist = new NBTTagList();
+
+        for (int i = 0; i < this.inventoryContent.length; ++i)
+        {
+            if (this.inventoryContent[i] != null)
+            {
+                NBTTagCompound nbttagcompound1 = new NBTTagCompound();
+                nbttagcompound1.setByte("Slot", (byte)i);
+                this.inventoryContent[i].writeToNBT(nbttagcompound1);
+                nbttaglist.appendTag(nbttagcompound1);
+            }
+        }
+
+        par1NBTTagCompound.setTag("Items", nbttaglist);
+    }
 	
 }

@@ -13,6 +13,7 @@ public class Reference {
 		public static final int GUIHEIGHT = 222;
 		public static final int GUIWIDTH = 176;
 		
+		public static final int SLOTSTART = GUIHEIGHT + 1;
 		public static final int SLOTHEIGHT = 18;
 		public static final int SLOTWIDTH = 18;
 	}
