@@ -40,13 +40,13 @@ public class TileEntityBChest extends TileEntityChest {
 			case SLOT:  {
 				if (slotLimit + 9 > Reference.Conf.SLOT_LIMIT) return false;
 				slotLimit += 9;
-				onUpgradeInserted(item);
+				onUpgradeInserted();
 				return true;
 			}
 			case STACK: {
 				if (stackLimit + 1 > 64) return false;
 				stackLimit += 1;
-				onUpgradeInserted(item);
+				onUpgradeInserted();
 				return true;
 			}
 		}
@@ -69,13 +69,7 @@ public class TileEntityBChest extends TileEntityChest {
         par1NBTTagCompound.setShort("stackLimit", this.stackLimit);
     }
     
-    private void onUpgradeInserted(ItemStack item) {
-    	if (item.stackSize > 1) {
-    		item.stackSize -= 1;
-    	}
-    	else {
-    		item = null;
-    	}
+    private void onUpgradeInserted() {
     	NBTTagCompound nbttagcompound = new NBTTagCompound();
     	this.writeToNBT(nbttagcompound);
     	super.readFromNBT(nbttagcompound);
