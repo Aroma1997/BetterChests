@@ -1,0 +1,13 @@
+[
+{
+  "modid": "BetterChests",
+  "name": "BetterChests",
+  "description": "This mod was created during ModJam 2013 by Aroma1997. This mod adds a new type of chests, that is mostly adjustable. You can put some upgrades into the chest and personalize the chest to how you want it to be.",
+  "mcversion": "@MCVERSION@",
+  "version": "@VERSION@",
+  "url": "https://github.com/Aroma1997/BetterChests",
+  "updateUrl": "",
+  "authors": ["Aroma1997", "Noisyboy"],
+  "credits": "Code by Aroma1997, Textures by Noisyboy"
+}
+]
