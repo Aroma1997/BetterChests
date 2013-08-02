@@ -1,6 +1,8 @@
 package aroma1997.betterchests;
 
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntityChest;
+import net.minecraft.world.World;
 
 
 public class TileEntityBChest extends TileEntityChest {
@@ -26,6 +28,11 @@ public class TileEntityBChest extends TileEntityChest {
 	@Override
 	public int getInventoryStackLimit() {
 		return stackLimit;
+	}
+	
+	public boolean upgrade(EntityPlayer player, World world) {
+		
+		return false;
 	}
 	
 }
