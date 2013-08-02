@@ -11,7 +11,6 @@ import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 @Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, version = Reference.VERSION)
@@ -31,13 +30,13 @@ public class BetterChests {
 		config.load();
 		chest = new BlockBChest(config.getBlock("chestID", 2540, "The Block id of the BetterChest").getInt());
 		config.save();
-		GameRegistry.registerBlock(chest, ItemBlockBChest.class, "Adjustable Chest");
+		GameRegistry.registerBlock(chest, "Adjustable Chest");
 	}
 	
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
-		proxy.registerRenderer();
-		NetworkRegistry.instance().registerGuiHandler(this, proxy);
+		proxy.registerRenderers();
+		GameRegistry.registerTileEntity(TileEntityBChest.class, "adjustableChest");
 	}
 	
 	@EventHandler
