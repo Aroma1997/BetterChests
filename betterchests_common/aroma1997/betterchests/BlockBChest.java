@@ -17,7 +17,7 @@ public class BlockBChest extends BlockChest {
 		super(id, 0);
 		setUnlocalizedName("betterChest");
 		setHardness(4.0F);
-		setCreativeTab(CreativeTabs.tabBlock);
+		setCreativeTab(CreativeTabs.tabDecorations);
 	}
 	
 	@Override
@@ -27,6 +27,11 @@ public class BlockBChest extends BlockChest {
 	
 	@Override
 	public TileEntity createNewTileEntity(World world) {
+		return new TileEntityBChest();
+	}
+	
+	@Override
+	public TileEntity createTileEntity(World world, int metadata) {
 		return new TileEntityBChest();
 	}
 	
