@@ -42,7 +42,7 @@ public class BetterChests {
 	
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event) {
-		
+		return;
 	}
 	
 }
