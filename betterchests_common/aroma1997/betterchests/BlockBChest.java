@@ -1,6 +1,5 @@
 package aroma1997.betterchests;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockChest;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
@@ -16,6 +15,7 @@ public class BlockBChest extends BlockChest {
 		super(id, -1);
 		setHardness(3.0F);
 		setCreativeTab(BetterChests.creativeTabBC);
+		setUnlocalizedName("betterChest");
 	}
 
 	@Override
