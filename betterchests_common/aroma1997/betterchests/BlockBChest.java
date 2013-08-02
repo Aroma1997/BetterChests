@@ -3,6 +3,9 @@ package aroma1997.betterchests;
 import net.minecraft.block.BlockChest;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityChest;
+import net.minecraft.util.MathHelper;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 
@@ -28,6 +31,20 @@ public class BlockBChest extends BlockChest {
 		
 		return te.upgrade(par5EntityPlayer, par1World);
 		
+    }
+	
+	@Override
+    public int isProvidingWeakPower(IBlockAccess par1IBlockAccess, int par2, int par3, int par4, int par5)
+    {
+        if (!((TileEntityBChest)par1IBlockAccess.getBlockTileEntity(par2, par3, par4)).hasRedstoneUpgrade())
+        {
+            return 0;
+        }
+        else
+        {
+            int i1 = ((TileEntityChest)par1IBlockAccess.getBlockTileEntity(par2, par3, par4)).numUsingPlayers;
+            return MathHelper.clamp_int(i1, 0, 15);
+        }
     }
 	
 }

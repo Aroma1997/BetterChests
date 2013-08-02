@@ -2,11 +2,15 @@ package aroma1997.betterchests;
 
 import java.util.List;
 
+import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
+import net.minecraft.util.Icon;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 
 public class ItemUpgrade extends Item {
@@ -34,6 +38,24 @@ public class ItemUpgrade extends Item {
     public String getItemStackDisplayName(ItemStack par1ItemStack)
     {
         return Upgrade.values()[par1ItemStack.getItemDamage()].getName();
+    }
+	
+	private Icon[] itemIcons;
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void registerIcons(IconRegister iconRegister) {
+		itemIcons = new Icon[Upgrade.values().length];
+		for (int i = 0; i < itemIcons.length; i++) {
+			itemIcons[i] = iconRegister.registerIcon(Upgrade.values()[i].getTexture());
+		}
+	}
+	
+	@SideOnly(Side.CLIENT)
+	@Override
+    public Icon getIconFromDamage(int par1)
+    {
+        return this.itemIcons[par1];
     }
 	
 }

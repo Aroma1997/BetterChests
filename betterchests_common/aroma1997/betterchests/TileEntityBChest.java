@@ -11,6 +11,7 @@ public class TileEntityBChest extends TileEntityChest {
 	
 	private short stackLimit;
 	private short slotLimit;
+	private boolean redstoneUpgrade;
 
 	public TileEntityBChest() {
 		stackLimit = 1;
@@ -49,6 +50,12 @@ public class TileEntityBChest extends TileEntityChest {
 				onUpgradeInserted(player);
 				return true;
 			}
+			case REDSTONE: {
+				if(redstoneUpgrade) return false;
+				redstoneUpgrade = true;
+				onUpgradeInserted(player);
+				return true;
+			}
 		}
 		return false;
 	}
@@ -58,6 +65,7 @@ public class TileEntityBChest extends TileEntityChest {
     {
 		this.slotLimit = par1NBTTagCompound.getShort("slotLimit");
 		this.stackLimit = par1NBTTagCompound.getShort("stackLimit");
+		this.redstoneUpgrade = par1NBTTagCompound.getBoolean("redstoneUpgrade");
         super.readFromNBT(par1NBTTagCompound);
     }
 
@@ -67,6 +75,7 @@ public class TileEntityBChest extends TileEntityChest {
         super.writeToNBT(par1NBTTagCompound);
         par1NBTTagCompound.setShort("slotLimit", this.slotLimit);
         par1NBTTagCompound.setShort("stackLimit", this.stackLimit);
+        par1NBTTagCompound.setBoolean("redstoneUpgrade", this.redstoneUpgrade);
     }
     
     private void onUpgradeInserted(EntityPlayer player) {
@@ -74,6 +83,10 @@ public class TileEntityBChest extends TileEntityChest {
     	NBTTagCompound nbttagcompound = new NBTTagCompound();
     	this.writeToNBT(nbttagcompound);
     	super.readFromNBT(nbttagcompound);
+    }
+    
+    public boolean hasRedstoneUpgrade() {
+    	return this.redstoneUpgrade;
     }
 	
 }
