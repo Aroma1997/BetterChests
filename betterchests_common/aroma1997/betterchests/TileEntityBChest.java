@@ -71,9 +71,8 @@ public class TileEntityBChest extends TileEntityChest {
     }
     
     private void onUpgradeInserted() {
-    	NBTTagCompound nbttagcompound = new NBTTagCompound();
-    	this.writeToNBT(nbttagcompound);
-    	createAndLoadEntity(nbttagcompound);
+    	
+    	worldObj.setBlockTileEntity(xCoord, yCoord, zCoord, new TileEntityBChest());
     }
 	
 }
