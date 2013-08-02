@@ -26,11 +26,6 @@ public class BlockBChest extends BlockChest {
 	
 	@Override
 	public TileEntity createNewTileEntity(World world) {
-		return null;
-	}
-	
-	@Override
-	public TileEntity createTileEntity(World world, int metadata) {
 		return new TileEntityBChest();
 	}
 	
