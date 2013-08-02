@@ -1,6 +1,7 @@
 package aroma1997.betterchests.client;
 
 import aroma1997.betterchests.CommonProxy;
+import aroma1997.betterchests.ContainerBChest;
 import aroma1997.betterchests.TileEntityBChest;
 
 import net.minecraft.entity.player.EntityPlayer;
@@ -23,8 +24,7 @@ public class ClientProxy extends CommonProxy {
 		TileEntity tileEntity = world.getBlockTileEntity(X, Y, Z);
 		if (tileEntity != null && tileEntity instanceof TileEntityBChest) {
 			TileEntityBChest tileEntityBC = (TileEntityBChest) tileEntity;
-//			return GUIChest.GUI.makeGUI(tileEntityBC.getType(), thePlayer.inventory,
-//				tileEntityBC);
+			return new GUIChest(new ContainerBChest(thePlayer.inventory, tileEntityBC));
 		}
 		return null;
 	}
