@@ -11,7 +11,6 @@ public class TileEntityBChest extends TileEntityChest {
 	
 	private short stackLimit;
 	private short slotLimit;
-	private static final short SLOTLIMIT = 36;
 
 	public TileEntityBChest() {
 		stackLimit = 1;
@@ -39,15 +38,15 @@ public class TileEntityBChest extends TileEntityChest {
 		Upgrade upgrade = Upgrade.values()[item.getItemDamage()];
 		switch (upgrade) {
 			case SLOT:  {
-				if (slotLimit + 9 > SLOTLIMIT) return false;
+				if (slotLimit + 9 > Reference.Conf.SLOT_LIMIT) return false;
 				slotLimit += 9;
-				onUpgradeInserted();
+				onUpgradeInserted(item);
 				return true;
 			}
 			case STACK: {
 				if (stackLimit + 1 > 64) return false;
 				stackLimit += 1;
-				onUpgradeInserted();
+				onUpgradeInserted(item);
 				return true;
 			}
 		}
@@ -70,9 +69,16 @@ public class TileEntityBChest extends TileEntityChest {
         par1NBTTagCompound.setShort("stackLimit", this.stackLimit);
     }
     
-    private void onUpgradeInserted() {
-    	
-    	worldObj.setBlockTileEntity(xCoord, yCoord, zCoord, new TileEntityBChest());
+    private void onUpgradeInserted(ItemStack item) {
+    	if (item.stackSize > 1) {
+    		item.stackSize -= 1;
+    	}
+    	else {
+    		item = null;
+    	}
+    	NBTTagCompound nbttagcompound = new NBTTagCompound();
+    	this.writeToNBT(nbttagcompound);
+    	super.readFromNBT(nbttagcompound);
     }
 	
 }
