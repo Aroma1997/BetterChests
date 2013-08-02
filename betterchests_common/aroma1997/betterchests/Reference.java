@@ -11,6 +11,7 @@ public class Reference {
 	
 	public static class Conf {
 		public static final short SLOT_LIMIT = 54;
+		public static final short LIGHT_LIMIT = 15;
 	}
 		
 	

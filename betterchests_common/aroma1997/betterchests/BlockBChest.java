@@ -1,5 +1,6 @@
 package aroma1997.betterchests;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockChest;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
@@ -45,6 +46,24 @@ public class BlockBChest extends BlockChest {
             int i1 = ((TileEntityChest)par1IBlockAccess.getBlockTileEntity(par2, par3, par4)).numUsingPlayers;
             return MathHelper.clamp_int(i1, 0, 15);
         }
+    }
+	
+	@Override
+    public void unifyAdjacentChests(World par1World, int par2, int par3, int par4)
+    {
+    	
+    }
+	
+	@Override
+    public void onBlockAdded(World par1World, int par2, int par3, int par4)
+    {
+		
+    }
+	
+	@Override
+    public int getLightValue(IBlockAccess world, int x, int y, int z)
+    {
+		return ((TileEntityBChest)world.getBlockTileEntity(x, y, z)).getLightValue();
     }
 	
 }
