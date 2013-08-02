@@ -2,6 +2,8 @@ package aroma1997.betterchests;
 
 import java.io.File;
 
+import net.minecraft.creativetab.CreativeTabs;
+
 import net.minecraftforge.common.Configuration;
 
 import cpw.mods.fml.common.Mod;
@@ -12,6 +14,7 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.common.registry.LanguageRegistry;
 
 @Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, version = Reference.VERSION)
 public class BetterChests {
@@ -23,20 +26,27 @@ public class BetterChests {
 	public static CommonProxy proxy;
 	
 	public static BlockBChest chest;
+	public static ItemUpgrade upgrade;
+	
+	public static CreativeTabs creativeTabBC;
 	
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		Configuration config = new Configuration(new File(new File(event.getModConfigurationDirectory(), "aroma1997"), Reference.MOD_ID + ".cfg"));
 		config.load();
 		chest = new BlockBChest(config.getBlock("chestID", 2540, "The Block id of the BetterChest").getInt());
+		upgrade = new ItemUpgrade(config.getItem(Configuration.CATEGORY_ITEM, "upgradeItem", 12458).getInt() - 256);
 		config.save();
 		GameRegistry.registerBlock(chest, "Adjustable Chest");
+		GameRegistry.registerItem(upgrade, "Upgrade");
 	}
 	
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
 		proxy.registerRenderers();
 		GameRegistry.registerTileEntity(TileEntityBChest.class, "adjustableChest");
+		LanguageRegistry.instance().addStringLocalization("itemGroup.creativeTabBC", "en_US",
+			"BetterChests");
 	}
 	
 	@EventHandler
