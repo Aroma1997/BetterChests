@@ -1,9 +1,13 @@
 package aroma1997.betterchests;
 
 import net.minecraft.block.BlockChest;
+import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 
 public class BlockBChest extends BlockChest {
@@ -29,5 +33,12 @@ public class BlockBChest extends BlockChest {
 	public TileEntity createTileEntity(World world, int metadata) {
 		return new TileEntityBChest();
 	}
+	
+	@SideOnly(Side.CLIENT)
+	@Override
+    public void registerIcons(IconRegister par1IconRegister)
+    {
+        this.blockIcon = par1IconRegister.registerIcon(Reference.MOD_ID + ":" + "BChest");
+    }
 	
 }

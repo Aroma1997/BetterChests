@@ -30,12 +30,12 @@ public class BetterChests {
 		config.load();
 		chest = new BlockBChest(config.getBlock("chestID", 2540, "The Block id of the BetterChest").getInt());
 		config.save();
-		//GameRegistry.registerBlock(chest, ItemBlockBChest.class, "Adjustable Chest");
+		GameRegistry.registerBlock(chest, ItemBlockBChest.class, "Adjustable Chest");
 	}
 	
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
-		
+		proxy.registerRenderer();
 	}
 	
 	@EventHandler
