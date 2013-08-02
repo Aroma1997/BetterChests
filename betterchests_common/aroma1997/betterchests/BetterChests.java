@@ -41,7 +41,7 @@ public class BetterChests {
 	}
 	
 	@EventHandler
-	public void portInit(FMLPostInitializationEvent event) {
+	public void postInit(FMLPostInitializationEvent event) {
 		
 	}
 	
