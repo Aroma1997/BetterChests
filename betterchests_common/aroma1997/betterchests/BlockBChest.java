@@ -30,7 +30,9 @@ public class BlockBChest extends BlockChest {
 	@Override
     public boolean onBlockActivated(World par1World, int par2, int par3, int par4, EntityPlayer par5EntityPlayer, int par6, float par7, float par8, float par9)
     {
-		if (par5EntityPlayer.getHeldItem() == null || !(par5EntityPlayer.getHeldItem().itemID == BetterChests.upgrade.itemID && par5EntityPlayer.getHeldItem().getItemDamage() != Upgrade.BASIC.ordinal())) return super.onBlockActivated(par1World, par2, par3, par4, par5EntityPlayer, par6, par7, par8, par9);
+		if (par5EntityPlayer.getHeldItem() == null || !(par5EntityPlayer.getHeldItem().itemID == BetterChests.upgrade.itemID && par5EntityPlayer.getHeldItem().getItemDamage() != Upgrade.BASIC.ordinal())){
+			return super.onBlockActivated(par1World, par2, par3, par4, par5EntityPlayer, par6, par7, par8, par9);
+		}
 		
 		TileEntityBChest te = (TileEntityBChest) par1World.getBlockTileEntity(par2, par3, par4);
 		
@@ -107,12 +109,6 @@ public class BlockBChest extends BlockChest {
 			return 0;
 		}
         return Container.calcRedstoneFromInventory(this.getInventory(par1World, par2, par3, par4));
-    }
-	
-	@Override
-    public void breakBlock(World par1World, int par2, int par3, int par4, int par5, int par6)
-    {
-		if (((TileEntityBChest)par1World.getBlockTileEntity(par2, par3, par4)).isPlayerUpgrade()) return;
     }
 	
 }
