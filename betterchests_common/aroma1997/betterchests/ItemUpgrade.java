@@ -34,12 +34,6 @@ public class ItemUpgrade extends Item {
         }
     }
 	
-	@Override
-    public String getItemStackDisplayName(ItemStack par1ItemStack)
-    {
-        return Upgrade.values()[par1ItemStack.getItemDamage()].getName();
-    }
-	
 	private Icon[] itemIcons;
 	
 	@Override
@@ -56,6 +50,12 @@ public class ItemUpgrade extends Item {
     public Icon getIconFromDamage(int par1)
     {
         return this.itemIcons[par1];
+    }
+	
+	@Override
+    public String getItemDisplayName(ItemStack par1ItemStack)
+    {
+		return Upgrade.values()[par1ItemStack.getItemDamage()].getName();
     }
 	
 }
