@@ -56,6 +56,8 @@ public class BetterChests {
 		GameRegistry.addRecipe(new ItemStack(upgrade.itemID, 1, Upgrade.SLOT.ordinal()), " W ", "WUW", " W ", 'W', new ItemStack(Block.planks, 1, 32767), 'U', itemUpgrade);
 		GameRegistry.addRecipe(new ItemStack(upgrade.itemID, 1, Upgrade.STACK.ordinal()), "W W", " U ", "W W", 'W', new ItemStack(Block.planks, 1, 32767), 'U', itemUpgrade);
 		GameRegistry.addRecipe(new ItemStack(upgrade.itemID, 1, Upgrade.REDSTONE.ordinal()), "RRR", "RUR", "RRR", 'R', new ItemStack(Item.redstone), 'U', itemUpgrade);
+		GameRegistry.addRecipe(new ItemStack(upgrade.itemID, 1, Upgrade.COMPARATOR.ordinal()), " Q ", "RUR", " Q ", 'Q', new ItemStack(Item.netherQuartz), 'R', new ItemStack(Item.redstone), 'U', itemUpgrade);
+		GameRegistry.addRecipe(new ItemStack(upgrade.itemID, 1, Upgrade.COMPARATOR.ordinal()), " R ", "QUQ", " R ", 'Q', new ItemStack(Item.netherQuartz), 'R', new ItemStack(Item.redstone), 'U', itemUpgrade);
 		
 	}
 	
