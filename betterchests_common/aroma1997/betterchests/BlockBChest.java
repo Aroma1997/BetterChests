@@ -149,11 +149,5 @@ public class BlockBChest extends BlockChest {
     {
     	return false;
     }
-    
-    @Override
-    public void fillWithRain(World par1World, int par2, int par3, int par4)
-    {
-    	((TileEntityBChest)par1World.getBlockTileEntity(par2, par3, par4)).doRainThingy();
-    }
 	
 }

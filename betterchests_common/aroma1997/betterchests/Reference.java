@@ -21,6 +21,8 @@ public class Reference {
 		public static final short LIGHT_LIMIT = 15;
 		public static final short LIGHT_START = 0;
 		public static final short LIGHT_UPGRADE = 1;
+		
+		public static final float RAIN_THINGY = 0.995F;
 	}
 		
 	

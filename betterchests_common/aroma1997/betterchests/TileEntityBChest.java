@@ -1,5 +1,7 @@
 package aroma1997.betterchests;
 
+import java.util.Random;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -42,6 +44,10 @@ public class TileEntityBChest extends TileEntityChest {
 				if (this.getStackInSlot(i) == null) continue;
 				this.decrStackSize(i, this.getStackInSlot(i).stackSize);
 			}
+		}
+		
+		if(rain && worldObj.canBlockSeeTheSky(xCoord, yCoord, zCoord) && worldObj.isRaining() && new Random().nextFloat() > Reference.Conf.RAIN_THINGY) {
+			doRainThingy();
 		}
 	}
 	
@@ -147,6 +153,7 @@ public class TileEntityBChest extends TileEntityChest {
 		this.playerUpgrade  =par1NBTTagCompound.getBoolean("playerUpgrade");
 		this.voidU = par1NBTTagCompound.getBoolean("voidU");
 		this.indestructable = par1NBTTagCompound.getBoolean("indestructable");
+		this.rain = par1NBTTagCompound.getBoolean("rain");
         super.readFromNBT(par1NBTTagCompound);
     }
 
@@ -163,6 +170,7 @@ public class TileEntityBChest extends TileEntityChest {
         par1NBTTagCompound.setBoolean("playerUpgrade", this.playerUpgrade);
         par1NBTTagCompound.setBoolean("voidU", this.voidU);
         par1NBTTagCompound.setBoolean("indestructable", this.indestructable);
+        par1NBTTagCompound.setBoolean("rain", this.rain);
     }
     
     private void onUpgradeInserted(EntityPlayer player) {
@@ -192,8 +200,7 @@ public class TileEntityBChest extends TileEntityChest {
     	return this.indestructable;
     }
     
-    public void doRainThingy() {
-    	if (!rain) return;
+    private void doRainThingy() {
     	int bucketEmpty = -1;
     	int emptySpace = -1;
     	for (int i = 0; i < this.getSizeInventory(); i++) {
@@ -205,9 +212,9 @@ public class TileEntityBChest extends TileEntityChest {
     			}
     			continue;
     		}
-    		if (bucketEmpty != -1 && emptySpace == -1 && this.getStackInSlot(i) == null) {
+    		if (emptySpace == -1 && this.getStackInSlot(i) == null) {
     			emptySpace = i;
-    			break;
+    			continue;
     		}
     	}
     	if (bucketEmpty == -1 || emptySpace == -1) return;
