@@ -1,7 +1,11 @@
 package aroma1997.betterchests;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockChest;
 import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.boss.EntityDragon;
+import net.minecraft.entity.boss.EntityWither;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
@@ -95,6 +99,12 @@ public class BlockBChest extends BlockChest {
     public int getMixedBrightnessForBlock(IBlockAccess par1IBlockAccess, int par2, int par3, int par4)
     {
         return 15;
+    }
+	
+	@Override
+    public boolean canEntityDestroy(World world, int x, int y, int z, Entity entity)
+    {
+		return !((TileEntityBChest)world.getBlockTileEntity(x, y, z)).hasIndestructableUpgrade();
     }
 	
 	@Override

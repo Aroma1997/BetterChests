@@ -17,6 +17,7 @@ public class TileEntityBChest extends TileEntityChest {
 	private boolean playerUpgrade;
 	private String player;
 	private boolean voidU;
+	private boolean indestructable;
 
 	public TileEntityBChest() {
 		stackLimit = Reference.Conf.STACK_START;
@@ -116,6 +117,12 @@ public class TileEntityBChest extends TileEntityChest {
 				onUpgradeInserted(player);
 				return true;
 			}
+			case UNBREAKABLE: {
+				if (this.indestructable) return false;
+				indestructable = true;
+				onUpgradeInserted(player);
+				return true;
+			}
 		}
 		return false;
 	}
@@ -169,6 +176,10 @@ public class TileEntityBChest extends TileEntityChest {
     
     public boolean isPlayerUpgrade() {
     	return this.playerUpgrade;
+    }
+    
+    public boolean hasIndestructableUpgrade() {
+    	return this.indestructable;
     }
 	
 }
