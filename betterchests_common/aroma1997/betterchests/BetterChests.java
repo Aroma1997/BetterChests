@@ -2,7 +2,10 @@ package aroma1997.betterchests;
 
 import java.io.File;
 
+import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 
 import net.minecraftforge.common.Configuration;
 
@@ -47,6 +50,8 @@ public class BetterChests {
 		GameRegistry.registerTileEntity(TileEntityBChest.class, "adjustableChest");
 		LanguageRegistry.instance().addStringLocalization("itemGroup.creativeTabBC", "en_US",
 			"BetterChests");
+		GameRegistry.addRecipe(new ItemStack(upgrade, 4, Upgrade.BASIC.ordinal()), "WIW", "ISI", "WIW", 'W', new ItemStack(Block.planks, 1, 32767), 'I', new ItemStack(Block.fenceIron), 'S', new ItemStack(Item.stick));
+		GameRegistry.addRecipe(new ItemStack(chest), "CCC", "CBC", "CCC", 'C', new ItemStack(Block.cobblestone), 'B', new ItemStack(Block.chest));
 	}
 	
 	@EventHandler
