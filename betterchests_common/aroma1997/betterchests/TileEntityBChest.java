@@ -13,6 +13,7 @@ public class TileEntityBChest extends TileEntityChest {
 	private short slotLimit;
 	private boolean redstoneUpgrade;
 	private short light;
+	private boolean comparator;
 
 	public TileEntityBChest() {
 		stackLimit = 1;
@@ -64,6 +65,12 @@ public class TileEntityBChest extends TileEntityChest {
 				onUpgradeInserted(player);
 				return true;
 			}
+			case COMPARATOR: {
+				if (this.comparator) return false;
+				comparator = true;
+				onUpgradeInserted(player);
+				return true;
+			}
 		}
 		return false;
 	}
@@ -101,6 +108,10 @@ public class TileEntityBChest extends TileEntityChest {
     
     public int getLightValue() {
     	return light;
+    }
+    
+    public boolean isComparator() {
+    	return this.comparator;
     }
 	
 }

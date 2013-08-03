@@ -3,6 +3,7 @@ package aroma1997.betterchests;
 import net.minecraft.block.BlockChest;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityChest;
@@ -97,6 +98,15 @@ public class BlockBChest extends BlockChest {
 	public void registerIcons(IconRegister par1IconRegister)
     {
         this.blockIcon = par1IconRegister.registerIcon("cobblestone");
+    }
+	
+	@Override
+    public int getComparatorInputOverride(World par1World, int par2, int par3, int par4, int par5)
+    {
+		if (!((TileEntityBChest)par1World.getBlockTileEntity(par2, par3, par4)).isComparator()) {
+			return 0;
+		}
+        return Container.calcRedstoneFromInventory(this.getInventory(par1World, par2, par3, par4));
     }
 	
 }
