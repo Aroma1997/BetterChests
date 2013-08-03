@@ -10,7 +10,8 @@ public enum Upgrade {
 	COMPARATOR("Comparator Upgrade", "This Upgrade will enable the usage of the Comparators.", "comparator"),
 	PLAYER("Player Upgrade", "This will make the chest accessable only for you.", "player"),
 	VOID("Void Upgrade", "This will destroy and delete all Items that go into the Chest.", "void"),
-	UNBREAKABLE("Unbreakable Upgrade", "This will make Entitys no longer able to destroy the chest. (Wither,...)", "unbreakable");
+	UNBREAKABLE("Unbreakable Upgrade", "This will make Entitys no longer able to destroy the chest. (Wither,...)", "unbreakable"),
+	RAIN("Rain Upgrade", "This will fill buckets in the Chest with Water.", "rain");
 	
 	private String name;
 	private String tooltip;

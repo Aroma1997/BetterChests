@@ -1,6 +1,7 @@
 package aroma1997.betterchests;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
@@ -18,6 +19,7 @@ public class TileEntityBChest extends TileEntityChest {
 	private String player;
 	private boolean voidU;
 	private boolean indestructable;
+	private boolean rain;
 
 	public TileEntityBChest() {
 		stackLimit = Reference.Conf.STACK_START;
@@ -123,6 +125,12 @@ public class TileEntityBChest extends TileEntityChest {
 				onUpgradeInserted(player);
 				return true;
 			}
+			case RAIN: {
+				if (this.rain) return false;
+				rain = true;
+				onUpgradeInserted(player);
+				return true;
+			}
 		}
 		return false;
 	}
@@ -138,6 +146,7 @@ public class TileEntityBChest extends TileEntityChest {
 		this.player = par1NBTTagCompound.getString("player");
 		this.playerUpgrade  =par1NBTTagCompound.getBoolean("playerUpgrade");
 		this.voidU = par1NBTTagCompound.getBoolean("voidU");
+		this.indestructable = par1NBTTagCompound.getBoolean("indestructable");
         super.readFromNBT(par1NBTTagCompound);
     }
 
@@ -153,6 +162,7 @@ public class TileEntityBChest extends TileEntityChest {
         par1NBTTagCompound.setString("player", this.player);
         par1NBTTagCompound.setBoolean("playerUpgrade", this.playerUpgrade);
         par1NBTTagCompound.setBoolean("voidU", this.voidU);
+        par1NBTTagCompound.setBoolean("indestructable", this.indestructable);
     }
     
     private void onUpgradeInserted(EntityPlayer player) {
@@ -180,6 +190,29 @@ public class TileEntityBChest extends TileEntityChest {
     
     public boolean hasIndestructableUpgrade() {
     	return this.indestructable;
+    }
+    
+    public void doRainThingy() {
+    	if (!rain) return;
+    	int bucketEmpty = -1;
+    	int emptySpace = -1;
+    	for (int i = 0; i < this.getSizeInventory(); i++) {
+    		if (this.getStackInSlot(i) != null && this.getStackInSlot(i).itemID == Item.bucketEmpty.itemID && bucketEmpty == -1) {
+    			bucketEmpty = i;
+    			if (this.getStackInSlot(i).stackSize == 1) {
+    				emptySpace = i;
+    				break;
+    			}
+    			continue;
+    		}
+    		if (bucketEmpty != -1 && emptySpace == -1 && this.getStackInSlot(i) == null) {
+    			emptySpace = i;
+    			break;
+    		}
+    	}
+    	if (bucketEmpty == -1 || emptySpace == -1) return;
+    	this.decrStackSize(bucketEmpty, 1);
+    	this.setInventorySlotContents(emptySpace, new ItemStack(Item.bucketWater));
     }
 	
 }
