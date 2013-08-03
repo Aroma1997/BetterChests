@@ -12,7 +12,7 @@ public class TileEntityBChest extends TileEntityChest {
 	private short stackLimit;
 	private short slotLimit;
 	private boolean redstoneUpgrade;
-	private int light;
+	private short light;
 
 	public TileEntityBChest() {
 		stackLimit = 1;
@@ -74,7 +74,7 @@ public class TileEntityBChest extends TileEntityChest {
 		this.slotLimit = par1NBTTagCompound.getShort("slotLimit");
 		this.stackLimit = par1NBTTagCompound.getShort("stackLimit");
 		this.redstoneUpgrade = par1NBTTagCompound.getBoolean("redstoneUpgrade");
-		this.light = par1NBTTagCompound.getInteger("light");
+		this.light = par1NBTTagCompound.getShort("lightValue");
         super.readFromNBT(par1NBTTagCompound);
     }
 
@@ -85,7 +85,7 @@ public class TileEntityBChest extends TileEntityChest {
         par1NBTTagCompound.setShort("slotLimit", this.slotLimit);
         par1NBTTagCompound.setShort("stackLimit", this.stackLimit);
         par1NBTTagCompound.setBoolean("redstoneUpgrade", this.redstoneUpgrade);
-        par1NBTTagCompound.setInteger("light", this.light);
+        par1NBTTagCompound.setShort("lightValue", this.light);
     }
     
     private void onUpgradeInserted(EntityPlayer player) {

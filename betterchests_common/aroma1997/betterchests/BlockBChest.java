@@ -1,6 +1,7 @@
 package aroma1997.betterchests;
 
 import net.minecraft.block.BlockChest;
+import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.tileentity.TileEntity;
@@ -17,6 +18,7 @@ public class BlockBChest extends BlockChest {
 		setHardness(3.0F);
 		setCreativeTab(BetterChests.creativeTabBC);
 		setUnlocalizedName("betterChest");
+		setLightOpacity(0);
 	}
 
 	@Override
@@ -83,6 +85,18 @@ public class BlockBChest extends BlockChest {
     public void setBlockBoundsBasedOnState(IBlockAccess par1IBlockAccess, int par2, int par3, int par4)
     {
 		
+    }
+	
+	@Override
+    public int getMixedBrightnessForBlock(IBlockAccess par1IBlockAccess, int par2, int par3, int par4)
+    {
+        return 15;
+    }
+	
+	@Override
+	public void registerIcons(IconRegister par1IconRegister)
+    {
+        this.blockIcon = par1IconRegister.registerIcon("cobblestone");
     }
 	
 }

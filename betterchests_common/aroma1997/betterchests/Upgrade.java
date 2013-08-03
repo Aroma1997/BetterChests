@@ -4,8 +4,8 @@ package aroma1997.betterchests;
 public enum Upgrade {
 	SLOT("Slot Upgrade", "Gives you 9 more Slots.", "slot"),
 	STACK("Stack Upgrade", "Gives you one more Item per Slot.", "stack"),
-	REDSTONE("Redstone Upgrade", "Outputs a redstone signal, when somebody opens a chest.", "redstone"),
-	LIGHT("Light Upgrade", "Makes the Chest emit light.", "light");
+	REDSTONE("Redstone Upgrade", "Outputs a redstone signal, when somebody opens the chest.", "redstone"),
+	LIGHT("Light Upgrade", "Makes the Chest emit light. " + Colors.RED + "Does not work yet.", "light");
 	
 	private String name;
 	private String tooltip;
