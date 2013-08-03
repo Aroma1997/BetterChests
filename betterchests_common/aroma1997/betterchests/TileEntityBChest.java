@@ -4,6 +4,7 @@ package aroma1997.betterchests;
 
 import java.util.Random;
 
+import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.item.Item;
@@ -66,28 +67,37 @@ public class TileEntityBChest extends TileEntityChest {
 		}
 		
 		if (cobbleGen && new Random().nextFloat() > Reference.Conf.COBBLEGEN_THINGY) {
-			int bucketEmpty = - 1;
-			int emptySpace = - 1;
+			int bucketLava = - 1;
+			int bucketWater = - 1;
+			int empty = -1;
 			for (int i = 0; i < getSizeInventory(); i++) {
 				if (getStackInSlot(i) != null
-					&& getStackInSlot(i).itemID == Item.bucketEmpty.itemID && bucketEmpty == - 1) {
-					bucketEmpty = i;
-					if (getStackInSlot(i).stackSize == 1) {
-						emptySpace = i;
-						break;
-					}
+					&& getStackInSlot(i).itemID == Item.bucketWater.itemID && bucketWater == - 1) {
+					bucketWater = i;
 					continue;
 				}
-				if (emptySpace == - 1 && getStackInSlot(i) == null) {
-					emptySpace = i;
+				if (getStackInSlot(i) != null && bucketLava == - 1 && getStackInSlot(i).itemID == Item.bucketLava.itemID) {
+					bucketLava = i;
+					continue;
+				}
+				if (empty == -1 && (getStackInSlot(i) == null || (getStackInSlot(i) != null && getStackInSlot(i).itemID == Block.cobblestone.blockID && getStackInSlot(i).stackSize < getStackInSlot(i).getMaxStackSize()))) {
+					empty = i;
 					continue;
 				}
 			}
-			if (bucketEmpty == - 1 || emptySpace == - 1) {
+			if (bucketLava == - 1 || bucketWater == - 1 || empty == -1) {
 				return;
 			}
-			decrStackSize(bucketEmpty, 1);
-			setInventorySlotContents(emptySpace, new ItemStack(Item.bucketWater));
+			int amount;
+			
+			if (getStackInSlot(empty) == null) {
+				amount = 1;
+			}
+			else {
+				amount = 1 + getStackInSlot(empty).stackSize;
+			}
+			
+			setInventorySlotContents(empty, new ItemStack(Block.cobblestone, amount));
 		}
 	}
 	
