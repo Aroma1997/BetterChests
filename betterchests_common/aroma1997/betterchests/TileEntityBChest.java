@@ -35,7 +35,10 @@ public class TileEntityBChest extends TileEntityChest {
 	public void updateEntity() {
 		super.updateEntity();
 		if (voidU) {
-			
+			for (int i = 0; i < this.getSizeInventory(); i++) {
+				if (this.getStackInSlot(i) == null) continue;
+				this.decrStackSize(i, this.getStackInSlot(i).stackSize);
+			}
 		}
 	}
 	
