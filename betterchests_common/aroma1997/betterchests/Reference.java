@@ -26,7 +26,7 @@ public class Reference {
 		
 		public static final short LIGHT_UPGRADE = 1;
 		
-		public static final float RAIN_THINGY = 0.995F;
+		public static final float RAIN_THINGY = 0.9975F;
 		
 		public static final float COBBLEGEN_THINGY = 0.95F;
 	}
