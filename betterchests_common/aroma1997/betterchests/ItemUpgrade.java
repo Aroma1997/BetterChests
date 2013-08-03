@@ -1,4 +1,6 @@
+
 package aroma1997.betterchests;
+
 
 import java.util.List;
 
@@ -12,9 +14,8 @@ import net.minecraft.util.Icon;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-
 public class ItemUpgrade extends Item {
-
+	
 	public ItemUpgrade(int id) {
 		super(id);
 		setCreativeTab(BetterChests.creativeTabBC);
@@ -27,12 +28,12 @@ public class ItemUpgrade extends Item {
 	}
 	
 	@Override
-    public void getSubItems(int par1, CreativeTabs par2CreativeTabs, List par3List)
-    {
-        for (int i = 0; i < Upgrade.values().length; i++) {
-        	par3List.add(new ItemStack(this.itemID, 1, i));
-        }
-    }
+	public void getSubItems(int par1, CreativeTabs par2CreativeTabs, List par3List)
+	{
+		for (int i = 0; i < Upgrade.values().length; i++) {
+			par3List.add(new ItemStack(itemID, 1, i));
+		}
+	}
 	
 	private Icon[] itemIcons;
 	
@@ -47,15 +48,15 @@ public class ItemUpgrade extends Item {
 	
 	@SideOnly(Side.CLIENT)
 	@Override
-    public Icon getIconFromDamage(int par1)
-    {
-        return this.itemIcons[par1];
-    }
+	public Icon getIconFromDamage(int par1)
+	{
+		return itemIcons[par1];
+	}
 	
 	@Override
-    public String getItemDisplayName(ItemStack par1ItemStack)
-    {
+	public String getItemDisplayName(ItemStack par1ItemStack)
+	{
 		return Upgrade.values()[par1ItemStack.getItemDamage()].getName();
-    }
+	}
 	
 }

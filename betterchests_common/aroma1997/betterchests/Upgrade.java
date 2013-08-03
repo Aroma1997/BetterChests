@@ -1,3 +1,4 @@
+
 package aroma1997.betterchests;
 
 
@@ -14,21 +15,23 @@ public enum Upgrade {
 	RAIN("Rain Upgrade", "This will fill buckets in the Chest with Water.", "rain");
 	
 	private String name;
+	
 	private String tooltip;
+	
 	private String texture;
 	
 	private Upgrade(String name, String tooltip, String texture) {
 		this.name = name;
 		this.tooltip = tooltip;
-		this.texture =  Reference.MOD_ID + ":" + texture;
+		this.texture = Reference.MOD_ID + ":" + texture;
 	}
 	
 	public String getName() {
-		return this.name;
+		return name;
 	}
 	
 	public String getTooltip() {
-		return this.tooltip;
+		return tooltip;
 	}
 	
 	public String getTexture() {
