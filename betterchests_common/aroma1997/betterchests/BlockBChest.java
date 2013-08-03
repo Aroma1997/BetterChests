@@ -39,6 +39,8 @@ public class BlockBChest extends BlockChest {
 		if (par5EntityPlayer.getHeldItem() == null
 			|| ! (par5EntityPlayer.getHeldItem().itemID == BetterChests.upgrade.itemID && par5EntityPlayer.getHeldItem().getItemDamage() != Upgrade.BASIC.ordinal())) {
 			
+			((TileEntityBChest)par1World.getBlockTileEntity(par2, par3, par4)).playerOpenChest(par5EntityPlayer);
+			
 			return super.onBlockActivated(par1World, par2, par3, par4, par5EntityPlayer, par6,
 				par7, par8, par9);
 		}

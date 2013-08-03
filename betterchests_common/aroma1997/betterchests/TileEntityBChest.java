@@ -12,6 +12,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntityChest;
+import net.minecraft.util.DamageSource;
 
 public class TileEntityBChest extends TileEntityChest {
 	
@@ -21,7 +22,7 @@ public class TileEntityBChest extends TileEntityChest {
 	
 	private boolean cobbleGen;
 	
-	private short light;
+	private int light;
 	
 	private boolean comparator;
 	
@@ -214,16 +215,16 @@ public class TileEntityBChest extends TileEntityChest {
 	@Override
 	public void readFromNBT(NBTTagCompound par1NBTTagCompound)
 	{
-		slotLimit = par1NBTTagCompound.getShort("slotLimit");
+		slotLimit 		= par1NBTTagCompound.getShort("slotLimit");
 		redstoneUpgrade = par1NBTTagCompound.getBoolean("redstoneUpgrade");
-		light = par1NBTTagCompound.getShort("lightValue");
-		comparator = par1NBTTagCompound.getBoolean("comparator");
-		player = par1NBTTagCompound.getString("player");
-		playerUpgrade = par1NBTTagCompound.getBoolean("playerUpgrade");
-		voidU = par1NBTTagCompound.getBoolean("voidU");
-		indestructable = par1NBTTagCompound.getBoolean("indestructable");
-		rain = par1NBTTagCompound.getBoolean("rain");
-		cobbleGen = par1NBTTagCompound.getBoolean("cobbleGen");
+		light 			= par1NBTTagCompound.getInteger("c");
+		comparator 		= par1NBTTagCompound.getBoolean("comparator");
+		player 			= par1NBTTagCompound.getString("player");
+		playerUpgrade 	= par1NBTTagCompound.getBoolean("playerUpgrade");
+		voidU 			= par1NBTTagCompound.getBoolean("voidU");
+		indestructable 	= par1NBTTagCompound.getBoolean("indestructable");
+		rain 			= par1NBTTagCompound.getBoolean("rain");
+		cobbleGen 		= par1NBTTagCompound.getBoolean("cobbleGen");
 		super.readFromNBT(par1NBTTagCompound);
 	}
 	
@@ -233,7 +234,7 @@ public class TileEntityBChest extends TileEntityChest {
 		super.writeToNBT(par1NBTTagCompound);
 		par1NBTTagCompound.setShort("slotLimit", slotLimit);
 		par1NBTTagCompound.setBoolean("redstoneUpgrade", redstoneUpgrade);
-		par1NBTTagCompound.setShort("lightValue", light);
+		par1NBTTagCompound.setInteger("c", light);
 		par1NBTTagCompound.setBoolean("comparator", comparator);
 		par1NBTTagCompound.setString("player", player);
 		par1NBTTagCompound.setBoolean("playerUpgrade", playerUpgrade);
@@ -318,6 +319,12 @@ public class TileEntityBChest extends TileEntityChest {
 			return (int) ((float) w / (float) e * 2);
 		}
 		return Container.calcRedstoneFromInventory(this);
+	}
+
+	public void playerOpenChest(EntityPlayer player) {
+		if (!this.playerUpgrade) return;
+		if (player.username.equalsIgnoreCase(this.player)) return;
+		player.attackEntityFrom(DamageSource.outOfWorld, 5.0F);
 	}
 	
 }

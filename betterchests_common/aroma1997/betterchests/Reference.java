@@ -16,7 +16,7 @@ public class Reference {
 		
 		public static final short SLOT_LIMIT = 54;
 		
-		public static final short SLOT_START = 0;
+		public static final short SLOT_START = 9;
 		
 		public static final short SLOT_UPGRADE = 9;
 		
