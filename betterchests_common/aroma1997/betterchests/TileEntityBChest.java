@@ -16,6 +16,7 @@ public class TileEntityBChest extends TileEntityChest {
 	private boolean comparator;
 	private boolean playerUpgrade;
 	private String player;
+	private boolean voidU;
 
 	public TileEntityBChest() {
 		stackLimit = Reference.Conf.STACK_START;
@@ -26,7 +27,16 @@ public class TileEntityBChest extends TileEntityChest {
 
 	@Override
 	public String getInvName() {
+		if (voidU) return Colors.RED + "Void Chest";
 		return "Adjustable Chest";
+	}
+	
+	@Override
+	public void updateEntity() {
+		super.updateEntity();
+		if (voidU) {
+			
+		}
 	}
 	
 	@Override
@@ -97,6 +107,12 @@ public class TileEntityBChest extends TileEntityChest {
 				onUpgradeInserted(player);
 				return true;
 			}
+			case VOID: {
+				if (this.voidU) return false;
+				voidU = true;
+				onUpgradeInserted(player);
+				return true;
+			}
 		}
 		return false;
 	}
@@ -111,6 +127,7 @@ public class TileEntityBChest extends TileEntityChest {
 		this.comparator = par1NBTTagCompound.getBoolean("comparator");
 		this.player = par1NBTTagCompound.getString("player");
 		this.playerUpgrade  =par1NBTTagCompound.getBoolean("playerUpgrade");
+		this.voidU = par1NBTTagCompound.getBoolean("voidU");
         super.readFromNBT(par1NBTTagCompound);
     }
 
@@ -125,6 +142,7 @@ public class TileEntityBChest extends TileEntityChest {
         par1NBTTagCompound.setBoolean("comparator", this.comparator);
         par1NBTTagCompound.setString("player", this.player);
         par1NBTTagCompound.setBoolean("playerUpgrade", this.playerUpgrade);
+        par1NBTTagCompound.setBoolean("voidU", this.voidU);
     }
     
     private void onUpgradeInserted(EntityPlayer player) {
