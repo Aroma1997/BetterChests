@@ -1,11 +1,8 @@
 package aroma1997.betterchests;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockChest;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.boss.EntityDragon;
-import net.minecraft.entity.boss.EntityWither;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
@@ -27,6 +24,7 @@ public class BlockBChest extends BlockChest {
 		setCreativeTab(BetterChests.creativeTabBC);
 		setUnlocalizedName("betterChest");
 		setLightOpacity(0);
+		disableStats();
 	}
 
 	@Override
@@ -119,10 +117,7 @@ public class BlockBChest extends BlockChest {
 	@Override
     public int getComparatorInputOverride(World par1World, int par2, int par3, int par4, int par5)
     {
-		if (!((TileEntityBChest)par1World.getBlockTileEntity(par2, par3, par4)).isComparator()) {
-			return 0;
-		}
-        return Container.calcRedstoneFromInventory(this.getInventory(par1World, par2, par3, par4));
+		return ((TileEntityBChest)par1World.getBlockTileEntity(par2, par3, par4)).getComparatorOutput();
     }
     
     @Override

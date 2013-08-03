@@ -3,6 +3,7 @@ package aroma1997.betterchests;
 import java.util.Random;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.Container;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -188,10 +189,6 @@ public class TileEntityBChest extends TileEntityChest {
     	return light;
     }
     
-    public boolean isComparator() {
-    	return this.comparator;
-    }
-    
     public boolean isPlayerUpgrade() {
     	return this.playerUpgrade;
     }
@@ -220,6 +217,29 @@ public class TileEntityBChest extends TileEntityChest {
     	if (bucketEmpty == -1 || emptySpace == -1) return;
     	this.decrStackSize(bucketEmpty, 1);
     	this.setInventorySlotContents(emptySpace, new ItemStack(Item.bucketWater));
+    }
+    
+    public int getComparatorOutput() {
+
+		if (!comparator) {
+			return 0;
+		}
+		if (rain) {
+			int w = 0;
+			int e = 0;
+			for (int i = 0; i < this.getSizeInventory(); i++) {
+				if (this.getStackInSlot(i) != null && this.getStackInSlot(i).itemID == Item.bucketWater.itemID) {
+					w++;
+				}
+				if (this.getStackInSlot(i) != null && this.getStackInSlot(i).itemID == Item.bucketEmpty.itemID) {
+					e += this.getStackInSlot(i).stackSize;
+				}
+			}
+			if (w == 0) return 0;
+			if (e == 0) return 16;
+			return (int)(16 -((float)e / (float)w) * 2);
+		}
+        return Container.calcRedstoneFromInventory(this);
     }
 	
 }
