@@ -3,6 +3,7 @@ package aroma1997.betterchests.client;
 
 
 import aroma1997.betterchests.Reference;
+import aroma1997.betterchests.TileEntityBChest;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockChest;
@@ -21,6 +22,7 @@ public class BChestRenderer extends TileEntityChestRenderer {
 	
 	private ResourceLocation model = new ResourceLocation(Reference.MOD_ID
 		+ ":textures/blocks/tile.betterChest.png");
+	private ResourceLocation modelLight = new ResourceLocation(Reference.MOD_ID + ":textures/blocks/tile.betterChestLight.png");
 	
 	private ModelChest chestModel = new ModelChest();
 	
@@ -59,14 +61,13 @@ public class BChestRenderer extends TileEntityChestRenderer {
 			
 			par1TileEntityChest.checkForAdjacentChests();
 		}
-		
-		// if (par1TileEntityChest.adjacentChestZNeg == null &&
-		// par1TileEntityChest.adjacentChestXNeg == null &&
-		// par1TileEntityChest.adjacentChestZPosition == null &&
-		// par1TileEntityChest.adjacentChestXPos == null)
-		// {
 		ModelChest modelchest = chestModel;
-		func_110628_a(model);
+		if (((TileEntityBChest)par1TileEntityChest).getLightValue() > 10) {
+			func_110628_a(modelLight);
+		}
+		else {
+			func_110628_a(model);
+		}
 		
 		GL11.glPushMatrix();
 		GL11.glEnable(GL12.GL_RESCALE_NORMAL);
@@ -143,7 +144,6 @@ public class BChestRenderer extends TileEntityChestRenderer {
 		GL11.glDisable(GL12.GL_RESCALE_NORMAL);
 		GL11.glPopMatrix();
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-		// }
 	}
 	
 	@Override
