@@ -12,8 +12,11 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.MathHelper;
+import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+
+import net.minecraftforge.common.ForgeDirection;
 
 
 public class BlockBChest extends BlockChest {
@@ -126,6 +129,25 @@ public class BlockBChest extends BlockChest {
     public String getItemIconName()
     {
         return Reference.MOD_ID + ":chest";
+    }
+    
+    @Override
+    public boolean canConnectRedstone(IBlockAccess world, int x, int y, int z, int side)
+    {
+        return ((TileEntityBChest)world.getBlockTileEntity(x, y, z)).hasRedstoneUpgrade();
+    }
+    
+    @Override
+    public void onBlockExploded(World world, int x, int y, int z, Explosion explosion)
+    {
+    	if (((TileEntityBChest)world.getBlockTileEntity(x, y, z)).hasIndestructableUpgrade()) return;
+    	super.onBlockExploded(world, x, y, z, explosion);
+    }
+    
+    @Override
+    public boolean isFlammable(IBlockAccess world, int x, int y, int z, int metadata, ForgeDirection face)
+    {
+    	return false;
     }
 	
 }
