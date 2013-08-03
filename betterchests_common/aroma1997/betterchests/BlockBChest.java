@@ -23,7 +23,7 @@ public class BlockBChest extends BlockChest {
 		return new TileEntityBChest();
 	}
 	
-	@Override
+	/*@Override
     public boolean onBlockActivated(World par1World, int par2, int par3, int par4, EntityPlayer par5EntityPlayer, int par6, float par7, float par8, float par9)
     {
 		if (par5EntityPlayer.getHeldItem() == null || !(par5EntityPlayer.getHeldItem().getItem() instanceof ItemUpgrade)) return super.onBlockActivated(par1World, par2, par3, par4, par5EntityPlayer, par6, par7, par8, par9);
@@ -32,7 +32,7 @@ public class BlockBChest extends BlockChest {
 		
 		return te.upgrade(par5EntityPlayer, par1World);
 		
-    }
+    }*/
 	
 	@Override
     public int isProvidingWeakPower(IBlockAccess par1IBlockAccess, int par2, int par3, int par4, int par5)
@@ -49,15 +49,18 @@ public class BlockBChest extends BlockChest {
     }
 	
 	@Override
-    public void unifyAdjacentChests(World par1World, int par2, int par3, int par4)
+    public boolean onBlockActivated(World par1World, int par2, int par3, int par4, EntityPlayer par5EntityPlayer, int par6, float par7, float par8, float par9)
     {
-    	
-    }
-	
-	@Override
-    public void onBlockAdded(World par1World, int par2, int par3, int par4)
-    {
+		try {
+			TileEntityChest te = (TileEntityChest) par1World.getBlockTileEntity(par2, par3, par4);
+			te.adjacentChestXNeg = te.adjacentChestXPos = te.adjacentChestZNeg = te.adjacentChestZPosition = null;
+		}
+		catch(Exception e) {}
+		if (par5EntityPlayer.getHeldItem() == null || !(par5EntityPlayer.getHeldItem().getItem() instanceof ItemUpgrade)) return super.onBlockActivated(par1World, par2, par3, par4, par5EntityPlayer, par6, par7, par8, par9);
 		
+		TileEntityBChest te = (TileEntityBChest) par1World.getBlockTileEntity(par2, par3, par4);
+		
+		return te.upgrade(par5EntityPlayer, par1World);
     }
 	
 	@Override
