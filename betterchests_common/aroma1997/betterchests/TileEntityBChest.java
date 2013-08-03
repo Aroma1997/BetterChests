@@ -14,11 +14,11 @@ import net.minecraft.tileentity.TileEntityChest;
 
 public class TileEntityBChest extends TileEntityChest {
 	
-	private short stackLimit;
-	
 	private short slotLimit;
 	
 	private boolean redstoneUpgrade;
+	
+	private boolean cobbleGen;
 	
 	private short light;
 	
@@ -35,7 +35,6 @@ public class TileEntityBChest extends TileEntityChest {
 	private boolean rain;
 	
 	public TileEntityBChest() {
-		stackLimit = Reference.Conf.STACK_START;
 		slotLimit = Reference.Conf.SLOT_START;
 		light = Reference.Conf.LIGHT_START;
 		player = "";
@@ -64,6 +63,31 @@ public class TileEntityBChest extends TileEntityChest {
 		if (rain && worldObj.canBlockSeeTheSky(xCoord, yCoord, zCoord) && worldObj.isRaining()
 			&& new Random().nextFloat() > Reference.Conf.RAIN_THINGY) {
 			doRainThingy();
+		}
+		
+		if (cobbleGen && new Random().nextFloat() > Reference.Conf.COBBLEGEN_THINGY) {
+			int bucketEmpty = - 1;
+			int emptySpace = - 1;
+			for (int i = 0; i < getSizeInventory(); i++) {
+				if (getStackInSlot(i) != null
+					&& getStackInSlot(i).itemID == Item.bucketEmpty.itemID && bucketEmpty == - 1) {
+					bucketEmpty = i;
+					if (getStackInSlot(i).stackSize == 1) {
+						emptySpace = i;
+						break;
+					}
+					continue;
+				}
+				if (emptySpace == - 1 && getStackInSlot(i) == null) {
+					emptySpace = i;
+					continue;
+				}
+			}
+			if (bucketEmpty == - 1 || emptySpace == - 1) {
+				return;
+			}
+			decrStackSize(bucketEmpty, 1);
+			setInventorySlotContents(emptySpace, new ItemStack(Item.bucketWater));
 		}
 	}
 	
@@ -94,11 +118,6 @@ public class TileEntityBChest extends TileEntityChest {
 		
 	}
 	
-	@Override
-	public int getInventoryStackLimit() {
-		return stackLimit;
-	}
-	
 	public boolean upgrade(EntityPlayer player) {
 		if (! (player.getHeldItem().getItem() instanceof ItemUpgrade)
 			|| ! isUseableByPlayer(player)) {
@@ -112,14 +131,6 @@ public class TileEntityBChest extends TileEntityChest {
 					return false;
 				}
 				slotLimit += Reference.Conf.SLOT_UPGRADE;
-				onUpgradeInserted(player);
-				return true;
-			}
-			case STACK: {
-				if (stackLimit + Reference.Conf.STACK_UPGRADE > Reference.Conf.STACK_LIMIT) {
-					return false;
-				}
-				stackLimit += Reference.Conf.STACK_UPGRADE;
 				onUpgradeInserted(player);
 				return true;
 			}
@@ -180,6 +191,12 @@ public class TileEntityBChest extends TileEntityChest {
 				onUpgradeInserted(player);
 				return true;
 			}
+			case COBBLEGEN: {
+				if (cobbleGen) return false;
+				cobbleGen = true;
+				onUpgradeInserted(player);
+				return true;
+			}
 		}
 		return false;
 	}
@@ -188,7 +205,6 @@ public class TileEntityBChest extends TileEntityChest {
 	public void readFromNBT(NBTTagCompound par1NBTTagCompound)
 	{
 		slotLimit = par1NBTTagCompound.getShort("slotLimit");
-		stackLimit = par1NBTTagCompound.getShort("stackLimit");
 		redstoneUpgrade = par1NBTTagCompound.getBoolean("redstoneUpgrade");
 		light = par1NBTTagCompound.getShort("lightValue");
 		comparator = par1NBTTagCompound.getBoolean("comparator");
@@ -197,6 +213,7 @@ public class TileEntityBChest extends TileEntityChest {
 		voidU = par1NBTTagCompound.getBoolean("voidU");
 		indestructable = par1NBTTagCompound.getBoolean("indestructable");
 		rain = par1NBTTagCompound.getBoolean("rain");
+		cobbleGen = par1NBTTagCompound.getBoolean("cobbleGen");
 		super.readFromNBT(par1NBTTagCompound);
 	}
 	
@@ -205,7 +222,6 @@ public class TileEntityBChest extends TileEntityChest {
 	{
 		super.writeToNBT(par1NBTTagCompound);
 		par1NBTTagCompound.setShort("slotLimit", slotLimit);
-		par1NBTTagCompound.setShort("stackLimit", stackLimit);
 		par1NBTTagCompound.setBoolean("redstoneUpgrade", redstoneUpgrade);
 		par1NBTTagCompound.setShort("lightValue", light);
 		par1NBTTagCompound.setBoolean("comparator", comparator);
@@ -214,6 +230,7 @@ public class TileEntityBChest extends TileEntityChest {
 		par1NBTTagCompound.setBoolean("voidU", voidU);
 		par1NBTTagCompound.setBoolean("indestructable", indestructable);
 		par1NBTTagCompound.setBoolean("rain", rain);
+		par1NBTTagCompound.setBoolean("cobbleGen", this.cobbleGen);
 	}
 	
 	private void onUpgradeInserted(EntityPlayer player) {

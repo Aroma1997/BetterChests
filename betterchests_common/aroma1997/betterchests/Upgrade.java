@@ -4,7 +4,7 @@ package aroma1997.betterchests;
 
 public enum Upgrade {
 	SLOT("Slot Upgrade", "Gives you " + Reference.Conf.SLOT_UPGRADE + " more Slots.", "slot"),
-	STACK("Stack Upgrade", "Gives you " + Reference.Conf.STACK_UPGRADE + " more Item per Slot.", "stack"),
+	COBBLEGEN("Cobblestone Generator", "This lets your chest create Cobblestone with Lava and Water", "cobble"),
 	REDSTONE("Redstone Upgrade", "Outputs a redstone signal, when somebody opens the chest.", "redstone"),
 	LIGHT("Light Upgrade", "Makes the Chest emit light. " + Colors.RED + "Does not work yet.", "light"),
 	BASIC("Upgrade Case", "This is only needed to craft the other upgrades.", "basic"),

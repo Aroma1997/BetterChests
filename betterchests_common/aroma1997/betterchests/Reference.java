@@ -20,12 +20,6 @@ public class Reference {
 		
 		public static final short SLOT_UPGRADE = 9;
 		
-		public static final short STACK_LIMIT = 64;
-		
-		public static final short STACK_START = 8;
-		
-		public static final short STACK_UPGRADE = 8;
-		
 		public static final short LIGHT_LIMIT = 15;
 		
 		public static final short LIGHT_START = 0;
@@ -33,6 +27,8 @@ public class Reference {
 		public static final short LIGHT_UPGRADE = 1;
 		
 		public static final float RAIN_THINGY = 0.995F;
+		
+		public static final float COBBLEGEN_THINGY = 0.95F;
 	}
 	
 }

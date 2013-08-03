@@ -113,7 +113,7 @@ public class BChestRenderer extends TileEntityChestRenderer {
 			+ (par1TileEntityChest.lidAngle - par1TileEntityChest.prevLidAngle) * par8;
 		float f2;
 		
-		if (par1TileEntityChest.adjacentChestZNeg != null)
+		/*if (par1TileEntityChest.adjacentChestZNeg != null)
 		{
 			f2 = par1TileEntityChest.adjacentChestZNeg.prevLidAngle
 				+ (par1TileEntityChest.adjacentChestZNeg.lidAngle - par1TileEntityChest.adjacentChestZNeg.prevLidAngle)
@@ -135,7 +135,7 @@ public class BChestRenderer extends TileEntityChestRenderer {
 			{
 				f1 = f2;
 			}
-		}
+		}*/
 		
 		f1 = 1.0F - f1;
 		f1 = 1.0F - f1 * f1 * f1;
