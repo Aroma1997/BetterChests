@@ -21,6 +21,7 @@ public class TileEntityBChest extends TileEntityChest {
 		stackLimit = Reference.Conf.STACK_START;
 		slotLimit = Reference.Conf.SLOT_START;
 		light = Reference.Conf.LIGHT_START;
+		player = "";
 	}
 
 	@Override
@@ -61,13 +62,13 @@ public class TileEntityBChest extends TileEntityChest {
 		switch (upgrade) {
 			case SLOT:  {
 				if (slotLimit + Reference.Conf.SLOT_UPGRADE > Reference.Conf.SLOT_LIMIT) return false;
-				slotLimit += 9;
+				slotLimit += Reference.Conf.SLOT_UPGRADE;
 				onUpgradeInserted(player);
 				return true;
 			}
 			case STACK: {
 				if (stackLimit + Reference.Conf.STACK_UPGRADE > Reference.Conf.STACK_LIMIT) return false;
-				stackLimit += 1;
+				stackLimit += Reference.Conf.STACK_UPGRADE;
 				onUpgradeInserted(player);
 				return true;
 			}
