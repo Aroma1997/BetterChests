@@ -109,4 +109,10 @@ public class BlockBChest extends BlockChest {
         return Container.calcRedstoneFromInventory(this.getInventory(par1World, par2, par3, par4));
     }
 	
+	@Override
+    public void breakBlock(World par1World, int par2, int par3, int par4, int par5, int par6)
+    {
+		if (((TileEntityBChest)par1World.getBlockTileEntity(par2, par3, par4)).isPlayerUpgrade()) return;
+    }
+	
 }

@@ -19,9 +19,9 @@ public class TileEntityBChest extends TileEntityChest {
 	private String player;
 
 	public TileEntityBChest() {
-		stackLimit = 1;
-		slotLimit = 0;
-		light = 0;
+		stackLimit = Reference.Conf.STACK_START;
+		slotLimit = Reference.Conf.SLOT_START;
+		light = Reference.Conf.LIGHT_START;
 	}
 
 	@Override
@@ -39,10 +39,10 @@ public class TileEntityBChest extends TileEntityChest {
     {
 		if (!super.isUseableByPlayer(par1EntityPlayer)) return false;
 		if (!playerUpgrade) return true;
-		if (!MinecraftServer.getServer().isDedicatedServer()) {
+		/*if (!MinecraftServer.getServer().isDedicatedServer()) {
 			this.player = par1EntityPlayer.username;
 			return true;
-		}
+		}*/
 		if (MinecraftServer.getServerConfigurationManager(MinecraftServer.getServer()).getOps().contains(par1EntityPlayer.username) || player.equalsIgnoreCase(par1EntityPlayer.username)) {
 			return true;
 		}
@@ -61,13 +61,13 @@ public class TileEntityBChest extends TileEntityChest {
 		Upgrade upgrade = Upgrade.values()[item.getItemDamage()];
 		switch (upgrade) {
 			case SLOT:  {
-				if (slotLimit + 9 > Reference.Conf.SLOT_LIMIT) return false;
+				if (slotLimit + Reference.Conf.SLOT_UPGRADE > Reference.Conf.SLOT_LIMIT) return false;
 				slotLimit += 9;
 				onUpgradeInserted(player);
 				return true;
 			}
 			case STACK: {
-				if (stackLimit + 1 > 64) return false;
+				if (stackLimit + Reference.Conf.STACK_UPGRADE > Reference.Conf.STACK_LIMIT) return false;
 				stackLimit += 1;
 				onUpgradeInserted(player);
 				return true;
@@ -79,7 +79,7 @@ public class TileEntityBChest extends TileEntityChest {
 				return true;
 			}
 			case LIGHT: {
-				if(light + 1 > Reference.Conf.LIGHT_LIMIT) return false;
+				if(light + Reference.Conf.LIGHT_UPGRADE > Reference.Conf.LIGHT_LIMIT) return false;
 				light++;
 				onUpgradeInserted(player);
 				return true;
@@ -140,6 +140,10 @@ public class TileEntityBChest extends TileEntityChest {
     
     public boolean isComparator() {
     	return this.comparator;
+    }
+    
+    public boolean isPlayerUpgrade() {
+    	return this.playerUpgrade;
     }
 	
 }
