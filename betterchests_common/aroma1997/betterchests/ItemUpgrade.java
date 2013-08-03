@@ -19,6 +19,7 @@ public class ItemUpgrade extends Item {
 	public ItemUpgrade(int id) {
 		super(id);
 		setCreativeTab(BetterChests.creativeTabBC);
+		setHasSubtypes(true);
 	}
 	
 	@Override
