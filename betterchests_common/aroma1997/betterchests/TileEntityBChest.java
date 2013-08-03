@@ -3,6 +3,7 @@ package aroma1997.betterchests;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.world.World;
 
@@ -14,6 +15,8 @@ public class TileEntityBChest extends TileEntityChest {
 	private boolean redstoneUpgrade;
 	private short light;
 	private boolean comparator;
+	private boolean playerUpgrade;
+	private String player;
 
 	public TileEntityBChest() {
 		stackLimit = 1;
@@ -30,6 +33,22 @@ public class TileEntityBChest extends TileEntityChest {
 	public int getSizeInventory() {
 		return slotLimit;
 	}
+	
+	@Override
+    public boolean isUseableByPlayer(EntityPlayer par1EntityPlayer)
+    {
+		if (!super.isUseableByPlayer(par1EntityPlayer)) return false;
+		if (!playerUpgrade) return true;
+		if (!MinecraftServer.getServer().isDedicatedServer()) {
+			this.player = par1EntityPlayer.username;
+			return true;
+		}
+		if (MinecraftServer.getServerConfigurationManager(MinecraftServer.getServer()).getOps().contains(par1EntityPlayer.username) || player.equalsIgnoreCase(par1EntityPlayer.username)) {
+			return true;
+		}
+		return false;
+		
+    }
 
 	@Override
 	public int getInventoryStackLimit() {
@@ -68,6 +87,13 @@ public class TileEntityBChest extends TileEntityChest {
 			case COMPARATOR: {
 				if (this.comparator) return false;
 				comparator = true;
+				onUpgradeInserted(player);
+				return true;
+			}
+			case PLAYER: {
+				if (this.playerUpgrade) return false;
+				playerUpgrade = true;
+				this.player = player.username;
 				onUpgradeInserted(player);
 				return true;
 			}

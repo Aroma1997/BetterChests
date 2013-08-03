@@ -7,7 +7,8 @@ public enum Upgrade {
 	REDSTONE("Redstone Upgrade", "Outputs a redstone signal, when somebody opens the chest.", "redstone"),
 	LIGHT("Light Upgrade", "Makes the Chest emit light. " + Colors.RED + "Does not work yet.", "light"),
 	BASIC("Upgrade Case", "This is only needed to craft the other upgrades.", "basic"),
-	COMPARATOR("Comparator Upgrade", "This Upgrade will enable the usage of the Comparators.", "comparator");
+	COMPARATOR("Comparator Upgrade", "This Upgrade will enable the usage of the Comparators.", "comparator"),
+	PLAYER("Player Upgrade", "This will make the chest accessable only for you.", "player");
 	
 	private String name;
 	private String tooltip;
