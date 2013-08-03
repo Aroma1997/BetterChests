@@ -111,5 +111,11 @@ public class BlockBChest extends BlockChest {
 		}
         return Container.calcRedstoneFromInventory(this.getInventory(par1World, par2, par3, par4));
     }
+    
+    @Override
+    public String getItemIconName()
+    {
+        return Reference.MOD_ID + ":chest";
+    }
 	
 }

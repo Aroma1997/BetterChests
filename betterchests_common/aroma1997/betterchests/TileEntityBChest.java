@@ -69,7 +69,7 @@ public class TileEntityBChest extends TileEntityChest {
 	}
 	
 	public boolean upgrade(EntityPlayer player) {
-		if (!(player.getHeldItem().getItem() instanceof ItemUpgrade)) return false;
+		if (!(player.getHeldItem().getItem() instanceof ItemUpgrade) || !this.isUseableByPlayer(player)) return false;
 		ItemStack item = player.getHeldItem();
 		Upgrade upgrade = Upgrade.values()[item.getItemDamage()];
 		switch (upgrade) {
