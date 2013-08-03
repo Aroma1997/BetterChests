@@ -50,8 +50,13 @@ public class BetterChests {
 		GameRegistry.registerTileEntity(TileEntityBChest.class, "adjustableChest");
 		LanguageRegistry.instance().addStringLocalization("itemGroup.creativeTabBC", "en_US",
 			"BetterChests");
-		GameRegistry.addRecipe(new ItemStack(upgrade, 4, Upgrade.BASIC.ordinal()), "WIW", "ISI", "WIW", 'W', new ItemStack(Block.planks, 1, 32767), 'I', new ItemStack(Block.fenceIron), 'S', new ItemStack(Item.stick));
+		ItemStack itemUpgrade = new ItemStack(upgrade.itemID, 1, Upgrade.BASIC.ordinal());
+		GameRegistry.addRecipe(new ItemStack(upgrade.itemID, 8, Upgrade.BASIC.ordinal()), "WIW", "ISI", "WIW", 'W', new ItemStack(Block.planks, 1, 32767), 'I', new ItemStack(Block.fenceIron), 'S', new ItemStack(Item.stick));
 		GameRegistry.addRecipe(new ItemStack(chest), "CCC", "CBC", "CCC", 'C', new ItemStack(Block.cobblestone), 'B', new ItemStack(Block.chest));
+		GameRegistry.addRecipe(new ItemStack(upgrade.itemID, 1, Upgrade.SLOT.ordinal()), " W ", "WUW", " W ", 'W', new ItemStack(Block.planks, 1, 32767), 'U', itemUpgrade);
+		GameRegistry.addRecipe(new ItemStack(upgrade.itemID, 1, Upgrade.STACK.ordinal()), "W W", " U ", "W W", 'W', new ItemStack(Block.planks, 1, 32767), 'U', itemUpgrade);
+		GameRegistry.addRecipe(new ItemStack(upgrade.itemID, 1, Upgrade.REDSTONE.ordinal()), "RRR", "RUR", "RRR", 'R', new ItemStack(Item.redstone), 'U', itemUpgrade);
+		
 	}
 	
 	@EventHandler
