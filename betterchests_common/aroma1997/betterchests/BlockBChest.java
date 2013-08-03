@@ -31,12 +31,13 @@ public class BlockBChest extends BlockChest {
     public boolean onBlockActivated(World par1World, int par2, int par3, int par4, EntityPlayer par5EntityPlayer, int par6, float par7, float par8, float par9)
     {
 		if (par5EntityPlayer.getHeldItem() == null || !(par5EntityPlayer.getHeldItem().itemID == BetterChests.upgrade.itemID && par5EntityPlayer.getHeldItem().getItemDamage() != Upgrade.BASIC.ordinal())){
+			
 			return super.onBlockActivated(par1World, par2, par3, par4, par5EntityPlayer, par6, par7, par8, par9);
 		}
 		
 		TileEntityBChest te = (TileEntityBChest) par1World.getBlockTileEntity(par2, par3, par4);
 		
-		return te.upgrade(par5EntityPlayer, par1World);
+		return te.upgrade(par5EntityPlayer);
 		
     }
 	

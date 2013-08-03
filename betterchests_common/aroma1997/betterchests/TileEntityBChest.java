@@ -5,7 +5,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntityChest;
-import net.minecraft.world.World;
 
 
 public class TileEntityBChest extends TileEntityChest {
@@ -55,7 +54,7 @@ public class TileEntityBChest extends TileEntityChest {
 		return stackLimit;
 	}
 	
-	public boolean upgrade(EntityPlayer player, World world) {
+	public boolean upgrade(EntityPlayer player) {
 		if (!(player.getHeldItem().getItem() instanceof ItemUpgrade)) return false;
 		ItemStack item = player.getHeldItem();
 		Upgrade upgrade = Upgrade.values()[item.getItemDamage()];
@@ -109,6 +108,8 @@ public class TileEntityBChest extends TileEntityChest {
 		this.redstoneUpgrade = par1NBTTagCompound.getBoolean("redstoneUpgrade");
 		this.light = par1NBTTagCompound.getShort("lightValue");
 		this.comparator = par1NBTTagCompound.getBoolean("comparator");
+		this.player = par1NBTTagCompound.getString("player");
+		this.playerUpgrade  =par1NBTTagCompound.getBoolean("playerUpgrade");
         super.readFromNBT(par1NBTTagCompound);
     }
 
@@ -121,6 +122,8 @@ public class TileEntityBChest extends TileEntityChest {
         par1NBTTagCompound.setBoolean("redstoneUpgrade", this.redstoneUpgrade);
         par1NBTTagCompound.setShort("lightValue", this.light);
         par1NBTTagCompound.setBoolean("comparator", this.comparator);
+        par1NBTTagCompound.setString("player", this.player);
+        par1NBTTagCompound.setBoolean("playerUpgrade", this.playerUpgrade);
     }
     
     private void onUpgradeInserted(EntityPlayer player) {
