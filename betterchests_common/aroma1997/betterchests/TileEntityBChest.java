@@ -237,7 +237,7 @@ public class TileEntityBChest extends TileEntityChest {
 			}
 			if (w == 0) return 0;
 			if (e == 0) return 16;
-			return (int)(16 -((float)e / (float)w) * 2);
+			return (int)(((float)w / (float)e)* 2);
 		}
         return Container.calcRedstoneFromInventory(this);
     }
