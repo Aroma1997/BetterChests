@@ -8,7 +8,6 @@ import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
-import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -16,7 +15,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.DamageSource;
 
-public class TileEntityBChest extends TileEntityChest implements ISidedInventory {
+public class TileEntityBChest extends TileEntityChest {
 	
 	private short slotLimit;
 	
@@ -37,8 +36,6 @@ public class TileEntityBChest extends TileEntityChest implements ISidedInventory
 	private boolean indestructable;
 	
 	private boolean rain;
-	
-	private boolean side;
 	
 	public TileEntityBChest() {
 		slotLimit = Reference.Conf.SLOT_START;
@@ -241,12 +238,6 @@ public class TileEntityBChest extends TileEntityChest implements ISidedInventory
 				onUpgradeInserted(player);
 				return true;
 			}
-			case SIDE: {
-				if (side) return false;
-				side = true;
-				onUpgradeInserted(player);
-				return true;
-			}
 		}
 		return false;
 	}
@@ -264,7 +255,6 @@ public class TileEntityBChest extends TileEntityChest implements ISidedInventory
 		indestructable 	= par1NBTTagCompound.getBoolean("indestructable");
 		rain 			= par1NBTTagCompound.getBoolean("rain");
 		cobbleGen 		= par1NBTTagCompound.getBoolean("cobbleGen");
-		side			= par1NBTTagCompound.getBoolean("side");
 		super.readFromNBT(par1NBTTagCompound);
 	}
 	
@@ -282,7 +272,6 @@ public class TileEntityBChest extends TileEntityChest implements ISidedInventory
 		par1NBTTagCompound.setBoolean("indestructable", indestructable);
 		par1NBTTagCompound.setBoolean("rain", rain);
 		par1NBTTagCompound.setBoolean("cobbleGen", this.cobbleGen);
-		par1NBTTagCompound.setBoolean("side", this.side);
 	}
 	
 	private void onUpgradeInserted(EntityPlayer player) {
@@ -354,7 +343,6 @@ public class TileEntityBChest extends TileEntityChest implements ISidedInventory
 		if (indestructable) amount++;
 		if (rain) amount++;
 		if (cobbleGen) amount++;
-		if (side) amount++;
 		
 		ItemStack[] items = new ItemStack[amount];
 		int i1 = 0;
@@ -431,45 +419,8 @@ public class TileEntityBChest extends TileEntityChest implements ISidedInventory
 				}
 				i1++;
 			}
-			if (i1 == 9) {
-				if (side) {
-					items[i] = new ItemStack(BetterChests.upgrade, 1, Upgrade.SIDE.ordinal());
-					i1++;
-					continue;
-				}
-				i1++;
-			}
 		}
 		return items;
 	}
-
-	@Override
-	public int[] getAccessibleSlotsFromSide(int var1) {
-		if (!side) return null;
-		int[] ret = new int[this.getInventoryStackLimit()];
-		for (int i = 0; i < this.getInventoryStackLimit(); i++) {
-			ret[i] = i;
-		}
-		return ret;
-	}
-
-	@Override
-	public boolean canInsertItem(int i, ItemStack itemstack, int j) {
-		return (!side && i <= this.getInventoryStackLimit());
-	}
-
-	@Override
-	public boolean canExtractItem(int i, ItemStack itemstack, int j) {
-		return (!side && i <= this.getInventoryStackLimit());
-	}
-	
-	@Override
-    public void setInventorySlotContents(int par1, ItemStack par2ItemStack)
-    {
-		if (par1 >= this.slotLimit) {
-			return;
-		}
-		super.setInventorySlotContents(par1, par2ItemStack);
-    }
 	
 }
