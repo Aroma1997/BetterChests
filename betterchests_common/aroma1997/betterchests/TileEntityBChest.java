@@ -38,6 +38,8 @@ public class TileEntityBChest extends TileEntityChest implements ISidedInventory
 	
 	private boolean rain;
 	
+	private boolean side;
+	
 	public TileEntityBChest() {
 		slotLimit = Reference.Conf.SLOT_START;
 		player = "";
@@ -231,6 +233,12 @@ public class TileEntityBChest extends TileEntityChest implements ISidedInventory
 				onUpgradeInserted(player);
 				return true;
 			}
+			case SIDE: {
+				if (side) return false;
+				side = true;
+				onUpgradeInserted(player);
+				return true;
+			}
 		}
 		return false;
 	}
@@ -248,6 +256,7 @@ public class TileEntityBChest extends TileEntityChest implements ISidedInventory
 		indestructable 	= par1NBTTagCompound.getBoolean("indestructable");
 		rain 			= par1NBTTagCompound.getBoolean("rain");
 		cobbleGen 		= par1NBTTagCompound.getBoolean("cobbleGen");
+		side			= par1NBTTagCompound.getBoolean("side");
 		super.readFromNBT(par1NBTTagCompound);
 	}
 	
@@ -265,6 +274,7 @@ public class TileEntityBChest extends TileEntityChest implements ISidedInventory
 		par1NBTTagCompound.setBoolean("indestructable", indestructable);
 		par1NBTTagCompound.setBoolean("rain", rain);
 		par1NBTTagCompound.setBoolean("cobbleGen", this.cobbleGen);
+		par1NBTTagCompound.setBoolean("side", this.side);
 	}
 	
 	private void onUpgradeInserted(EntityPlayer player) {
@@ -336,6 +346,7 @@ public class TileEntityBChest extends TileEntityChest implements ISidedInventory
 		if (indestructable) amount++;
 		if (rain) amount++;
 		if (cobbleGen) amount++;
+		if (side) amount++;
 		
 		ItemStack[] items = new ItemStack[amount];
 		int i1 = 0;
@@ -412,23 +423,36 @@ public class TileEntityBChest extends TileEntityChest implements ISidedInventory
 				}
 				i1++;
 			}
+			if (i1 == 9) {
+				if (side) {
+					items[i] = new ItemStack(BetterChests.upgrade, 1, Upgrade.SIDE.ordinal());
+					i1++;
+					continue;
+				}
+				i1++;
+			}
 		}
 		return items;
 	}
 
 	@Override
 	public int[] getAccessibleSlotsFromSide(int var1) {
-		return null;
+		if (!side) return null;
+		int[] ret = new int[this.getInventoryStackLimit()];
+		for (int i = 0; i < this.getInventoryStackLimit(); i++) {
+			ret[i] = i;
+		}
+		return ret;
 	}
 
 	@Override
 	public boolean canInsertItem(int i, ItemStack itemstack, int j) {
-		return false;
+		return (!side && i <= this.getInventoryStackLimit());
 	}
 
 	@Override
 	public boolean canExtractItem(int i, ItemStack itemstack, int j) {
-		return false;
+		return (!side && i <= this.getInventoryStackLimit());
 	}
 	
 }
