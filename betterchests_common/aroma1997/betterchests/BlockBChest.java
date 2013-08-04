@@ -161,6 +161,7 @@ public class BlockBChest extends BlockChest {
 	@Override
     public float getPlayerRelativeBlockHardness(EntityPlayer par1EntityPlayer, World par2World, int par3, int par4, int par5)
     {
+		if (par2World.isRemote) return -1.0F;
 		if (!((TileEntityBChest)par2World.getBlockTileEntity(par3, par4, par5)).isUseableByPlayer(par1EntityPlayer)) return -1.0F;
 		else return super.getPlayerRelativeBlockHardness(par1EntityPlayer, par2World, par3, par4, par5);
     }
