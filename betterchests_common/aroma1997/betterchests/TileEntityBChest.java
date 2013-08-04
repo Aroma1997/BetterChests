@@ -324,4 +324,95 @@ public class TileEntityBChest extends TileEntityChest {
 		player.attackEntityFrom(DamageSource.outOfWorld, 5.0F);
 	}
 	
+	public ItemStack[] getItemUpgrades() {
+		int amount = 0;
+		if (slotLimit > Reference.Conf.SLOT_START) amount++;
+		if (redstoneUpgrade) amount++;
+		if (light) amount++;
+		if (comparator) amount++;
+		if (playerUpgrade) amount++;
+		if (voidU) amount++;
+		if (indestructable) amount++;
+		if (rain) amount++;
+		if (cobbleGen) amount++;
+		
+		ItemStack[] items = new ItemStack[amount];
+		int i1 = 0;
+		for (int i = 0; i < amount; i++) {
+			if (i1 == 0) {
+				if (slotLimit > Reference.Conf.SLOT_START) {
+					items[i] = new ItemStack(BetterChests.upgrade, (slotLimit - Reference.Conf.SLOT_START) / Reference.Conf.SLOT_UPGRADE, Upgrade.SLOT.ordinal());
+					i1++;
+					continue;
+				}
+				i1++;
+			}
+			if (i1 == 1) {
+				if (redstoneUpgrade) {
+					items[i] = new ItemStack(BetterChests.upgrade, 1, Upgrade.REDSTONE.ordinal());
+					i1++;
+					continue;
+				}
+				i1++;
+			}
+			if (i1 == 2) {
+				if (light) {
+					items[i] = new ItemStack(BetterChests.upgrade, 1, Upgrade.REDSTONE.ordinal());
+					i1++;
+					continue;
+				}
+				i1++;
+			}
+			if (i1 == 3) {
+				if (comparator) {
+					items[i] = new ItemStack(BetterChests.upgrade, 1, Upgrade.COMPARATOR.ordinal());
+					i1++;
+					continue;
+				}
+				i1++;
+			}
+			if (i1 == 4) {
+				if (playerUpgrade) {
+					items[i] = new ItemStack(BetterChests.upgrade, 1, Upgrade.PLAYER.ordinal());
+					i1++;
+					continue;
+				}
+				i1++;
+			}
+			if (i1 == 5) {
+				if(voidU) {
+					items[i] = new ItemStack(BetterChests.upgrade, 1, Upgrade.VOID.ordinal());
+					i1++;
+					continue;
+				}
+				i1++;
+			}
+			if (i1 == 6) {
+				if (indestructable) {
+					items[i] = new ItemStack(BetterChests.upgrade, 1, Upgrade.VOID.ordinal());
+					i1++;
+					continue;
+				}
+				i1++;
+			}
+			if (i1 == 7) {
+				if (rain) {
+					items[i] = new ItemStack(BetterChests.upgrade, 1, Upgrade.VOID.ordinal());
+					i1++;
+					continue;
+				}
+				i1++;
+			}
+			if (i1 == 8) {
+				if (cobbleGen) {
+					items[i] = new ItemStack(BetterChests.upgrade, 1, Upgrade.COBBLEGEN.ordinal());
+					i1++;
+					continue;
+				}
+				i1++;
+			}
+		}
+		return items;
+	}
+	
 }
