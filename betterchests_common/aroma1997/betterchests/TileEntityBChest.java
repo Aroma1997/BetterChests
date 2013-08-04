@@ -6,6 +6,7 @@ import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.item.Item;
@@ -13,10 +14,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.tileentity.Hopper;
 import net.minecraft.tileentity.TileEntityChest;
+import net.minecraft.tileentity.TileEntityHopper;
 import net.minecraft.util.DamageSource;
 
-public class TileEntityBChest extends TileEntityChest {
+public class TileEntityBChest extends TileEntityChest implements Hopper {
 	
 	private short slotLimit;
 	
@@ -43,6 +46,8 @@ public class TileEntityBChest extends TileEntityChest {
 	private boolean furnace;
 	
 	private int tick;
+	
+	private boolean suckItems;
 	
 	public TileEntityBChest() {
 		slotLimit = Reference.Conf.SLOT_START;
@@ -174,6 +179,21 @@ public class TileEntityBChest extends TileEntityChest {
 				}
 			}
 		}
+		
+		if (suckItems && tick == 4) {
+			for (int i = -Reference.Conf.HOPPERRADIUS; i <= Reference.Conf.HOPPERRADIUS; i++) {
+				for (int j = -Reference.Conf.HOPPERRADIUS; j <= Reference.Conf.HOPPERRADIUS; j++) {
+					for (int k = 0; k <= 1; k++) {
+						EntityItem entityitem = TileEntityHopper.func_96119_a(worldObj, xCoord + i, (double)yCoord + k, zCoord + j);
+
+						if (entityitem != null)
+						{
+							TileEntityHopper.func_96114_a(this, entityitem);
+						}
+					}
+				}
+			}
+		}
 	}
 	
 	@Override
@@ -295,6 +315,12 @@ public class TileEntityBChest extends TileEntityChest {
 				onUpgradeInserted(player);
 				return true;
 			}
+			case COLLECTOR: {
+				if (suckItems || !solar) return false;
+				suckItems = true;
+				onUpgradeInserted(player);
+				return true;
+			}
 		}
 		return false;
 	}
@@ -314,6 +340,7 @@ public class TileEntityBChest extends TileEntityChest {
 		cobbleGen 		= par1NBTTagCompound.getBoolean("cobbleGen");
 		solar			= par1NBTTagCompound.getBoolean("solar");
 		furnace			= par1NBTTagCompound.getBoolean("furnace");
+		suckItems		= par1NBTTagCompound.getBoolean("suckItems");
 		super.readFromNBT(par1NBTTagCompound);
 	}
 	
@@ -333,6 +360,7 @@ public class TileEntityBChest extends TileEntityChest {
 		par1NBTTagCompound.setBoolean("cobbleGen", this.cobbleGen);
 		par1NBTTagCompound.setBoolean("solar", solar);
 		par1NBTTagCompound.setBoolean("furnace", furnace);
+		par1NBTTagCompound.setBoolean("suckItems", suckItems);
 	}
 	
 	private void onUpgradeInserted(EntityPlayer player) {
@@ -382,7 +410,7 @@ public class TileEntityBChest extends TileEntityChest {
 			if (e == 0) {
 				return 16;
 			}
-			return (int) ((float) w / (float) e * 2);
+			return (int) ((float) w / (float) (e * w));
 		}
 		return Container.calcRedstoneFromInventory(this);
 	}
@@ -404,6 +432,8 @@ public class TileEntityBChest extends TileEntityChest {
 		if (indestructable) amount++;
 		if (rain) amount++;
 		if (cobbleGen) amount++;
+		if (solar) amount++;
+		if (furnace) amount++;
 		
 		ItemStack[] items = new ItemStack[amount];
 		int i1 = 0;
@@ -480,6 +510,31 @@ public class TileEntityBChest extends TileEntityChest {
 				}
 				i1++;
 			}
+			if (i1 == 9) {
+				if (solar) {
+					items[i] = new ItemStack(BetterChests.upgrade, 1, Upgrade.SOLAR.ordinal());
+					i1++;
+					continue;
+				}
+				i1++;
+			}
+			if (i1 == 10) {
+				if (furnace) {
+					items[i] = new ItemStack(BetterChests.upgrade, 1, Upgrade.FURNACE.ordinal());
+					i1++;
+					continue;
+				}
+				i1++;
+			}
+			if (i1 == 11) {
+				if (suckItems) {
+					items[i] = new ItemStack(BetterChests.upgrade, 1, Upgrade.COLLECTOR.ordinal());
+					i1++;
+					continue;
+				}
+				i1++;
+			}
+			
 		}
 		return items;
 	}
@@ -490,6 +545,21 @@ public class TileEntityBChest extends TileEntityChest {
 	
 	public boolean hasSolar() {
 		return solar;
+	}
+
+	@Override
+	public double getXPos() {
+		return this.xCoord;
+	}
+
+	@Override
+	public double getYPos() {
+		return this.yCoord;
+	}
+
+	@Override
+	public double getZPos() {
+		return this.zCoord;
 	}
 	
 }

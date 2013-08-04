@@ -25,6 +25,8 @@ public class Reference {
 		public static final int TICK_TIME = 64;
 		
 		public static final float ENERGY_NONDAY = 0.8F;
+		
+		public static final short HOPPERRADIUS = 2;
 	}
 	
 }

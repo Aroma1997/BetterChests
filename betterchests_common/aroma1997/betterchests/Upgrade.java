@@ -20,7 +20,8 @@ public enum Upgrade {
 	PLAYER("Player Upgrade", "This will make the chest accessable only for you.", "player", UNBREAKABLE),
 	RAIN("Rain Upgrade", "This will fill buckets in the Chest with Water.", "rain", null),
 	SOLAR("Solar Upgrade", "This will supply your chest Power.", "solar", null),
-	FURNACE("Furnace Upgrade", "With this Upgrade, your chest will smelt.", "furnace", SOLAR);
+	FURNACE("Furnace Upgrade", "With this Upgrade, your chest will smelt.", "furnace", SOLAR),
+	COLLECTOR("Collector Upgrade", "Lets the chest collect Items above it.", "collector", SOLAR);
 	
 	private String name;
 	
