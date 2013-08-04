@@ -357,7 +357,7 @@ public class TileEntityBChest extends TileEntityChest {
 			}
 			if (i1 == 2) {
 				if (light) {
-					items[i] = new ItemStack(BetterChests.upgrade, 1, Upgrade.REDSTONE.ordinal());
+					items[i] = new ItemStack(BetterChests.upgrade, 1, Upgrade.LIGHT.ordinal());
 					i1++;
 					continue;
 				}
@@ -389,7 +389,7 @@ public class TileEntityBChest extends TileEntityChest {
 			}
 			if (i1 == 6) {
 				if (indestructable) {
-					items[i] = new ItemStack(BetterChests.upgrade, 1, Upgrade.VOID.ordinal());
+					items[i] = new ItemStack(BetterChests.upgrade, 1, Upgrade.UNBREAKABLE.ordinal());
 					i1++;
 					continue;
 				}
@@ -397,7 +397,7 @@ public class TileEntityBChest extends TileEntityChest {
 			}
 			if (i1 == 7) {
 				if (rain) {
-					items[i] = new ItemStack(BetterChests.upgrade, 1, Upgrade.VOID.ordinal());
+					items[i] = new ItemStack(BetterChests.upgrade, 1, Upgrade.RAIN.ordinal());
 					i1++;
 					continue;
 				}

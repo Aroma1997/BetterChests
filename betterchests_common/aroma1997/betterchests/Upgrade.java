@@ -1,6 +1,12 @@
 
 package aroma1997.betterchests;
 
+import net.minecraft.block.Block;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+
+import cpw.mods.fml.common.registry.GameRegistry;
+
 
 public enum Upgrade {
 	SLOT("Slot Upgrade", "Gives you " + Reference.Conf.SLOT_UPGRADE + " more Slots.", "slot", null),
@@ -43,6 +49,37 @@ public enum Upgrade {
 	
 	public Upgrade getRequirement() {
 		return this.requirement;
+	}
+	
+	public static void generateRecipes() {
+		int itemID = BetterChests.upgrade.itemID;
+		ItemStack itemUpgrade = new ItemStack(itemID, 1, Upgrade.BASIC.ordinal());
+		//BASIC
+		GameRegistry.addRecipe(new ItemStack(itemID, 8, Upgrade.BASIC.ordinal()), "WIW",
+			"ISI", "WIW", 'W', new ItemStack(Block.planks, 1, 32767), 'I', new ItemStack(
+				Block.fenceIron), 'S', new ItemStack(Item.stick));
+		//SLOT
+		GameRegistry.addRecipe(new ItemStack(itemID, 1, Upgrade.SLOT.ordinal()), " W ",
+			"WUW", " W ", 'W', new ItemStack(Block.planks, 1, 32767), 'U', itemUpgrade);
+		//
+		GameRegistry.addRecipe(new ItemStack(itemID, 1, Upgrade.REDSTONE.ordinal()), "RRR",
+			"RUR", "RRR", 'R', new ItemStack(Item.redstone), 'U', itemUpgrade);
+		GameRegistry.addRecipe(new ItemStack(itemID, 1, Upgrade.COMPARATOR.ordinal()),
+			" Q ", "RUR", " Q ", 'Q', new ItemStack(Item.netherQuartz), 'R', new ItemStack(
+				Item.redstone), 'U', itemUpgrade);
+		GameRegistry.addRecipe(new ItemStack(itemID, 1, Upgrade.COMPARATOR.ordinal()),
+			" R ", "QUQ", " R ", 'Q', new ItemStack(Item.netherQuartz), 'R', new ItemStack(
+				Item.redstone), 'U', itemUpgrade);
+		GameRegistry.addRecipe(new ItemStack(itemID, 1, Upgrade.PLAYER.ordinal()), "OQO",
+			"QUQ", "OQO", 'Q', new ItemStack(Item.netherQuartz), 'O',
+			new ItemStack(Block.obsidian), 'U', itemUpgrade);
+		
+		
+		
+		for (Upgrade upgr : Upgrade.values()) {
+			if (upgr == BASIC) continue;
+			GameRegistry.addShapelessRecipe(itemUpgrade, new ItemStack(itemID, 1, upgr.ordinal()));
+		}
 	}
 	
 }
