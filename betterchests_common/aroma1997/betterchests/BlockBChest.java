@@ -60,15 +60,7 @@ public class BlockBChest extends BlockChest {
 	public int isProvidingWeakPower(IBlockAccess par1IBlockAccess, int par2, int par3, int par4,
 		int par5)
 	{
-		if (! ((TileEntityBChest) par1IBlockAccess.getBlockTileEntity(par2, par3, par4)).hasRedstoneUpgrade())
-		{
-			return 0;
-		}
-		else
-		{
-			int i1 = ((TileEntityChest) par1IBlockAccess.getBlockTileEntity(par2, par3, par4)).numUsingPlayers;
-			return MathHelper.clamp_int(i1, 0, 15);
-		}
+		return ((TileEntityBChest) par1IBlockAccess.getBlockTileEntity(par2, par3, par4)).getRedstoneOutput();
 	}
 	
 	@Override
@@ -209,7 +201,14 @@ public class BlockBChest extends BlockChest {
 		super.breakBlock(par1World, par2, par3, par4, par5, par6);
     }
 	
+	@Override
     public boolean canPlaceBlockAt(World par1World, int par2, int par3, int par4)
+    {
+        return true;
+    }
+    
+	@Override
+    public boolean canProvidePower()
     {
         return true;
     }

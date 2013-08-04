@@ -18,6 +18,7 @@ import net.minecraft.tileentity.Hopper;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.tileentity.TileEntityHopper;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.MathHelper;
 
 public class TileEntityBChest extends TileEntityChest implements Hopper {
 	
@@ -77,6 +78,13 @@ public class TileEntityBChest extends TileEntityChest implements Hopper {
 		if (worldObj.isRemote) return;
 		if (tick-- <= 0) {
 			tick = 64;
+			onInventoryChanged();
+			updateBlock(this.xCoord + 1, this.yCoord, this.zCoord);
+			updateBlock(this.xCoord - 1, this.yCoord, this.zCoord);
+			updateBlock(this.xCoord, this.yCoord, this.zCoord + 1);
+			updateBlock(this.xCoord, this.yCoord, this.zCoord - 1);
+			updateBlock(this.xCoord, this.yCoord + 1, this.zCoord);
+			updateBlock(this.xCoord, this.yCoord - 1, this.zCoord);
 		}
 		if (voidU) {
 			for (int i = 0; i < getSizeInventory(); i++) {
@@ -560,6 +568,23 @@ public class TileEntityBChest extends TileEntityChest implements Hopper {
 	@Override
 	public double getZPos() {
 		return this.zCoord;
+	}
+	
+	public int getRedstoneOutput() {
+		if (!redstoneUpgrade) {
+			return 0;
+		}
+		if (rain) {
+			if (worldObj.isThundering()) return 2;
+			if (worldObj.isRaining()) return 1;
+			return 0;
+		}
+		return MathHelper.clamp_int(numUsingPlayers, 0, 15);
+	}
+	
+	private void updateBlock(int x, int y, int z) {
+		if (worldObj.isAirBlock(x, y, z)) return;
+		Block.blocksList[worldObj.getBlockId(x, y, z)].onNeighborBlockChange(worldObj, x, y, z, BetterChests.chest.blockID);
 	}
 	
 }
