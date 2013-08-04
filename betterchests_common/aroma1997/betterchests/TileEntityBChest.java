@@ -151,7 +151,28 @@ public class TileEntityBChest extends TileEntityChest {
 				cooking = i;
 				break;
 			}
-			
+			if (cooking != -1) {
+				ItemStack smelted = FurnaceRecipes.smelting().getSmeltingResult(this.getStackInSlot(cooking)).copy();
+				if (smelted.stackSize <= 0) smelted.stackSize = 1;
+				int result = -1;
+				for (int i = 0; i < this.getSizeInventory(); i++) {
+					if (this.getStackInSlot(i) == null || (smelted.isItemEqual(this.getStackInSlot(i)) && smelted.stackSize + this.getStackInSlot(i).stackSize <= 64)) {
+						result = i;
+						break;
+					}
+				}
+				if (result != -1) {
+					this.decrStackSize(cooking, 1);
+					ItemStack put = this.getStackInSlot(result);
+					if (put != null) {
+						put.stackSize += smelted.stackSize;
+					}
+					else {
+						put = smelted;
+					}
+					this.setInventorySlotContents(result, put);
+				}
+			}
 		}
 	}
 	

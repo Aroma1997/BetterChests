@@ -23,6 +23,7 @@ public class BChestRenderer extends TileEntityChestRenderer {
 	private ResourceLocation model = new ResourceLocation(Reference.MOD_ID
 		+ ":textures/blocks/tile.betterChest.png");
 	private ResourceLocation modelLight = new ResourceLocation(Reference.MOD_ID + ":textures/blocks/tile.betterChestLight.png");
+	private ResourceLocation modelSolar = new ResourceLocation(Reference.MOD_ID + ":textures/blocks/tile.betterChestSolar.png");
 	
 	private ModelChest chestModel = new ModelChest();
 	
@@ -62,6 +63,9 @@ public class BChestRenderer extends TileEntityChestRenderer {
 		ModelChest modelchest = chestModel;
 		if (((TileEntityBChest)par1TileEntityChest).getLightValue() > 10) {
 			func_110628_a(modelLight);
+		}
+		else if (((TileEntityBChest)par1TileEntityChest).hasEnergy()) {
+			func_110628_a(this.modelSolar);
 		}
 		else {
 			func_110628_a(model);
