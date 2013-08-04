@@ -3,6 +3,7 @@ package aroma1997.betterchests;
 
 
 import net.minecraft.block.BlockChest;
+import net.minecraft.block.BlockContainer;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -15,6 +16,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.common.ForgeHooks;
 
 public class BlockBChest extends BlockChest {
 	
@@ -155,5 +157,12 @@ public class BlockBChest extends BlockChest {
 	{
 		return false;
 	}
+	
+	@Override
+    public float getPlayerRelativeBlockHardness(EntityPlayer par1EntityPlayer, World par2World, int par3, int par4, int par5)
+    {
+		if (!((TileEntityBChest)par2World.getBlockTileEntity(par3, par4, par5)).isUseableByPlayer(par1EntityPlayer)) return -1.0F;
+		else return super.getPlayerRelativeBlockHardness(par1EntityPlayer, par2World, par3, par4, par5);
+    }
 	
 }

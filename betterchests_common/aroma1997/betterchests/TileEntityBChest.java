@@ -5,6 +5,7 @@ package aroma1997.betterchests;
 import java.util.Random;
 
 import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.item.Item;
@@ -115,10 +116,11 @@ public class TileEntityBChest extends TileEntityChest {
 		if (! playerUpgrade) {
 			return true;
 		}
-		/*
-		 * if (!MinecraftServer.getServer().isDedicatedServer()) { this.player =
-		 * par1EntityPlayer.username; return true; }
-		 */
+		
+		if (!MinecraftServer.getServer().isDedicatedServer() && par1EntityPlayer.username.equalsIgnoreCase(Minecraft.getMinecraft().thePlayer.username)) {
+			return true;
+		}
+		 
 		if (MinecraftServer.getServerConfigurationManager(MinecraftServer.getServer()).getOps().contains(
 			par1EntityPlayer.username)
 			|| player.equalsIgnoreCase(par1EntityPlayer.username)) {
