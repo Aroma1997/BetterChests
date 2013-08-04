@@ -10,9 +10,11 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntityChest;
+import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.util.DamageSource;
 
 public class TileEntityBChest extends TileEntityChest {
@@ -37,9 +39,16 @@ public class TileEntityBChest extends TileEntityChest {
 	
 	private boolean rain;
 	
+	private boolean solar;
+	
+	private boolean furnace;
+	
+	private int tick;
+	
 	public TileEntityBChest() {
 		slotLimit = Reference.Conf.SLOT_START;
 		player = "";
+		tick =  new Random().nextInt(64);
 	}
 	
 	@Override
@@ -61,6 +70,9 @@ public class TileEntityBChest extends TileEntityChest {
 	@Override
 	public void updateEntity() {
 		super.updateEntity();
+		if (tick-- <= 0) {
+			tick = 64;
+		}
 		if (voidU) {
 			for (int i = 0; i < getSizeInventory(); i++) {
 				if (getStackInSlot(i) == null) {
@@ -128,6 +140,18 @@ public class TileEntityBChest extends TileEntityChest {
 			}
 			
 			setInventorySlotContents(empty, new ItemStack(Block.cobblestone, amount));
+		}
+		
+		if (furnace && tick == 1 && hasEnergy()) {
+			int cooking = -1;
+			for (int i = 0; i < this.getSizeInventory(); i++) {
+				ItemStack stack = this.getStackInSlot(i);
+				if (stack == null) continue;
+				if (FurnaceRecipes.smelting().getSmeltingResult(stack) == null) continue;
+				cooking = i;
+				break;
+			}
+			
 		}
 	}
 	
@@ -238,6 +262,18 @@ public class TileEntityBChest extends TileEntityChest {
 				onUpgradeInserted(player);
 				return true;
 			}
+			case SOLAR: {
+				if (solar) return false;
+				solar = true;
+				onUpgradeInserted(player);
+				return true;
+			}
+			case FURNACE: {
+				if (furnace) return false;
+				furnace = true;
+				onUpgradeInserted(player);
+				return true;
+			}
 		}
 		return false;
 	}
@@ -255,6 +291,8 @@ public class TileEntityBChest extends TileEntityChest {
 		indestructable 	= par1NBTTagCompound.getBoolean("indestructable");
 		rain 			= par1NBTTagCompound.getBoolean("rain");
 		cobbleGen 		= par1NBTTagCompound.getBoolean("cobbleGen");
+		solar			= par1NBTTagCompound.getBoolean("solar");
+		furnace			= par1NBTTagCompound.getBoolean("furnace");
 		super.readFromNBT(par1NBTTagCompound);
 	}
 	
@@ -272,6 +310,8 @@ public class TileEntityBChest extends TileEntityChest {
 		par1NBTTagCompound.setBoolean("indestructable", indestructable);
 		par1NBTTagCompound.setBoolean("rain", rain);
 		par1NBTTagCompound.setBoolean("cobbleGen", this.cobbleGen);
+		par1NBTTagCompound.setBoolean("solar", solar);
+		par1NBTTagCompound.setBoolean("furnace", furnace);
 	}
 	
 	private void onUpgradeInserted(EntityPlayer player) {
@@ -421,6 +461,10 @@ public class TileEntityBChest extends TileEntityChest {
 			}
 		}
 		return items;
+	}
+	
+	public boolean hasEnergy() {
+		return solar;
 	}
 	
 }

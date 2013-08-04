@@ -23,6 +23,8 @@ public class Reference {
 		public static final float RAIN_THINGY = 0.9975F;
 		
 		public static final float COBBLEGEN_THINGY = 0.95F;
+		
+		public static final int TICK_TIME = 64;
 	}
 	
 }
