@@ -85,7 +85,10 @@ public enum Upgrade {
 		GameRegistry.addRecipe(new ItemStack(itemID, 1, Upgrade.UNBREAKABLE.ordinal()), "OOO", "OUO", "OOO", 'O', new ItemStack(Block.obsidian), 'U', itemUpgrade);
 		//RAIN
 		GameRegistry.addRecipe(new ItemStack(itemID, 1, Upgrade.RAIN.ordinal()), " B ", "BUB", " B ", 'B', new ItemStack(Item.bucketEmpty), 'U', itemUpgrade);
-		
+		//SOLAR
+		GameRegistry.addRecipe(new ItemStack(itemID, 1, Upgrade.SOLAR.ordinal()), "QSQ", "RUR", "QCQ", 'S', new ItemStack(Block.daylightSensor), 'R', new ItemStack(Item.redstone), 'C', new ItemStack(Item.redstoneRepeater), 'Q', new ItemStack(Item.netherQuartz), 'R', itemUpgrade);
+		//FURNACE
+		GameRegistry.addRecipe(new ItemStack(itemID, 1, Upgrade.FURNACE.ordinal()), "RFR", "FUF", "RFR", 'R', new ItemStack(Item.redstone), 'F', new ItemStack(Block.furnaceIdle), 'U', itemUpgrade);
 		
 		for (Upgrade upgr : Upgrade.values()) {
 			if (upgr == BASIC) continue;
