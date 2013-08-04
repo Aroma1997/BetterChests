@@ -54,6 +54,14 @@ public class TileEntityBChest extends TileEntityChest implements ISidedInventory
 	}
 	
 	@Override
+	public ItemStack getStackInSlot(int slot) {
+		if (slot >= this.slotLimit) {
+			return null;
+		}
+		return super.getStackInSlot(slot);
+	}
+	
+	@Override
 	public void updateEntity() {
 		super.updateEntity();
 		if (voidU) {
@@ -454,5 +462,14 @@ public class TileEntityBChest extends TileEntityChest implements ISidedInventory
 	public boolean canExtractItem(int i, ItemStack itemstack, int j) {
 		return (!side && i <= this.getInventoryStackLimit());
 	}
+	
+	@Override
+    public void setInventorySlotContents(int par1, ItemStack par2ItemStack)
+    {
+		if (par1 >= this.slotLimit) {
+			return;
+		}
+		super.setInventorySlotContents(par1, par2ItemStack);
+    }
 	
 }
