@@ -14,7 +14,6 @@ import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntityChest;
-import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.util.DamageSource;
 
 public class TileEntityBChest extends TileEntityChest {
@@ -70,6 +69,7 @@ public class TileEntityBChest extends TileEntityChest {
 	@Override
 	public void updateEntity() {
 		super.updateEntity();
+		if (worldObj.isRemote) return;
 		if (tick-- <= 0) {
 			tick = 64;
 		}
@@ -83,7 +83,7 @@ public class TileEntityBChest extends TileEntityChest {
 		}
 		
 		if (rain && worldObj.canBlockSeeTheSky(xCoord, yCoord, zCoord) && worldObj.isRaining()
-			&& new Random().nextFloat() > Reference.Conf.RAIN_THINGY) {
+			&& new Random().nextFloat() > Reference.Conf.RAIN_THINGY && tick == 3) {
 			int bucketEmpty = - 1;
 			int emptySpace = - 1;
 			for (int i = 0; i < getSizeInventory(); i++) {
@@ -108,7 +108,7 @@ public class TileEntityBChest extends TileEntityChest {
 			setInventorySlotContents(emptySpace, new ItemStack(Item.bucketWater));
 		}
 		
-		if (cobbleGen && new Random().nextFloat() > Reference.Conf.COBBLEGEN_THINGY) {
+		if (cobbleGen && tick == 2) {
 			int bucketLava = - 1;
 			int bucketWater = - 1;
 			int empty = -1;
@@ -290,7 +290,7 @@ public class TileEntityBChest extends TileEntityChest {
 				return true;
 			}
 			case FURNACE: {
-				if (furnace) return false;
+				if (furnace || !solar) return false;
 				furnace = true;
 				onUpgradeInserted(player);
 				return true;
@@ -484,7 +484,11 @@ public class TileEntityBChest extends TileEntityChest {
 		return items;
 	}
 	
-	public boolean hasEnergy() {
+	private boolean hasEnergy() {
+		return (solar && ((this.worldObj.canBlockSeeTheSky(xCoord, yCoord, zCoord) && this.worldObj.isDaytime()) || new Random().nextFloat() > Reference.Conf.ENERGY_NONDAY));
+	}
+	
+	public boolean hasSolar() {
 		return solar;
 	}
 	

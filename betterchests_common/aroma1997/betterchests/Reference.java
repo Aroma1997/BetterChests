@@ -20,11 +20,11 @@ public class Reference {
 		
 		public static final short SLOT_UPGRADE = 9;
 		
-		public static final float RAIN_THINGY = 0.9975F;
-		
-		public static final float COBBLEGEN_THINGY = 0.95F;
+		public static final float RAIN_THINGY = 0.9F;
 		
 		public static final int TICK_TIME = 64;
+		
+		public static final float ENERGY_NONDAY = 0.8F;
 	}
 	
 }

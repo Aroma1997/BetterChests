@@ -64,7 +64,7 @@ public class BChestRenderer extends TileEntityChestRenderer {
 		if (((TileEntityBChest)par1TileEntityChest).getLightValue() > 10) {
 			func_110628_a(modelLight);
 		}
-		else if (((TileEntityBChest)par1TileEntityChest).hasEnergy()) {
+		else if (((TileEntityBChest)par1TileEntityChest).hasSolar()) {
 			func_110628_a(this.modelSolar);
 		}
 		else {
