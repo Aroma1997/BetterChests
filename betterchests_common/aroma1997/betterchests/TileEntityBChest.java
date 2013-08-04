@@ -64,7 +64,28 @@ public class TileEntityBChest extends TileEntityChest {
 		
 		if (rain && worldObj.canBlockSeeTheSky(xCoord, yCoord, zCoord) && worldObj.isRaining()
 			&& new Random().nextFloat() > Reference.Conf.RAIN_THINGY) {
-			doRainThingy();
+			int bucketEmpty = - 1;
+			int emptySpace = - 1;
+			for (int i = 0; i < getSizeInventory(); i++) {
+				if (getStackInSlot(i) != null
+					&& getStackInSlot(i).itemID == Item.bucketEmpty.itemID && bucketEmpty == - 1) {
+					bucketEmpty = i;
+					if (getStackInSlot(i).stackSize == 1) {
+						emptySpace = i;
+						break;
+					}
+					continue;
+				}
+				if (emptySpace == - 1 && getStackInSlot(i) == null) {
+					emptySpace = i;
+					continue;
+				}
+			}
+			if (bucketEmpty == - 1 || emptySpace == - 1) {
+				return;
+			}
+			decrStackSize(bucketEmpty, 1);
+			setInventorySlotContents(emptySpace, new ItemStack(Item.bucketWater));
 		}
 		
 		if (cobbleGen && new Random().nextFloat() > Reference.Conf.COBBLEGEN_THINGY) {
@@ -268,31 +289,6 @@ public class TileEntityBChest extends TileEntityChest {
 		return indestructable;
 	}
 	
-	private void doRainThingy() {
-		int bucketEmpty = - 1;
-		int emptySpace = - 1;
-		for (int i = 0; i < getSizeInventory(); i++) {
-			if (getStackInSlot(i) != null
-				&& getStackInSlot(i).itemID == Item.bucketEmpty.itemID && bucketEmpty == - 1) {
-				bucketEmpty = i;
-				if (getStackInSlot(i).stackSize == 1) {
-					emptySpace = i;
-					break;
-				}
-				continue;
-			}
-			if (emptySpace == - 1 && getStackInSlot(i) == null) {
-				emptySpace = i;
-				continue;
-			}
-		}
-		if (bucketEmpty == - 1 || emptySpace == - 1) {
-			return;
-		}
-		decrStackSize(bucketEmpty, 1);
-		setInventorySlotContents(emptySpace, new ItemStack(Item.bucketWater));
-	}
-	
 	public int getComparatorOutput() {
 		
 		if (! comparator) {
@@ -324,7 +320,7 @@ public class TileEntityBChest extends TileEntityChest {
 
 	public void playerOpenChest(EntityPlayer player) {
 		if (!this.playerUpgrade) return;
-		if (player.username.equalsIgnoreCase(this.player)) return;
+		if (this.isUseableByPlayer(player)) return;
 		player.attackEntityFrom(DamageSource.outOfWorld, 5.0F);
 	}
 	
