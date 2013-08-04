@@ -61,19 +61,28 @@ public enum Upgrade {
 		//SLOT
 		GameRegistry.addRecipe(new ItemStack(itemID, 1, Upgrade.SLOT.ordinal()), " W ",
 			"WUW", " W ", 'W', new ItemStack(Block.planks, 1, 32767), 'U', itemUpgrade);
-		//
+		//REDSTONE
 		GameRegistry.addRecipe(new ItemStack(itemID, 1, Upgrade.REDSTONE.ordinal()), "RRR",
 			"RUR", "RRR", 'R', new ItemStack(Item.redstone), 'U', itemUpgrade);
+		//COMPARATOR
 		GameRegistry.addRecipe(new ItemStack(itemID, 1, Upgrade.COMPARATOR.ordinal()),
 			" Q ", "RUR", " Q ", 'Q', new ItemStack(Item.netherQuartz), 'R', new ItemStack(
 				Item.redstone), 'U', itemUpgrade);
 		GameRegistry.addRecipe(new ItemStack(itemID, 1, Upgrade.COMPARATOR.ordinal()),
 			" R ", "QUQ", " R ", 'Q', new ItemStack(Item.netherQuartz), 'R', new ItemStack(
 				Item.redstone), 'U', itemUpgrade);
+		//PLAYER
 		GameRegistry.addRecipe(new ItemStack(itemID, 1, Upgrade.PLAYER.ordinal()), "OQO",
 			"QUQ", "OQO", 'Q', new ItemStack(Item.netherQuartz), 'O',
 			new ItemStack(Block.obsidian), 'U', itemUpgrade);
-		
+		//COBBLEGEN
+		GameRegistry.addRecipe(new ItemStack(itemID, 1, Upgrade.COBBLEGEN.ordinal()), "CCC", "LUW", "BBB", 'C', new ItemStack(Block.cobblestone), 'L', new ItemStack(Item.bucketLava), 'U', itemUpgrade, 'W', new ItemStack(Item.bucketWater), 'B', new ItemStack(Item.bucketEmpty));
+		//VOID
+		GameRegistry.addRecipe(new ItemStack(itemID, 1, Upgrade.VOID.ordinal()), " E ", "RUR", " E ", 'E', new ItemStack(Item.enderPearl), 'R', new ItemStack(Item.redstone), 'U', itemUpgrade);
+		//UNBREAKABLE
+		GameRegistry.addRecipe(new ItemStack(itemID, 1, Upgrade.UNBREAKABLE.ordinal()), "OOO", "OUO", "OOO", 'O', new ItemStack(Block.obsidian), 'U', itemUpgrade);
+		//RAIN
+		GameRegistry.addRecipe(new ItemStack(itemID, 1, Upgrade.RAIN.ordinal()), " B ", "BUB", " B ", 'B', new ItemStack(Item.bucketEmpty), 'U', itemUpgrade);
 		
 		
 		for (Upgrade upgr : Upgrade.values()) {
