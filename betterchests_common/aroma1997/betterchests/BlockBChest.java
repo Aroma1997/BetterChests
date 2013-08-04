@@ -209,4 +209,9 @@ public class BlockBChest extends BlockChest {
 		super.breakBlock(par1World, par2, par3, par4, par5, par6);
     }
 	
+    public boolean canPlaceBlockAt(World par1World, int par2, int par3, int par4)
+    {
+        return true;
+    }
+	
 }

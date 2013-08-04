@@ -58,8 +58,6 @@ public class BChestRenderer extends TileEntityChestRenderer {
 				}
 				i = par1TileEntityChest.getBlockMetadata();
 			}
-			
-			par1TileEntityChest.checkForAdjacentChests();
 		}
 		ModelChest modelchest = chestModel;
 		if (((TileEntityBChest)par1TileEntityChest).getLightValue() > 10) {
@@ -97,45 +95,10 @@ public class BChestRenderer extends TileEntityChestRenderer {
 			short1 = - 90;
 		}
 		
-		/*if (i == 2 && par1TileEntityChest.adjacentChestXPos != null)
-		{
-			GL11.glTranslatef(1.0F, 0.0F, 0.0F);
-		}
-		
-		if (i == 5 && par1TileEntityChest.adjacentChestZPosition != null)
-		{
-			GL11.glTranslatef(0.0F, 0.0F, - 1.0F);
-		}*/
-		
 		GL11.glRotatef(short1, 0.0F, 1.0F, 0.0F);
 		GL11.glTranslatef(- 0.5F, - 0.5F, - 0.5F);
 		float f1 = par1TileEntityChest.prevLidAngle
 			+ (par1TileEntityChest.lidAngle - par1TileEntityChest.prevLidAngle) * par8;
-		float f2;
-		
-		/*if (par1TileEntityChest.adjacentChestZNeg != null)
-		{
-			f2 = par1TileEntityChest.adjacentChestZNeg.prevLidAngle
-				+ (par1TileEntityChest.adjacentChestZNeg.lidAngle - par1TileEntityChest.adjacentChestZNeg.prevLidAngle)
-				* par8;
-			
-			if (f2 > f1)
-			{
-				f1 = f2;
-			}
-		}
-		
-		if (par1TileEntityChest.adjacentChestXNeg != null)
-		{
-			f2 = par1TileEntityChest.adjacentChestXNeg.prevLidAngle
-				+ (par1TileEntityChest.adjacentChestXNeg.lidAngle - par1TileEntityChest.adjacentChestXNeg.prevLidAngle)
-				* par8;
-			
-			if (f2 > f1)
-			{
-				f1 = f2;
-			}
-		}*/
 		
 		f1 = 1.0F - f1;
 		f1 = 1.0F - f1 * f1 * f1;

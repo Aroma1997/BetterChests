@@ -18,7 +18,8 @@ public enum Upgrade {
 	VOID("Void Upgrade", "This will destroy and delete all Items that go into the Chest.", "void", null),
 	UNBREAKABLE("Unbreakable Upgrade", "This will make Entitys no longer able to destroy the chest. (Wither,...)", "unbreakable", null),
 	PLAYER("Player Upgrade", "This will make the chest accessable only for you.", "player", UNBREAKABLE),
-	RAIN("Rain Upgrade", "This will fill buckets in the Chest with Water.", "rain", null);
+	RAIN("Rain Upgrade", "This will fill buckets in the Chest with Water.", "rain", null),
+	SIDE("Pipe Upgrade", "This will make the chests not accessible for Pipes etc.", "side", null);
 	
 	private String name;
 	

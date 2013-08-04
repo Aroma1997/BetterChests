@@ -8,6 +8,7 @@ import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
+import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -15,7 +16,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.DamageSource;
 
-public class TileEntityBChest extends TileEntityChest {
+public class TileEntityBChest extends TileEntityChest implements ISidedInventory {
 	
 	private short slotLimit;
 	
@@ -413,6 +414,21 @@ public class TileEntityBChest extends TileEntityChest {
 			}
 		}
 		return items;
+	}
+
+	@Override
+	public int[] getAccessibleSlotsFromSide(int var1) {
+		return null;
+	}
+
+	@Override
+	public boolean canInsertItem(int i, ItemStack itemstack, int j) {
+		return false;
+	}
+
+	@Override
+	public boolean canExtractItem(int i, ItemStack itemstack, int j) {
+		return false;
 	}
 	
 }
