@@ -97,7 +97,7 @@ public class BChestRenderer extends TileEntityChestRenderer {
 			short1 = - 90;
 		}
 		
-		if (i == 2 && par1TileEntityChest.adjacentChestXPos != null)
+		/*if (i == 2 && par1TileEntityChest.adjacentChestXPos != null)
 		{
 			GL11.glTranslatef(1.0F, 0.0F, 0.0F);
 		}
@@ -105,7 +105,7 @@ public class BChestRenderer extends TileEntityChestRenderer {
 		if (i == 5 && par1TileEntityChest.adjacentChestZPosition != null)
 		{
 			GL11.glTranslatef(0.0F, 0.0F, - 1.0F);
-		}
+		}*/
 		
 		GL11.glRotatef(short1, 0.0F, 1.0F, 0.0F);
 		GL11.glTranslatef(- 0.5F, - 0.5F, - 0.5F);
