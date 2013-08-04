@@ -408,9 +408,9 @@ public class TileEntityBChest extends TileEntityChest implements Hopper {
 				return 0;
 			}
 			if (e == 0) {
-				return 16;
+				return 15;
 			}
-			return (int) ((float) w / (float) (e * w));
+			return (int) ((float) w / ((float)e + (float)w) * (float)15);
 		}
 		return Container.calcRedstoneFromInventory(this);
 	}

@@ -21,7 +21,7 @@ public enum Upgrade {
 	RAIN("Rain Upgrade", "This will fill buckets in the Chest with Water.", "rain", null),
 	SOLAR("Solar Upgrade", "This will supply your chest Power.", "solar", null),
 	FURNACE("Furnace Upgrade", "With this Upgrade, your chest will smelt.", "furnace", SOLAR),
-	COLLECTOR("Collector Upgrade", "Lets the chest collect Items above it.", "collector", SOLAR);
+	COLLECTOR("Collector Upgrade", "Lets the chest collect Items around it.", "collector", SOLAR);
 	
 	private String name;
 	
