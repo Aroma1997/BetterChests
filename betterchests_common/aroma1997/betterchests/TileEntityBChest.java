@@ -96,7 +96,7 @@ public class TileEntityBChest extends TileEntityChest implements Hopper {
 		}
 		
 		if (rain && worldObj.canBlockSeeTheSky(xCoord, yCoord, zCoord) && worldObj.isRaining()
-			&& new Random().nextFloat() > Reference.Conf.RAIN_THINGY && tick == 3) {
+			&& new Random().nextFloat() > Reference.Conf.RAIN_THINGY && tick == 20) {
 			int bucketEmpty = - 1;
 			int emptySpace = - 1;
 			for (int i = 0; i < getSizeInventory(); i++) {
@@ -121,7 +121,7 @@ public class TileEntityBChest extends TileEntityChest implements Hopper {
 			setInventorySlotContents(emptySpace, new ItemStack(Item.bucketWater));
 		}
 		
-		if (cobbleGen && tick == 2) {
+		if (cobbleGen && tick == 30) {
 			int bucketLava = - 1;
 			int bucketWater = - 1;
 			int empty = -1;
@@ -155,7 +155,7 @@ public class TileEntityBChest extends TileEntityChest implements Hopper {
 			setInventorySlotContents(empty, new ItemStack(Block.cobblestone, amount));
 		}
 		
-		if (furnace && tick == 1 && hasEnergy()) {
+		if (furnace && tick == 40 && hasEnergy()) {
 			int cooking = -1;
 			for (int i = 0; i < this.getSizeInventory(); i++) {
 				ItemStack stack = this.getStackInSlot(i);
@@ -188,7 +188,7 @@ public class TileEntityBChest extends TileEntityChest implements Hopper {
 			}
 		}
 		
-		if (suckItems && tick == 4) {
+		if (suckItems && tick == 50) {
 			for (int i = -Reference.Conf.HOPPERRADIUS; i <= Reference.Conf.HOPPERRADIUS; i++) {
 				for (int j = -Reference.Conf.HOPPERRADIUS; j <= Reference.Conf.HOPPERRADIUS; j++) {
 					for (int k = 0; k <= 1; k++) {

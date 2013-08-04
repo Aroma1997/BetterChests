@@ -15,7 +15,7 @@ public enum Upgrade {
 	LIGHT("Light Upgrade", "Makes the Chest emit light. " + Colors.RED + "Does not work yet.", "light", null),
 	BASIC("Upgrade Case", "This is only needed to craft the other upgrades.", "basic", null),
 	COMPARATOR("Comparator Upgrade", "This Upgrade will enable the usage of the Comparators.", "comparator", null),
-	VOID("Void Upgrade", "This will destroy and delete all Items that go into the Chest.", "void", null),
+	VOID("Void Upgrade", "This will destroy all Items that enter the Chest.", "void", null),
 	UNBREAKABLE("Unbreakable Upgrade", "This will make Entitys no longer able to destroy the chest. (Wither,...)", "unbreakable", null),
 	PLAYER("Player Upgrade", "This will make the chest accessable only for you.", "player", UNBREAKABLE),
 	RAIN("Rain Upgrade", "This will fill buckets in the Chest with Water.", "rain", null),
