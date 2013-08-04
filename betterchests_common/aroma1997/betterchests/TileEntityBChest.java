@@ -169,7 +169,7 @@ public class TileEntityBChest extends TileEntityChest {
 				return true;
 			}
 			case PLAYER: {
-				if (playerUpgrade) {
+				if (playerUpgrade || !this.indestructable) {
 					return false;
 				}
 				playerUpgrade = true;

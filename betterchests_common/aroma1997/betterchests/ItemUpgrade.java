@@ -26,6 +26,9 @@ public class ItemUpgrade extends Item {
 	public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer,
 		List par3List, boolean par4) {
 		par3List.add(Upgrade.values()[par1ItemStack.getItemDamage()].getTooltip());
+		if (Upgrade.values()[par1ItemStack.getItemDamage()].getRequirement() != null) {
+			par3List.add("Requires " + Colors.YELLOW + Upgrade.values()[par1ItemStack.getItemDamage()].getRequirement().getName());
+		}
 	}
 	
 	@Override
