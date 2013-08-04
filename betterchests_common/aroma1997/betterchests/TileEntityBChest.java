@@ -22,7 +22,7 @@ public class TileEntityBChest extends TileEntityChest {
 	
 	private boolean cobbleGen;
 	
-	private int light;
+	private boolean light;
 	
 	private boolean comparator;
 	
@@ -38,7 +38,6 @@ public class TileEntityBChest extends TileEntityChest {
 	
 	public TileEntityBChest() {
 		slotLimit = Reference.Conf.SLOT_START;
-		light = Reference.Conf.LIGHT_START;
 		player = "";
 	}
 	
@@ -154,10 +153,10 @@ public class TileEntityBChest extends TileEntityChest {
 				return true;
 			}
 			case LIGHT: {
-				if (light + Reference.Conf.LIGHT_UPGRADE > Reference.Conf.LIGHT_LIMIT) {
+				if (light) {
 					return false;
 				}
-				light++;
+				light = true;
 				onUpgradeInserted(player);
 				return true;
 			}
@@ -217,7 +216,7 @@ public class TileEntityBChest extends TileEntityChest {
 	{
 		slotLimit 		= par1NBTTagCompound.getShort("slotLimit");
 		redstoneUpgrade = par1NBTTagCompound.getBoolean("redstoneUpgrade");
-		light 			= par1NBTTagCompound.getInteger("c");
+		light 			= par1NBTTagCompound.getBoolean("light");
 		comparator 		= par1NBTTagCompound.getBoolean("comparator");
 		player 			= par1NBTTagCompound.getString("player");
 		playerUpgrade 	= par1NBTTagCompound.getBoolean("playerUpgrade");
@@ -234,7 +233,7 @@ public class TileEntityBChest extends TileEntityChest {
 		super.writeToNBT(par1NBTTagCompound);
 		par1NBTTagCompound.setShort("slotLimit", slotLimit);
 		par1NBTTagCompound.setBoolean("redstoneUpgrade", redstoneUpgrade);
-		par1NBTTagCompound.setInteger("c", light);
+		par1NBTTagCompound.setBoolean("light", light);
 		par1NBTTagCompound.setBoolean("comparator", comparator);
 		par1NBTTagCompound.setString("player", player);
 		par1NBTTagCompound.setBoolean("playerUpgrade", playerUpgrade);
@@ -256,7 +255,7 @@ public class TileEntityBChest extends TileEntityChest {
 	}
 	
 	public int getLightValue() {
-		return light;
+		return light ? 15 : 0;
 	}
 	
 	public boolean isPlayerUpgrade() {
