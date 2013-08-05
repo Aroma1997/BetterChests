@@ -1,4 +1,11 @@
-
+/**
+ * The code of BetterChests and all related materials like textures is copyrighted material.
+ * It may only be redistributed or used for Commercial purposes with the permission of Aroma1997.
+ * 
+ * All Rights reserved (c) by Aroma1997
+ * 
+ * See https://github.com/Aroma1997/BetterChests/blob/master/LICENSE.md for more information.
+ */
 package aroma1997.betterchests;
 
 
@@ -19,7 +26,6 @@ import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.tileentity.TileEntityHopper;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
-import net.minecraft.world.EnumSkyBlock;
 
 public class TileEntityBChest extends TileEntityChest implements Hopper {
 	
@@ -54,7 +60,7 @@ public class TileEntityBChest extends TileEntityChest implements Hopper {
 	public TileEntityBChest() {
 		slotLimit = Reference.Conf.SLOT_START;
 		player = "";
-		tick =  new Random().nextInt(64);
+		tick = new Random().nextInt(64);
 	}
 	
 	@Override
@@ -67,7 +73,7 @@ public class TileEntityBChest extends TileEntityChest implements Hopper {
 	
 	@Override
 	public ItemStack getStackInSlot(int slot) {
-		if (slot >= this.slotLimit) {
+		if (slot >= slotLimit) {
 			return null;
 		}
 		return super.getStackInSlot(slot);
@@ -76,16 +82,18 @@ public class TileEntityBChest extends TileEntityChest implements Hopper {
 	@Override
 	public void updateEntity() {
 		super.updateEntity();
-		if (worldObj.isRemote) return;
+		if (worldObj.isRemote) {
+			return;
+		}
 		if (tick-- <= 0) {
 			tick = 64;
 			onInventoryChanged();
-			updateBlock(this.xCoord + 1, this.yCoord, this.zCoord);
-			updateBlock(this.xCoord - 1, this.yCoord, this.zCoord);
-			updateBlock(this.xCoord, this.yCoord, this.zCoord + 1);
-			updateBlock(this.xCoord, this.yCoord, this.zCoord - 1);
-			updateBlock(this.xCoord, this.yCoord + 1, this.zCoord);
-			updateBlock(this.xCoord, this.yCoord - 1, this.zCoord);
+			updateBlock(xCoord + 1, yCoord, zCoord);
+			updateBlock(xCoord - 1, yCoord, zCoord);
+			updateBlock(xCoord, yCoord, zCoord + 1);
+			updateBlock(xCoord, yCoord, zCoord - 1);
+			updateBlock(xCoord, yCoord + 1, zCoord);
+			updateBlock(xCoord, yCoord - 1, zCoord);
 		}
 		if (voidU) {
 			for (int i = 0; i < getSizeInventory(); i++) {
@@ -125,23 +133,27 @@ public class TileEntityBChest extends TileEntityChest implements Hopper {
 		if (cobbleGen && tick == 30) {
 			int bucketLava = - 1;
 			int bucketWater = - 1;
-			int empty = -1;
+			int empty = - 1;
 			for (int i = 0; i < getSizeInventory(); i++) {
 				if (getStackInSlot(i) != null
 					&& getStackInSlot(i).itemID == Item.bucketWater.itemID && bucketWater == - 1) {
 					bucketWater = i;
 					continue;
 				}
-				if (getStackInSlot(i) != null && bucketLava == - 1 && getStackInSlot(i).itemID == Item.bucketLava.itemID) {
+				if (getStackInSlot(i) != null && bucketLava == - 1
+					&& getStackInSlot(i).itemID == Item.bucketLava.itemID) {
 					bucketLava = i;
 					continue;
 				}
-				if (empty == -1 && (getStackInSlot(i) == null || (getStackInSlot(i) != null && getStackInSlot(i).itemID == Block.cobblestone.blockID && getStackInSlot(i).stackSize < getStackInSlot(i).getMaxStackSize()))) {
+				if (empty == - 1
+					&& (getStackInSlot(i) == null || getStackInSlot(i) != null
+					&& getStackInSlot(i).itemID == Block.cobblestone.blockID && getStackInSlot(i).stackSize < getStackInSlot(
+						i).getMaxStackSize())) {
 					empty = i;
 					continue;
 				}
 			}
-			if (bucketLava == - 1 || bucketWater == - 1 || empty == -1) {
+			if (bucketLava == - 1 || bucketWater == - 1 || empty == - 1) {
 				return;
 			}
 			int amount;
@@ -157,44 +169,54 @@ public class TileEntityBChest extends TileEntityChest implements Hopper {
 		}
 		
 		if (furnace && tick == 40 && hasEnergy()) {
-			int cooking = -1;
-			for (int i = 0; i < this.getSizeInventory(); i++) {
-				ItemStack stack = this.getStackInSlot(i);
-				if (stack == null) continue;
-				if (FurnaceRecipes.smelting().getSmeltingResult(stack) == null) continue;
+			int cooking = - 1;
+			for (int i = 0; i < getSizeInventory(); i++) {
+				ItemStack stack = getStackInSlot(i);
+				if (stack == null) {
+					continue;
+				}
+				if (FurnaceRecipes.smelting().getSmeltingResult(stack) == null) {
+					continue;
+				}
 				cooking = i;
 				break;
 			}
-			if (cooking != -1) {
-				ItemStack smelted = FurnaceRecipes.smelting().getSmeltingResult(this.getStackInSlot(cooking)).copy();
-				if (smelted.stackSize <= 0) smelted.stackSize = 1;
-				int result = -1;
-				for (int i = 0; i < this.getSizeInventory(); i++) {
-					if (this.getStackInSlot(i) == null || (smelted.isItemEqual(this.getStackInSlot(i)) && smelted.stackSize + this.getStackInSlot(i).stackSize <= 64)) {
+			if (cooking != - 1) {
+				ItemStack smelted = FurnaceRecipes.smelting().getSmeltingResult(
+					getStackInSlot(cooking)).copy();
+				if (smelted.stackSize <= 0) {
+					smelted.stackSize = 1;
+				}
+				int result = - 1;
+				for (int i = 0; i < getSizeInventory(); i++) {
+					if (getStackInSlot(i) == null
+						|| smelted.isItemEqual(getStackInSlot(i)) && smelted.stackSize
+						+ getStackInSlot(i).stackSize <= 64) {
 						result = i;
 						break;
 					}
 				}
-				if (result != -1) {
-					this.decrStackSize(cooking, 1);
-					ItemStack put = this.getStackInSlot(result);
+				if (result != - 1) {
+					decrStackSize(cooking, 1);
+					ItemStack put = getStackInSlot(result);
 					if (put != null) {
 						put.stackSize += smelted.stackSize;
 					}
 					else {
 						put = smelted;
 					}
-					this.setInventorySlotContents(result, put);
+					setInventorySlotContents(result, put);
 				}
 			}
 		}
 		
 		if (suckItems && tick == 50) {
-			for (int i = -Reference.Conf.HOPPERRADIUS; i <= Reference.Conf.HOPPERRADIUS; i++) {
-				for (int j = -Reference.Conf.HOPPERRADIUS; j <= Reference.Conf.HOPPERRADIUS; j++) {
+			for (int i = - Reference.Conf.HOPPERRADIUS; i <= Reference.Conf.HOPPERRADIUS; i++) {
+				for (int j = - Reference.Conf.HOPPERRADIUS; j <= Reference.Conf.HOPPERRADIUS; j++) {
 					for (int k = 0; k <= 1; k++) {
-						EntityItem entityitem = TileEntityHopper.func_96119_a(worldObj, xCoord + i, (double)yCoord + k, zCoord + j);
-
+						EntityItem entityitem = TileEntityHopper.func_96119_a(worldObj, xCoord + i,
+							(double) yCoord + k, zCoord + j);
+						
 						if (entityitem != null)
 						{
 							TileEntityHopper.func_96114_a(this, entityitem);
@@ -220,10 +242,11 @@ public class TileEntityBChest extends TileEntityChest implements Hopper {
 			return true;
 		}
 		
-		if (!MinecraftServer.getServer().isDedicatedServer() && par1EntityPlayer.username.equalsIgnoreCase(Minecraft.getMinecraft().thePlayer.username)) {
+		if (! MinecraftServer.getServer().isDedicatedServer()
+			&& par1EntityPlayer.username.equalsIgnoreCase(Minecraft.getMinecraft().thePlayer.username)) {
 			return true;
 		}
-		 
+		
 		if (MinecraftServer.getServerConfigurationManager(MinecraftServer.getServer()).getOps().contains(
 			par1EntityPlayer.username)
 			|| player.equalsIgnoreCase(par1EntityPlayer.username)) {
@@ -274,7 +297,7 @@ public class TileEntityBChest extends TileEntityChest implements Hopper {
 				return true;
 			}
 			case PLAYER: {
-				if (playerUpgrade || !this.indestructable) {
+				if (playerUpgrade || ! indestructable) {
 					return false;
 				}
 				playerUpgrade = true;
@@ -307,25 +330,33 @@ public class TileEntityBChest extends TileEntityChest implements Hopper {
 				return true;
 			}
 			case COBBLEGEN: {
-				if (cobbleGen) return false;
+				if (cobbleGen) {
+					return false;
+				}
 				cobbleGen = true;
 				onUpgradeInserted(player);
 				return true;
 			}
 			case SOLAR: {
-				if (solar) return false;
+				if (solar) {
+					return false;
+				}
 				solar = true;
 				onUpgradeInserted(player);
 				return true;
 			}
 			case FURNACE: {
-				if (furnace || !solar) return false;
+				if (furnace || ! solar) {
+					return false;
+				}
 				furnace = true;
 				onUpgradeInserted(player);
 				return true;
 			}
 			case COLLECTOR: {
-				if (suckItems || !solar) return false;
+				if (suckItems || ! solar) {
+					return false;
+				}
 				suckItems = true;
 				onUpgradeInserted(player);
 				return true;
@@ -337,21 +368,20 @@ public class TileEntityBChest extends TileEntityChest implements Hopper {
 	@Override
 	public void readFromNBT(NBTTagCompound par1NBTTagCompound)
 	{
-		slotLimit 		= par1NBTTagCompound.getShort("slotLimit");
+		slotLimit = par1NBTTagCompound.getShort("slotLimit");
 		redstoneUpgrade = par1NBTTagCompound.getBoolean("redstoneUpgrade");
-		light 			= par1NBTTagCompound.getBoolean("light");
-		comparator 		= par1NBTTagCompound.getBoolean("comparator");
-		player 			= par1NBTTagCompound.getString("player");
-		playerUpgrade 	= par1NBTTagCompound.getBoolean("playerUpgrade");
-		voidU 			= par1NBTTagCompound.getBoolean("voidU");
-		indestructable 	= par1NBTTagCompound.getBoolean("indestructable");
-		rain 			= par1NBTTagCompound.getBoolean("rain");
-		cobbleGen 		= par1NBTTagCompound.getBoolean("cobbleGen");
-		solar			= par1NBTTagCompound.getBoolean("solar");
-		furnace			= par1NBTTagCompound.getBoolean("furnace");
-		suckItems		= par1NBTTagCompound.getBoolean("suckItems");
+		light = par1NBTTagCompound.getBoolean("light");
+		comparator = par1NBTTagCompound.getBoolean("comparator");
+		player = par1NBTTagCompound.getString("player");
+		playerUpgrade = par1NBTTagCompound.getBoolean("playerUpgrade");
+		voidU = par1NBTTagCompound.getBoolean("voidU");
+		indestructable = par1NBTTagCompound.getBoolean("indestructable");
+		rain = par1NBTTagCompound.getBoolean("rain");
+		cobbleGen = par1NBTTagCompound.getBoolean("cobbleGen");
+		solar = par1NBTTagCompound.getBoolean("solar");
+		furnace = par1NBTTagCompound.getBoolean("furnace");
+		suckItems = par1NBTTagCompound.getBoolean("suckItems");
 		super.readFromNBT(par1NBTTagCompound);
-		//worldObj.updateLightByType(EnumSkyBlock.Block, xCoord, yCoord, zCoord);
 	}
 	
 	@Override
@@ -367,7 +397,7 @@ public class TileEntityBChest extends TileEntityChest implements Hopper {
 		par1NBTTagCompound.setBoolean("voidU", voidU);
 		par1NBTTagCompound.setBoolean("indestructable", indestructable);
 		par1NBTTagCompound.setBoolean("rain", rain);
-		par1NBTTagCompound.setBoolean("cobbleGen", this.cobbleGen);
+		par1NBTTagCompound.setBoolean("cobbleGen", cobbleGen);
 		par1NBTTagCompound.setBoolean("solar", solar);
 		par1NBTTagCompound.setBoolean("furnace", furnace);
 		par1NBTTagCompound.setBoolean("suckItems", suckItems);
@@ -377,7 +407,7 @@ public class TileEntityBChest extends TileEntityChest implements Hopper {
 		player.inventory.mainInventory[player.inventory.currentItem].stackSize -= 1;
 		NBTTagCompound nbttagcompound = new NBTTagCompound();
 		writeToNBT(nbttagcompound);
-		this.readFromNBT(nbttagcompound);
+		readFromNBT(nbttagcompound);
 		onInventoryChanged();
 		
 	}
@@ -422,37 +452,65 @@ public class TileEntityBChest extends TileEntityChest implements Hopper {
 			if (e == 0) {
 				return 15;
 			}
-			return (int) ((float) w / ((float)e + (float)w) * (float)15);
+			return (int) (w / ((float) e + (float) w) * 15);
 		}
 		return Container.calcRedstoneFromInventory(this);
 	}
-
+	
 	public void playerOpenChest(EntityPlayer player) {
-		if (!this.playerUpgrade) return;
-		if (this.isUseableByPlayer(player)) return;
+		if (! playerUpgrade) {
+			return;
+		}
+		if (isUseableByPlayer(player)) {
+			return;
+		}
 		player.attackEntityFrom(DamageSource.outOfWorld, 5.0F);
 	}
 	
 	public ItemStack[] getItemUpgrades() {
 		int amount = 0;
-		if (slotLimit > Reference.Conf.SLOT_START) amount++;
-		if (redstoneUpgrade) amount++;
-		if (light) amount++;
-		if (comparator) amount++;
-		if (playerUpgrade) amount++;
-		if (voidU) amount++;
-		if (indestructable) amount++;
-		if (rain) amount++;
-		if (cobbleGen) amount++;
-		if (solar) amount++;
-		if (furnace) amount++;
+		if (slotLimit > Reference.Conf.SLOT_START) {
+			amount++;
+		}
+		if (redstoneUpgrade) {
+			amount++;
+		}
+		if (light) {
+			amount++;
+		}
+		if (comparator) {
+			amount++;
+		}
+		if (playerUpgrade) {
+			amount++;
+		}
+		if (voidU) {
+			amount++;
+		}
+		if (indestructable) {
+			amount++;
+		}
+		if (rain) {
+			amount++;
+		}
+		if (cobbleGen) {
+			amount++;
+		}
+		if (solar) {
+			amount++;
+		}
+		if (furnace) {
+			amount++;
+		}
 		
 		ItemStack[] items = new ItemStack[amount];
 		int i1 = 0;
 		for (int i = 0; i < amount; i++) {
 			if (i1 == 0) {
 				if (slotLimit > Reference.Conf.SLOT_START) {
-					items[i] = new ItemStack(BetterChests.upgrade, (slotLimit - Reference.Conf.SLOT_START) / Reference.Conf.SLOT_UPGRADE, Upgrade.SLOT.ordinal());
+					items[i] = new ItemStack(BetterChests.upgrade,
+						(slotLimit - Reference.Conf.SLOT_START) / Reference.Conf.SLOT_UPGRADE,
+						Upgrade.SLOT.ordinal());
 					i1++;
 					continue;
 				}
@@ -491,7 +549,7 @@ public class TileEntityBChest extends TileEntityChest implements Hopper {
 				i1++;
 			}
 			if (i1 == 5) {
-				if(voidU) {
+				if (voidU) {
 					items[i] = new ItemStack(BetterChests.upgrade, 1, Upgrade.VOID.ordinal());
 					i1++;
 					continue;
@@ -552,43 +610,50 @@ public class TileEntityBChest extends TileEntityChest implements Hopper {
 	}
 	
 	private boolean hasEnergy() {
-		return (solar && ((this.worldObj.canBlockSeeTheSky(xCoord, yCoord, zCoord) && this.worldObj.isDaytime()) || new Random().nextFloat() > Reference.Conf.ENERGY_NONDAY));
+		return solar && (worldObj.canBlockSeeTheSky(xCoord, yCoord, zCoord) && worldObj.isDaytime() || new Random().nextFloat() > Reference.Conf.ENERGY_NONDAY);
 	}
 	
 	public boolean hasSolar() {
 		return solar;
 	}
-
+	
 	@Override
 	public double getXPos() {
-		return this.xCoord;
+		return xCoord;
 	}
-
+	
 	@Override
 	public double getYPos() {
-		return this.yCoord;
+		return yCoord;
 	}
-
+	
 	@Override
 	public double getZPos() {
-		return this.zCoord;
+		return zCoord;
 	}
 	
 	public int getRedstoneOutput() {
-		if (!redstoneUpgrade) {
+		if (! redstoneUpgrade) {
 			return 0;
 		}
 		if (rain) {
-			if (worldObj.isThundering()) return 2;
-			if (worldObj.isRaining()) return 1;
+			if (worldObj.isThundering()) {
+				return 2;
+			}
+			if (worldObj.isRaining()) {
+				return 1;
+			}
 			return 0;
 		}
 		return MathHelper.clamp_int(numUsingPlayers, 0, 15);
 	}
 	
 	private void updateBlock(int x, int y, int z) {
-		if (worldObj.isAirBlock(x, y, z)) return;
-		Block.blocksList[worldObj.getBlockId(x, y, z)].onNeighborBlockChange(worldObj, x, y, z, BetterChests.chest.blockID);
+		if (worldObj.isAirBlock(x, y, z)) {
+			return;
+		}
+		Block.blocksList[worldObj.getBlockId(x, y, z)].onNeighborBlockChange(worldObj, x, y, z,
+			BetterChests.chest.blockID);
 	}
 	
 }

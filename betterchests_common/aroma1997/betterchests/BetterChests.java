@@ -1,4 +1,11 @@
-
+/**
+ * The code of BetterChests and all related materials like textures is copyrighted material.
+ * It may only be redistributed or used for Commercial purposes with the permission of Aroma1997.
+ * 
+ * All Rights reserved (c) by Aroma1997
+ * 
+ * See https://github.com/Aroma1997/BetterChests/blob/master/LICENSE.md for more information.
+ */
 package aroma1997.betterchests;
 
 
@@ -43,7 +50,8 @@ public class BetterChests {
 		chest = new BlockBChest(
 			config.getBlock("chestID", 2540, "The Block id of the BetterChest").getInt());
 		upgrade = new ItemUpgrade(
-			config.getItem(Configuration.CATEGORY_ITEM, "upgradeItem", 12458, "The Item id of the Upgrades").getInt() - 256);
+			config.getItem(Configuration.CATEGORY_ITEM, "upgradeItem", 12458,
+				"The Item id of the Upgrades").getInt() - 256);
 		config.save();
 		GameRegistry.registerBlock(chest, ItemBlockBChest.class, "betterChest");
 		GameRegistry.registerItem(upgrade, "Upgrade");

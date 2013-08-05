@@ -1,4 +1,11 @@
-
+/**
+ * The code of BetterChests and all related materials like textures is copyrighted material.
+ * It may only be redistributed or used for Commercial purposes with the permission of Aroma1997.
+ * 
+ * All Rights reserved (c) by Aroma1997
+ * 
+ * See https://github.com/Aroma1997/BetterChests/blob/master/LICENSE.md for more information.
+ */
 package aroma1997.betterchests;
 
 
@@ -13,8 +20,6 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityChest;
-import net.minecraft.util.MathHelper;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -44,7 +49,7 @@ public class BlockBChest extends BlockChest {
 		if (par5EntityPlayer.getHeldItem() == null
 			|| ! (par5EntityPlayer.getHeldItem().itemID == BetterChests.upgrade.itemID && par5EntityPlayer.getHeldItem().getItemDamage() != Upgrade.BASIC.ordinal())) {
 			
-			((TileEntityBChest)par1World.getBlockTileEntity(par2, par3, par4)).playerOpenChest(par5EntityPlayer);
+			((TileEntityBChest) par1World.getBlockTileEntity(par2, par3, par4)).playerOpenChest(par5EntityPlayer);
 			
 			return super.onBlockActivated(par1World, par2, par3, par4, par5EntityPlayer, par6,
 				par7, par8, par9);
@@ -154,63 +159,72 @@ public class BlockBChest extends BlockChest {
 	}
 	
 	@Override
-    public float getPlayerRelativeBlockHardness(EntityPlayer par1EntityPlayer, World par2World, int par3, int par4, int par5)
-    {
-		if (!((TileEntityBChest)par2World.getBlockTileEntity(par3, par4, par5)).isUseableByPlayer(par1EntityPlayer)) return -1.0F;
-		else return super.getPlayerRelativeBlockHardness(par1EntityPlayer, par2World, par3, par4, par5);
-    }
+	public float getPlayerRelativeBlockHardness(EntityPlayer par1EntityPlayer, World par2World,
+		int par3, int par4, int par5)
+	{
+		if (! ((TileEntityBChest) par2World.getBlockTileEntity(par3, par4, par5)).isUseableByPlayer(par1EntityPlayer)) {
+			return - 1.0F;
+		}
+		else {
+			return super.getPlayerRelativeBlockHardness(par1EntityPlayer, par2World, par3, par4,
+				par5);
+		}
+	}
 	
 	@Override
-    public void breakBlock(World par1World, int par2, int par3, int par4, int par5, int par6)
-    {
+	public void breakBlock(World par1World, int par2, int par3, int par4, int par5, int par6)
+	{
 		Random random = new Random();
-		TileEntityBChest te = (TileEntityBChest)par1World.getBlockTileEntity(par2, par3, par4);
+		TileEntityBChest te = (TileEntityBChest) par1World.getBlockTileEntity(par2, par3, par4);
 		ItemStack[] items = te.getItemUpgrades();
-		for (int i = 0; i < items.length; i++) {
-            ItemStack itemstack = items[i];
-
-            if (itemstack != null)
-            {
-                float f = random.nextFloat() * 0.8F + 0.1F;
-                float f1 = random.nextFloat() * 0.8F + 0.1F;
-                EntityItem entityitem;
-
-                for (float f2 = random.nextFloat() * 0.8F + 0.1F; itemstack.stackSize > 0; par1World.spawnEntityInWorld(entityitem))
-                {
-                    int k1 = random.nextInt(21) + 10;
-
-                    if (k1 > itemstack.stackSize)
-                    {
-                        k1 = itemstack.stackSize;
-                    }
-
-                    itemstack.stackSize -= k1;
-                    entityitem = new EntityItem(par1World, (double)((float)par2 + f), (double)((float)par3 + f1), (double)((float)par4 + f2), new ItemStack(itemstack.itemID, k1, itemstack.getItemDamage()));
-                    float f3 = 0.05F;
-                    entityitem.motionX = (double)((float)random.nextGaussian() * f3);
-                    entityitem.motionY = (double)((float)random.nextGaussian() * f3 + 0.2F);
-                    entityitem.motionZ = (double)((float)random.nextGaussian() * f3);
-
-                    if (itemstack.hasTagCompound())
-                    {
-                        entityitem.getEntityItem().setTagCompound((NBTTagCompound)itemstack.getTagCompound().copy());
-                    }
-                }
-            }
+		for (ItemStack item : items) {
+			ItemStack itemstack = item;
+			
+			if (itemstack != null)
+			{
+				float f = random.nextFloat() * 0.8F + 0.1F;
+				float f1 = random.nextFloat() * 0.8F + 0.1F;
+				EntityItem entityitem;
+				
+				for (float f2 = random.nextFloat() * 0.8F + 0.1F; itemstack.stackSize > 0; par1World.spawnEntityInWorld(entityitem))
+				{
+					int k1 = random.nextInt(21) + 10;
+					
+					if (k1 > itemstack.stackSize)
+					{
+						k1 = itemstack.stackSize;
+					}
+					
+					itemstack.stackSize -= k1;
+					entityitem = new EntityItem(par1World, par2 + f,
+						par3 + f1, par4 + f2, new ItemStack(
+							itemstack.itemID, k1, itemstack.getItemDamage()));
+					float f3 = 0.05F;
+					entityitem.motionX = (float) random.nextGaussian() * f3;
+					entityitem.motionY = (float) random.nextGaussian() * f3 + 0.2F;
+					entityitem.motionZ = (float) random.nextGaussian() * f3;
+					
+					if (itemstack.hasTagCompound())
+					{
+						entityitem.getEntityItem().setTagCompound(
+							(NBTTagCompound) itemstack.getTagCompound().copy());
+					}
+				}
+			}
 		}
 		super.breakBlock(par1World, par2, par3, par4, par5, par6);
-    }
+	}
 	
 	@Override
-    public boolean canPlaceBlockAt(World par1World, int par2, int par3, int par4)
-    {
-        return true;
-    }
-    
+	public boolean canPlaceBlockAt(World par1World, int par2, int par3, int par4)
+	{
+		return true;
+	}
+	
 	@Override
-    public boolean canProvidePower()
-    {
-        return true;
-    }
+	public boolean canProvidePower()
+	{
+		return true;
+	}
 	
 }

@@ -1,9 +1,15 @@
-
+/**
+ * The code of BetterChests and all related materials like textures is copyrighted material.
+ * It may only be redistributed or used for Commercial purposes with the permission of Aroma1997.
+ * 
+ * All Rights reserved (c) by Aroma1997
+ * 
+ * See https://github.com/Aroma1997/BetterChests/blob/master/LICENSE.md for more information.
+ */
 package aroma1997.betterchests.client;
 
 
 import aroma1997.betterchests.Reference;
-import aroma1997.betterchests.TileEntityBChest;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockChest;
@@ -22,8 +28,12 @@ public class BChestRenderer extends TileEntityChestRenderer {
 	
 	private ResourceLocation model = new ResourceLocation(Reference.MOD_ID
 		+ ":textures/blocks/tile.betterChest.png");
-	private ResourceLocation modelLight = new ResourceLocation(Reference.MOD_ID + ":textures/blocks/tile.betterChestLight.png");
-	private ResourceLocation modelSolar = new ResourceLocation(Reference.MOD_ID + ":textures/blocks/tile.betterChestSolar.png");
+	
+	private ResourceLocation modelLight = new ResourceLocation(Reference.MOD_ID
+		+ ":textures/blocks/tile.betterChestLight.png");
+	
+	private ResourceLocation modelSolar = new ResourceLocation(Reference.MOD_ID
+		+ ":textures/blocks/tile.betterChestSolar.png");
 	
 	private ModelChest chestModel = new ModelChest();
 	
@@ -61,15 +71,7 @@ public class BChestRenderer extends TileEntityChestRenderer {
 			}
 		}
 		ModelChest modelchest = chestModel;
-		/*if (((TileEntityBChest)par1TileEntityChest).getLightValue() > 10) {
-			func_110628_a(modelLight);
-		}
-		else if (((TileEntityBChest)par1TileEntityChest).hasSolar()) {
-			func_110628_a(this.modelSolar);
-		}
-		else {*/
-			func_110628_a(model);
-		//}
+		func_110628_a(model);
 		
 		GL11.glPushMatrix();
 		GL11.glEnable(GL12.GL_RESCALE_NORMAL);
