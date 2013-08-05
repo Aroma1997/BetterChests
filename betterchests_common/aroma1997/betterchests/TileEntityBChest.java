@@ -351,7 +351,7 @@ public class TileEntityBChest extends TileEntityChest implements Hopper {
 		furnace			= par1NBTTagCompound.getBoolean("furnace");
 		suckItems		= par1NBTTagCompound.getBoolean("suckItems");
 		super.readFromNBT(par1NBTTagCompound);
-		worldObj.updateLightByType(EnumSkyBlock.Block, xCoord, yCoord, zCoord);
+		//worldObj.updateLightByType(EnumSkyBlock.Block, xCoord, yCoord, zCoord);
 	}
 	
 	@Override
