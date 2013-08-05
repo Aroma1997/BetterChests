@@ -19,6 +19,7 @@ import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.tileentity.TileEntityHopper;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
+import net.minecraft.world.EnumSkyBlock;
 
 public class TileEntityBChest extends TileEntityChest implements Hopper {
 	
@@ -350,6 +351,7 @@ public class TileEntityBChest extends TileEntityChest implements Hopper {
 		furnace			= par1NBTTagCompound.getBoolean("furnace");
 		suckItems		= par1NBTTagCompound.getBoolean("suckItems");
 		super.readFromNBT(par1NBTTagCompound);
+		worldObj.updateLightByType(EnumSkyBlock.Block, xCoord, yCoord, zCoord);
 	}
 	
 	@Override
@@ -375,7 +377,8 @@ public class TileEntityBChest extends TileEntityChest implements Hopper {
 		player.inventory.mainInventory[player.inventory.currentItem].stackSize -= 1;
 		NBTTagCompound nbttagcompound = new NBTTagCompound();
 		writeToNBT(nbttagcompound);
-		super.readFromNBT(nbttagcompound);
+		this.readFromNBT(nbttagcompound);
+		
 	}
 	
 	public boolean hasRedstoneUpgrade() {
