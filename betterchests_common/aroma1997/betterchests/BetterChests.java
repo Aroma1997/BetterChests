@@ -43,7 +43,7 @@ public class BetterChests {
 		chest = new BlockBChest(
 			config.getBlock("chestID", 2540, "The Block id of the BetterChest").getInt());
 		upgrade = new ItemUpgrade(
-			config.getItem(Configuration.CATEGORY_ITEM, "upgradeItem", 12458).getInt() - 256);
+			config.getItem(Configuration.CATEGORY_ITEM, "upgradeItem", 12458, "The Item id of the Upgrades").getInt() - 256);
 		config.save();
 		GameRegistry.registerBlock(chest, ItemBlockBChest.class, "betterChest");
 		GameRegistry.registerItem(upgrade, "Upgrade");

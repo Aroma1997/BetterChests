@@ -61,15 +61,15 @@ public class BChestRenderer extends TileEntityChestRenderer {
 			}
 		}
 		ModelChest modelchest = chestModel;
-		if (((TileEntityBChest)par1TileEntityChest).getLightValue() > 10) {
+		/*if (((TileEntityBChest)par1TileEntityChest).getLightValue() > 10) {
 			func_110628_a(modelLight);
 		}
 		else if (((TileEntityBChest)par1TileEntityChest).hasSolar()) {
 			func_110628_a(this.modelSolar);
 		}
-		else {
+		else {*/
 			func_110628_a(model);
-		}
+		//}
 		
 		GL11.glPushMatrix();
 		GL11.glEnable(GL12.GL_RESCALE_NORMAL);

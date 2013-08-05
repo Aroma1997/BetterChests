@@ -378,6 +378,7 @@ public class TileEntityBChest extends TileEntityChest implements Hopper {
 		NBTTagCompound nbttagcompound = new NBTTagCompound();
 		writeToNBT(nbttagcompound);
 		this.readFromNBT(nbttagcompound);
+		onInventoryChanged();
 		
 	}
 	
