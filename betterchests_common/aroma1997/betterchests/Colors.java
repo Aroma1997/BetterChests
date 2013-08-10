@@ -9,10 +9,7 @@
 package aroma1997.betterchests;
 
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
-@SideOnly(Side.CLIENT)
 public enum Colors {
 	BLACK,
 	BLUE,
