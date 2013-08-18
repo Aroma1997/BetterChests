@@ -256,6 +256,7 @@ public class TileEntityBChest extends TileEntityChest implements Hopper {
 		
 	}
 	
+	@SuppressWarnings("incomplete-switch")
 	public boolean upgrade(EntityPlayer player) {
 		if (! (player.getHeldItem().getItem() instanceof ItemUpgrade)
 			|| ! isUseableByPlayer(player)) {

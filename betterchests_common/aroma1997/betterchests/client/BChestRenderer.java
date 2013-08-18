@@ -29,9 +29,11 @@ public class BChestRenderer extends TileEntityChestRenderer {
 	private ResourceLocation model = new ResourceLocation(Reference.MOD_ID
 		+ ":textures/blocks/tile.betterChest.png");
 	
+	@SuppressWarnings("unused")
 	private ResourceLocation modelLight = new ResourceLocation(Reference.MOD_ID
 		+ ":textures/blocks/tile.betterChestLight.png");
 	
+	@SuppressWarnings("unused")
 	private ResourceLocation modelSolar = new ResourceLocation(Reference.MOD_ID
 		+ ":textures/blocks/tile.betterChestSolar.png");
 	

@@ -29,6 +29,7 @@ public class ItemUpgrade extends Item {
 		setHasSubtypes(true);
 	}
 	
+	@SuppressWarnings({"rawtypes", "unchecked"})
 	@Override
 	public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer,
 		List par3List, boolean par4) {
@@ -39,6 +40,7 @@ public class ItemUpgrade extends Item {
 		}
 	}
 	
+	@SuppressWarnings({"unchecked", "rawtypes"})
 	@Override
 	public void getSubItems(int par1, CreativeTabs par2CreativeTabs, List par3List)
 	{

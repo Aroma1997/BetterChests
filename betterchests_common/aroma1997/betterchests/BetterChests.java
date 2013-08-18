@@ -70,7 +70,7 @@ public class BetterChests {
 	
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event) {
-		return;
+		CoreReminder.init(Reference.MOD_NAME);
 	}
 	
 }
