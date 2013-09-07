@@ -73,7 +73,7 @@ public class BChestRenderer extends TileEntityChestRenderer {
 			}
 		}
 		ModelChest modelchest = chestModel;
-		func_110628_a(model);
+		bindTexture(model);
 		
 		GL11.glPushMatrix();
 		GL11.glEnable(GL12.GL_RESCALE_NORMAL);

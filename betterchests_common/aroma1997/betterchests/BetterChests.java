@@ -14,6 +14,7 @@ import java.io.File;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
+import net.minecraft.src.ModLoader;
 
 import net.minecraftforge.common.Configuration;
 
@@ -66,11 +67,17 @@ public class BetterChests {
 		GameRegistry.addRecipe(new ItemStack(chest), "CCC", "CBC", "CCC", 'C', new ItemStack(
 			Block.cobblestone), 'B', new ItemStack(Block.chest));
 		Upgrade.generateRecipes();
+		if (ModLoader.isModLoaded("Aroma1997Core")) {
+			Core.init(event);
+		}
 	}
 	
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event) {
 		CoreReminder.init(Reference.MOD_NAME);
+		if (ModLoader.isModLoaded("Aroma1997Core")) {
+			Core.postInit(event);
+		}
 	}
 	
 }

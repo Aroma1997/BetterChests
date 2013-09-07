@@ -20,6 +20,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.INetworkManager;
+import net.minecraft.network.packet.Packet132TileEntityData;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.Hopper;
 import net.minecraft.tileentity.TileEntityChest;
@@ -214,17 +216,22 @@ public class TileEntityBChest extends TileEntityChest implements Hopper {
 			for (int i = - Reference.Conf.HOPPERRADIUS; i <= Reference.Conf.HOPPERRADIUS; i++) {
 				for (int j = - Reference.Conf.HOPPERRADIUS; j <= Reference.Conf.HOPPERRADIUS; j++) {
 					for (int k = 0; k <= 1; k++) {
-						EntityItem entityitem = TileEntityHopper.func_96119_a(worldObj, xCoord + i,
+						EntityItem entityitem = TileEntityHopper.getEntityAbove(worldObj, xCoord + i,
 							(double) yCoord + k, zCoord + j);
 						
 						if (entityitem != null)
 						{
-							TileEntityHopper.func_96114_a(this, entityitem);
+							TileEntityHopper.insertStackFromEntity(this, entityitem);
 						}
 					}
 				}
 			}
 		}
+	}
+	
+	@Override
+	public void onDataPacket(INetworkManager net, Packet132TileEntityData packet) {
+		readFromNBT(packet.data);
 	}
 	
 	@Override
