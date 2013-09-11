@@ -11,10 +11,11 @@ package aroma1997.betterchests;
 
 import java.io.File;
 
+import aroma1997.core.version.VersionCheck;
+
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
-import net.minecraft.src.ModLoader;
 
 import net.minecraftforge.common.Configuration;
 
@@ -28,7 +29,7 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
-@Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, version = Reference.VERSION)
+@Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, version = Reference.VERSION, dependencies="required-after:Aroma1997Core")
 public class BetterChests {
 	
 	@Instance(Reference.MOD_ID)
@@ -67,17 +68,13 @@ public class BetterChests {
 		GameRegistry.addRecipe(new ItemStack(chest), "CCC", "CBC", "CCC", 'C', new ItemStack(
 			Block.cobblestone), 'B', new ItemStack(Block.chest));
 		Upgrade.generateRecipes();
-		if (ModLoader.isModLoaded("Aroma1997Core")) {
-			Core.init(event);
-		}
+		
+		VersionCheck.registerVersionChecker(Reference.MOD_ID, Reference.VERSION);
 	}
 	
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event) {
-		CoreReminder.init(Reference.MOD_NAME);
-		if (ModLoader.isModLoaded("Aroma1997Core")) {
-			Core.postInit(event);
-		}
+		
 	}
 	
 }

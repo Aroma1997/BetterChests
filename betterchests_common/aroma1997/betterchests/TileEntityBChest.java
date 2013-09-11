@@ -11,6 +11,8 @@ package aroma1997.betterchests;
 
 import java.util.Random;
 
+import aroma1997.core.misc.FakePlayer;
+
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.item.EntityItem;
@@ -59,6 +61,10 @@ public class TileEntityBChest extends TileEntityChest implements Hopper {
 	
 	private boolean suckItems;
 	
+	private boolean ticking;
+	
+	private FakePlayer fplayer;
+	
 	public TileEntityBChest() {
 		slotLimit = Reference.Conf.SLOT_START;
 		player = "";
@@ -79,6 +85,16 @@ public class TileEntityBChest extends TileEntityChest implements Hopper {
 			return null;
 		}
 		return super.getStackInSlot(slot);
+	}
+	
+	@Override
+	public void validate() {
+		super.validate();
+
+		fplayer = FakePlayer.getFakePlayer(worldObj);
+		fplayer.posX = xCoord;
+		fplayer.posY = yCoord;
+		fplayer.posZ = zCoord;
 	}
 	
 	@Override
@@ -227,6 +243,18 @@ public class TileEntityBChest extends TileEntityChest implements Hopper {
 				}
 			}
 		}
+		
+		if (ticking && tick % 32 == 0) {
+			for (int i = 0; i < getSizeInventory(); i++) {
+				ItemStack item = getStackInSlot(i);
+				if (item == null || item.getItem() == null) continue;
+				fplayer.inventory.mainInventory[0] = this.getStackInSlot(i);
+				fplayer.inventory.onInventoryChanged();
+				item.getItem().onUpdate(item, worldObj, fplayer, 0, false);
+				onInventoryChanged();
+//				this.setInventorySlotContents(i, fplayer.inventory.mainInventory[0]);
+			}
+		}
 	}
 	
 	@Override
@@ -263,7 +291,6 @@ public class TileEntityBChest extends TileEntityChest implements Hopper {
 		
 	}
 	
-	@SuppressWarnings("incomplete-switch")
 	public boolean upgrade(EntityPlayer player) {
 		if (! (player.getHeldItem().getItem() instanceof ItemUpgrade)
 			|| ! isUseableByPlayer(player)) {
@@ -369,6 +396,15 @@ public class TileEntityBChest extends TileEntityChest implements Hopper {
 				onUpgradeInserted(player);
 				return true;
 			}
+			case TICKING: {
+				if (ticking || !solar) {
+					return false;
+				}
+				ticking = true;
+				onUpgradeInserted(player);
+				return true;
+			}
+			case BASIC : {}
 		}
 		return false;
 	}
@@ -389,6 +425,7 @@ public class TileEntityBChest extends TileEntityChest implements Hopper {
 		solar = par1NBTTagCompound.getBoolean("solar");
 		furnace = par1NBTTagCompound.getBoolean("furnace");
 		suckItems = par1NBTTagCompound.getBoolean("suckItems");
+		ticking = par1NBTTagCompound.getBoolean("ticking");
 		super.readFromNBT(par1NBTTagCompound);
 	}
 	
@@ -409,6 +446,7 @@ public class TileEntityBChest extends TileEntityChest implements Hopper {
 		par1NBTTagCompound.setBoolean("solar", solar);
 		par1NBTTagCompound.setBoolean("furnace", furnace);
 		par1NBTTagCompound.setBoolean("suckItems", suckItems);
+		par1NBTTagCompound.setBoolean("ticking", ticking);
 	}
 	
 	private void onUpgradeInserted(EntityPlayer player) {

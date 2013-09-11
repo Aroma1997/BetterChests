@@ -12,6 +12,7 @@
 	<target name="precompile">
 		<copy todir="${dir.mcp}\src\minecraft">
 			<fileset dir="${dir.src}\betterchests_common\" />
+			<fileset dir="${dir.core}\aroma1997core_common\" />
 		</copy>
 		<replace dir="${dir.mcp}\src\minecraft" token="@VERSION@" value="${release.mod.version}" />
 		<replace dir="${dir.mcp}\src\minecraft" token="@MCVERSION@" value="${release.minecraft.version}" />
@@ -35,6 +36,8 @@
 		<antcall target="precompile" />
 		<antcall target="recompile" />		
 		<antcall target="reobfuscate" />
+		
+		<delete dir="${dir.mcp}\reobf\minecraft\aroma1997\core" />
 		
 		<mkdir dir="${dir.release}\${release.mod.modname}\${release.minecraft.version}\${release.mod.version}" />
 		<jar destfile="${dir.release}\${release.mod.modname}\${release.minecraft.version}\${release.mod.version}\${release.mod.modname} MC.${release.minecraft.version} v.${release.mod.version}.jar">
