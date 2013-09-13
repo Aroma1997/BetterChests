@@ -26,7 +26,7 @@
 	
 	<target name="reobfuscate">
 		<exec dir="${dir.mcp}" executable="cmd" os="Windows 7">
-			<arg line="/c reobfuscate.bat" />
+			<arg line="/c reobfuscate_srg.bat" />
 		</exec>
 	</target>
 	

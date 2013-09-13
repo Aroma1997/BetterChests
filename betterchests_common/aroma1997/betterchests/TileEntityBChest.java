@@ -9,8 +9,10 @@
 package aroma1997.betterchests;
 
 
+import java.util.HashMap;
 import java.util.Random;
 
+import aroma1997.core.client.util.Colors;
 import aroma1997.core.misc.FakePlayer;
 
 import net.minecraft.block.Block;
@@ -23,6 +25,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.INetworkManager;
+import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.Packet132TileEntityData;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.Hopper;
@@ -33,47 +36,25 @@ import net.minecraft.util.MathHelper;
 
 public class TileEntityBChest extends TileEntityChest implements Hopper {
 	
-	private short slotLimit;
-	
-	private boolean redstoneUpgrade;
-	
-	private boolean cobbleGen;
-	
-	private boolean light;
-	
-	private boolean comparator;
-	
-	private boolean playerUpgrade;
-	
 	private String player;
-	
-	private boolean voidU;
-	
-	private boolean indestructable;
-	
-	private boolean rain;
-	
-	private boolean solar;
-	
-	private boolean furnace;
 	
 	private int tick;
 	
-	private boolean suckItems;
-	
-	private boolean ticking;
-	
 	private FakePlayer fplayer;
 	
+	private HashMap<Upgrade, Integer> upgrades = new HashMap<Upgrade, Integer>();
+	
 	public TileEntityBChest() {
-		slotLimit = Reference.Conf.SLOT_START;
 		player = "";
 		tick = new Random().nextInt(64);
+		for (Upgrade upgrade : Upgrade.values()) {
+			upgrades.put(upgrade, 0);
+		}
 	}
 	
 	@Override
 	public String getInvName() {
-		if (voidU) {
+		if (isUpgradeInstalled(Upgrade.VOID)) {
 			return Colors.RED + "Void Chest";
 		}
 		return "Adjustable Chest";
@@ -81,7 +62,7 @@ public class TileEntityBChest extends TileEntityChest implements Hopper {
 	
 	@Override
 	public ItemStack getStackInSlot(int slot) {
-		if (slot >= slotLimit) {
+		if (slot >= getSizeInventory()) {
 			return null;
 		}
 		return super.getStackInSlot(slot);
@@ -91,10 +72,12 @@ public class TileEntityBChest extends TileEntityChest implements Hopper {
 	public void validate() {
 		super.validate();
 
-		fplayer = FakePlayer.getFakePlayer(worldObj);
-		fplayer.posX = xCoord;
-		fplayer.posY = yCoord;
-		fplayer.posZ = zCoord;
+		if (!worldObj.isRemote) {
+			fplayer = FakePlayer.getFakePlayer(worldObj);
+			fplayer.posX = xCoord;
+			fplayer.posY = yCoord;
+			fplayer.posZ = zCoord;
+		}
 	}
 	
 	@Override
@@ -103,6 +86,7 @@ public class TileEntityBChest extends TileEntityChest implements Hopper {
 		if (worldObj.isRemote) {
 			return;
 		}
+		
 		if (tick-- <= 0) {
 			tick = 64;
 			onInventoryChanged();
@@ -113,7 +97,7 @@ public class TileEntityBChest extends TileEntityChest implements Hopper {
 			updateBlock(xCoord, yCoord + 1, zCoord);
 			updateBlock(xCoord, yCoord - 1, zCoord);
 		}
-		if (voidU) {
+		if (isUpgradeInstalled(Upgrade.VOID)) {
 			for (int i = 0; i < getSizeInventory(); i++) {
 				if (getStackInSlot(i) == null) {
 					continue;
@@ -122,7 +106,7 @@ public class TileEntityBChest extends TileEntityChest implements Hopper {
 			}
 		}
 		
-		if (rain && worldObj.canBlockSeeTheSky(xCoord, yCoord, zCoord) && worldObj.isRaining()
+		if (isUpgradeInstalled(Upgrade.RAIN) && worldObj.canBlockSeeTheSky(xCoord, yCoord, zCoord) && worldObj.isRaining()
 			&& new Random().nextFloat() > Reference.Conf.RAIN_THINGY && tick == 20) {
 			int bucketEmpty = - 1;
 			int emptySpace = - 1;
@@ -148,7 +132,7 @@ public class TileEntityBChest extends TileEntityChest implements Hopper {
 			setInventorySlotContents(emptySpace, new ItemStack(Item.bucketWater));
 		}
 		
-		if (cobbleGen && tick == 30) {
+		if (isUpgradeInstalled(Upgrade.COBBLEGEN) && tick == 30) {
 			int bucketLava = - 1;
 			int bucketWater = - 1;
 			int empty = - 1;
@@ -186,7 +170,7 @@ public class TileEntityBChest extends TileEntityChest implements Hopper {
 			setInventorySlotContents(empty, new ItemStack(Block.cobblestone, amount));
 		}
 		
-		if (furnace && tick == 40 && hasEnergy()) {
+		if (isUpgradeInstalled(Upgrade.FURNACE) && tick == 40 && hasEnergy()) {
 			int cooking = - 1;
 			for (int i = 0; i < getSizeInventory(); i++) {
 				ItemStack stack = getStackInSlot(i);
@@ -228,9 +212,9 @@ public class TileEntityBChest extends TileEntityChest implements Hopper {
 			}
 		}
 		
-		if (suckItems && tick == 50) {
-			for (int i = - Reference.Conf.HOPPERRADIUS; i <= Reference.Conf.HOPPERRADIUS; i++) {
-				for (int j = - Reference.Conf.HOPPERRADIUS; j <= Reference.Conf.HOPPERRADIUS; j++) {
+		if (isUpgradeInstalled(Upgrade.COLLECTOR) && tick == 50) {
+			for (int i = - getAmountUpgrade(Upgrade.COLLECTOR); i <= getAmountUpgrade(Upgrade.COLLECTOR); i++) {
+				for (int j = - getAmountUpgrade(Upgrade.COLLECTOR); j <= getAmountUpgrade(Upgrade.COLLECTOR); j++) {
 					for (int k = 0; k <= 1; k++) {
 						EntityItem entityitem = TileEntityHopper.getEntityAbove(worldObj, xCoord + i,
 							(double) yCoord + k, zCoord + j);
@@ -244,7 +228,7 @@ public class TileEntityBChest extends TileEntityChest implements Hopper {
 			}
 		}
 		
-		if (ticking && tick % 32 == 0) {
+		if (isUpgradeInstalled(Upgrade.TICKING) && tick % 8 == 0) {
 			for (int i = 0; i < getSizeInventory(); i++) {
 				ItemStack item = getStackInSlot(i);
 				if (item == null || item.getItem() == null) continue;
@@ -252,10 +236,19 @@ public class TileEntityBChest extends TileEntityChest implements Hopper {
 				fplayer.inventory.onInventoryChanged();
 				item.getItem().onUpdate(item, worldObj, fplayer, 0, false);
 				onInventoryChanged();
-//				this.setInventorySlotContents(i, fplayer.inventory.mainInventory[0]);
 			}
 		}
 	}
+	
+	@Override
+    public Packet getDescriptionPacket()
+    {
+    	NBTTagCompound nbt = new NBTTagCompound();
+    	writeToNBT(nbt);
+    	Packet132TileEntityData packet = new Packet132TileEntityData();
+    	packet.data = nbt;
+        return packet;
+    }
 	
 	@Override
 	public void onDataPacket(INetworkManager net, Packet132TileEntityData packet) {
@@ -264,7 +257,7 @@ public class TileEntityBChest extends TileEntityChest implements Hopper {
 	
 	@Override
 	public int getSizeInventory() {
-		return slotLimit;
+		return 9 + (getAmountUpgrade(Upgrade.SLOT) * 9);
 	}
 	
 	@Override
@@ -273,7 +266,7 @@ public class TileEntityBChest extends TileEntityChest implements Hopper {
 		if (! super.isUseableByPlayer(par1EntityPlayer)) {
 			return false;
 		}
-		if (! playerUpgrade) {
+		if (! (isUpgradeInstalled(Upgrade.PLAYER))) {
 			return true;
 		}
 		
@@ -298,155 +291,60 @@ public class TileEntityBChest extends TileEntityChest implements Hopper {
 		}
 		ItemStack item = player.getHeldItem();
 		Upgrade upgrade = Upgrade.values()[item.getItemDamage()];
-		switch (upgrade) {
-			case SLOT: {
-				if (slotLimit + Reference.Conf.SLOT_UPGRADE > Reference.Conf.SLOT_LIMIT) {
-					return false;
-				}
-				slotLimit += Reference.Conf.SLOT_UPGRADE;
+		
+		if (!(getAmountUpgrade(upgrade) >= upgrade.getMaxAmount())) {
+			if (upgrade.getRequirement() == null || isUpgradeInstalled(upgrade.getRequirement())) {
+				setAmountUpgrade(upgrade, getAmountUpgrade(upgrade) + 1);
 				onUpgradeInserted(player);
 				return true;
 			}
-			case REDSTONE: {
-				if (redstoneUpgrade) {
-					return false;
-				}
-				redstoneUpgrade = true;
-				onUpgradeInserted(player);
-				return true;
-			}
-			case LIGHT: {
-				if (light) {
-					return false;
-				}
-				light = true;
-				onUpgradeInserted(player);
-				return true;
-			}
-			case COMPARATOR: {
-				if (comparator) {
-					return false;
-				}
-				comparator = true;
-				onUpgradeInserted(player);
-				return true;
-			}
-			case PLAYER: {
-				if (playerUpgrade || ! indestructable) {
-					return false;
-				}
-				playerUpgrade = true;
-				this.player = player.username;
-				onUpgradeInserted(player);
-				return true;
-			}
-			case VOID: {
-				if (voidU) {
-					return false;
-				}
-				voidU = true;
-				onUpgradeInserted(player);
-				return true;
-			}
-			case UNBREAKABLE: {
-				if (indestructable) {
-					return false;
-				}
-				indestructable = true;
-				onUpgradeInserted(player);
-				return true;
-			}
-			case RAIN: {
-				if (rain) {
-					return false;
-				}
-				rain = true;
-				onUpgradeInserted(player);
-				return true;
-			}
-			case COBBLEGEN: {
-				if (cobbleGen) {
-					return false;
-				}
-				cobbleGen = true;
-				onUpgradeInserted(player);
-				return true;
-			}
-			case SOLAR: {
-				if (solar) {
-					return false;
-				}
-				solar = true;
-				onUpgradeInserted(player);
-				return true;
-			}
-			case FURNACE: {
-				if (furnace || ! solar) {
-					return false;
-				}
-				furnace = true;
-				onUpgradeInserted(player);
-				return true;
-			}
-			case COLLECTOR: {
-				if (suckItems || ! solar) {
-					return false;
-				}
-				suckItems = true;
-				onUpgradeInserted(player);
-				return true;
-			}
-			case TICKING: {
-				if (ticking || !solar) {
-					return false;
-				}
-				ticking = true;
-				onUpgradeInserted(player);
-				return true;
-			}
-			case BASIC : {}
 		}
+		
 		return false;
 	}
 	
+	private int getAmountUpgrade(Upgrade upgrade) {
+		return upgrades.get(upgrade);
+	}
+
 	@Override
-	public void readFromNBT(NBTTagCompound par1NBTTagCompound)
+	public void readFromNBT(NBTTagCompound nbt) {
+		if (nbt.hasKey("slotLimit")) {
+			readFromNBTOld(nbt);
+			return;
+		}
+		for (Upgrade upgrade : Upgrade.values()) {
+			setAmountUpgrade(upgrade, nbt.getInteger(upgrade.toString()));
+		}
+		player = nbt.getString("player");
+		super.readFromNBT(nbt);
+	}
+	
+	private void readFromNBTOld(NBTTagCompound par1NBTTagCompound)
 	{
-		slotLimit = par1NBTTagCompound.getShort("slotLimit");
-		redstoneUpgrade = par1NBTTagCompound.getBoolean("redstoneUpgrade");
-		light = par1NBTTagCompound.getBoolean("light");
-		comparator = par1NBTTagCompound.getBoolean("comparator");
+		setAmountUpgrade(Upgrade.SLOT, par1NBTTagCompound.getShort("slotLimit"));
+		setAmountUpgrade(Upgrade.REDSTONE, par1NBTTagCompound.getBoolean("redstoneUpgrade") ? 1 : 0);
+		setAmountUpgrade(Upgrade.LIGHT, par1NBTTagCompound.getBoolean("light") ? 1 : 0);
+		setAmountUpgrade(Upgrade.COMPARATOR, par1NBTTagCompound.getBoolean("comparator") ? 1 : 0);
+		setAmountUpgrade(Upgrade.PLAYER, par1NBTTagCompound.getBoolean("playerUpgrade") ? 1 : 0);;
+		setAmountUpgrade(Upgrade.VOID, par1NBTTagCompound.getBoolean("voidU") ? 1 : 0);
+		setAmountUpgrade(Upgrade.UNBREAKABLE, par1NBTTagCompound.getBoolean("indestructable") ? 1 : 0);
+		setAmountUpgrade(Upgrade.RAIN, par1NBTTagCompound.getBoolean("rain") ? 1 : 0);
+		setAmountUpgrade(Upgrade.COBBLEGEN, par1NBTTagCompound.getBoolean("cobbleGen") ? 1 : 0);
+		setAmountUpgrade(Upgrade.SOLAR, par1NBTTagCompound.getBoolean("solar") ? 1 : 0);
+		setAmountUpgrade(Upgrade.FURNACE, par1NBTTagCompound.getBoolean("furnace") ? 1 : 0);
+		setAmountUpgrade(Upgrade.COLLECTOR, par1NBTTagCompound.getBoolean("suckItems") ? 1 : 0);
+		setAmountUpgrade(Upgrade.TICKING, par1NBTTagCompound.getBoolean("ticking") ? 1 : 0);
 		player = par1NBTTagCompound.getString("player");
-		playerUpgrade = par1NBTTagCompound.getBoolean("playerUpgrade");
-		voidU = par1NBTTagCompound.getBoolean("voidU");
-		indestructable = par1NBTTagCompound.getBoolean("indestructable");
-		rain = par1NBTTagCompound.getBoolean("rain");
-		cobbleGen = par1NBTTagCompound.getBoolean("cobbleGen");
-		solar = par1NBTTagCompound.getBoolean("solar");
-		furnace = par1NBTTagCompound.getBoolean("furnace");
-		suckItems = par1NBTTagCompound.getBoolean("suckItems");
-		ticking = par1NBTTagCompound.getBoolean("ticking");
 		super.readFromNBT(par1NBTTagCompound);
 	}
 	
-	@Override
-	public void writeToNBT(NBTTagCompound par1NBTTagCompound)
-	{
-		super.writeToNBT(par1NBTTagCompound);
-		par1NBTTagCompound.setShort("slotLimit", slotLimit);
-		par1NBTTagCompound.setBoolean("redstoneUpgrade", redstoneUpgrade);
-		par1NBTTagCompound.setBoolean("light", light);
-		par1NBTTagCompound.setBoolean("comparator", comparator);
-		par1NBTTagCompound.setString("player", player);
-		par1NBTTagCompound.setBoolean("playerUpgrade", playerUpgrade);
-		par1NBTTagCompound.setBoolean("voidU", voidU);
-		par1NBTTagCompound.setBoolean("indestructable", indestructable);
-		par1NBTTagCompound.setBoolean("rain", rain);
-		par1NBTTagCompound.setBoolean("cobbleGen", cobbleGen);
-		par1NBTTagCompound.setBoolean("solar", solar);
-		par1NBTTagCompound.setBoolean("furnace", furnace);
-		par1NBTTagCompound.setBoolean("suckItems", suckItems);
-		par1NBTTagCompound.setBoolean("ticking", ticking);
+	public void writeToNBT(NBTTagCompound nbt) {
+		super.writeToNBT(nbt);
+		for (Upgrade upgrade : Upgrade.values()) {
+			nbt.setInteger(upgrade.toString(), getAmountUpgrade(upgrade));
+		}
+		nbt.setString("player", player);
 	}
 	
 	private void onUpgradeInserted(EntityPlayer player) {
@@ -458,28 +356,16 @@ public class TileEntityBChest extends TileEntityChest implements Hopper {
 		
 	}
 	
-	public boolean hasRedstoneUpgrade() {
-		return redstoneUpgrade;
-	}
-	
 	public int getLightValue() {
-		return light ? 15 : 0;
-	}
-	
-	public boolean isPlayerUpgrade() {
-		return playerUpgrade;
-	}
-	
-	public boolean hasIndestructableUpgrade() {
-		return indestructable;
+		return isUpgradeInstalled(Upgrade.LIGHT) ? 15 : 0;
 	}
 	
 	public int getComparatorOutput() {
 		
-		if (! comparator) {
+		if (!isUpgradeInstalled(Upgrade.COMPARATOR)) {
 			return 0;
 		}
-		if (rain) {
+		if (isUpgradeInstalled(Upgrade.RAIN)) {
 			int w = 0;
 			int e = 0;
 			for (int i = 0; i < getSizeInventory(); i++) {
@@ -504,7 +390,7 @@ public class TileEntityBChest extends TileEntityChest implements Hopper {
 	}
 	
 	public void playerOpenChest(EntityPlayer player) {
-		if (! playerUpgrade) {
+		if (! isUpgradeInstalled(Upgrade.PLAYER)) {
 			return;
 		}
 		if (isUseableByPlayer(player)) {
@@ -515,152 +401,25 @@ public class TileEntityBChest extends TileEntityChest implements Hopper {
 	
 	public ItemStack[] getItemUpgrades() {
 		int amount = 0;
-		if (slotLimit > Reference.Conf.SLOT_START) {
-			amount++;
+		for (Upgrade upgrade : Upgrade.values()) {
+			if (isUpgradeInstalled(upgrade)) {
+				amount++;
+			}
 		}
-		if (redstoneUpgrade) {
-			amount++;
-		}
-		if (light) {
-			amount++;
-		}
-		if (comparator) {
-			amount++;
-		}
-		if (playerUpgrade) {
-			amount++;
-		}
-		if (voidU) {
-			amount++;
-		}
-		if (indestructable) {
-			amount++;
-		}
-		if (rain) {
-			amount++;
-		}
-		if (cobbleGen) {
-			amount++;
-		}
-		if (solar) {
-			amount++;
-		}
-		if (furnace) {
-			amount++;
-		}
-		
 		ItemStack[] items = new ItemStack[amount];
-		int i1 = 0;
-		for (int i = 0; i < amount; i++) {
-			if (i1 == 0) {
-				if (slotLimit > Reference.Conf.SLOT_START) {
-					items[i] = new ItemStack(BetterChests.upgrade,
-						(slotLimit - Reference.Conf.SLOT_START) / Reference.Conf.SLOT_UPGRADE,
-						Upgrade.SLOT.ordinal());
-					i1++;
-					continue;
-				}
-				i1++;
+		int pos = 0;
+		for (Upgrade upgrade : Upgrade.values()) {
+			if (!isUpgradeInstalled(upgrade)) {
+				continue;
 			}
-			if (i1 == 1) {
-				if (redstoneUpgrade) {
-					items[i] = new ItemStack(BetterChests.upgrade, 1, Upgrade.REDSTONE.ordinal());
-					i1++;
-					continue;
-				}
-				i1++;
-			}
-			if (i1 == 2) {
-				if (light) {
-					items[i] = new ItemStack(BetterChests.upgrade, 1, Upgrade.LIGHT.ordinal());
-					i1++;
-					continue;
-				}
-				i1++;
-			}
-			if (i1 == 3) {
-				if (comparator) {
-					items[i] = new ItemStack(BetterChests.upgrade, 1, Upgrade.COMPARATOR.ordinal());
-					i1++;
-					continue;
-				}
-				i1++;
-			}
-			if (i1 == 4) {
-				if (playerUpgrade) {
-					items[i] = new ItemStack(BetterChests.upgrade, 1, Upgrade.PLAYER.ordinal());
-					i1++;
-					continue;
-				}
-				i1++;
-			}
-			if (i1 == 5) {
-				if (voidU) {
-					items[i] = new ItemStack(BetterChests.upgrade, 1, Upgrade.VOID.ordinal());
-					i1++;
-					continue;
-				}
-				i1++;
-			}
-			if (i1 == 6) {
-				if (indestructable) {
-					items[i] = new ItemStack(BetterChests.upgrade, 1, Upgrade.UNBREAKABLE.ordinal());
-					i1++;
-					continue;
-				}
-				i1++;
-			}
-			if (i1 == 7) {
-				if (rain) {
-					items[i] = new ItemStack(BetterChests.upgrade, 1, Upgrade.RAIN.ordinal());
-					i1++;
-					continue;
-				}
-				i1++;
-			}
-			if (i1 == 8) {
-				if (cobbleGen) {
-					items[i] = new ItemStack(BetterChests.upgrade, 1, Upgrade.COBBLEGEN.ordinal());
-					i1++;
-					continue;
-				}
-				i1++;
-			}
-			if (i1 == 9) {
-				if (solar) {
-					items[i] = new ItemStack(BetterChests.upgrade, 1, Upgrade.SOLAR.ordinal());
-					i1++;
-					continue;
-				}
-				i1++;
-			}
-			if (i1 == 10) {
-				if (furnace) {
-					items[i] = new ItemStack(BetterChests.upgrade, 1, Upgrade.FURNACE.ordinal());
-					i1++;
-					continue;
-				}
-				i1++;
-			}
-			if (i1 == 11) {
-				if (suckItems) {
-					items[i] = new ItemStack(BetterChests.upgrade, 1, Upgrade.COLLECTOR.ordinal());
-					i1++;
-					continue;
-				}
-				i1++;
-			}
-			
+			items[pos] = new ItemStack(BetterChests.upgrade, getAmountUpgrade(upgrade), upgrade.ordinal());
+			pos++;
 		}
 		return items;
 	}
 	
 	private boolean hasEnergy() {
-		return solar && (worldObj.canBlockSeeTheSky(xCoord, yCoord, zCoord) && worldObj.isDaytime() || new Random().nextFloat() > Reference.Conf.ENERGY_NONDAY);
-	}
-	
-	public boolean hasSolar() {
-		return solar;
+		return isUpgradeInstalled(Upgrade.SOLAR) && (worldObj.canBlockSeeTheSky(xCoord, yCoord, zCoord) && worldObj.isDaytime() || new Random().nextFloat() > Reference.Conf.ENERGY_NONDAY);
 	}
 	
 	@Override
@@ -679,10 +438,10 @@ public class TileEntityBChest extends TileEntityChest implements Hopper {
 	}
 	
 	public int getRedstoneOutput() {
-		if (! redstoneUpgrade) {
+		if (! isUpgradeInstalled(Upgrade.REDSTONE)) {
 			return 0;
 		}
-		if (rain) {
+		if (isUpgradeInstalled(Upgrade.RAIN)) {
 			if (worldObj.isThundering()) {
 				return 2;
 			}
@@ -700,6 +459,15 @@ public class TileEntityBChest extends TileEntityChest implements Hopper {
 		}
 		Block.blocksList[worldObj.getBlockId(x, y, z)].onNeighborBlockChange(worldObj, x, y, z,
 			BetterChests.chest.blockID);
+	}
+	
+	public boolean isUpgradeInstalled(Upgrade upgrade) {
+		return getAmountUpgrade(upgrade) > 0;
+	}
+	
+	private void setAmountUpgrade(Upgrade upgrade, int amount) {
+		upgrades.remove(upgrade);
+		upgrades.put(upgrade,  amount);
 	}
 	
 }

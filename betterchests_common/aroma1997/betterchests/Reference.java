@@ -21,12 +21,6 @@ public class Reference {
 	
 	public static class Conf {
 		
-		public static final short SLOT_LIMIT = 54;
-		
-		public static final short SLOT_START = 9;
-		
-		public static final short SLOT_UPGRADE = 9;
-		
 		public static final float RAIN_THINGY = 0.8F;
 		
 		public static final int TICK_TIME = 64;

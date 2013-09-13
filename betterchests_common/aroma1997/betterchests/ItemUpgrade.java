@@ -11,6 +11,8 @@ package aroma1997.betterchests;
 
 import java.util.List;
 
+import aroma1997.core.client.util.Colors;
+
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -33,10 +35,14 @@ public class ItemUpgrade extends Item {
 	@Override
 	public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer,
 		List par3List, boolean par4) {
-		par3List.add(Upgrade.values()[par1ItemStack.getItemDamage()].getTooltip());
+		Upgrade upgrade = Upgrade.values()[par1ItemStack.getItemDamage()];
+		par3List.add(upgrade.getTooltip());
 		if (Upgrade.values()[par1ItemStack.getItemDamage()].getRequirement() != null) {
 			par3List.add("Requires " + Colors.YELLOW
 				+ Upgrade.values()[par1ItemStack.getItemDamage()].getRequirement().getName());
+		}
+		if (upgrade.getMaxAmount() != 0) {
+			par3List.add("Max Upgrades per Chest: " + upgrade.getMaxAmount() + ".");
 		}
 	}
 	

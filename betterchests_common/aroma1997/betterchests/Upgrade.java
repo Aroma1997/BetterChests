@@ -9,6 +9,8 @@
 package aroma1997.betterchests;
 
 
+import aroma1997.core.client.util.Colors;
+
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -16,20 +18,20 @@ import net.minecraft.item.ItemStack;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public enum Upgrade {
-	SLOT("Slot Upgrade", "Gives you " + Reference.Conf.SLOT_UPGRADE + " more Slots.", "slot", null),
-	COBBLEGEN("Cobblestone Generator", "This lets your chest create Cobblestone with Lava and Water", "cobble", null),
-	REDSTONE("Redstone Upgrade", "Outputs a redstone signal, when somebody opens the chest.", "redstone", null),
-	LIGHT("Light Upgrade", "Makes the Chest emit light. " + Colors.RED + "Does not work yet.", "light", null),
-	BASIC("Upgrade Case", "This is only needed to craft the other upgrades.", "basic", null),
-	COMPARATOR("Comparator Upgrade", "This Upgrade will enable the usage of the Comparators.", "comparator", null),
-	VOID("Void Upgrade", "This will destroy all Items that enter the Chest.", "void", null),
-	UNBREAKABLE("Unbreakable Upgrade", "This will make Entitys no longer able to destroy the chest. (Wither,...)", "unbreakable", null),
-	PLAYER("Player Upgrade", "This will make the chest accessable only for you.", "player", UNBREAKABLE),
-	RAIN("Rain Upgrade", "This will fill buckets in the Chest with Water.", "rain", null),
-	SOLAR("Solar Upgrade", "This will supply your chest Power.", "solar", null),
-	FURNACE("Furnace Upgrade", "With this Upgrade, your chest will smelt.", "furnace", SOLAR),
-	COLLECTOR("Collector Upgrade", "Lets the chest collect Items around it.", "collector", SOLAR),
-	TICKING("Ticking Upgrade", "Ticks the Items as in a Player Inventory.", "ticking", SOLAR);
+	SLOT("Slot Upgrade", "Gives you 9 more Slots.", "slot", null, 5),
+	COBBLEGEN("Cobblestone Generator", "This lets your chest create Cobblestone with Lava and Water", "cobble", null, 1),
+	REDSTONE("Redstone Upgrade", "Outputs a redstone signal, when somebody opens the chest.", "redstone", null, 1),
+	LIGHT("Light Upgrade", "Makes the Chest emit light. " + Colors.RED + "Does not work yet.", "light", null, 1),
+	BASIC("Upgrade Case", "This is only needed to craft the other upgrades.", "basic", null, 0),
+	COMPARATOR("Comparator Upgrade", "This Upgrade will enable the usage of the Comparators.", "comparator", null, 1),
+	VOID("Void Upgrade", "This will destroy all Items that enter the Chest.", "void", null, 1),
+	UNBREAKABLE("Unbreakable Upgrade", "This will make Entitys no longer able to destroy the chest. (Wither,...)", "unbreakable", null, 1),
+	PLAYER("Player Upgrade", "This will make the chest accessable only for you.", "player", UNBREAKABLE, 1),
+	RAIN("Rain Upgrade", "This will fill buckets in the Chest with Water.", "rain", null, 1),
+	SOLAR("Solar Upgrade", "This will supply your chest Power.", "solar", null, 1),
+	FURNACE("Furnace Upgrade", "With this Upgrade, your chest will smelt.", "furnace", SOLAR, 1),
+	COLLECTOR("Collector Upgrade", "Lets the chest collect Items around it. Radius increase by 1.", "collector", SOLAR, 8),
+	TICKING("Ticking Upgrade", "Ticks the Items as in a Player Inventory.", "ticking", SOLAR, 1);
 	
 	private String name;
 	
@@ -39,11 +41,14 @@ public enum Upgrade {
 	
 	private Upgrade requirement;
 	
-	private Upgrade(String name, String tooltip, String texture, Upgrade requirement) {
+	private int max;
+	
+	private Upgrade(String name, String tooltip, String texture, Upgrade requirement, int max) {
 		this.name = name;
 		this.tooltip = tooltip;
 		this.texture = Reference.MOD_ID + ":" + texture;
 		this.requirement = requirement;
+		this.max = max;
 	}
 	
 	public String getName() {
@@ -120,5 +125,9 @@ public enum Upgrade {
 			}
 			GameRegistry.addShapelessRecipe(itemUpgrade, new ItemStack(itemID, 1, upgr.ordinal()));
 		}
+	}
+	
+	public int getMaxAmount() {
+		return max;
 	}
 }
