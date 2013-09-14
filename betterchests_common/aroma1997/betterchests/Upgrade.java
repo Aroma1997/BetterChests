@@ -18,35 +18,32 @@ import net.minecraft.item.ItemStack;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public enum Upgrade {
-	SLOT("Slot Upgrade", "Gives you 9 more Slots.", "slot", null, 5),
-	COBBLEGEN("Cobblestone Generator", "This lets your chest create Cobblestone with Lava and Water", "cobble", null, 1),
-	REDSTONE("Redstone Upgrade", "Outputs a redstone signal, when somebody opens the chest.", "redstone", null, 1),
-	LIGHT("Light Upgrade", "Makes the Chest emit light. " + Colors.RED + "Does not work yet.", "light", null, 1),
-	BASIC("Upgrade Case", "This is only needed to craft the other upgrades.", "basic", null, 0),
-	COMPARATOR("Comparator Upgrade", "This Upgrade will enable the usage of the Comparators.", "comparator", null, 1),
-	VOID("Void Upgrade", "This will destroy all Items that enter the Chest.", "void", null, 1),
-	UNBREAKABLE("Unbreakable Upgrade", "This will make Entitys no longer able to destroy the chest. (Wither,...)", "unbreakable", null, 1),
-	PLAYER("Player Upgrade", "This will make the chest accessable only for you.", "player", UNBREAKABLE, 1),
-	RAIN("Rain Upgrade", "This will fill buckets in the Chest with Water.", "rain", null, 1),
-	SOLAR("Solar Upgrade", "This will supply your chest Power.", "solar", null, 1),
-	FURNACE("Furnace Upgrade", "With this Upgrade, your chest will smelt.", "furnace", SOLAR, 1),
-	COLLECTOR("Collector Upgrade", "Lets the chest collect Items around it. Radius increase by 1.", "collector", SOLAR, 8),
-	TICKING("Ticking Upgrade", "Ticks the Items as in a Player Inventory.", "ticking", SOLAR, 1);
+	SLOT("Slot Upgrade", "Gives you 9 more Slots.", null, 5),
+	COBBLEGEN("Cobblestone Generator", "This lets your chest create Cobblestone with Lava and Water", null, 1),
+	REDSTONE("Redstone Upgrade", "Outputs a redstone signal, when somebody opens the chest.", null, 1),
+	LIGHT("Light Upgrade", "Makes the Chest emit light. " + Colors.RED + "Does not work yet.", null, 1),
+	BASIC("Upgrade Case", "This is only needed to craft the other upgrades.", null, 0),
+	COMPARATOR("Comparator Upgrade", "This Upgrade will enable the usage of the Comparators.", null, 1),
+	VOID("Void Upgrade", "This will destroy all Items that enter the Chest.", null, 1),
+	UNBREAKABLE("Unbreakable Upgrade", "This will make Entitys no longer able to destroy the chest. (Wither,...)", null, 1),
+	PLAYER("Player Upgrade", "This will make the chest accessable only for you.", UNBREAKABLE, 1),
+	RAIN("Rain Upgrade", "This will fill buckets in the Chest with Water.", null, 1),
+	SOLAR("Solar Upgrade", "This will supply your chest Power.", null, 1),
+	FURNACE("Furnace Upgrade", "With this Upgrade, your chest will smelt.", SOLAR, 1),
+	COLLECTOR("Collector Upgrade", "Lets the chest collect Items around it. Radius increase by 1.", SOLAR, 8),
+	TICKING("Ticking Upgrade", "Ticks the Items as in a Player Inventory.", SOLAR, 1);
 	
 	private String name;
 	
 	private String tooltip;
 	
-	private String texture;
-	
 	private Upgrade requirement;
 	
 	private int max;
 	
-	private Upgrade(String name, String tooltip, String texture, Upgrade requirement, int max) {
+	private Upgrade(String name, String tooltip, Upgrade requirement, int max) {
 		this.name = name;
 		this.tooltip = tooltip;
-		this.texture = Reference.MOD_ID + ":" + texture;
 		this.requirement = requirement;
 		this.max = max;
 	}
@@ -60,7 +57,7 @@ public enum Upgrade {
 	}
 	
 	public String getTexture() {
-		return texture;
+		return Reference.MOD_ID + ":" + toString().toLowerCase();
 	}
 	
 	public Upgrade getRequirement() {
@@ -118,6 +115,8 @@ public enum Upgrade {
 		GameRegistry.addRecipe(new ItemStack(itemID, 1, Upgrade.COLLECTOR.ordinal()), " H ", "HUH",
 			"RER", 'H', new ItemStack(Block.hopperBlock), 'R', new ItemStack(Item.redstone), 'E',
 			new ItemStack(Item.enderPearl), 'U', itemUpgrade);
+		// TICKING
+		GameRegistry.addRecipe(new ItemStack(itemID, 1, Upgrade.TICKING.ordinal()), "QCQ", "RUR", "QCQ", 'Q', new ItemStack(Item.netherQuartz), 'C', new ItemStack(Item.pocketSundial), 'R', new ItemStack(Item.comparator), 'U', itemUpgrade);
 		
 		for (Upgrade upgr : Upgrade.values()) {
 			if (upgr == BASIC) {
