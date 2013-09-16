@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.Random;
 
 import aroma1997.core.client.util.Colors;
-import aroma1997.core.misc.FakePlayer;
+import aroma1997.core.misc.FakePlayerFactory;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -40,7 +40,7 @@ public class TileEntityBChest extends TileEntityChest implements Hopper {
 	
 	private int tick;
 	
-	private FakePlayer fplayer;
+	private EntityPlayer fplayer;
 	
 	private HashMap<Upgrade, Integer> upgrades = new HashMap<Upgrade, Integer>();
 	
@@ -56,6 +56,9 @@ public class TileEntityBChest extends TileEntityChest implements Hopper {
 	public String getInvName() {
 		if (isUpgradeInstalled(Upgrade.VOID)) {
 			return Colors.RED + "Void Chest";
+		}
+		if (isUpgradeInstalled(Upgrade.PLAYER)) {
+			return Colors.YELLOW + player + "'s Chest";
 		}
 		return "Adjustable Chest";
 	}
@@ -73,7 +76,7 @@ public class TileEntityBChest extends TileEntityChest implements Hopper {
 		super.validate();
 
 		if (!worldObj.isRemote) {
-			fplayer = FakePlayer.getFakePlayer(worldObj);
+			fplayer = FakePlayerFactory.getFakePlayer(worldObj);
 			fplayer.posX = xCoord;
 			fplayer.posY = yCoord;
 			fplayer.posZ = zCoord;
@@ -295,6 +298,9 @@ public class TileEntityBChest extends TileEntityChest implements Hopper {
 		if (!(getAmountUpgrade(upgrade) >= upgrade.getMaxAmount())) {
 			if (upgrade.getRequirement() == null || isUpgradeInstalled(upgrade.getRequirement())) {
 				setAmountUpgrade(upgrade, getAmountUpgrade(upgrade) + 1);
+				if (upgrade == Upgrade.PLAYER) {
+					this.player = player.username;
+				}
 				onUpgradeInserted(player);
 				return true;
 			}
