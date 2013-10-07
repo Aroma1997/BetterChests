@@ -11,6 +11,8 @@ package aroma1997.betterchests;
 
 import java.util.Random;
 
+import aroma1997.core.inventories.Inventories;
+
 import net.minecraft.block.BlockChest;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.Entity;
@@ -46,13 +48,13 @@ public class BlockBChest extends BlockChest {
 	public boolean onBlockActivated(World par1World, int par2, int par3, int par4,
 		EntityPlayer par5EntityPlayer, int par6, float par7, float par8, float par9)
 	{
+		if (par5EntityPlayer.isSneaking()) return false;
 		if (par5EntityPlayer.getHeldItem() == null
 			|| ! (par5EntityPlayer.getHeldItem().itemID == BetterChests.upgrade.itemID && par5EntityPlayer.getHeldItem().getItemDamage() != Upgrade.BASIC.ordinal())) {
-			
-			((TileEntityBChest) par1World.getBlockTileEntity(par2, par3, par4)).playerOpenChest(par5EntityPlayer);
-			
-			return super.onBlockActivated(par1World, par2, par3, par4, par5EntityPlayer, par6,
-				par7, par8, par9);
+				TileEntityBChest te = (TileEntityBChest)par1World.getBlockTileEntity(par2, par3, par4);
+				te.playerOpenChest(par5EntityPlayer);
+				Inventories.openContainerTileEntity(par5EntityPlayer, te);
+				return true;
 		}
 		
 		TileEntityBChest te = (TileEntityBChest) par1World.getBlockTileEntity(par2, par3, par4);
@@ -121,7 +123,7 @@ public class BlockBChest extends BlockChest {
 	@Override
 	public void registerIcons(IconRegister par1IconRegister)
 	{
-		blockIcon = par1IconRegister.registerIcon("cobblestone");
+		blockIcon = par1IconRegister.registerIcon(Reference.MOD_ID + ":tile.betterChest");
 	}
 	
 	@Override

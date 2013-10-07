@@ -10,9 +10,14 @@ package aroma1997.betterchests;
 
 
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Random;
 
 import aroma1997.core.client.util.Colors;
+import aroma1997.core.inventories.ContainerBasic;
+import aroma1997.core.inventories.GUIContainer;
+import aroma1997.core.inventories.ISpecialInventory;
 import aroma1997.core.misc.FakePlayerFactory;
 
 import net.minecraft.block.Block;
@@ -20,6 +25,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
+import net.minecraft.inventory.Slot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
@@ -31,10 +37,11 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.Hopper;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.tileentity.TileEntityHopper;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
 
-public class TileEntityBChest extends TileEntityChest implements Hopper {
+public class TileEntityBChest extends TileEntityChest implements ISpecialInventory, Hopper {
 	
 	private String player;
 	
@@ -43,6 +50,8 @@ public class TileEntityBChest extends TileEntityChest implements Hopper {
 	private EntityPlayer fplayer;
 	
 	private HashMap<Upgrade, Integer> upgrades = new HashMap<Upgrade, Integer>();
+
+	private int ticksSinceSync = -1;
 	
 	public TileEntityBChest() {
 		player = "";
@@ -74,7 +83,6 @@ public class TileEntityBChest extends TileEntityChest implements Hopper {
 	@Override
 	public void validate() {
 		super.validate();
-
 		if (!worldObj.isRemote) {
 			fplayer = FakePlayerFactory.getFakePlayer(worldObj);
 			fplayer.posX = xCoord;
@@ -83,9 +91,16 @@ public class TileEntityBChest extends TileEntityChest implements Hopper {
 		}
 	}
 	
+	private boolean firstInit = false;
+	
 	@Override
 	public void updateEntity() {
 		super.updateEntity();
+
+		doNormalChestUpdate();
+		if (firstInit) {
+			this.worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+		}
 		if (worldObj.isRemote) {
 			return;
 		}
@@ -250,6 +265,10 @@ public class TileEntityBChest extends TileEntityChest implements Hopper {
     	writeToNBT(nbt);
     	Packet132TileEntityData packet = new Packet132TileEntityData();
     	packet.data = nbt;
+    	packet.xPosition = xCoord;
+    	packet.yPosition = yCoord;
+    	packet.zPosition = zCoord;
+    	packet.actionType = 1;
         return packet;
     }
 	
@@ -324,6 +343,9 @@ public class TileEntityBChest extends TileEntityChest implements Hopper {
 		}
 		player = nbt.getString("player");
 		super.readFromNBT(nbt);
+		if (worldObj != null && worldObj.isRemote) {
+			this.worldObj.markBlockForRenderUpdate(xCoord, yCoord, zCoord);
+		}
 	}
 	
 	private void readFromNBTOld(NBTTagCompound par1NBTTagCompound)
@@ -474,6 +496,93 @@ public class TileEntityBChest extends TileEntityChest implements Hopper {
 	private void setAmountUpgrade(Upgrade upgrade, int amount) {
 		upgrades.remove(upgrade);
 		upgrades.put(upgrade,  amount);
+	}
+
+	@Override
+	public Slot getSlot(int slot, int index, int x, int y) {
+		return new Slot(this, index, x, y);
+	}
+
+	@Override
+	public void drawGuiContainerForegroundLayer(GUIContainer gui, ContainerBasic container,
+		int par1, int par2) {
+		
+	}
+
+	@Override
+	public void drawGuiContainerBackgroundLayer(GUIContainer gui, ContainerBasic container,
+		float f, int i, int j) {
+		
+	}
+
+	@Override
+	public ContainerBasic getContainer(EntityPlayer player, int i) {
+		return new ContainerBasic(player.inventory, this);
+	}
+	
+	@SuppressWarnings("rawtypes")
+	private void doNormalChestUpdate() {
+        if (worldObj != null && !this.worldObj.isRemote && this.numUsingPlayers > 0 && (this.ticksSinceSync + this.xCoord + this.yCoord + this.zCoord) % 200 == 0)
+        {
+            this.numUsingPlayers = 0;
+            float var1 = 5.0F;
+            List var2 = this.worldObj.getEntitiesWithinAABB(EntityPlayer.class, AxisAlignedBB.getAABBPool().getAABB((double)((float)this.xCoord - var1), (double)((float)this.yCoord - var1), (double)((float)this.zCoord - var1), (double)((float)(this.xCoord + 1) + var1), (double)((float)(this.yCoord + 1) + var1), (double)((float)(this.zCoord + 1) + var1)));
+            Iterator var3 = var2.iterator();
+
+            while (var3.hasNext())
+            {
+                EntityPlayer var4 = (EntityPlayer)var3.next();
+
+                if (var4.openContainer instanceof ContainerBasic)
+                {
+                    ++this.numUsingPlayers;
+                }
+            }
+        }
+
+        if (worldObj != null && !worldObj.isRemote && ticksSinceSync < 0)
+        {
+            worldObj.addBlockEvent(xCoord, yCoord, zCoord, BetterChests.chest.blockID, 1, numUsingPlayers);
+        }
+
+        this.ticksSinceSync++;
+        prevLidAngle = lidAngle;
+        float f = 0.1F;
+        if (numUsingPlayers > 0 && lidAngle == 0.0F)
+        {
+            worldObj.playSoundEffect(xCoord + 0.5D, (double) yCoord + 0.5D, zCoord + 0.5D, "random.chestopen", 0.5F, worldObj.rand.nextFloat() * 0.1F + 0.9F);
+        }
+        if (numUsingPlayers <= 0 && lidAngle > 0.0F || numUsingPlayers > 0 && lidAngle < 1.0F)
+        {
+            float f1 = lidAngle;
+            if (numUsingPlayers > 0)
+            {
+                lidAngle += f;
+            }
+            else
+            {
+                lidAngle -= f;
+            }
+            if (lidAngle > 1.0F)
+            {
+                lidAngle = 1.0F;
+            }
+            float f2 = 0.5F;
+            if (lidAngle < f2 && f1 >= f2)
+            {
+                worldObj.playSoundEffect(xCoord + 0.5D, (double) yCoord + 0.5D, zCoord + 0.5D, "random.chestclosed", 0.5F, worldObj.rand.nextFloat() * 0.1F + 0.9F);
+            }
+            if (lidAngle < 0.0F)
+            {
+                lidAngle = 0.0F;
+            }
+        }
+	}
+	
+	@Override
+	public void onInventoryChanged() {
+		super.onInventoryChanged();
+		this.worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
 	}
 	
 }

@@ -9,8 +9,6 @@
 package aroma1997.betterchests;
 
 
-import aroma1997.core.client.util.Colors;
-
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -21,7 +19,7 @@ public enum Upgrade {
 	SLOT("Slot Upgrade", "Gives you 9 more Slots.", null, 5),
 	COBBLEGEN("Cobblestone Generator", "This lets your chest create Cobblestone with Lava and Water", null, 1),
 	REDSTONE("Redstone Upgrade", "Outputs a redstone signal, when somebody opens the chest.", null, 1),
-	LIGHT("Light Upgrade", "Makes the Chest emit light. " + Colors.RED + "Does not work yet.", null, 1),
+	LIGHT("Light Upgrade", "Makes the Chest emit light.", null, 1),
 	BASIC("Upgrade Case", "This is only needed to craft the other upgrades.", null, 0),
 	COMPARATOR("Comparator Upgrade", "This Upgrade will enable the usage of the Comparators.", null, 1),
 	VOID("Void Upgrade", "This will destroy all Items that enter the Chest.", null, 1),
@@ -77,6 +75,8 @@ public enum Upgrade {
 		// REDSTONE
 		GameRegistry.addRecipe(new ItemStack(itemID, 1, Upgrade.REDSTONE.ordinal()), "RRR",
 			"RUR", "RRR", 'R', new ItemStack(Item.redstone), 'U', itemUpgrade);
+		//LIGHT
+		GameRegistry.addRecipe(new ItemStack(itemID, 1, Upgrade.LIGHT.ordinal()), " G ", "GUG", " G ", 'G', new ItemStack(Item.glowstone), 'U', itemUpgrade);
 		// COMPARATOR
 		GameRegistry.addRecipe(new ItemStack(itemID, 1, Upgrade.COMPARATOR.ordinal()),
 			" Q ", "RUR", " Q ", 'Q', new ItemStack(Item.netherQuartz), 'R', new ItemStack(
