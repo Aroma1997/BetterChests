@@ -19,6 +19,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Icon;
+import net.minecraft.util.StatCollector;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -37,14 +38,14 @@ public class ItemUpgrade extends Item {
 		List par3List, boolean par4) {
 		Upgrade upgrade = Upgrade.values()[par1ItemStack.getItemDamage()];
 		if (Upgrade.values()[par1ItemStack.getItemDamage()].getRequirement() != null) {
-			par3List.add("Requires " + Colors.YELLOW
-				+ Upgrade.values()[par1ItemStack.getItemDamage()].getRequirement().getName());
+			par3List.add(StatCollector.translateToLocalFormatted("info.betterchests:tooltip.requires", Colors.YELLOW
+				+ Upgrade.values()[par1ItemStack.getItemDamage()].getRequirement().getName()));
 		}
 		if (upgrade.getMaxAmount() != 0) {
-			par3List.add("Max Upgrades per Chest: " + upgrade.getMaxAmount() + ".");
+			par3List.add(StatCollector.translateToLocalFormatted("info.betterchests:tooltip.maxamount", upgrade.getMaxAmount()));
 		}
 		if (!upgrade.canBag) {
-			par3List.add("Can not be put on a Bag.");
+			par3List.add(StatCollector.translateToLocal("info.betterchests:tooltip.nobag"));
 		}
 	}
 	

@@ -14,26 +14,26 @@ import java.util.ArrayList;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.StatCollector;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public enum Upgrade {
-	SLOT("Slot Upgrade", null, 5, true, true),
-	COBBLEGEN("Cobblestone Generator", null, 1, true, false),
-	REDSTONE("Redstone Upgrade", null, 1, true, false),
-	LIGHT("Light Upgrade", null, 1, true, false),
-	BASIC("Upgrade Case", null, 0, false, false),
-	COMPARATOR("Comparator Upgrade", null, 1, true, false),
-	VOID("Void Upgrade", null, 1, true, false),
-	UNBREAKABLE("Unbreakable Upgrade", null, 1, true, false),
-	PLAYER("Player Upgrade", UNBREAKABLE, 1, true, false),
-	RAIN("Rain Upgrade", null, 1, true, false),
-	SOLAR("Solar Upgrade", null, 1, true, false),
-	FURNACE("Furnace Upgrade", SOLAR, 1, true, false),
-	COLLECTOR("Collector Upgrade", SOLAR, 8, true, false),
-	TICKING("Ticking Upgrade", SOLAR, 1, true, false);
+	SLOT(null, 5, true, true),
+	COBBLEGEN(null, 1, true, false),
+	REDSTONE(null, 1, true, false),
+	LIGHT(null, 1, true, false),
+	BASIC(null, 0, false, false),
+	COMPARATOR(null, 1, true, false),
+	VOID(null, 1, true, false),
+	UNBREAKABLE(null, 1, true, false),
+	PLAYER(UNBREAKABLE, 1, true, false),
+	RAIN(null, 1, true, false),
+	SOLAR(null, 1, true, false),
+	FURNACE(SOLAR, 1, true, false),
+	COLLECTOR(SOLAR, 8, true, false),
+	TICKING(SOLAR, 1, true, false);
 	
-	private String name;
 	
 	private Upgrade requirement;
 	
@@ -43,8 +43,7 @@ public enum Upgrade {
 	
 	final boolean canBag;
 	
-	private Upgrade(String name, Upgrade requirement, int max, boolean validItem, boolean canBag) {
-		this.name = name;
+	private Upgrade(Upgrade requirement, int max, boolean validItem, boolean canBag) {
 		this.requirement = requirement;
 		this.max = max;
 		this.validItem = validItem;
@@ -52,7 +51,7 @@ public enum Upgrade {
 	}
 	
 	public String getName() {
-		return name;
+		return StatCollector.translateToLocal("item.betterchests:upgrade." + toString() + ".name");
 	}
 	
 	public String getTexture() {

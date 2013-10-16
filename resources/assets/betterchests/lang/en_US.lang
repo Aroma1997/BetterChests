@@ -27,9 +27,10 @@ book.betterchests:upgrade.VOID=Void Upgrade: You have too much Cobblestone? Or t
 book.betterchests:upgrade.UNBREAKABLE=Unbreakable Upgrade: This upgrade makes your Chest blast- and fireproff, so Creepers, TNT, (Nukes), Ender Dragon(s) or Withers can't destroy it.
 book.betterchests:upgrade.PLAYER=Player Upgrade: With this Upgrade, the Chest is only accessible for the Player who inserted the Upgrade and Admins. To the other people, well let's just say, the Chest won't be nice to them!
 book.betterchests:upgrade.RAIN=Rain Upgrade: If it rains onto your Chest and the Rain Upgrade is installed, it will automatically fill empty buckets with water.
+book.betterchests:upgrade.SOLAR=Solar Upgrade: This Upgrade is only required by other Upgrades, because it supplies Energy to your Chest.
 book.betterchests:upgrade.FURNACE=Furnace Upgrade: You know that problem, you have too much stuff to smelt, but not enough furnaces? This Upgrade will solve that problem for you.
 book.betterchests:upgrade.COLLECTOR=Collector Upgrade: This Upgrade will suck items into the Chest that are dropped nearby it. You can increase the range of it by installing more upgrades.
-book.betterchests:upgrade.TICKING=Bla Bla Bla
+book.betterchests:upgrade.TICKING=Ticking Upgrade: This Upgrade will tick the contents of your chest as if they were in a Player Inventory.
 
 
 book.betterchests:credits=Thank you for reading the User Manual. If you still have questions just ask them in the MCF thread at: http://tinyurl.com/aroma1997
@@ -44,3 +45,23 @@ inv.betterchests:bag.name=Adjustable Bag
 
 tile.betterchests:chest.name=Adjustable Chest
 item.betterchests:bag.name=Adjustable Bag
+
+item.betterchests:upgrade.SLOT.name=Slot Upgrade
+item.betterchests:upgrade.COBBLEGEN.name=CobbleGen Upgrade
+item.betterchests:upgrade.REDSTONE.name=Redstone Upgrade
+item.betterchests:upgrade.LIGHT.name=Light Upgrade
+item.betterchests:upgrade.BASIC.name=Upgrade Case
+item.betterchests:upgrade.COMPARATOR.name=Comparator Upgrade
+item.betterchests:upgrade.VOID.name=Void Upgrade
+item.betterchests:upgrade.UNBREAKABLE.name=Unbreakable Upgrade
+item.betterchests:upgrade.PLAYER.name=Player Upgrade
+item.betterchests:upgrade.RAIN.name=Rain Upgrade
+item.betterchests:upgrade.SOLAR.name=Solar Upgrade
+item.betterchests:upgrade.FURNACE.name=Furnace Upgrade
+item.betterchests:upgrade.COLLECTOR.name=Collector Upgrade
+item.betterChests:upgrade.TICKING.name=Ticking Upgrade
+
+
+info.betterchests:tooltip.nobag=This Upgrade cannot be put on a bag.
+info.betterchests:tooltip.maxamount=Max Upgrades per chest: %s.
+info.betterchests:tooltip.requires=Requires: %s.

@@ -4,6 +4,7 @@ import aroma1997.core.inventories.ISpecialInventory;
 import aroma1997.core.inventories.ISpecialInventoryProvider;
 import aroma1997.core.inventories.Inventories;
 
+import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -11,6 +12,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 
 public class ItemBag extends Item implements ISpecialInventoryProvider {
@@ -59,5 +63,12 @@ public class ItemBag extends Item implements ISpecialInventoryProvider {
 	public String getItemDisplayName(ItemStack par1ItemStack) {
 		return StatCollector.translateToLocal("item.betterchests:bag.name");
 	}
+	
+    @SideOnly(Side.CLIENT)
+    @Override
+    public void registerIcons(IconRegister par1IconRegister)
+    {
+    	this.itemIcon = par1IconRegister.registerIcon(Reference.MOD_ID + ":bag");
+    }
 	
 }
