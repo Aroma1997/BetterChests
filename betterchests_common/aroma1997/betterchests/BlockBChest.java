@@ -13,12 +13,12 @@ import java.util.Random;
 
 import aroma1997.core.inventories.Inventories;
 
-import net.minecraft.block.BlockChest;
+import net.minecraft.block.BlockContainer;
+import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -28,16 +28,34 @@ import net.minecraft.world.World;
 
 import net.minecraftforge.common.ForgeDirection;
 
-public class BlockBChest extends BlockChest {
+public class BlockBChest extends BlockContainer {
 	
 	public BlockBChest(int id) {
-		super(id, - 1);
+		super(id, Material.wood);
 		setHardness(3.0F);
 		setCreativeTab(BetterChests.creativeTabBC);
 		setUnlocalizedName("betterChest");
 		setLightOpacity(0);
 		disableStats();
+        this.setBlockBounds(0.0625F, 0.0F, 0.0625F, 0.9375F, 0.875F, 0.9375F);
 	}
+	
+	@Override
+	public boolean renderAsNormalBlock() {
+		return false;
+	}
+	
+	@Override
+    public int getRenderType()
+    {
+        return 22;
+    }
+	
+	@Override
+    public boolean isOpaqueCube()
+    {
+        return false;
+    }
 	
 	@Override
 	public TileEntity createNewTileEntity(World world) {
@@ -49,18 +67,25 @@ public class BlockBChest extends BlockChest {
 		EntityPlayer par5EntityPlayer, int par6, float par7, float par8, float par9)
 	{
 		if (par5EntityPlayer.isSneaking()) return false;
-		if (par5EntityPlayer.getHeldItem() == null
-			|| ! (par5EntityPlayer.getHeldItem().itemID == BetterChests.upgrade.itemID && par5EntityPlayer.getHeldItem().getItemDamage() != Upgrade.BASIC.ordinal())) {
-				TileEntityBChest te = (TileEntityBChest)par1World.getBlockTileEntity(par2, par3, par4);
-				te.playerOpenChest(par5EntityPlayer);
-				Inventories.openContainerTileEntity(par5EntityPlayer, te);
-				return true;
+		ItemStack item = par5EntityPlayer.getHeldItem();
+		
+		if (item == null || !(item.getItem() instanceof ItemUpgrade)) {
+			return openInventory(par5EntityPlayer, par1World, par2, par3, par4);
 		}
+		if (Upgrade.values()[item.getItemDamage()].isValidUpgrade()) {
+
+			TileEntityBChest te = (TileEntityBChest) par1World.getBlockTileEntity(par2, par3, par4);
+			return te.upgrade(par5EntityPlayer);
+		}
+		return openInventory(par5EntityPlayer, par1World, par2, par3, par4);
 		
-		TileEntityBChest te = (TileEntityBChest) par1World.getBlockTileEntity(par2, par3, par4);
-		
-		return te.upgrade(par5EntityPlayer);
-		
+	}
+	
+	private boolean openInventory(EntityPlayer player, World world, int x, int y, int z) {
+		TileEntityBChest te = (TileEntityBChest)world.getBlockTileEntity(x, y, z);
+		te.playerOpenChest(player);
+		Inventories.openContainerTileEntity(player, te);
+		return true;
 	}
 	
 	@Override
@@ -68,12 +93,6 @@ public class BlockBChest extends BlockChest {
 		int par5)
 	{
 		return ((TileEntityBChest) par1IBlockAccess.getBlockTileEntity(par2, par3, par4)).getRedstoneOutput();
-	}
-	
-	@Override
-	public void unifyAdjacentChests(World par1World, int par2, int par3, int par4)
-	{
-		
 	}
 	
 	@Override
@@ -88,17 +107,17 @@ public class BlockBChest extends BlockChest {
 		return ((TileEntityBChest) world.getBlockTileEntity(x, y, z)).getLightValue();
 	}
 	
-	@Override
-	public IInventory getInventory(World par1World, int par2, int par3, int par4)
-	{
-		Object object = par1World.getBlockTileEntity(par2, par3, par4);
-		
-		if (object == null)
-		{
-			return null;
-		}
-		return (IInventory) object;
-	}
+//	@Override
+//	public IInventory getInventory(World par1World, int par2, int par3, int par4)
+//	{
+//		Object object = par1World.getBlockTileEntity(par2, par3, par4);
+//		
+//		if (object == null)
+//		{
+//			return null;
+//		}
+//		return (IInventory) object;
+//	}
 	
 	@Override
 	public void setBlockBoundsBasedOnState(IBlockAccess par1IBlockAccess, int par2, int par3,
@@ -123,7 +142,7 @@ public class BlockBChest extends BlockChest {
 	@Override
 	public void registerIcons(IconRegister par1IconRegister)
 	{
-		blockIcon = par1IconRegister.registerIcon(Reference.MOD_ID + ":tile.betterChest");
+//		blockIcon = par1IconRegister.registerIcon(Reference.MOD_ID + ":tile.betterChest");
 	}
 	
 	@Override

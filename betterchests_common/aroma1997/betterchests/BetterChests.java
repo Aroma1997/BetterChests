@@ -10,11 +10,14 @@ package aroma1997.betterchests;
 
 
 import java.io.File;
+import java.util.ArrayList;
 
+import aroma1997.core.util.ItemUtil;
 import aroma1997.core.version.VersionCheck;
 
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 import net.minecraftforge.common.Configuration;
@@ -27,7 +30,6 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.common.registry.LanguageRegistry;
 
 @Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, version = Reference.VERSION, dependencies="required-after:Aroma1997Core")
 public class BetterChests {
@@ -42,6 +44,10 @@ public class BetterChests {
 	
 	public static ItemUpgrade upgrade;
 	
+	public static ItemBag bag;
+	
+	public static ItemStack helpBook;
+	
 	public static CreativeTabs creativeTabBC = new CreativeTabBChest();
 	
 	@EventHandler
@@ -54,20 +60,39 @@ public class BetterChests {
 		upgrade = new ItemUpgrade(
 			config.getItem(Configuration.CATEGORY_ITEM, "upgradeItem", 12458,
 				"The Item id of the Upgrades").getInt() - 256);
+		bag = new ItemBag(config.getItem("bagItem", 12457, "The item id of the Bag").getInt() - 256);
 		config.save();
 		GameRegistry.registerBlock(chest, ItemBlockBChest.class, "betterChest");
 		GameRegistry.registerItem(upgrade, "Upgrade");
+		GameRegistry.registerItem(bag, "Bag");
+		GameRegistry.addShapedRecipe(new ItemStack(bag), "SWS", "LCL", "SWS", 'S', new ItemStack(Item.silk), 'L', new ItemStack(Item.leather), 'W', new ItemStack(Block.cloth), 'C', new ItemStack(chest));
 	}
 	
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
 		proxy.registerRenderers();
 		GameRegistry.registerTileEntity(TileEntityBChest.class, "adjustableChest");
-		LanguageRegistry.instance().addStringLocalization("itemGroup.creativeTabBC", "en_US",
-			"BetterChests");
 		GameRegistry.addRecipe(new ItemStack(chest), "CCC", "CBC", "CCC", 'C', new ItemStack(
 			Block.cobblestone), 'B', new ItemStack(Block.chest));
+		GameRegistry.addRecipe(new CraftingBag());
 		Upgrade.generateRecipes();
+		
+		ArrayList<String> list = new ArrayList<String>();
+		list.add("book.betterchests:introduction");
+		list.add("book.betterchests:chapter.general");
+		list.add("book.betterchests:general.1");
+		list.add("book.betterchests:general.2");
+		list.add("book.betterchests:general.3");
+		list.add("book.betterchests:chest.1");
+		list.add("book.betterchests:bag.1");
+		list.add("book.betterchests:chapter.upgrades");
+		Upgrade.addBagBookDescription(list);
+		list.add("book.betterchests:chapter.credits");
+		list.add("book.betterchests:credits");
+		helpBook = ItemUtil.getWrittenBook("book.betterchests:name", "Aroma1997", true, list.toArray(new String[list.size()]));
+		
+		GameRegistry.addShapelessRecipe(helpBook, Upgrade.BASIC.getItem(), new ItemStack(Item.book));
+		GameRegistry.addRecipe(new CraftingBook());
 		
 		VersionCheck.registerVersionChecker(Reference.MOD_ID, Reference.VERSION);
 	}

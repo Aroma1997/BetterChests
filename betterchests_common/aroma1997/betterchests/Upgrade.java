@@ -9,6 +9,8 @@
 package aroma1997.betterchests;
 
 
+import java.util.ArrayList;
+
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -16,42 +18,41 @@ import net.minecraft.item.ItemStack;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public enum Upgrade {
-	SLOT("Slot Upgrade", "Gives you 9 more Slots.", null, 5),
-	COBBLEGEN("Cobblestone Generator", "This lets your chest create Cobblestone with Lava and Water", null, 1),
-	REDSTONE("Redstone Upgrade", "Outputs a redstone signal, when somebody opens the chest.", null, 1),
-	LIGHT("Light Upgrade", "Makes the Chest emit light.", null, 1),
-	BASIC("Upgrade Case", "This is only needed to craft the other upgrades.", null, 0),
-	COMPARATOR("Comparator Upgrade", "This Upgrade will enable the usage of the Comparators.", null, 1),
-	VOID("Void Upgrade", "This will destroy all Items that enter the Chest.", null, 1),
-	UNBREAKABLE("Unbreakable Upgrade", "This will make Entitys no longer able to destroy the chest. (Wither,...)", null, 1),
-	PLAYER("Player Upgrade", "This will make the chest accessable only for you.", UNBREAKABLE, 1),
-	RAIN("Rain Upgrade", "This will fill buckets in the Chest with Water.", null, 1),
-	SOLAR("Solar Upgrade", "This will supply your chest Power.", null, 1),
-	FURNACE("Furnace Upgrade", "With this Upgrade, your chest will smelt.", SOLAR, 1),
-	COLLECTOR("Collector Upgrade", "Lets the chest collect Items around it. Radius increase by 1.", SOLAR, 8),
-	TICKING("Ticking Upgrade", "Ticks the Items as in a Player Inventory.", SOLAR, 1);
+	SLOT("Slot Upgrade", null, 5, true, true),
+	COBBLEGEN("Cobblestone Generator", null, 1, true, false),
+	REDSTONE("Redstone Upgrade", null, 1, true, false),
+	LIGHT("Light Upgrade", null, 1, true, false),
+	BASIC("Upgrade Case", null, 0, false, false),
+	COMPARATOR("Comparator Upgrade", null, 1, true, false),
+	VOID("Void Upgrade", null, 1, true, false),
+	UNBREAKABLE("Unbreakable Upgrade", null, 1, true, false),
+	PLAYER("Player Upgrade", UNBREAKABLE, 1, true, false),
+	RAIN("Rain Upgrade", null, 1, true, false),
+	SOLAR("Solar Upgrade", null, 1, true, false),
+	FURNACE("Furnace Upgrade", SOLAR, 1, true, false),
+	COLLECTOR("Collector Upgrade", SOLAR, 8, true, false),
+	TICKING("Ticking Upgrade", SOLAR, 1, true, false);
 	
 	private String name;
-	
-	private String tooltip;
 	
 	private Upgrade requirement;
 	
 	private int max;
 	
-	private Upgrade(String name, String tooltip, Upgrade requirement, int max) {
+	private boolean validItem;
+	
+	final boolean canBag;
+	
+	private Upgrade(String name, Upgrade requirement, int max, boolean validItem, boolean canBag) {
 		this.name = name;
-		this.tooltip = tooltip;
 		this.requirement = requirement;
 		this.max = max;
+		this.validItem = validItem;
+		this.canBag = canBag;
 	}
 	
 	public String getName() {
 		return name;
-	}
-	
-	public String getTooltip() {
-		return tooltip;
 	}
 	
 	public String getTexture() {
@@ -128,5 +129,23 @@ public enum Upgrade {
 	
 	public int getMaxAmount() {
 		return max;
+	}
+	
+	public boolean isValidUpgrade() {
+		return validItem;
+	}
+	
+	public boolean canBagTakeUpgrade() {
+		return canBag && isValidUpgrade();
+	}
+	
+	public static void addBagBookDescription(ArrayList<String> list) {
+		for (Upgrade upgrade : Upgrade.values()) {
+			list.add("book.betterchests:upgrade." + upgrade);
+		}
+	}
+	
+	public ItemStack getItem() {
+		return new ItemStack(BetterChests.upgrade, 1, ordinal());
 	}
 }

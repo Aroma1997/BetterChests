@@ -12,6 +12,9 @@ package aroma1997.betterchests;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 public class CreativeTabBChest extends CreativeTabs {
 	
 	public CreativeTabBChest() {
@@ -22,5 +25,12 @@ public class CreativeTabBChest extends CreativeTabs {
 	public ItemStack getIconItemStack() {
 		return new ItemStack(BetterChests.chest);
 	}
+	
+	@SideOnly(Side.CLIENT)
+	@Override
+    public String getTranslatedTabLabel()
+    {
+		return "creativetab.betterchests:creativetab.name";
+    }
 	
 }

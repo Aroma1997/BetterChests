@@ -36,13 +36,15 @@ public class ItemUpgrade extends Item {
 	public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer,
 		List par3List, boolean par4) {
 		Upgrade upgrade = Upgrade.values()[par1ItemStack.getItemDamage()];
-		par3List.add(upgrade.getTooltip());
 		if (Upgrade.values()[par1ItemStack.getItemDamage()].getRequirement() != null) {
 			par3List.add("Requires " + Colors.YELLOW
 				+ Upgrade.values()[par1ItemStack.getItemDamage()].getRequirement().getName());
 		}
 		if (upgrade.getMaxAmount() != 0) {
 			par3List.add("Max Upgrades per Chest: " + upgrade.getMaxAmount() + ".");
+		}
+		if (!upgrade.canBag) {
+			par3List.add("Can not be put on a Bag.");
 		}
 	}
 	

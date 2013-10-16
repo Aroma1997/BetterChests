@@ -1,0 +1,46 @@
+book.betterchests:name=BetterChests User Manual
+
+book.betterchests:chapter.general=General information
+book.betterchests:chapter.upgrades=Upgrade information
+book.betterchests:chapter.credits=Credits
+
+
+book.betterchests:introduction=Welcome to your new BetterChests User Manual. Here you can find some general information about the Adjustable Chest, the Bag and their upgrades.
+
+
+book.betterchests:general.1=BetterChests is a mod, that adds an Adjustable Chest, an Adjustable Bag and some Upgrades. How to use them you'll see later on, because they don't do anything special on their own.
+book.betterchests:general.2=This User Manual will not automatically update itself between versions. To update it manually just place it into a crafting grid.
+book.betterchests:general.3=If you don't know the recipes of the Chest, Bag or the Upgrades, install NEI or CraftGuide. The Crafting recipes won't be shown here.
+
+book.betterchests:chest.1=The Adjustable Chest can be placed down to store some Items. By default it has 9 Slots. You can upgrade it by right-clicking with an Upgrade on the Chest.
+
+book.betterchests:bag.1=The Adjustable Bag is basically a Chest as an Item. The Inventory can be opened by Right-Clicking it in your hand. To upgrade it, just place an Upgrade alongside with the Bag in the Crafting Grid and you will get a upgraded Bag.
+
+
+book.betterchests:upgrade.SLOT=Slot Upgrade: This upgrade gives your chest nine more slots. This upgrade can be inserted multiple times.
+book.betterchests.upgrade.COBBLEGEN=CobbleGen Upgrade: This upgrade lets your chest generate cobblestone if you place a bucket of Lava and a bucket of Water in there, cause that's how Cobble gets generated.
+book.betterchests:upgrade.REDSTONE=Redstone Upgrade: This Upgrade makes your chest emit a Redstone signal, whenever somebody opens the Chest. The signal strength depends on the amount of people having that chest open.
+book.betterchests:upgrade.LIGHT=Light Upgrade: This Upgrade mages your chest emit light with the brightness of Glowstone.
+book.betterchests:upgrade.BASIC=Basic Upgrade: This is the basic Upgrade. You can't use this Upgrade in a chest or bag. It's only ment for crafting purposes.
+book.betterchests:upgrade.COMPARATOR=Comparator Upgrade: If you place a Comparator next to the Chest facing away from it, the Comparator will emit a redstone signal with the strength depending on the amount of Items in that Chest.
+book.betterchests:upgrade.VOID=Void Upgrade: You have too much Cobblestone? Or too much useless stuff? Then wait no longer, you can simply put a Void Upgrade on your Chest and put that useless stuff into there and it will be gone. All it does: Deleting Items.
+book.betterchests:upgrade.UNBREAKABLE=Unbreakable Upgrade: This upgrade makes your Chest blast- and fireproff, so Creepers, TNT, (Nukes), Ender Dragon(s) or Withers can't destroy it.
+book.betterchests:upgrade.PLAYER=Player Upgrade: With this Upgrade, the Chest is only accessible for the Player who inserted the Upgrade and Admins. To the other people, well let's just say, the Chest won't be nice to them!
+book.betterchests:upgrade.RAIN=Rain Upgrade: If it rains onto your Chest and the Rain Upgrade is installed, it will automatically fill empty buckets with water.
+book.betterchests:upgrade.FURNACE=Furnace Upgrade: You know that problem, you have too much stuff to smelt, but not enough furnaces? This Upgrade will solve that problem for you.
+book.betterchests:upgrade.COLLECTOR=Collector Upgrade: This Upgrade will suck items into the Chest that are dropped nearby it. You can increase the range of it by installing more upgrades.
+book.betterchests:upgrade.TICKING=Bla Bla Bla
+
+
+book.betterchests:credits=Thank you for reading the User Manual. If you still have questions just ask them in the MCF thread at: http://tinyurl.com/aroma1997
+
+
+
+
+creativetab.betterchests:creativetab.name=BetterChests
+
+inv.betterchests:chest.name=Adjustable Chest
+inv.betterchests:bag.name=Adjustable Bag
+
+tile.betterchests:chest.name=Adjustable Chest
+item.betterchests:bag.name=Adjustable Bag

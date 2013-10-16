@@ -14,70 +14,59 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
-import aroma1997.core.client.util.Colors;
+import aroma1997.core.client.inventories.GUIContainer;
 import aroma1997.core.inventories.ContainerBasic;
-import aroma1997.core.inventories.GUIContainer;
 import aroma1997.core.inventories.ISpecialInventory;
 import aroma1997.core.misc.FakePlayerFactory;
+import aroma1997.core.util.FileUtil;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.INetworkManager;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.Packet132TileEntityData;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.Hopper;
-import net.minecraft.tileentity.TileEntityChest;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityHopper;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
 
-public class TileEntityBChest extends TileEntityChest implements ISpecialInventory, Hopper {
+public class TileEntityBChest extends TileEntity implements IInventory, ISpecialInventory, Hopper, IUpgradeProvider {
 	
 	private String player;
 	
 	private int tick;
 	
 	private EntityPlayer fplayer;
-	
-	private HashMap<Upgrade, Integer> upgrades = new HashMap<Upgrade, Integer>();
 
 	private int ticksSinceSync = -1;
+	
+	private HashMap<Upgrade, Integer> upgrades = new HashMap<Upgrade, Integer>();
 	
 	public TileEntityBChest() {
 		player = "";
 		tick = new Random().nextInt(64);
-		for (Upgrade upgrade : Upgrade.values()) {
-			upgrades.put(upgrade, 0);
-		}
+		this.items = new ItemStack[0];
 	}
 	
 	@Override
 	public String getInvName() {
-		if (isUpgradeInstalled(Upgrade.VOID)) {
-			return Colors.RED + "Void Chest";
-		}
-		if (isUpgradeInstalled(Upgrade.PLAYER)) {
-			return Colors.YELLOW + player + "'s Chest";
-		}
-		return "Adjustable Chest";
+		return "inv.betterchests:chest.name";
 	}
 	
 	@Override
 	public ItemStack getStackInSlot(int slot) {
-		if (slot >= getSizeInventory()) {
-			return null;
-		}
-		return super.getStackInSlot(slot);
+		return items[slot];
 	}
 	
 	@Override
@@ -92,11 +81,18 @@ public class TileEntityBChest extends TileEntityChest implements ISpecialInvento
 	}
 	
 	private boolean firstInit = false;
+
+	private int numUsingPlayers;
+
+	public float prevLidAngle;
+
+	public float lidAngle;
+
+	private ItemStack[] items;
 	
 	@Override
 	public void updateEntity() {
 		super.updateEntity();
-
 		doNormalChestUpdate();
 		if (firstInit) {
 			this.worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
@@ -104,6 +100,7 @@ public class TileEntityBChest extends TileEntityChest implements ISpecialInvento
 		if (worldObj.isRemote) {
 			return;
 		}
+		UpgradeHelper.updateChest(this);
 		
 		if (tick-- <= 0) {
 			tick = 64;
@@ -114,13 +111,18 @@ public class TileEntityBChest extends TileEntityChest implements ISpecialInvento
 			updateBlock(xCoord, yCoord, zCoord - 1);
 			updateBlock(xCoord, yCoord + 1, zCoord);
 			updateBlock(xCoord, yCoord - 1, zCoord);
-		}
-		if (isUpgradeInstalled(Upgrade.VOID)) {
+		};
+		
+
+		
+		if (isUpgradeInstalled(Upgrade.TICKING) && tick % 8 == 0) {
 			for (int i = 0; i < getSizeInventory(); i++) {
-				if (getStackInSlot(i) == null) {
-					continue;
-				}
-				decrStackSize(i, getStackInSlot(i).stackSize);
+				ItemStack item = getStackInSlot(i);
+				if (item == null || item.getItem() == null) continue;
+				fplayer.inventory.mainInventory[0] = this.getStackInSlot(i);
+				fplayer.inventory.onInventoryChanged();
+				item.getItem().onUpdate(item, worldObj, fplayer, 0, false);
+				onInventoryChanged();
 			}
 		}
 		
@@ -150,86 +152,6 @@ public class TileEntityBChest extends TileEntityChest implements ISpecialInvento
 			setInventorySlotContents(emptySpace, new ItemStack(Item.bucketWater));
 		}
 		
-		if (isUpgradeInstalled(Upgrade.COBBLEGEN) && tick == 30) {
-			int bucketLava = - 1;
-			int bucketWater = - 1;
-			int empty = - 1;
-			for (int i = 0; i < getSizeInventory(); i++) {
-				if (getStackInSlot(i) != null
-					&& getStackInSlot(i).itemID == Item.bucketWater.itemID && bucketWater == - 1) {
-					bucketWater = i;
-					continue;
-				}
-				if (getStackInSlot(i) != null && bucketLava == - 1
-					&& getStackInSlot(i).itemID == Item.bucketLava.itemID) {
-					bucketLava = i;
-					continue;
-				}
-				if (empty == - 1
-					&& (getStackInSlot(i) == null || getStackInSlot(i) != null
-					&& getStackInSlot(i).itemID == Block.cobblestone.blockID && getStackInSlot(i).stackSize < getStackInSlot(
-						i).getMaxStackSize())) {
-					empty = i;
-					continue;
-				}
-			}
-			if (bucketLava == - 1 || bucketWater == - 1 || empty == - 1) {
-				return;
-			}
-			int amount;
-			
-			if (getStackInSlot(empty) == null) {
-				amount = 1;
-			}
-			else {
-				amount = 1 + getStackInSlot(empty).stackSize;
-			}
-			
-			setInventorySlotContents(empty, new ItemStack(Block.cobblestone, amount));
-		}
-		
-		if (isUpgradeInstalled(Upgrade.FURNACE) && tick == 40 && hasEnergy()) {
-			int cooking = - 1;
-			for (int i = 0; i < getSizeInventory(); i++) {
-				ItemStack stack = getStackInSlot(i);
-				if (stack == null) {
-					continue;
-				}
-				if (FurnaceRecipes.smelting().getSmeltingResult(stack) == null) {
-					continue;
-				}
-				cooking = i;
-				break;
-			}
-			if (cooking != - 1) {
-				ItemStack smelted = FurnaceRecipes.smelting().getSmeltingResult(
-					getStackInSlot(cooking)).copy();
-				if (smelted.stackSize <= 0) {
-					smelted.stackSize = 1;
-				}
-				int result = - 1;
-				for (int i = 0; i < getSizeInventory(); i++) {
-					if (getStackInSlot(i) == null
-						|| smelted.isItemEqual(getStackInSlot(i)) && smelted.stackSize
-						+ getStackInSlot(i).stackSize <= 64) {
-						result = i;
-						break;
-					}
-				}
-				if (result != - 1) {
-					decrStackSize(cooking, 1);
-					ItemStack put = getStackInSlot(result);
-					if (put != null) {
-						put.stackSize += smelted.stackSize;
-					}
-					else {
-						put = smelted;
-					}
-					setInventorySlotContents(result, put);
-				}
-			}
-		}
-		
 		if (isUpgradeInstalled(Upgrade.COLLECTOR) && tick == 50) {
 			for (int i = - getAmountUpgrade(Upgrade.COLLECTOR); i <= getAmountUpgrade(Upgrade.COLLECTOR); i++) {
 				for (int j = - getAmountUpgrade(Upgrade.COLLECTOR); j <= getAmountUpgrade(Upgrade.COLLECTOR); j++) {
@@ -243,17 +165,6 @@ public class TileEntityBChest extends TileEntityChest implements ISpecialInvento
 						}
 					}
 				}
-			}
-		}
-		
-		if (isUpgradeInstalled(Upgrade.TICKING) && tick % 8 == 0) {
-			for (int i = 0; i < getSizeInventory(); i++) {
-				ItemStack item = getStackInSlot(i);
-				if (item == null || item.getItem() == null) continue;
-				fplayer.inventory.mainInventory[0] = this.getStackInSlot(i);
-				fplayer.inventory.onInventoryChanged();
-				item.getItem().onUpdate(item, worldObj, fplayer, 0, false);
-				onInventoryChanged();
 			}
 		}
 	}
@@ -279,15 +190,12 @@ public class TileEntityBChest extends TileEntityChest implements ISpecialInvento
 	
 	@Override
 	public int getSizeInventory() {
-		return 9 + (getAmountUpgrade(Upgrade.SLOT) * 9);
+		return getAmountUpgrade(Upgrade.SLOT) * 9 + 9;
 	}
 	
 	@Override
 	public boolean isUseableByPlayer(EntityPlayer par1EntityPlayer)
 	{
-		if (! super.isUseableByPlayer(par1EntityPlayer)) {
-			return false;
-		}
 		if (! (isUpgradeInstalled(Upgrade.PLAYER))) {
 			return true;
 		}
@@ -327,20 +235,14 @@ public class TileEntityBChest extends TileEntityChest implements ISpecialInvento
 		
 		return false;
 	}
-	
-	private int getAmountUpgrade(Upgrade upgrade) {
-		return upgrades.get(upgrade);
-	}
 
 	@Override
 	public void readFromNBT(NBTTagCompound nbt) {
-		if (nbt.hasKey("slotLimit")) {
-			readFromNBTOld(nbt);
-			return;
-		}
 		for (Upgrade upgrade : Upgrade.values()) {
 			setAmountUpgrade(upgrade, nbt.getInteger(upgrade.toString()));
 		}
+		this.items = new ItemStack[getSizeInventory()];
+		FileUtil.readFromNBT(this, nbt);
 		player = nbt.getString("player");
 		super.readFromNBT(nbt);
 		if (worldObj != null && worldObj.isRemote) {
@@ -348,31 +250,14 @@ public class TileEntityBChest extends TileEntityChest implements ISpecialInvento
 		}
 	}
 	
-	private void readFromNBTOld(NBTTagCompound par1NBTTagCompound)
-	{
-		setAmountUpgrade(Upgrade.SLOT, par1NBTTagCompound.getShort("slotLimit"));
-		setAmountUpgrade(Upgrade.REDSTONE, par1NBTTagCompound.getBoolean("redstoneUpgrade") ? 1 : 0);
-		setAmountUpgrade(Upgrade.LIGHT, par1NBTTagCompound.getBoolean("light") ? 1 : 0);
-		setAmountUpgrade(Upgrade.COMPARATOR, par1NBTTagCompound.getBoolean("comparator") ? 1 : 0);
-		setAmountUpgrade(Upgrade.PLAYER, par1NBTTagCompound.getBoolean("playerUpgrade") ? 1 : 0);;
-		setAmountUpgrade(Upgrade.VOID, par1NBTTagCompound.getBoolean("voidU") ? 1 : 0);
-		setAmountUpgrade(Upgrade.UNBREAKABLE, par1NBTTagCompound.getBoolean("indestructable") ? 1 : 0);
-		setAmountUpgrade(Upgrade.RAIN, par1NBTTagCompound.getBoolean("rain") ? 1 : 0);
-		setAmountUpgrade(Upgrade.COBBLEGEN, par1NBTTagCompound.getBoolean("cobbleGen") ? 1 : 0);
-		setAmountUpgrade(Upgrade.SOLAR, par1NBTTagCompound.getBoolean("solar") ? 1 : 0);
-		setAmountUpgrade(Upgrade.FURNACE, par1NBTTagCompound.getBoolean("furnace") ? 1 : 0);
-		setAmountUpgrade(Upgrade.COLLECTOR, par1NBTTagCompound.getBoolean("suckItems") ? 1 : 0);
-		setAmountUpgrade(Upgrade.TICKING, par1NBTTagCompound.getBoolean("ticking") ? 1 : 0);
-		player = par1NBTTagCompound.getString("player");
-		super.readFromNBT(par1NBTTagCompound);
-	}
-	
+	@Override
 	public void writeToNBT(NBTTagCompound nbt) {
 		super.writeToNBT(nbt);
+		nbt.setString("player", player);
+		FileUtil.writeToNBT(this, nbt);
 		for (Upgrade upgrade : Upgrade.values()) {
 			nbt.setInteger(upgrade.toString(), getAmountUpgrade(upgrade));
 		}
-		nbt.setString("player", player);
 	}
 	
 	private void onUpgradeInserted(EntityPlayer player) {
@@ -428,25 +313,23 @@ public class TileEntityBChest extends TileEntityChest implements ISpecialInvento
 	}
 	
 	public ItemStack[] getItemUpgrades() {
-		int amount = 0;
-		for (Upgrade upgrade : Upgrade.values()) {
-			if (isUpgradeInstalled(upgrade)) {
-				amount++;
+		int a = 0;
+		for (int i = 0; i < getSizeInventory(); i++) {
+			if (getStackInSlot(i) != null) {
+				a++;
 			}
 		}
-		ItemStack[] items = new ItemStack[amount];
-		int pos = 0;
-		for (Upgrade upgrade : Upgrade.values()) {
-			if (!isUpgradeInstalled(upgrade)) {
-				continue;
+		int b = 0;
+		ItemStack[] item = new ItemStack[a];
+		for (int i = 0; i < getSizeInventory(); i++) {
+			if (getStackInSlot(i) != null) {
+				item[b++] = getStackInSlot(i);
 			}
-			items[pos] = new ItemStack(BetterChests.upgrade, getAmountUpgrade(upgrade), upgrade.ordinal());
-			pos++;
 		}
-		return items;
+		return item;
 	}
 	
-	private boolean hasEnergy() {
+	public boolean hasEnergy() {
 		return isUpgradeInstalled(Upgrade.SOLAR) && (worldObj.canBlockSeeTheSky(xCoord, yCoord, zCoord) && worldObj.isDaytime() || new Random().nextFloat() > Reference.Conf.ENERGY_NONDAY);
 	}
 	
@@ -487,37 +370,6 @@ public class TileEntityBChest extends TileEntityChest implements ISpecialInvento
 		}
 		Block.blocksList[worldObj.getBlockId(x, y, z)].onNeighborBlockChange(worldObj, x, y, z,
 			BetterChests.chest.blockID);
-	}
-	
-	public boolean isUpgradeInstalled(Upgrade upgrade) {
-		return getAmountUpgrade(upgrade) > 0;
-	}
-	
-	private void setAmountUpgrade(Upgrade upgrade, int amount) {
-		upgrades.remove(upgrade);
-		upgrades.put(upgrade,  amount);
-	}
-
-	@Override
-	public Slot getSlot(int slot, int index, int x, int y) {
-		return new Slot(this, index, x, y);
-	}
-
-	@Override
-	public void drawGuiContainerForegroundLayer(GUIContainer gui, ContainerBasic container,
-		int par1, int par2) {
-		
-	}
-
-	@Override
-	public void drawGuiContainerBackgroundLayer(GUIContainer gui, ContainerBasic container,
-		float f, int i, int j) {
-		
-	}
-
-	@Override
-	public ContainerBasic getContainer(EntityPlayer player, int i) {
-		return new ContainerBasic(player.inventory, this);
 	}
 	
 	@SuppressWarnings("rawtypes")
@@ -583,6 +435,129 @@ public class TileEntityBChest extends TileEntityChest implements ISpecialInvento
 	public void onInventoryChanged() {
 		super.onInventoryChanged();
 		this.worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+	}
+
+	@Override
+    public ItemStack decrStackSize(int par1, int par2)
+    {
+        if (items[par1] != null)
+        {
+            ItemStack itemstack;
+
+            if (items[par1].stackSize <= par2)
+            {
+                itemstack = items[par1];
+                items[par1] = null;
+                this.onInventoryChanged();
+                return itemstack;
+            }
+            else
+            {
+                itemstack = items[par1].splitStack(par2);
+
+                if (items[par1].stackSize == 0)
+                {
+                    items[par1] = null;
+                }
+
+                this.onInventoryChanged();
+                return itemstack;
+            }
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+	@Override
+	public ItemStack getStackInSlotOnClosing(int i) {
+		return items[i];
+	}
+
+	@Override
+	public void setInventorySlotContents(int i, ItemStack itemstack) {
+		items[i] = itemstack;
+	}
+
+	@Override
+	public boolean isInvNameLocalized() {
+		return true;
+	}
+
+	@Override
+	public int getInventoryStackLimit() {
+		return 64;
+	}
+
+	@Override
+	public void openChest() {
+		this.numUsingPlayers++;
+	}
+
+	@Override
+	public void closeChest() {
+		this.numUsingPlayers--;
+	}
+
+	@Override
+	public boolean isItemValidForSlot(int i, ItemStack itemstack) {
+		return true;
+	}
+	
+	@Override
+    public boolean receiveClientEvent(int par1, int par2)
+    {
+        if (par1 == 1)
+        {
+            this.numUsingPlayers = par2;
+            return true;
+        }
+        else
+        {
+            return super.receiveClientEvent(par1, par2);
+        }
+    }
+	
+	public int getAmountUpgrade(Upgrade upgrade) {
+		Integer c = upgrades.get(upgrade);
+		if (c != null) {
+			return c;
+		}
+		return 0;
+	}
+	
+	public boolean isUpgradeInstalled(Upgrade upgrade) {
+		return getAmountUpgrade(upgrade) > 0;
+	}
+	
+	public void setAmountUpgrade(Upgrade upgrade, int amount) {
+		if (upgrades.containsKey(upgrade)) {
+			upgrades.remove(upgrade);
+		}
+		upgrades.put(upgrade, new Integer(amount));
+	}
+
+	@Override
+	public Slot getSlot(int slot, int index, int x, int y) {
+		return new Slot(this, index, x, y);
+	}
+
+	@Override
+	public void drawGuiContainerForegroundLayer(GUIContainer gui, ContainerBasic container,
+		int par1, int par2) {
+		
+	}
+
+	@Override
+	public void drawGuiContainerBackgroundLayer(GUIContainer gui, ContainerBasic container,
+		float f, int i, int j) {
+		
+	}
+
+	@Override
+	public ContainerBasic getContainer(EntityPlayer player, int i) {
+		return new ContainerBasic(player.inventory, this);
 	}
 	
 }

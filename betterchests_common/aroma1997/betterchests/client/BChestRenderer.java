@@ -10,13 +10,13 @@ package aroma1997.betterchests.client;
 
 
 import aroma1997.betterchests.Reference;
+import aroma1997.betterchests.TileEntityBChest;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockChest;
 import net.minecraft.client.model.ModelChest;
-import net.minecraft.client.renderer.tileentity.TileEntityChestRenderer;
+import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
@@ -24,7 +24,7 @@ import org.lwjgl.opengl.GL12;
 
 import cpw.mods.fml.common.FMLLog;
 
-public class BChestRenderer extends TileEntityChestRenderer {
+public class BChestRenderer extends TileEntitySpecialRenderer {
 	
 	private ResourceLocation model = new ResourceLocation(Reference.MOD_ID
 		+ ":textures/blocks/tile.betterChest.png");
@@ -39,8 +39,7 @@ public class BChestRenderer extends TileEntityChestRenderer {
 	
 	private ModelChest chestModel = new ModelChest();
 	
-	@Override
-	public void renderTileEntityChestAt(TileEntityChest par1TileEntityChest, double par2,
+	public void renderTileEntityChestAt(TileEntityBChest par1TileEntityChest, double par2,
 		double par4, double par6, float par8)
 	{
 		int i;
@@ -121,7 +120,7 @@ public class BChestRenderer extends TileEntityChestRenderer {
 	public void renderTileEntityAt(TileEntity par1TileEntity, double par2, double par4,
 		double par6, float par8)
 	{
-		renderTileEntityChestAt((TileEntityChest) par1TileEntity, par2, par4, par6, par8);
+		renderTileEntityChestAt((TileEntityBChest) par1TileEntity, par2, par4, par6, par8);
 	}
 	
 }
