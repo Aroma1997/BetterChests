@@ -20,19 +20,19 @@ import cpw.mods.fml.common.registry.GameRegistry;
 
 public enum Upgrade {
 	SLOT(null, 5, true, true),
-	COBBLEGEN(null, 1, true, false),
+	COBBLEGEN(null, 1, true, true),
 	REDSTONE(null, 1, true, false),
 	LIGHT(null, 1, true, false),
 	BASIC(null, 0, false, false),
 	COMPARATOR(null, 1, true, false),
-	VOID(null, 1, true, false),
+	VOID(null, 1, true, true),
 	UNBREAKABLE(null, 1, true, false),
 	PLAYER(UNBREAKABLE, 1, true, false),
 	RAIN(null, 1, true, false),
-	SOLAR(null, 1, true, false),
-	FURNACE(SOLAR, 1, true, false),
-	COLLECTOR(SOLAR, 8, true, false),
-	TICKING(SOLAR, 1, true, false);
+	ENERGY(null, 1, true, true),
+	FURNACE(ENERGY, 1, true, true),
+	COLLECTOR(ENERGY, 8, true, false),
+	TICKING(ENERGY, 1, true, false);
 	
 	
 	private Upgrade requirement;
@@ -103,7 +103,7 @@ public enum Upgrade {
 		GameRegistry.addRecipe(new ItemStack(itemID, 1, Upgrade.RAIN.ordinal()), " B ", "BUB",
 			" B ", 'B', new ItemStack(Item.bucketEmpty), 'U', itemUpgrade);
 		// SOLAR
-		GameRegistry.addRecipe(new ItemStack(itemID, 1, Upgrade.SOLAR.ordinal()), "QSQ", "RUR",
+		GameRegistry.addRecipe(new ItemStack(itemID, 1, Upgrade.ENERGY.ordinal()), "QSQ", "RUR",
 			"QCQ", 'S', new ItemStack(Block.daylightSensor), 'R', new ItemStack(Item.redstone),
 			'C', new ItemStack(Item.redstoneRepeater), 'Q', new ItemStack(Item.netherQuartz), 'R',
 			new ItemStack(Item.redstone), 'U', itemUpgrade);

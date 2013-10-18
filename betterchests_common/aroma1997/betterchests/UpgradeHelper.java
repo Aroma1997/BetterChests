@@ -1,9 +1,14 @@
+/**
+ * The code of BetterChests and all related materials like textures is copyrighted material.
+ * It may only be redistributed or used for Commercial purposes with the permission of Aroma1997.
+ * 
+ * All Rights reserved (c) by Aroma1997
+ * 
+ * See https://github.com/Aroma1997/BetterChests/blob/master/LICENSE.md for more information.
+ */
 package aroma1997.betterchests;
 
-import java.util.Random;
-
 import net.minecraft.block.Block;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -12,7 +17,7 @@ import net.minecraft.item.crafting.FurnaceRecipes;
 
 public class UpgradeHelper {
 	
-	public static void updateChest(IInventory inv) {
+	public static void updateChest(IInventory inv, int tick) {
 		if (!(inv instanceof IUpgradeProvider)) {
 			throw new IllegalArgumentException("The parameter has to be an instance of IUpgradeProvider!");
 		}
@@ -27,7 +32,7 @@ public class UpgradeHelper {
 			}
 		}
 		
-		if (up.isUpgradeInstalled(Upgrade.COBBLEGEN) && new Random().nextFloat() < 0.02) {
+		if (up.isUpgradeInstalled(Upgrade.COBBLEGEN) && tick == 60) {
 			int bucketLava = - 1;
 			int bucketWater = - 1;
 			int empty = - 1;
@@ -65,7 +70,7 @@ public class UpgradeHelper {
 			inv.setInventorySlotContents(empty, new ItemStack(Block.cobblestone, amount));
 		}
 		
-		if (up.isUpgradeInstalled(Upgrade.FURNACE) && new Random().nextFloat() < 0.02 && up.hasEnergy()) {
+		if (up.isUpgradeInstalled(Upgrade.FURNACE) && tick == 59) {
 			int cooking = - 1;
 			for (int i = 0; i < inv.getSizeInventory(); i++) {
 				ItemStack stack = inv.getStackInSlot(i);

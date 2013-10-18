@@ -100,7 +100,7 @@ public class TileEntityBChest extends TileEntity implements IInventory, ISpecial
 		if (worldObj.isRemote) {
 			return;
 		}
-		UpgradeHelper.updateChest(this);
+		UpgradeHelper.updateChest(this, tick);
 		
 		if (tick-- <= 0) {
 			tick = 64;
@@ -330,7 +330,7 @@ public class TileEntityBChest extends TileEntity implements IInventory, ISpecial
 	}
 	
 	public boolean hasEnergy() {
-		return isUpgradeInstalled(Upgrade.SOLAR) && (worldObj.canBlockSeeTheSky(xCoord, yCoord, zCoord) && worldObj.isDaytime() || new Random().nextFloat() > Reference.Conf.ENERGY_NONDAY);
+		return isUpgradeInstalled(Upgrade.ENERGY);
 	}
 	
 	@Override
@@ -482,7 +482,7 @@ public class TileEntityBChest extends TileEntity implements IInventory, ISpecial
 
 	@Override
 	public boolean isInvNameLocalized() {
-		return true;
+		return false;
 	}
 
 	@Override

@@ -1,3 +1,11 @@
+/**
+ * The code of BetterChests and all related materials like textures is copyrighted material.
+ * It may only be redistributed or used for Commercial purposes with the permission of Aroma1997.
+ * 
+ * All Rights reserved (c) by Aroma1997
+ * 
+ * See https://github.com/Aroma1997/BetterChests/blob/master/LICENSE.md for more information.
+ */
 package aroma1997.betterchests;
 
 import aroma1997.core.inventories.ISpecialInventory;
@@ -9,7 +17,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
@@ -45,18 +52,13 @@ public class ItemBag extends Item implements ISpecialInventoryProvider {
 	}
 	
 	public ISpecialInventory getInventory(ItemStack item) {
-		return new BagInventory();
+		return BagInventory.getInvForItem(item);//new BagInventory(item);
 	}
 	
 	@Override
 	public void onUpdate(ItemStack par1ItemStack, World par2World, Entity par3Entity, int par4, boolean par5) {
-		if (par1ItemStack.getTagCompound() == null) {
-			par1ItemStack.setTagCompound(new NBTTagCompound());
-		}
 		BagInventory inv = (BagInventory) getInventory(par1ItemStack);
-		inv.readFromNBT(par1ItemStack.getTagCompound());
 		inv.onUpdate();
-		inv.writeToNBT(par1ItemStack.getTagCompound());
 	}
 	
 	@Override

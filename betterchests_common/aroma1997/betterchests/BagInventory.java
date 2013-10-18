@@ -1,6 +1,15 @@
+/**
+ * The code of BetterChests and all related materials like textures is copyrighted material.
+ * It may only be redistributed or used for Commercial purposes with the permission of Aroma1997.
+ * 
+ * All Rights reserved (c) by Aroma1997
+ * 
+ * See https://github.com/Aroma1997/BetterChests/blob/master/LICENSE.md for more information.
+ */
 package aroma1997.betterchests;
 
 import java.util.HashMap;
+import java.util.Random;
 
 import aroma1997.core.client.inventories.GUIContainer;
 import aroma1997.core.inventories.ContainerBasic;
@@ -15,6 +24,16 @@ import net.minecraft.nbt.NBTTagCompound;
 
 
 public class BagInventory implements ISpecialInventory, IUpgradeProvider {
+	
+	private final ItemStack item;
+	
+	public BagInventory(ItemStack item) {
+		this.item = item;
+		if (item.getTagCompound() == null) {
+			item.setTagCompound(new NBTTagCompound());
+		}
+		this.readFromNBT(item.stackTagCompound);
+	}
 	
 	private ItemStack[] items;
 	private String customName;
@@ -107,7 +126,7 @@ public class BagInventory implements ISpecialInventory, IUpgradeProvider {
 	
 	@Override
 	public void onInventoryChanged() {
-		
+		writeToNBT(this.item.stackTagCompound);
 	}
 	
 	@Override
@@ -164,7 +183,7 @@ public class BagInventory implements ISpecialInventory, IUpgradeProvider {
             }
         }
 		for (Upgrade upgrade : Upgrade.values()) {
-			setAmountUpgrade(upgrade, nbt.getInteger(upgrade.toString()));
+			setAmountUpgradeWithoutNotify(upgrade, nbt.getInteger(upgrade.toString()));
 		}
 		this.items = new ItemStack[getSizeInventory()];
 		FileUtil.readFromNBT(this, nbt);
@@ -195,6 +214,10 @@ public class BagInventory implements ISpecialInventory, IUpgradeProvider {
 
 	@Override
 	public void setAmountUpgrade(Upgrade upgrade, int amount)  {
+		setAmountUpgradeWithoutNotify(upgrade, amount);
+		onInventoryChanged();
+	}
+	public void setAmountUpgradeWithoutNotify(Upgrade upgrade, int amount) {
 		if (upgrades.containsKey(upgrade)) {
 			upgrades.remove(upgrade);
 		}
@@ -203,11 +226,27 @@ public class BagInventory implements ISpecialInventory, IUpgradeProvider {
 
 	@Override
 	public boolean hasEnergy() {
-		return isUpgradeInstalled(Upgrade.SOLAR);
+		return isUpgradeInstalled(Upgrade.ENERGY);
 	}
 	
+	private int tick = new Random().nextInt(64);
+	
 	public void onUpdate() {
-		UpgradeHelper.updateChest(this);
+		if (tick-- <= 0) {
+			tick = 64;
+		}
+		UpgradeHelper.updateChest(this, tick);
+	}
+	
+	private static HashMap<ItemStack, BagInventory> invs = new HashMap<ItemStack, BagInventory>();
+	
+	public static BagInventory getInvForItem(ItemStack item) {
+		if (!invs.containsKey(item)) {
+			BagInventory inv = new BagInventory(item);
+			invs.put(item, inv);
+			return inv;
+		}
+		return invs.get(item);
 	}
 	
 }

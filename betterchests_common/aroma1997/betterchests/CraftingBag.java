@@ -1,9 +1,16 @@
+/**
+ * The code of BetterChests and all related materials like textures is copyrighted material.
+ * It may only be redistributed or used for Commercial purposes with the permission of Aroma1997.
+ * 
+ * All Rights reserved (c) by Aroma1997
+ * 
+ * See https://github.com/Aroma1997/BetterChests/blob/master/LICENSE.md for more information.
+ */
 package aroma1997.betterchests;
 
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 
 
@@ -48,16 +55,11 @@ public class CraftingBag implements IRecipe {
 		ItemBag itemBag = (ItemBag) bag.getItem();
 		ItemStack item = bag.copy();
 		BagInventory inv = (BagInventory)itemBag.getInventory(item);
-		if (item.stackTagCompound == null) {
-			item.setTagCompound(new NBTTagCompound());
-		}
-		inv.readFromNBT(item.stackTagCompound);
-		Upgrade upgr = Upgrade.values()[item.getItemDamage()];
+		Upgrade upgr = Upgrade.values()[upgrade.getItemDamage()];
 		if (inv.getAmountUpgrade(upgr) >= upgr.getMaxAmount() || !upgr.canBagTakeUpgrade()) {
 			return null;
 		}
 		inv.setAmountUpgrade(upgr, inv.getAmountUpgrade(upgr) + 1);
-		inv.writeToNBT(item.stackTagCompound);
 		return item;
 	}
 	
