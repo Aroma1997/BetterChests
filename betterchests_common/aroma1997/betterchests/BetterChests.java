@@ -46,8 +46,6 @@ public class BetterChests {
 	
 	public static ItemBag bag;
 	
-	public static ItemStack helpBook;
-	
 	public static CreativeTabs creativeTabBC = new CreativeTabBChest();
 	
 	@EventHandler
@@ -76,7 +74,18 @@ public class BetterChests {
 			Block.cobblestone), 'B', new ItemStack(Block.chest));
 		GameRegistry.addRecipe(new CraftingBag());
 		Upgrade.generateRecipes();
+		GameRegistry.addShapelessRecipe(getHelpBook(), Upgrade.BASIC.getItem(), new ItemStack(Item.book));
+		GameRegistry.addRecipe(new CraftingBook());
 		
+		VersionCheck.registerVersionChecker(Reference.MOD_ID, Reference.VERSION);
+	}
+	
+	@EventHandler
+	public void postInit(FMLPostInitializationEvent event) {
+		
+	}
+	
+	public static ItemStack getHelpBook() {
 		ArrayList<String> list = new ArrayList<String>();
 		list.add("book.betterchests:introduction");
 		list.add("book.betterchests:chapter.general");
@@ -89,17 +98,7 @@ public class BetterChests {
 		Upgrade.addBagBookDescription(list);
 		list.add("book.betterchests:chapter.credits");
 		list.add("book.betterchests:credits");
-		helpBook = ItemUtil.getWrittenBook("book.betterchests:name", "Aroma1997", true, list.toArray(new String[list.size()]));
-		
-		GameRegistry.addShapelessRecipe(helpBook, Upgrade.BASIC.getItem(), new ItemStack(Item.book));
-		GameRegistry.addRecipe(new CraftingBook());
-		
-		VersionCheck.registerVersionChecker(Reference.MOD_ID, Reference.VERSION);
-	}
-	
-	@EventHandler
-	public void postInit(FMLPostInitializationEvent event) {
-		
+		return ItemUtil.getWrittenBook("book.betterchests:name", "Aroma1997", true, list.toArray(new String[list.size()]));
 	}
 	
 }

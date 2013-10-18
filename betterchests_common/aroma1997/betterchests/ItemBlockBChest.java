@@ -30,7 +30,7 @@ public class ItemBlockBChest extends ItemBlock {
 	@Override
     public void getSubItems(int par1, CreativeTabs par2CreativeTabs, List par3List)
     {
-		par3List.add(BetterChests.helpBook);
+		par3List.add(BetterChests.getHelpBook());
 		super.getSubItems(par1, par2CreativeTabs, par3List);
     }
 	

@@ -43,7 +43,7 @@ public class CraftingBook implements IRecipe {
 		if (item == null) {
 			return null;
 		}
-		return BetterChests.helpBook.copy();
+		return BetterChests.getHelpBook();
 	}
 	
 	@Override
@@ -53,7 +53,7 @@ public class CraftingBook implements IRecipe {
 	
 	@Override
 	public ItemStack getRecipeOutput() {
-		return BetterChests.helpBook.copy();
+		return BetterChests.getHelpBook();
 	}
 	
 }
