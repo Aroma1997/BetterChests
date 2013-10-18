@@ -27,6 +27,7 @@ public class ItemBlockBChest extends ItemBlock {
 		return StatCollector.translateToLocal("tile.betterchests:chest.name");
 	}
 	
+	@SuppressWarnings({"unchecked", "rawtypes"})
 	@Override
     public void getSubItems(int par1, CreativeTabs par2CreativeTabs, List par3List)
     {

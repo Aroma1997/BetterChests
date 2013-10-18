@@ -66,6 +66,9 @@ public class TileEntityBChest extends TileEntity implements IInventory, ISpecial
 	
 	@Override
 	public ItemStack getStackInSlot(int slot) {
+		if (slot < 0 || slot >= items.length) {
+			return null;
+		}
 		return items[slot];
 	}
 	
@@ -261,7 +264,8 @@ public class TileEntityBChest extends TileEntity implements IInventory, ISpecial
 	}
 	
 	private void onUpgradeInserted(EntityPlayer player) {
-		player.inventory.mainInventory[player.inventory.currentItem].stackSize -= 1;
+		if (!player.capabilities.isCreativeMode)
+			player.inventory.mainInventory[player.inventory.currentItem].stackSize -= 1;
 		NBTTagCompound nbttagcompound = new NBTTagCompound();
 		writeToNBT(nbttagcompound);
 		readFromNBT(nbttagcompound);

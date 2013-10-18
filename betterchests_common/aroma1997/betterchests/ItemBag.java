@@ -8,6 +8,8 @@
  */
 package aroma1997.betterchests;
 
+import java.util.List;
+
 import aroma1997.core.inventories.ISpecialInventory;
 import aroma1997.core.inventories.ISpecialInventoryProvider;
 import aroma1997.core.inventories.Inventories;
@@ -51,13 +53,13 @@ public class ItemBag extends Item implements ISpecialInventoryProvider {
 		return getInventory(player.inventory.getStackInSlot(id));
 	}
 	
-	public ISpecialInventory getInventory(ItemStack item) {
+	public BagInventory getInventory(ItemStack item) {
 		return BagInventory.getInvForItem(item);//new BagInventory(item);
 	}
 	
 	@Override
 	public void onUpdate(ItemStack par1ItemStack, World par2World, Entity par3Entity, int par4, boolean par5) {
-		BagInventory inv = (BagInventory) getInventory(par1ItemStack);
+		BagInventory inv = getInventory(par1ItemStack);
 		inv.onUpdate();
 	}
 	
@@ -72,5 +74,24 @@ public class ItemBag extends Item implements ISpecialInventoryProvider {
     {
     	this.itemIcon = par1IconRegister.registerIcon(Reference.MOD_ID + ":bag");
     }
+    
+    @SuppressWarnings({"unchecked", "rawtypes"})
+	@SideOnly(Side.CLIENT)
+    @Override
+	public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer,
+		List par3List, boolean par4) {
+		BagInventory inv = getInventory(par1ItemStack);
+		for (Upgrade upgrade : Upgrade.values()) {
+			int amount = inv.getAmountUpgrade(upgrade);
+			if (amount > 0) {
+				if (upgrade.getMaxAmount() == 1) {
+					par3List.add(upgrade.getName());
+				}
+				else {
+					par3List.add(upgrade.getName() + " (" + amount + ")");
+				}
+			}
+		}
+	}
 	
 }

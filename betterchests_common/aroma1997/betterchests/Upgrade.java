@@ -19,7 +19,7 @@ import net.minecraft.util.StatCollector;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public enum Upgrade {
-	SLOT(null, 5, true, true),
+	SLOT(null, 9, true, true),
 	COBBLEGEN(null, 1, true, true),
 	REDSTONE(null, 1, true, false),
 	LIGHT(null, 1, true, false),
