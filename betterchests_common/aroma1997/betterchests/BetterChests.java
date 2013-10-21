@@ -12,6 +12,7 @@ package aroma1997.betterchests;
 import java.io.File;
 import java.util.ArrayList;
 
+import aroma1997.core.util.AromaRegistry;
 import aroma1997.core.util.ItemUtil;
 import aroma1997.core.version.VersionCheck;
 
@@ -63,18 +64,18 @@ public class BetterChests {
 		GameRegistry.registerBlock(chest, ItemBlockBChest.class, "betterChest");
 		GameRegistry.registerItem(upgrade, "Upgrade");
 		GameRegistry.registerItem(bag, "Bag");
-		GameRegistry.addShapedRecipe(new ItemStack(bag), "SWS", "LCL", "SWS", 'S', new ItemStack(Item.silk), 'L', new ItemStack(Item.leather), 'W', new ItemStack(Block.cloth), 'C', new ItemStack(chest));
 	}
 	
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
 		proxy.registerRenderers();
 		GameRegistry.registerTileEntity(TileEntityBChest.class, "adjustableChest");
-		GameRegistry.addRecipe(new ItemStack(chest), "CCC", "CBC", "CCC", 'C', new ItemStack(
+		AromaRegistry.registerShapedOreRecipe(new ItemStack(chest), "CCC", "CBC", "CCC", 'C', new ItemStack(
 			Block.cobblestone), 'B', new ItemStack(Block.chest));
+		AromaRegistry.registerShapedOreRecipe(new ItemStack(bag), "SWS", "LCL", "SWS", 'S', new ItemStack(Item.silk), 'L', new ItemStack(Item.leather), 'W', new ItemStack(Block.cloth), 'C', new ItemStack(chest));
 		GameRegistry.addRecipe(new CraftingBag());
 		Upgrade.generateRecipes();
-		GameRegistry.addShapelessRecipe(getHelpBook(), Upgrade.BASIC.getItem(), new ItemStack(Item.book));
+		AromaRegistry.registerShapelessOreRecipe(getHelpBook(), Upgrade.BASIC.getItem(), new ItemStack(Item.book));
 		GameRegistry.addRecipe(new CraftingBook());
 		
 		VersionCheck.registerVersionChecker(Reference.MOD_ID, Reference.VERSION);
