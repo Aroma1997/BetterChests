@@ -6,6 +6,7 @@
  * 
  * See https://github.com/Aroma1997/BetterChests/blob/master/LICENSE.md for more information.
  */
+
 package aroma1997.betterchests;
 
 
@@ -35,7 +36,6 @@ public enum Upgrade {
 	FURNACE(ENERGY, 1, true, true),
 	COLLECTOR(ENERGY, 8, true, false),
 	TICKING(ENERGY, 1, true, false);
-	
 	
 	private Upgrade requirement;
 	
@@ -68,60 +68,76 @@ public enum Upgrade {
 		int itemID = BetterChests.upgrade.itemID;
 		ItemStack itemUpgrade = new ItemStack(itemID, 1, Upgrade.BASIC.ordinal());
 		// BASIC
-		AromaRegistry.registerShapedOreRecipe(new ItemStack(itemID, 8, Upgrade.BASIC.ordinal()), "WIW",
+		AromaRegistry.registerShapedOreRecipe(new ItemStack(itemID, 8, Upgrade.BASIC.ordinal()),
+			"WIW",
 			"ISI", "WIW", 'W', new ItemStack(Block.planks, 1, 32767), 'I', new ItemStack(
 				Block.fenceIron), 'S', new ItemStack(Item.stick));
 		// SLOT
-		AromaRegistry.registerShapedOreRecipe(new ItemStack(itemID, 1, Upgrade.SLOT.ordinal()), " W ",
+		AromaRegistry.registerShapedOreRecipe(new ItemStack(itemID, 1, Upgrade.SLOT.ordinal()),
+			" W ",
 			"WUW", " W ", 'W', new ItemStack(Block.planks, 1, 32767), 'U', itemUpgrade);
 		// REDSTONE
-		AromaRegistry.registerShapedOreRecipe(new ItemStack(itemID, 1, Upgrade.REDSTONE.ordinal()), "RRR",
+		AromaRegistry.registerShapedOreRecipe(new ItemStack(itemID, 1, Upgrade.REDSTONE.ordinal()),
+			"RRR",
 			"RUR", "RRR", 'R', new ItemStack(Item.redstone), 'U', itemUpgrade);
-		//LIGHT
-		AromaRegistry.registerShapedOreRecipe(new ItemStack(itemID, 1, Upgrade.LIGHT.ordinal()), " G ", "GUG", " G ", 'G', new ItemStack(Item.glowstone), 'U', itemUpgrade);
+		// LIGHT
+		AromaRegistry.registerShapedOreRecipe(new ItemStack(itemID, 1, Upgrade.LIGHT.ordinal()),
+			" G ", "GUG", " G ", 'G', new ItemStack(Item.glowstone), 'U', itemUpgrade);
 		// COMPARATOR
-		AromaRegistry.registerShapedOreRecipe(new ItemStack(itemID, 1, Upgrade.COMPARATOR.ordinal()),
+		AromaRegistry.registerShapedOreRecipe(
+			new ItemStack(itemID, 1, Upgrade.COMPARATOR.ordinal()),
 			" Q ", "RUR", " Q ", 'Q', new ItemStack(Item.netherQuartz), 'R', new ItemStack(
 				Item.redstone), 'U', itemUpgrade);
-		AromaRegistry.registerShapedOreRecipe(new ItemStack(itemID, 1, Upgrade.COMPARATOR.ordinal()),
+		AromaRegistry.registerShapedOreRecipe(
+			new ItemStack(itemID, 1, Upgrade.COMPARATOR.ordinal()),
 			" R ", "QUQ", " R ", 'Q', new ItemStack(Item.netherQuartz), 'R', new ItemStack(
 				Item.redstone), 'U', itemUpgrade);
 		// PLAYER
-		AromaRegistry.registerShapedOreRecipe(new ItemStack(itemID, 1, Upgrade.PLAYER.ordinal()), "OQO",
+		AromaRegistry.registerShapedOreRecipe(new ItemStack(itemID, 1, Upgrade.PLAYER.ordinal()),
+			"OQO",
 			"QUQ", "OQO", 'Q', new ItemStack(Item.netherQuartz), 'O',
 			new ItemStack(Block.obsidian), 'U', itemUpgrade);
 		// COBBLEGEN
-		AromaRegistry.registerShapedOreRecipe(new ItemStack(itemID, 1, Upgrade.COBBLEGEN.ordinal()), "CCC", "LUW",
+		AromaRegistry.registerShapedOreRecipe(
+			new ItemStack(itemID, 1, Upgrade.COBBLEGEN.ordinal()), "CCC", "LUW",
 			"BBB", 'C', new ItemStack(Block.cobblestone), 'L', new ItemStack(Item.bucketLava), 'U',
 			itemUpgrade, 'W', new ItemStack(Item.bucketWater), 'B', new ItemStack(Item.bucketEmpty));
 		// VOID
-		AromaRegistry.registerShapedOreRecipe(new ItemStack(itemID, 1, Upgrade.VOID.ordinal()), " E ", "RUR",
+		AromaRegistry.registerShapedOreRecipe(new ItemStack(itemID, 1, Upgrade.VOID.ordinal()),
+			" E ", "RUR",
 			" E ", 'E', new ItemStack(Item.enderPearl), 'R', new ItemStack(Item.redstone), 'U',
 			itemUpgrade);
 		// UNBREAKABLE
-		AromaRegistry.registerShapedOreRecipe(new ItemStack(itemID, 1, Upgrade.UNBREAKABLE.ordinal()), "OOO",
+		AromaRegistry.registerShapedOreRecipe(
+			new ItemStack(itemID, 1, Upgrade.UNBREAKABLE.ordinal()), "OOO",
 			"OUO", "OOO", 'O', new ItemStack(Block.obsidian), 'U', itemUpgrade);
 		// RAIN
-		AromaRegistry.registerShapedOreRecipe(new ItemStack(itemID, 1, Upgrade.RAIN.ordinal()), " B ", "BUB",
+		AromaRegistry.registerShapedOreRecipe(new ItemStack(itemID, 1, Upgrade.RAIN.ordinal()),
+			" B ", "BUB",
 			" B ", 'B', new ItemStack(Item.bucketEmpty), 'U', itemUpgrade);
 		// SOLAR
-		AromaRegistry.registerShapedOreRecipe(new ItemStack(itemID, 1, Upgrade.ENERGY.ordinal()), "QSQ", "RUR",
+		AromaRegistry.registerShapedOreRecipe(new ItemStack(itemID, 1, Upgrade.ENERGY.ordinal()),
+			"QSQ", "RUR",
 			"QCQ", 'S', new ItemStack(Block.daylightSensor), 'R', new ItemStack(Item.redstone),
 			'C', new ItemStack(Item.redstoneRepeater), 'Q', new ItemStack(Item.netherQuartz), 'R',
 			new ItemStack(Item.redstone), 'U', itemUpgrade);
 		// FURNACE
-		AromaRegistry.registerShapedOreRecipe(new ItemStack(itemID, 1, Upgrade.FURNACE.ordinal()), "RFR", "FUF",
+		AromaRegistry.registerShapedOreRecipe(new ItemStack(itemID, 1, Upgrade.FURNACE.ordinal()),
+			"RFR", "FUF",
 			"RFR", 'R', new ItemStack(Item.redstone), 'F', new ItemStack(Block.furnaceIdle), 'U',
 			itemUpgrade);
 		// COLLECTOR
-		AromaRegistry.registerShapedOreRecipe(new ItemStack(itemID, 1, Upgrade.COLLECTOR.ordinal()), " H ", "HUH",
+		AromaRegistry.registerShapedOreRecipe(
+			new ItemStack(itemID, 1, Upgrade.COLLECTOR.ordinal()), " H ", "HUH",
 			"RER", 'H', new ItemStack(Block.hopperBlock), 'R', new ItemStack(Item.redstone), 'E',
 			new ItemStack(Item.enderPearl), 'U', itemUpgrade);
 		// TICKING
-		AromaRegistry.registerShapedOreRecipe(new ItemStack(itemID, 1, Upgrade.TICKING.ordinal()), "QCQ", "RUR", "QCQ", 'Q', new ItemStack(Item.netherQuartz), 'C', new ItemStack(Item.pocketSundial), 'R', new ItemStack(Item.comparator), 'U', itemUpgrade);
+		AromaRegistry.registerShapedOreRecipe(new ItemStack(itemID, 1, Upgrade.TICKING.ordinal()),
+			"QCQ", "RUR", "QCQ", 'Q', new ItemStack(Item.netherQuartz), 'C', new ItemStack(
+				Item.pocketSundial), 'R', new ItemStack(Item.comparator), 'U', itemUpgrade);
 		
 		for (Upgrade upgr : Upgrade.values()) {
-			if (!upgr.isValidUpgrade()) {
+			if (! upgr.isValidUpgrade()) {
 				continue;
 			}
 			GameRegistry.addShapelessRecipe(itemUpgrade, new ItemStack(itemID, 1, upgr.ordinal()));

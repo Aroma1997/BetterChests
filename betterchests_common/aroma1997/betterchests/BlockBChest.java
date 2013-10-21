@@ -6,6 +6,7 @@
  * 
  * See https://github.com/Aroma1997/BetterChests/blob/master/LICENSE.md for more information.
  */
+
 package aroma1997.betterchests;
 
 
@@ -39,7 +40,7 @@ public class BlockBChest extends BlockContainer {
 		setUnlocalizedName("betterChest");
 		setLightOpacity(0);
 		disableStats();
-        this.setBlockBounds(0.0625F, 0.0F, 0.0625F, 0.9375F, 0.875F, 0.9375F);
+		setBlockBounds(0.0625F, 0.0F, 0.0625F, 0.9375F, 0.875F, 0.9375F);
 	}
 	
 	@Override
@@ -48,16 +49,16 @@ public class BlockBChest extends BlockContainer {
 	}
 	
 	@Override
-    public int getRenderType()
-    {
-        return 22;
-    }
+	public int getRenderType()
+	{
+		return 22;
+	}
 	
 	@Override
-    public boolean isOpaqueCube()
-    {
-        return false;
-    }
+	public boolean isOpaqueCube()
+	{
+		return false;
+	}
 	
 	@Override
 	public TileEntity createNewTileEntity(World world) {
@@ -68,14 +69,16 @@ public class BlockBChest extends BlockContainer {
 	public boolean onBlockActivated(World par1World, int par2, int par3, int par4,
 		EntityPlayer par5EntityPlayer, int par6, float par7, float par8, float par9)
 	{
-		if (par5EntityPlayer.isSneaking()) return false;
+		if (par5EntityPlayer.isSneaking()) {
+			return false;
+		}
 		ItemStack item = par5EntityPlayer.getHeldItem();
 		
-		if (item == null || !(item.getItem() instanceof ItemUpgrade)) {
+		if (item == null || ! (item.getItem() instanceof ItemUpgrade)) {
 			return openInventory(par5EntityPlayer, par1World, par2, par3, par4);
 		}
 		if (Upgrade.values()[item.getItemDamage()].isValidUpgrade()) {
-
+			
 			TileEntityBChest te = (TileEntityBChest) par1World.getBlockTileEntity(par2, par3, par4);
 			return te.upgrade(par5EntityPlayer);
 		}
@@ -84,7 +87,7 @@ public class BlockBChest extends BlockContainer {
 	}
 	
 	private boolean openInventory(EntityPlayer player, World world, int x, int y, int z) {
-		TileEntityBChest te = (TileEntityBChest)world.getBlockTileEntity(x, y, z);
+		TileEntityBChest te = (TileEntityBChest) world.getBlockTileEntity(x, y, z);
 		te.playerOpenChest(player);
 		Inventories.openContainerTileEntity(player, te);
 		return true;
@@ -109,17 +112,17 @@ public class BlockBChest extends BlockContainer {
 		return ((TileEntityBChest) world.getBlockTileEntity(x, y, z)).getLightValue();
 	}
 	
-//	@Override
-//	public IInventory getInventory(World par1World, int par2, int par3, int par4)
-//	{
-//		Object object = par1World.getBlockTileEntity(par2, par3, par4);
-//		
-//		if (object == null)
-//		{
-//			return null;
-//		}
-//		return (IInventory) object;
-//	}
+	// @Override
+	// public IInventory getInventory(World par1World, int par2, int par3, int par4)
+	// {
+	// Object object = par1World.getBlockTileEntity(par2, par3, par4);
+	//
+	// if (object == null)
+	// {
+	// return null;
+	// }
+	// return (IInventory) object;
+	// }
 	
 	@Override
 	public void setBlockBoundsBasedOnState(IBlockAccess par1IBlockAccess, int par2, int par3,
@@ -144,7 +147,7 @@ public class BlockBChest extends BlockContainer {
 	@Override
 	public void registerIcons(IconRegister par1IconRegister)
 	{
-//		blockIcon = par1IconRegister.registerIcon(Reference.MOD_ID + ":tile.betterChest");
+		// blockIcon = par1IconRegister.registerIcon(Reference.MOD_ID + ":tile.betterChest");
 	}
 	
 	@Override
@@ -251,31 +254,32 @@ public class BlockBChest extends BlockContainer {
 	}
 	
 	@Override
-    public void onBlockPlacedBy(World par1World, int par2, int par3, int par4, EntityLivingBase par5EntityLivingBase, ItemStack par6ItemStack)
-    {
-        byte facing = 0;
-        int rotation = MathHelper.floor_double((double)(par5EntityLivingBase.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
-
-        if (rotation == 0)
-        {
-            facing = 2;
-        }
-
-        if (rotation == 1)
-        {
-            facing = 5;
-        }
-
-        if (rotation == 2)
-        {
-            facing = 3;
-        }
-
-        if (rotation == 3)
-        {
-            facing = 4;
-        }
-        par1World.setBlockMetadataWithNotify(par2, par3, par4, facing, 3);
-    }
+	public void onBlockPlacedBy(World par1World, int par2, int par3, int par4,
+		EntityLivingBase par5EntityLivingBase, ItemStack par6ItemStack)
+	{
+		byte facing = 0;
+		int rotation = MathHelper.floor_double(par5EntityLivingBase.rotationYaw * 4.0F / 360.0F + 0.5D) & 3;
+		
+		if (rotation == 0)
+		{
+			facing = 2;
+		}
+		
+		if (rotation == 1)
+		{
+			facing = 5;
+		}
+		
+		if (rotation == 2)
+		{
+			facing = 3;
+		}
+		
+		if (rotation == 3)
+		{
+			facing = 4;
+		}
+		par1World.setBlockMetadataWithNotify(par2, par3, par4, facing, 3);
+	}
 	
 }

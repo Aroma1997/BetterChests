@@ -6,7 +6,9 @@
  * 
  * See https://github.com/Aroma1997/BetterChests/blob/master/LICENSE.md for more information.
  */
+
 package aroma1997.betterchests;
+
 
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemEditableBook;
@@ -14,7 +16,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.NBTTagString;
 import net.minecraft.world.World;
-
 
 public class CraftingBook implements IRecipe {
 	
@@ -28,10 +29,17 @@ public class CraftingBook implements IRecipe {
 		ItemStack item = null;
 		for (int i = 0; i < inventorycrafting.getSizeInventory(); i++) {
 			ItemStack tmp = inventorycrafting.getStackInSlot(i);
-			if (tmp == null) continue;
-			if (!(tmp.getItem() instanceof ItemEditableBook)) return null;
-			if (tmp.getTagCompound() == null) return null;
-			if (((NBTTagString)tmp.getTagCompound().getTag("author")).data.equals("Aroma1997") && ((NBTTagString)tmp.getTagCompound().getTag("title")).data.contains("BetterChests")) {
+			if (tmp == null) {
+				continue;
+			}
+			if (! (tmp.getItem() instanceof ItemEditableBook)) {
+				return null;
+			}
+			if (tmp.getTagCompound() == null) {
+				return null;
+			}
+			if (((NBTTagString) tmp.getTagCompound().getTag("author")).data.equals("Aroma1997")
+				&& ((NBTTagString) tmp.getTagCompound().getTag("title")).data.contains("BetterChests")) {
 				if (item != null) {
 					return null;
 				}

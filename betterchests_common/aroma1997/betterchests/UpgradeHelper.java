@@ -6,7 +6,9 @@
  * 
  * See https://github.com/Aroma1997/BetterChests/blob/master/LICENSE.md for more information.
  */
+
 package aroma1997.betterchests;
+
 
 import net.minecraft.block.Block;
 import net.minecraft.inventory.IInventory;
@@ -14,12 +16,12 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 
-
 public class UpgradeHelper {
 	
 	public static void updateChest(IInventory inv, int tick) {
-		if (!(inv instanceof IUpgradeProvider)) {
-			throw new IllegalArgumentException("The parameter has to be an instance of IUpgradeProvider!");
+		if (! (inv instanceof IUpgradeProvider)) {
+			throw new IllegalArgumentException(
+				"The parameter has to be an instance of IUpgradeProvider!");
 		}
 		IUpgradeProvider up = (IUpgradeProvider) inv;
 		
@@ -38,7 +40,8 @@ public class UpgradeHelper {
 			int empty = - 1;
 			for (int i = 0; i < inv.getSizeInventory(); i++) {
 				if (inv.getStackInSlot(i) != null
-					&& inv.getStackInSlot(i).itemID == Item.bucketWater.itemID && bucketWater == - 1) {
+					&& inv.getStackInSlot(i).itemID == Item.bucketWater.itemID
+					&& bucketWater == - 1) {
 					bucketWater = i;
 					continue;
 				}
@@ -49,7 +52,8 @@ public class UpgradeHelper {
 				}
 				if (empty == - 1
 					&& (inv.getStackInSlot(i) == null || inv.getStackInSlot(i) != null
-					&& inv.getStackInSlot(i).itemID == Block.cobblestone.blockID && inv.getStackInSlot(i).stackSize < inv.getStackInSlot(
+					&& inv.getStackInSlot(i).itemID == Block.cobblestone.blockID
+					&& inv.getStackInSlot(i).stackSize < inv.getStackInSlot(
 						i).getMaxStackSize())) {
 					empty = i;
 					continue;

@@ -6,13 +6,14 @@
  * 
  * See https://github.com/Aroma1997/BetterChests/blob/master/LICENSE.md for more information.
  */
+
 package aroma1997.betterchests;
+
 
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;
-
 
 public class CraftingBag implements IRecipe {
 	
@@ -54,9 +55,9 @@ public class CraftingBag implements IRecipe {
 		}
 		ItemBag itemBag = (ItemBag) bag.getItem();
 		ItemStack item = bag.copy();
-		BagInventory inv = (BagInventory)itemBag.getInventory(item);
+		BagInventory inv = itemBag.getInventory(item);
 		Upgrade upgr = Upgrade.values()[upgrade.getItemDamage()];
-		if (inv.getAmountUpgrade(upgr) >= upgr.getMaxAmount() || !upgr.canBagTakeUpgrade()) {
+		if (inv.getAmountUpgrade(upgr) >= upgr.getMaxAmount() || ! upgr.canBagTakeUpgrade()) {
 			return null;
 		}
 		inv.setAmountUpgrade(upgr, inv.getAmountUpgrade(upgr) + 1);

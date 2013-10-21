@@ -6,6 +6,7 @@
  * 
  * See https://github.com/Aroma1997/BetterChests/blob/master/LICENSE.md for more information.
  */
+
 package aroma1997.betterchests;
 
 
@@ -32,7 +33,7 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
 
-@Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, version = Reference.VERSION, dependencies="required-after:Aroma1997Core")
+@Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, version = Reference.VERSION, dependencies = "required-after:Aroma1997Core")
 public class BetterChests {
 	
 	@Instance(Reference.MOD_ID)
@@ -70,12 +71,16 @@ public class BetterChests {
 	public void init(FMLInitializationEvent event) {
 		proxy.registerRenderers();
 		GameRegistry.registerTileEntity(TileEntityBChest.class, "adjustableChest");
-		AromaRegistry.registerShapedOreRecipe(new ItemStack(chest), "CCC", "CBC", "CCC", 'C', new ItemStack(
-			Block.cobblestone), 'B', new ItemStack(Block.chest));
-		AromaRegistry.registerShapedOreRecipe(new ItemStack(bag), "SWS", "LCL", "SWS", 'S', new ItemStack(Item.silk), 'L', new ItemStack(Item.leather), 'W', new ItemStack(Block.cloth), 'C', new ItemStack(chest));
+		AromaRegistry.registerShapedOreRecipe(new ItemStack(chest), "CCC", "CBC", "CCC", 'C',
+			new ItemStack(
+				Block.cobblestone), 'B', new ItemStack(Block.chest));
+		AromaRegistry.registerShapedOreRecipe(new ItemStack(bag), "SWS", "LCL", "SWS", 'S',
+			new ItemStack(Item.silk), 'L', new ItemStack(Item.leather), 'W', new ItemStack(
+				Block.cloth), 'C', new ItemStack(chest));
 		GameRegistry.addRecipe(new CraftingBag());
 		Upgrade.generateRecipes();
-		AromaRegistry.registerShapelessOreRecipe(getHelpBook(), Upgrade.BASIC.getItem(), new ItemStack(Item.book));
+		AromaRegistry.registerShapelessOreRecipe(getHelpBook(), Upgrade.BASIC.getItem(),
+			new ItemStack(Item.book));
 		GameRegistry.addRecipe(new CraftingBook());
 		
 		VersionCheck.registerVersionChecker(Reference.MOD_ID, Reference.VERSION);
@@ -99,7 +104,8 @@ public class BetterChests {
 		Upgrade.addBagBookDescription(list);
 		list.add("book.betterchests:chapter.credits");
 		list.add("book.betterchests:credits");
-		return ItemUtil.getWrittenBook("book.betterchests:name", "Aroma1997", true, list.toArray(new String[list.size()]));
+		return ItemUtil.getWrittenBook("book.betterchests:name", "Aroma1997", true,
+			list.toArray(new String[list.size()]));
 	}
 	
 }

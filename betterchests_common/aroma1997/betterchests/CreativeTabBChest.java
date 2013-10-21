@@ -6,6 +6,7 @@
  * 
  * See https://github.com/Aroma1997/BetterChests/blob/master/LICENSE.md for more information.
  */
+
 package aroma1997.betterchests;
 
 
@@ -28,9 +29,9 @@ public class CreativeTabBChest extends CreativeTabs {
 	
 	@SideOnly(Side.CLIENT)
 	@Override
-    public String getTranslatedTabLabel()
-    {
+	public String getTranslatedTabLabel()
+	{
 		return "creativetab.betterchests:creativetab.name";
-    }
+	}
 	
 }

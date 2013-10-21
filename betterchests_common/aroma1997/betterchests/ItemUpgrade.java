@@ -6,6 +6,7 @@
  * 
  * See https://github.com/Aroma1997/BetterChests/blob/master/LICENSE.md for more information.
  */
+
 package aroma1997.betterchests;
 
 
@@ -38,13 +39,15 @@ public class ItemUpgrade extends Item {
 		List par3List, boolean par4) {
 		Upgrade upgrade = Upgrade.values()[par1ItemStack.getItemDamage()];
 		if (Upgrade.values()[par1ItemStack.getItemDamage()].getRequirement() != null) {
-			par3List.add(StatCollector.translateToLocalFormatted("info.betterchests:tooltip.requires", Colors.YELLOW
+			par3List.add(StatCollector.translateToLocalFormatted(
+				"info.betterchests:tooltip.requires", Colors.YELLOW
 				+ Upgrade.values()[par1ItemStack.getItemDamage()].getRequirement().getName()));
 		}
 		if (upgrade.getMaxAmount() != 0) {
-			par3List.add(StatCollector.translateToLocalFormatted("info.betterchests:tooltip.maxamount", upgrade.getMaxAmount()));
+			par3List.add(StatCollector.translateToLocalFormatted(
+				"info.betterchests:tooltip.maxamount", upgrade.getMaxAmount()));
 		}
-		if (!upgrade.canBag) {
+		if (! upgrade.canBag) {
 			par3List.add(StatCollector.translateToLocal("info.betterchests:tooltip.nobag"));
 		}
 	}

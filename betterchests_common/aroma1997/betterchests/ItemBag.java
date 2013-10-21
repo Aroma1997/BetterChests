@@ -6,7 +6,9 @@
  * 
  * See https://github.com/Aroma1997/BetterChests/blob/master/LICENSE.md for more information.
  */
+
 package aroma1997.betterchests;
+
 
 import java.util.List;
 
@@ -25,7 +27,6 @@ import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-
 public class ItemBag extends Item implements ISpecialInventoryProvider {
 	
 	public ItemBag(int id) {
@@ -35,30 +36,34 @@ public class ItemBag extends Item implements ISpecialInventoryProvider {
 	}
 	
 	@Override
-    public boolean onItemUse(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, World par3World, int par4, int par5, int par6, int par7, float par8, float par9, float par10)
-    {
+	public boolean
+	onItemUse(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, World par3World,
+		int par4, int par5, int par6, int par7, float par8, float par9, float par10)
+	{
 		onItemRightClick(par1ItemStack, par3World, par2EntityPlayer);
-    	return true;
-    }
+		return true;
+	}
 	
 	@Override
-    public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
-    {
+	public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World,
+		EntityPlayer par3EntityPlayer)
+	{
 		Inventories.openContainerAtPlayer(par3EntityPlayer, par3EntityPlayer.inventory.currentItem);
 		return par1ItemStack;
-    }
-
+	}
+	
 	@Override
 	public ISpecialInventory getInventory(EntityPlayer player, int id) {
 		return getInventory(player.inventory.getStackInSlot(id));
 	}
 	
 	public BagInventory getInventory(ItemStack item) {
-		return BagInventory.getInvForItem(item);//new BagInventory(item);
+		return BagInventory.getInvForItem(item);// new BagInventory(item);
 	}
 	
 	@Override
-	public void onUpdate(ItemStack par1ItemStack, World par2World, Entity par3Entity, int par4, boolean par5) {
+	public void onUpdate(ItemStack par1ItemStack, World par2World, Entity par3Entity, int par4,
+		boolean par5) {
 		BagInventory inv = getInventory(par1ItemStack);
 		inv.onUpdate();
 	}
@@ -68,16 +73,16 @@ public class ItemBag extends Item implements ISpecialInventoryProvider {
 		return StatCollector.translateToLocal("item.betterchests:bag.name");
 	}
 	
-    @SideOnly(Side.CLIENT)
-    @Override
-    public void registerIcons(IconRegister par1IconRegister)
-    {
-    	this.itemIcon = par1IconRegister.registerIcon(Reference.MOD_ID + ":bag");
-    }
-    
-    @SuppressWarnings({"unchecked", "rawtypes"})
 	@SideOnly(Side.CLIENT)
-    @Override
+	@Override
+	public void registerIcons(IconRegister par1IconRegister)
+	{
+		itemIcon = par1IconRegister.registerIcon(Reference.MOD_ID + ":bag");
+	}
+	
+	@SuppressWarnings({"unchecked", "rawtypes"})
+	@SideOnly(Side.CLIENT)
+	@Override
 	public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer,
 		List par3List, boolean par4) {
 		BagInventory inv = getInventory(par1ItemStack);

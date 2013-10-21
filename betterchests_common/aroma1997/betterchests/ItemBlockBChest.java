@@ -6,6 +6,7 @@
  * 
  * See https://github.com/Aroma1997/BetterChests/blob/master/LICENSE.md for more information.
  */
+
 package aroma1997.betterchests;
 
 
@@ -29,10 +30,10 @@ public class ItemBlockBChest extends ItemBlock {
 	
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	@Override
-    public void getSubItems(int par1, CreativeTabs par2CreativeTabs, List par3List)
-    {
+	public void getSubItems(int par1, CreativeTabs par2CreativeTabs, List par3List)
+	{
 		par3List.add(BetterChests.getHelpBook());
 		super.getSubItems(par1, par2CreativeTabs, par3List);
-    }
+	}
 	
 }

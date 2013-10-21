@@ -6,7 +6,9 @@
  * 
  * See https://github.com/Aroma1997/BetterChests/blob/master/LICENSE.md for more information.
  */
+
 package aroma1997.betterchests;
+
 
 import java.util.HashMap;
 import java.util.Random;
@@ -22,7 +24,6 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
-
 public class BagInventory implements ISpecialInventory, IUpgradeProvider {
 	
 	private final ItemStack item;
@@ -32,92 +33,96 @@ public class BagInventory implements ISpecialInventory, IUpgradeProvider {
 		if (item.getTagCompound() == null) {
 			item.setTagCompound(new NBTTagCompound());
 		}
-		this.readFromNBT(item.stackTagCompound);
+		readFromNBT(item.stackTagCompound);
 	}
 	
 	private ItemStack[] items;
+	
 	private String customName;
+	
 	private HashMap<Upgrade, Integer> upgrades = new HashMap<Upgrade, Integer>();
-
-	@Override
-    public ItemStack getStackInSlot(int par1)
-    {
-		if (par1 >= items.length) return null;
-        return this.items[par1];
-    }
 	
 	@Override
-    public ItemStack decrStackSize(int par1, int par2)
-    {
-        if (this.items[par1] != null)
-        {
-            ItemStack itemstack;
-
-            if (this.items[par1].stackSize <= par2)
-            {
-                itemstack = this.items[par1];
-                this.items[par1] = null;
-                this.onInventoryChanged();
-                return itemstack;
-            }
-            else
-            {
-                itemstack = this.items[par1].splitStack(par2);
-
-                if (this.items[par1].stackSize == 0)
-                {
-                    this.items[par1] = null;
-                }
-
-                this.onInventoryChanged();
-                return itemstack;
-            }
-        }
-        else
-        {
-            return null;
-        }
-    }
+	public ItemStack getStackInSlot(int par1)
+	{
+		if (par1 >= items.length) {
+			return null;
+		}
+		return items[par1];
+	}
 	
 	@Override
-    public ItemStack getStackInSlotOnClosing(int par1)
-    {
-        if (this.items[par1] != null)
-        {
-            ItemStack itemstack = this.items[par1];
-            this.items[par1] = null;
-            return itemstack;
-        }
-        else
-        {
-            return null;
-        }
-    }
+	public ItemStack decrStackSize(int par1, int par2)
+	{
+		if (items[par1] != null)
+		{
+			ItemStack itemstack;
+			
+			if (items[par1].stackSize <= par2)
+			{
+				itemstack = items[par1];
+				items[par1] = null;
+				onInventoryChanged();
+				return itemstack;
+			}
+			else
+			{
+				itemstack = items[par1].splitStack(par2);
+				
+				if (items[par1].stackSize == 0)
+				{
+					items[par1] = null;
+				}
+				
+				onInventoryChanged();
+				return itemstack;
+			}
+		}
+		else
+		{
+			return null;
+		}
+	}
 	
 	@Override
-    public void setInventorySlotContents(int par1, ItemStack par2ItemStack)
-    {
-        this.items[par1] = par2ItemStack;
-
-        if (par2ItemStack != null && par2ItemStack.stackSize > this.getInventoryStackLimit())
-        {
-            par2ItemStack.stackSize = this.getInventoryStackLimit();
-        }
-
-        this.onInventoryChanged();
-    }
+	public ItemStack getStackInSlotOnClosing(int par1)
+	{
+		if (items[par1] != null)
+		{
+			ItemStack itemstack = items[par1];
+			items[par1] = null;
+			return itemstack;
+		}
+		else
+		{
+			return null;
+		}
+	}
 	
 	@Override
-    public String getInvName()
-    {
-        return this.isInvNameLocalized() ? this.customName : "inv.betterchests:bag.name";
-    }
+	public void setInventorySlotContents(int par1, ItemStack par2ItemStack)
+	{
+		items[par1] = par2ItemStack;
+		
+		if (par2ItemStack != null && par2ItemStack.stackSize > getInventoryStackLimit())
+		{
+			par2ItemStack.stackSize = getInventoryStackLimit();
+		}
+		
+		onInventoryChanged();
+	}
 	
 	@Override
-    public boolean isInvNameLocalized()
-    {
-        return this.customName != null && this.customName.length() > 0;
-    }
+	public String getInvName()
+	{
+		return isInvNameLocalized() ? customName : "inv.betterchests:bag.name";
+	}
+	
+	@Override
+	public boolean isInvNameLocalized()
+	{
+		return customName != null && customName.length() > 0;
+	}
 	
 	@Override
 	public int getInventoryStackLimit() {
@@ -126,7 +131,7 @@ public class BagInventory implements ISpecialInventory, IUpgradeProvider {
 	
 	@Override
 	public void onInventoryChanged() {
-		writeToNBT(this.item.stackTagCompound);
+		writeToNBT(item.stackTagCompound);
 	}
 	
 	@Override
@@ -173,19 +178,19 @@ public class BagInventory implements ISpecialInventory, IUpgradeProvider {
 	
 	@Override
 	public void readFromNBT(NBTTagCompound nbt) {
-        if (nbt.hasKey("display"))
-        {
-            NBTTagCompound nbttagcompound = nbt.getCompoundTag("display");
-
-            if (nbttagcompound.hasKey("Name"))
-            {
-                customName = nbttagcompound.getString("Name");
-            }
-        }
+		if (nbt.hasKey("display"))
+		{
+			NBTTagCompound nbttagcompound = nbt.getCompoundTag("display");
+			
+			if (nbttagcompound.hasKey("Name"))
+			{
+				customName = nbttagcompound.getString("Name");
+			}
+		}
 		for (Upgrade upgrade : Upgrade.values()) {
 			setAmountUpgradeWithoutNotify(upgrade, nbt.getInteger(upgrade.toString()));
 		}
-		this.items = new ItemStack[getSizeInventory()];
+		items = new ItemStack[getSizeInventory()];
 		FileUtil.readFromNBT(this, nbt);
 	}
 	
@@ -196,34 +201,35 @@ public class BagInventory implements ISpecialInventory, IUpgradeProvider {
 			nbt.setInteger(upgrade.toString(), getAmountUpgrade(upgrade));
 		}
 	}
-
+	
 	@Override
 	public ContainerBasic getContainer(EntityPlayer player, int i) {
 		return new ContainerItem(player.inventory, this, i);
 	}
-
+	
 	@Override
 	public int getAmountUpgrade(Upgrade upgrade) {
 		return upgrades.get(upgrade);
 	}
-
+	
 	@Override
 	public boolean isUpgradeInstalled(Upgrade upgrade) {
 		return getAmountUpgrade(upgrade) > 0;
 	}
-
+	
 	@Override
-	public void setAmountUpgrade(Upgrade upgrade, int amount)  {
+	public void setAmountUpgrade(Upgrade upgrade, int amount) {
 		setAmountUpgradeWithoutNotify(upgrade, amount);
 		onInventoryChanged();
 	}
+	
 	public void setAmountUpgradeWithoutNotify(Upgrade upgrade, int amount) {
 		if (upgrades.containsKey(upgrade)) {
 			upgrades.remove(upgrade);
 		}
 		upgrades.put(upgrade, new Integer(amount));
 	}
-
+	
 	@Override
 	public boolean hasEnergy() {
 		return isUpgradeInstalled(Upgrade.ENERGY);
@@ -241,7 +247,7 @@ public class BagInventory implements ISpecialInventory, IUpgradeProvider {
 	private static HashMap<ItemStack, BagInventory> invs = new HashMap<ItemStack, BagInventory>();
 	
 	public static BagInventory getInvForItem(ItemStack item) {
-		if (!invs.containsKey(item)) {
+		if (! invs.containsKey(item)) {
 			BagInventory inv = new BagInventory(item);
 			invs.put(item, inv);
 			return inv;

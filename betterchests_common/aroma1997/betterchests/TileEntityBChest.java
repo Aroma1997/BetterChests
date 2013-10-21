@@ -6,6 +6,7 @@
  * 
  * See https://github.com/Aroma1997/BetterChests/blob/master/LICENSE.md for more information.
  */
+
 package aroma1997.betterchests;
 
 
@@ -48,15 +49,15 @@ public class TileEntityBChest extends TileEntity implements IInventory, ISpecial
 	private int tick;
 	
 	private EntityPlayer fplayer;
-
-	private int ticksSinceSync = -1;
+	
+	private int ticksSinceSync = - 1;
 	
 	private HashMap<Upgrade, Integer> upgrades = new HashMap<Upgrade, Integer>();
 	
 	public TileEntityBChest() {
 		player = "";
 		tick = new Random().nextInt(64);
-		this.items = new ItemStack[9];
+		items = new ItemStack[9];
 	}
 	
 	@Override
@@ -75,7 +76,7 @@ public class TileEntityBChest extends TileEntity implements IInventory, ISpecial
 	@Override
 	public void validate() {
 		super.validate();
-		if (!worldObj.isRemote) {
+		if (! worldObj.isRemote) {
 			fplayer = FakePlayerFactory.getFakePlayer(worldObj);
 			fplayer.posX = xCoord;
 			fplayer.posY = yCoord;
@@ -84,13 +85,13 @@ public class TileEntityBChest extends TileEntity implements IInventory, ISpecial
 	}
 	
 	private boolean firstInit = false;
-
+	
 	private int numUsingPlayers;
-
+	
 	public float prevLidAngle;
-
+	
 	public float lidAngle;
-
+	
 	private ItemStack[] items;
 	
 	@Override
@@ -98,7 +99,7 @@ public class TileEntityBChest extends TileEntity implements IInventory, ISpecial
 		super.updateEntity();
 		doNormalChestUpdate();
 		if (firstInit) {
-			this.worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+			worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
 		}
 		if (worldObj.isRemote) {
 			return;
@@ -116,20 +117,21 @@ public class TileEntityBChest extends TileEntity implements IInventory, ISpecial
 			updateBlock(xCoord, yCoord - 1, zCoord);
 		};
 		
-
-		
 		if (isUpgradeInstalled(Upgrade.TICKING) && tick % 8 == 0) {
 			for (int i = 0; i < getSizeInventory(); i++) {
 				ItemStack item = getStackInSlot(i);
-				if (item == null || item.getItem() == null) continue;
-				fplayer.inventory.mainInventory[0] = this.getStackInSlot(i);
+				if (item == null || item.getItem() == null) {
+					continue;
+				}
+				fplayer.inventory.mainInventory[0] = getStackInSlot(i);
 				fplayer.inventory.onInventoryChanged();
 				item.getItem().onUpdate(item, worldObj, fplayer, 0, false);
 				onInventoryChanged();
 			}
 		}
 		
-		if (isUpgradeInstalled(Upgrade.RAIN) && worldObj.canBlockSeeTheSky(xCoord, yCoord, zCoord) && worldObj.isRaining()
+		if (isUpgradeInstalled(Upgrade.RAIN) && worldObj.canBlockSeeTheSky(xCoord, yCoord, zCoord)
+			&& worldObj.isRaining()
 			&& new Random().nextFloat() > Reference.Conf.RAIN_THINGY && tick == 20) {
 			int bucketEmpty = - 1;
 			int emptySpace = - 1;
@@ -159,7 +161,8 @@ public class TileEntityBChest extends TileEntity implements IInventory, ISpecial
 			for (int i = - getAmountUpgrade(Upgrade.COLLECTOR); i <= getAmountUpgrade(Upgrade.COLLECTOR); i++) {
 				for (int j = - getAmountUpgrade(Upgrade.COLLECTOR); j <= getAmountUpgrade(Upgrade.COLLECTOR); j++) {
 					for (int k = 0; k <= 1; k++) {
-						EntityItem entityitem = TileEntityHopper.getEntityAbove(worldObj, xCoord + i,
+						EntityItem entityitem = TileEntityHopper.getEntityAbove(worldObj, xCoord
+							+ i,
 							(double) yCoord + k, zCoord + j);
 						
 						if (entityitem != null)
@@ -173,18 +176,18 @@ public class TileEntityBChest extends TileEntity implements IInventory, ISpecial
 	}
 	
 	@Override
-    public Packet getDescriptionPacket()
-    {
-    	NBTTagCompound nbt = new NBTTagCompound();
-    	writeToNBT(nbt);
-    	Packet132TileEntityData packet = new Packet132TileEntityData();
-    	packet.data = nbt;
-    	packet.xPosition = xCoord;
-    	packet.yPosition = yCoord;
-    	packet.zPosition = zCoord;
-    	packet.actionType = 1;
-        return packet;
-    }
+	public Packet getDescriptionPacket()
+	{
+		NBTTagCompound nbt = new NBTTagCompound();
+		writeToNBT(nbt);
+		Packet132TileEntityData packet = new Packet132TileEntityData();
+		packet.data = nbt;
+		packet.xPosition = xCoord;
+		packet.yPosition = yCoord;
+		packet.zPosition = zCoord;
+		packet.actionType = 1;
+		return packet;
+	}
 	
 	@Override
 	public void onDataPacket(INetworkManager net, Packet132TileEntityData packet) {
@@ -199,7 +202,7 @@ public class TileEntityBChest extends TileEntity implements IInventory, ISpecial
 	@Override
 	public boolean isUseableByPlayer(EntityPlayer par1EntityPlayer)
 	{
-		if (! (isUpgradeInstalled(Upgrade.PLAYER))) {
+		if (! isUpgradeInstalled(Upgrade.PLAYER)) {
 			return true;
 		}
 		
@@ -225,7 +228,7 @@ public class TileEntityBChest extends TileEntity implements IInventory, ISpecial
 		ItemStack item = player.getHeldItem();
 		Upgrade upgrade = Upgrade.values()[item.getItemDamage()];
 		
-		if (!(getAmountUpgrade(upgrade) >= upgrade.getMaxAmount())) {
+		if (! (getAmountUpgrade(upgrade) >= upgrade.getMaxAmount())) {
 			if (upgrade.getRequirement() == null || isUpgradeInstalled(upgrade.getRequirement())) {
 				setAmountUpgrade(upgrade, getAmountUpgrade(upgrade) + 1);
 				if (upgrade == Upgrade.PLAYER) {
@@ -238,18 +241,18 @@ public class TileEntityBChest extends TileEntity implements IInventory, ISpecial
 		
 		return false;
 	}
-
+	
 	@Override
 	public void readFromNBT(NBTTagCompound nbt) {
 		for (Upgrade upgrade : Upgrade.values()) {
 			setAmountUpgrade(upgrade, nbt.getInteger(upgrade.toString()));
 		}
-		this.items = new ItemStack[getSizeInventory()];
+		items = new ItemStack[getSizeInventory()];
 		FileUtil.readFromNBT(this, nbt);
 		player = nbt.getString("player");
 		super.readFromNBT(nbt);
 		if (worldObj != null && worldObj.isRemote) {
-			this.worldObj.markBlockForRenderUpdate(xCoord, yCoord, zCoord);
+			worldObj.markBlockForRenderUpdate(xCoord, yCoord, zCoord);
 		}
 	}
 	
@@ -264,8 +267,9 @@ public class TileEntityBChest extends TileEntity implements IInventory, ISpecial
 	}
 	
 	private void onUpgradeInserted(EntityPlayer player) {
-		if (!player.capabilities.isCreativeMode)
+		if (! player.capabilities.isCreativeMode) {
 			player.inventory.mainInventory[player.inventory.currentItem].stackSize -= 1;
+		}
 		NBTTagCompound nbttagcompound = new NBTTagCompound();
 		writeToNBT(nbttagcompound);
 		readFromNBT(nbttagcompound);
@@ -279,7 +283,7 @@ public class TileEntityBChest extends TileEntity implements IInventory, ISpecial
 	
 	public int getComparatorOutput() {
 		
-		if (!isUpgradeInstalled(Upgrade.COMPARATOR)) {
+		if (! isUpgradeInstalled(Upgrade.COMPARATOR)) {
 			return 0;
 		}
 		if (isUpgradeInstalled(Upgrade.RAIN)) {
@@ -333,6 +337,7 @@ public class TileEntityBChest extends TileEntity implements IInventory, ISpecial
 		return item;
 	}
 	
+	@Override
 	public boolean hasEnergy() {
 		return isUpgradeInstalled(Upgrade.ENERGY);
 	}
@@ -378,151 +383,162 @@ public class TileEntityBChest extends TileEntity implements IInventory, ISpecial
 	
 	@SuppressWarnings("rawtypes")
 	private void doNormalChestUpdate() {
-        if (worldObj != null && !this.worldObj.isRemote && this.numUsingPlayers > 0 && (this.ticksSinceSync + this.xCoord + this.yCoord + this.zCoord) % 200 == 0)
-        {
-            this.numUsingPlayers = 0;
-            float var1 = 5.0F;
-            List var2 = this.worldObj.getEntitiesWithinAABB(EntityPlayer.class, AxisAlignedBB.getAABBPool().getAABB((double)((float)this.xCoord - var1), (double)((float)this.yCoord - var1), (double)((float)this.zCoord - var1), (double)((float)(this.xCoord + 1) + var1), (double)((float)(this.yCoord + 1) + var1), (double)((float)(this.zCoord + 1) + var1)));
-            Iterator var3 = var2.iterator();
-
-            while (var3.hasNext())
-            {
-                EntityPlayer var4 = (EntityPlayer)var3.next();
-
-                if (var4.openContainer instanceof ContainerBasic)
-                {
-                    ++this.numUsingPlayers;
-                }
-            }
-        }
-
-        if (worldObj != null && !worldObj.isRemote && ticksSinceSync < 0)
-        {
-            worldObj.addBlockEvent(xCoord, yCoord, zCoord, BetterChests.chest.blockID, 1, numUsingPlayers);
-        }
-
-        this.ticksSinceSync++;
-        prevLidAngle = lidAngle;
-        float f = 0.1F;
-        if (numUsingPlayers > 0 && lidAngle == 0.0F)
-        {
-            worldObj.playSoundEffect(xCoord + 0.5D, (double) yCoord + 0.5D, zCoord + 0.5D, "random.chestopen", 0.5F, worldObj.rand.nextFloat() * 0.1F + 0.9F);
-        }
-        if (numUsingPlayers <= 0 && lidAngle > 0.0F || numUsingPlayers > 0 && lidAngle < 1.0F)
-        {
-            float f1 = lidAngle;
-            if (numUsingPlayers > 0)
-            {
-                lidAngle += f;
-            }
-            else
-            {
-                lidAngle -= f;
-            }
-            if (lidAngle > 1.0F)
-            {
-                lidAngle = 1.0F;
-            }
-            float f2 = 0.5F;
-            if (lidAngle < f2 && f1 >= f2)
-            {
-                worldObj.playSoundEffect(xCoord + 0.5D, (double) yCoord + 0.5D, zCoord + 0.5D, "random.chestclosed", 0.5F, worldObj.rand.nextFloat() * 0.1F + 0.9F);
-            }
-            if (lidAngle < 0.0F)
-            {
-                lidAngle = 0.0F;
-            }
-        }
+		if (worldObj != null && ! worldObj.isRemote && numUsingPlayers > 0
+			&& (ticksSinceSync + xCoord + yCoord + zCoord) % 200 == 0)
+		{
+			numUsingPlayers = 0;
+			float var1 = 5.0F;
+			List var2 = worldObj.getEntitiesWithinAABB(
+				EntityPlayer.class,
+				AxisAlignedBB.getAABBPool().getAABB(xCoord - var1,
+					yCoord - var1, zCoord - var1,
+					xCoord + 1 + var1,
+					yCoord + 1 + var1,
+					zCoord + 1 + var1));
+			Iterator var3 = var2.iterator();
+			
+			while (var3.hasNext())
+			{
+				EntityPlayer var4 = (EntityPlayer) var3.next();
+				
+				if (var4.openContainer instanceof ContainerBasic)
+				{
+					++numUsingPlayers;
+				}
+			}
+		}
+		
+		if (worldObj != null && ! worldObj.isRemote && ticksSinceSync < 0)
+		{
+			worldObj.addBlockEvent(xCoord, yCoord, zCoord, BetterChests.chest.blockID, 1,
+				numUsingPlayers);
+		}
+		
+		ticksSinceSync++;
+		prevLidAngle = lidAngle;
+		float f = 0.1F;
+		if (numUsingPlayers > 0 && lidAngle == 0.0F)
+		{
+			worldObj.playSoundEffect(xCoord + 0.5D, yCoord + 0.5D, zCoord + 0.5D,
+				"random.chestopen", 0.5F, worldObj.rand.nextFloat() * 0.1F + 0.9F);
+		}
+		if (numUsingPlayers <= 0 && lidAngle > 0.0F || numUsingPlayers > 0 && lidAngle < 1.0F)
+		{
+			float f1 = lidAngle;
+			if (numUsingPlayers > 0)
+			{
+				lidAngle += f;
+			}
+			else
+			{
+				lidAngle -= f;
+			}
+			if (lidAngle > 1.0F)
+			{
+				lidAngle = 1.0F;
+			}
+			float f2 = 0.5F;
+			if (lidAngle < f2 && f1 >= f2)
+			{
+				worldObj.playSoundEffect(xCoord + 0.5D, yCoord + 0.5D, zCoord + 0.5D,
+					"random.chestclosed", 0.5F, worldObj.rand.nextFloat() * 0.1F + 0.9F);
+			}
+			if (lidAngle < 0.0F)
+			{
+				lidAngle = 0.0F;
+			}
+		}
 	}
 	
 	@Override
 	public void onInventoryChanged() {
 		super.onInventoryChanged();
-		this.worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+		worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
 	}
-
+	
 	@Override
-    public ItemStack decrStackSize(int par1, int par2)
-    {
-        if (items[par1] != null)
-        {
-            ItemStack itemstack;
-
-            if (items[par1].stackSize <= par2)
-            {
-                itemstack = items[par1];
-                items[par1] = null;
-                this.onInventoryChanged();
-                return itemstack;
-            }
-            else
-            {
-                itemstack = items[par1].splitStack(par2);
-
-                if (items[par1].stackSize == 0)
-                {
-                    items[par1] = null;
-                }
-
-                this.onInventoryChanged();
-                return itemstack;
-            }
-        }
-        else
-        {
-            return null;
-        }
-    }
-
+	public ItemStack decrStackSize(int par1, int par2)
+	{
+		if (items[par1] != null)
+		{
+			ItemStack itemstack;
+			
+			if (items[par1].stackSize <= par2)
+			{
+				itemstack = items[par1];
+				items[par1] = null;
+				onInventoryChanged();
+				return itemstack;
+			}
+			else
+			{
+				itemstack = items[par1].splitStack(par2);
+				
+				if (items[par1].stackSize == 0)
+				{
+					items[par1] = null;
+				}
+				
+				onInventoryChanged();
+				return itemstack;
+			}
+		}
+		else
+		{
+			return null;
+		}
+	}
+	
 	@Override
 	public ItemStack getStackInSlotOnClosing(int i) {
 		return items[i];
 	}
-
+	
 	@Override
 	public void setInventorySlotContents(int i, ItemStack itemstack) {
 		items[i] = itemstack;
 	}
-
+	
 	@Override
 	public boolean isInvNameLocalized() {
 		return false;
 	}
-
+	
 	@Override
 	public int getInventoryStackLimit() {
 		return 64;
 	}
-
+	
 	@Override
 	public void openChest() {
-		this.numUsingPlayers++;
+		numUsingPlayers++;
 	}
-
+	
 	@Override
 	public void closeChest() {
-		this.numUsingPlayers--;
+		numUsingPlayers--;
 	}
-
+	
 	@Override
 	public boolean isItemValidForSlot(int i, ItemStack itemstack) {
 		return true;
 	}
 	
 	@Override
-    public boolean receiveClientEvent(int par1, int par2)
-    {
-        if (par1 == 1)
-        {
-            this.numUsingPlayers = par2;
-            return true;
-        }
-        else
-        {
-            return super.receiveClientEvent(par1, par2);
-        }
-    }
+	public boolean receiveClientEvent(int par1, int par2)
+	{
+		if (par1 == 1)
+		{
+			numUsingPlayers = par2;
+			return true;
+		}
+		else
+		{
+			return super.receiveClientEvent(par1, par2);
+		}
+	}
 	
+	@Override
 	public int getAmountUpgrade(Upgrade upgrade) {
 		Integer c = upgrades.get(upgrade);
 		if (c != null) {
@@ -531,34 +547,36 @@ public class TileEntityBChest extends TileEntity implements IInventory, ISpecial
 		return 0;
 	}
 	
+	@Override
 	public boolean isUpgradeInstalled(Upgrade upgrade) {
 		return getAmountUpgrade(upgrade) > 0;
 	}
 	
+	@Override
 	public void setAmountUpgrade(Upgrade upgrade, int amount) {
 		if (upgrades.containsKey(upgrade)) {
 			upgrades.remove(upgrade);
 		}
 		upgrades.put(upgrade, new Integer(amount));
 	}
-
+	
 	@Override
 	public Slot getSlot(int slot, int index, int x, int y) {
 		return new Slot(this, index, x, y);
 	}
-
+	
 	@Override
 	public void drawGuiContainerForegroundLayer(GUIContainer gui, ContainerBasic container,
 		int par1, int par2) {
 		
 	}
-
+	
 	@Override
 	public void drawGuiContainerBackgroundLayer(GUIContainer gui, ContainerBasic container,
 		float f, int i, int j) {
 		
 	}
-
+	
 	@Override
 	public ContainerBasic getContainer(EntityPlayer player, int i) {
 		return new ContainerBasic(player.inventory, this);
