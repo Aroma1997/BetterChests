@@ -56,7 +56,7 @@ public class TileEntityBChest extends TileEntity implements IInventory, ISpecial
 	public TileEntityBChest() {
 		player = "";
 		tick = new Random().nextInt(64);
-		this.items = new ItemStack[0];
+		this.items = new ItemStack[9];
 	}
 	
 	@Override
