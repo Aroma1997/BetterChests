@@ -11,21 +11,15 @@ package aroma1997.betterchests;
 
 
 import net.minecraft.block.Block;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 
 public class UpgradeHelper {
 	
-	public static void updateChest(IInventory inv, int tick) {
-		if (! (inv instanceof IUpgradeProvider)) {
-			throw new IllegalArgumentException(
-				"The parameter has to be an instance of IUpgradeProvider!");
-		}
-		IUpgradeProvider up = (IUpgradeProvider) inv;
+	public static void updateChest(IBetterChest inv, int tick) {
 		
-		if (up.isUpgradeInstalled(Upgrade.VOID)) {
+		if (inv.isUpgradeInstalled(Upgrade.VOID)) {
 			for (int i = 0; i < inv.getSizeInventory(); i++) {
 				if (inv.getStackInSlot(i) == null) {
 					continue;
@@ -34,7 +28,7 @@ public class UpgradeHelper {
 			}
 		}
 		
-		if (up.isUpgradeInstalled(Upgrade.COBBLEGEN) && tick == 60) {
+		if (inv.isUpgradeInstalled(Upgrade.COBBLEGEN) && tick == 60) {
 			int bucketLava = - 1;
 			int bucketWater = - 1;
 			int empty = - 1;
@@ -74,7 +68,7 @@ public class UpgradeHelper {
 			inv.setInventorySlotContents(empty, new ItemStack(Block.cobblestone, amount));
 		}
 		
-		if (up.isUpgradeInstalled(Upgrade.FURNACE) && tick == 59) {
+		if (inv.isUpgradeInstalled(Upgrade.FURNACE) && tick == 59) {
 			int cooking = - 1;
 			for (int i = 0; i < inv.getSizeInventory(); i++) {
 				ItemStack stack = inv.getStackInSlot(i);

@@ -34,7 +34,7 @@ public enum Upgrade {
 	RAIN(null, 1, true, false),
 	ENERGY(null, 1, true, true),
 	FURNACE(ENERGY, 1, true, true),
-	COLLECTOR(ENERGY, 8, true, false),
+	COLLECTOR(ENERGY, 8, true, true),
 	TICKING(ENERGY, 1, true, false);
 	
 	private Upgrade requirement;

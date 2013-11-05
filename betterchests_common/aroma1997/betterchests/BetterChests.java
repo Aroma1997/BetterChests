@@ -24,6 +24,7 @@ import net.minecraft.item.ItemStack;
 
 import net.minecraftforge.common.Configuration;
 
+import cpw.mods.fml.client.registry.KeyBindingRegistry;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -31,9 +32,11 @@ import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 @Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, version = Reference.VERSION, dependencies = "required-after:Aroma1997Core")
+@NetworkMod(channels={"BetterChests"}, clientSideRequired = true, serverSideRequired = false, packetHandler = PacketHandler.class)
 public class BetterChests {
 	
 	@Instance(Reference.MOD_ID)
@@ -88,7 +91,7 @@ public class BetterChests {
 	
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event) {
-		
+		KeyBindingRegistry.registerKeyBinding(new BetterChestsKeyHandler());
 	}
 	
 	public static ItemStack getHelpBook() {
@@ -100,6 +103,7 @@ public class BetterChests {
 		list.add("book.betterchests:general.3");
 		list.add("book.betterchests:chest.1");
 		list.add("book.betterchests:bag.1");
+		list.add("book.betterchests:bag.2");
 		list.add("book.betterchests:chapter.upgrades");
 		Upgrade.addBagBookDescription(list);
 		list.add("book.betterchests:chapter.credits");

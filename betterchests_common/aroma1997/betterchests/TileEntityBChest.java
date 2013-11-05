@@ -17,7 +17,6 @@ import java.util.Random;
 
 import aroma1997.core.client.inventories.GUIContainer;
 import aroma1997.core.inventories.ContainerBasic;
-import aroma1997.core.inventories.ISpecialInventory;
 import aroma1997.core.misc.FakePlayerFactory;
 import aroma1997.core.util.FileUtil;
 
@@ -26,7 +25,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -42,7 +40,7 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
 
-public class TileEntityBChest extends TileEntity implements IInventory, ISpecialInventory, Hopper, IUpgradeProvider {
+public class TileEntityBChest extends TileEntity implements Hopper, IBetterChest {
 	
 	private String player;
 	

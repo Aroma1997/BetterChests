@@ -46,9 +46,12 @@ public class ItemBag extends Item implements ISpecialInventoryProvider {
 	
 	@Override
 	public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World,
-		EntityPlayer par3EntityPlayer)
+		EntityPlayer thePlayer)
 	{
-		Inventories.openContainerAtPlayer(par3EntityPlayer, par3EntityPlayer.inventory.currentItem);
+		if (par2World.isRemote) {
+			PacketHandler.sendPacketBag(thePlayer.inventory.currentItem);
+		}
+		Inventories.openContainerAtPlayer(thePlayer, thePlayer.inventory.currentItem);
 		return par1ItemStack;
 	}
 	
@@ -64,8 +67,10 @@ public class ItemBag extends Item implements ISpecialInventoryProvider {
 	@Override
 	public void onUpdate(ItemStack par1ItemStack, World par2World, Entity par3Entity, int par4,
 		boolean par5) {
-		BagInventory inv = getInventory(par1ItemStack);
-		inv.onUpdate();
+		if (par3Entity instanceof EntityPlayer) {
+			BagInventory inv = getInventory(par1ItemStack);
+			inv.onUpdate((EntityPlayer) par3Entity);
+		}
 	}
 	
 	@Override

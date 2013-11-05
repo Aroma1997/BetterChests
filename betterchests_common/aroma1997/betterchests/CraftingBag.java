@@ -61,6 +61,7 @@ public class CraftingBag implements IRecipe {
 			return null;
 		}
 		inv.setAmountUpgrade(upgr, inv.getAmountUpgrade(upgr) + 1);
+		inv.writeToNBT(item.stackTagCompound);
 		return item;
 	}
 	

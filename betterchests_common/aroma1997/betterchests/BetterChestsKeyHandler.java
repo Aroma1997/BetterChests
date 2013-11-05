@@ -1,0 +1,50 @@
+package aroma1997.betterchests;
+
+import java.util.EnumSet;
+
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.settings.KeyBinding;
+
+import org.lwjgl.input.Keyboard;
+
+import cpw.mods.fml.client.registry.KeyBindingRegistry.KeyHandler;
+import cpw.mods.fml.common.TickType;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
+@SideOnly(Side.CLIENT)
+public class BetterChestsKeyHandler extends KeyHandler {
+	
+	public static KeyBinding openBag = new KeyBinding("Open Betterchests Bag", Keyboard.KEY_ADD);
+	
+    public static KeyBinding[] keybinds = new KeyBinding[]{openBag};
+    public static boolean[] repeats = new boolean[keybinds.length];
+    
+    public BetterChestsKeyHandler() {
+    	super(keybinds, repeats);
+    }
+	
+	@Override
+	public String getLabel() {
+		return "BetterChestsBag";
+	}
+	
+	@Override
+	public void keyDown(EnumSet<TickType> types, KeyBinding kb, boolean tickEnd, boolean isRepeat) {
+		if (!Minecraft.getMinecraft().inGameHasFocus) return;
+        if (kb.equals(openBag)) {
+        	PacketHandler.sendPacketBag(-1);
+        }
+	}
+	
+	@Override
+	public void keyUp(EnumSet<TickType> types, KeyBinding kb, boolean tickEnd) {
+		
+	}
+	
+	@Override
+	public EnumSet<TickType> ticks() {
+		return EnumSet.of(TickType.CLIENT);
+	}
+	
+}

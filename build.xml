@@ -37,7 +37,8 @@
 		<antcall target="recompile" />		
 		<antcall target="reobfuscate" />
 		
-		<delete dir="${dir.mcp}\reobf\minecraft\aroma1997\core" />
+		<delete dir="${dir.mcp}\reobf\minecraft\aroma1997\core"/>
+		<delete dir="${dir.mcp}\reobf\minecraft\invtweaks"/>
 		
 		<mkdir dir="${dir.release}\${release.mod.modname}\${release.minecraft.version}\${release.mod.version}" />
 		<jar destfile="${dir.release}\${release.mod.modname}\${release.minecraft.version}\${release.mod.version}\${release.mod.modname} MC.${release.minecraft.version} v.${release.mod.version}.jar">
