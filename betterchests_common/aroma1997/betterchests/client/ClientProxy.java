@@ -10,10 +10,12 @@
 package aroma1997.betterchests.client;
 
 
+import aroma1997.betterchests.BetterChestsKeyHandler;
 import aroma1997.betterchests.CommonProxy;
 import aroma1997.betterchests.TileEntityBChest;
 
 import cpw.mods.fml.client.registry.ClientRegistry;
+import cpw.mods.fml.client.registry.KeyBindingRegistry;
 
 public class ClientProxy extends CommonProxy {
 	
@@ -21,6 +23,8 @@ public class ClientProxy extends CommonProxy {
 	public void registerRenderers() {
 		ClientRegistry.registerTileEntity(TileEntityBChest.class, "betterChest",
 			new BChestRenderer());
+
+			KeyBindingRegistry.registerKeyBinding(new BetterChestsKeyHandler());
 	}
 	
 }

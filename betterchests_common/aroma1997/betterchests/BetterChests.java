@@ -90,7 +90,7 @@ public class BetterChests {
 	
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event) {
-		KeyBindingRegistry.registerKeyBinding(new BetterChestsKeyHandler());
+		
 	}
 	
 	public static ItemStack getHelpBook() {
