@@ -75,8 +75,7 @@ public class BetterChests {
 		proxy.registerRenderers();
 		GameRegistry.registerTileEntity(TileEntityBChest.class, "adjustableChest");
 		AromaRegistry.registerShapedOreRecipe(new ItemStack(chest), "CCC", "CBC", "CCC", 'C',
-			new ItemStack(
-				Block.cobblestone), 'B', new ItemStack(Block.chest));
+			"cobblestone", 'B', new ItemStack(Block.chest));
 		AromaRegistry.registerShapedOreRecipe(new ItemStack(bag), "SWS", "LCL", "SWS", 'S',
 			new ItemStack(Item.silk), 'L', new ItemStack(Item.leather), 'W', new ItemStack(
 				Block.cloth), 'C', new ItemStack(chest));

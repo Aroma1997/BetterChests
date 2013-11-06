@@ -70,12 +70,12 @@ public enum Upgrade {
 		// BASIC
 		AromaRegistry.registerShapedOreRecipe(new ItemStack(itemID, 8, Upgrade.BASIC.ordinal()),
 			"WIW",
-			"ISI", "WIW", 'W', new ItemStack(Block.planks, 1, 32767), 'I', new ItemStack(
+			"ISI", "WIW", 'W', "plankWood", 'I', new ItemStack(
 				Block.fenceIron), 'S', new ItemStack(Item.stick));
 		// SLOT
 		AromaRegistry.registerShapedOreRecipe(new ItemStack(itemID, 1, Upgrade.SLOT.ordinal()),
 			" W ",
-			"WUW", " W ", 'W', new ItemStack(Block.planks, 1, 32767), 'U', itemUpgrade);
+			"WUW", " W ", 'W', "plankWood", 'U', itemUpgrade);
 		// REDSTONE
 		AromaRegistry.registerShapedOreRecipe(new ItemStack(itemID, 1, Upgrade.REDSTONE.ordinal()),
 			"RRR",
@@ -100,7 +100,7 @@ public enum Upgrade {
 		// COBBLEGEN
 		AromaRegistry.registerShapedOreRecipe(
 			new ItemStack(itemID, 1, Upgrade.COBBLEGEN.ordinal()), "CCC", "LUW",
-			"BBB", 'C', new ItemStack(Block.cobblestone), 'L', new ItemStack(Item.bucketLava), 'U',
+			"BBB", 'C', "cobblestone", 'L', new ItemStack(Item.bucketLava), 'U',
 			itemUpgrade, 'W', new ItemStack(Item.bucketWater), 'B', new ItemStack(Item.bucketEmpty));
 		// VOID
 		AromaRegistry.registerShapedOreRecipe(new ItemStack(itemID, 1, Upgrade.VOID.ordinal()),
