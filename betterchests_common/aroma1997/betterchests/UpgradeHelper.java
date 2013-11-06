@@ -10,14 +10,21 @@
 package aroma1997.betterchests;
 
 
+import java.util.List;
+
+import aroma1997.core.util.InvUtil;
+
 import net.minecraft.block.Block;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.world.World;
 
 public class UpgradeHelper {
 	
-	public static void updateChest(IBetterChest inv, int tick) {
+	public static void updateChest(IBetterChest inv, int tick, World world) {
 		
 		if (inv.isUpgradeInstalled(Upgrade.VOID)) {
 			for (int i = 0; i < inv.getSizeInventory(); i++) {
@@ -31,7 +38,6 @@ public class UpgradeHelper {
 		if (inv.isUpgradeInstalled(Upgrade.COBBLEGEN) && tick == 60) {
 			int bucketLava = - 1;
 			int bucketWater = - 1;
-			int empty = - 1;
 			for (int i = 0; i < inv.getSizeInventory(); i++) {
 				if (inv.getStackInSlot(i) != null
 					&& inv.getStackInSlot(i).itemID == Item.bucketWater.itemID
@@ -44,28 +50,11 @@ public class UpgradeHelper {
 					bucketLava = i;
 					continue;
 				}
-				if (empty == - 1
-					&& (inv.getStackInSlot(i) == null || inv.getStackInSlot(i) != null
-					&& inv.getStackInSlot(i).itemID == Block.cobblestone.blockID
-					&& inv.getStackInSlot(i).stackSize < inv.getStackInSlot(
-						i).getMaxStackSize())) {
-					empty = i;
-					continue;
-				}
 			}
-			if (bucketLava == - 1 || bucketWater == - 1 || empty == - 1) {
+			if (bucketLava == - 1 || bucketWater == - 1) {
 				return;
 			}
-			int amount;
-			
-			if (inv.getStackInSlot(empty) == null) {
-				amount = 1;
-			}
-			else {
-				amount = 1 + inv.getStackInSlot(empty).stackSize;
-			}
-			
-			inv.setInventorySlotContents(empty, new ItemStack(Block.cobblestone, amount));
+			InvUtil.putIntoFirstSlot(inv, new ItemStack(Block.cobblestone));
 		}
 		
 		if (inv.isUpgradeInstalled(Upgrade.FURNACE) && tick == 59) {
@@ -109,6 +98,29 @@ public class UpgradeHelper {
 				}
 			}
 		}
+		if (inv.isUpgradeInstalled(Upgrade.COLLECTOR)) {
+		      float radius = inv.getAmountUpgrade(Upgrade.COLLECTOR) - 0.2F;
+		      AxisAlignedBB bounds = AxisAlignedBB.getBoundingBox(inv.getXPos() + -0.5D, inv.getYPos() + 0.0D, inv.getZPos() + -0.5D, inv.getXPos() + 0.5D, inv.getYPos() + 0.0D, inv.getZPos() + 0.5D);
+		      bounds = bounds.expand(radius, radius, radius);
+			List<EntityItem> list = world.getEntitiesWithinAABB(EntityItem.class, bounds);
+		      for (EntityItem e : list) {
+		        if (e.age >= 10)
+		        {
+		          ItemStack itemBack = InvUtil.putIntoFirstSlot(inv, e.getEntityItem());
+		        	if (itemBack == null) {
+		        		e.setDead();
+		        	}
+		        	else {
+		        		e.setEntityItemStack(itemBack);
+		        	}
+		          if (world.rand.nextInt(20) == 0)
+		          {
+		            float pitch = 0.85F - world.rand.nextFloat() * 3.0F / 10.0F;
+		            world.playSoundEffect(e.posX, e.posY, e.posZ, "mob.endermen.portal", 0.6F, pitch);
+		          }
+		        }
+		      }
+			}
 	}
 	
 }

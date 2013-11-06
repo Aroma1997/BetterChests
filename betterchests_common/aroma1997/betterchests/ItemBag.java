@@ -61,7 +61,7 @@ public class ItemBag extends Item implements ISpecialInventoryProvider {
 	}
 	
 	public BagInventory getInventory(ItemStack item) {
-		return BagInventory.getInvForItem(item);// new BagInventory(item);
+		return BagInventory.getInvForItem(item);
 	}
 	
 	@Override

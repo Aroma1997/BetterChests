@@ -7,7 +7,7 @@
   "version": "@VERSION@",
   "url": "https://github.com/Aroma1997/BetterChests",
   "updateUrl": "",
-  "authors": ["Aroma1997", "Noisyboy"],
-  "credits": "Code by Aroma1997, Textures by Noisyboy"
+  "authors": ["Aroma1997", "Noisyboy", "TechMac"],
+  "credits": "Code by Aroma1997, Textures by Noisyboy, Texture for Adjustable Bag by TechMac"
 }
 ]

@@ -22,7 +22,6 @@ import aroma1997.core.util.FileUtil;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
@@ -35,7 +34,6 @@ import net.minecraft.network.packet.Packet132TileEntityData;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.Hopper;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityHopper;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
@@ -102,7 +100,7 @@ public class TileEntityBChest extends TileEntity implements Hopper, IBetterChest
 		if (worldObj.isRemote) {
 			return;
 		}
-		UpgradeHelper.updateChest(this, tick);
+		UpgradeHelper.updateChest(this, tick, this.worldObj);
 		
 		if (tick-- <= 0) {
 			tick = 64;
@@ -153,23 +151,6 @@ public class TileEntityBChest extends TileEntity implements Hopper, IBetterChest
 			}
 			decrStackSize(bucketEmpty, 1);
 			setInventorySlotContents(emptySpace, new ItemStack(Item.bucketWater));
-		}
-		
-		if (isUpgradeInstalled(Upgrade.COLLECTOR) && tick == 50) {
-			for (int i = - getAmountUpgrade(Upgrade.COLLECTOR); i <= getAmountUpgrade(Upgrade.COLLECTOR); i++) {
-				for (int j = - getAmountUpgrade(Upgrade.COLLECTOR); j <= getAmountUpgrade(Upgrade.COLLECTOR); j++) {
-					for (int k = 0; k <= 1; k++) {
-						EntityItem entityitem = TileEntityHopper.getEntityAbove(worldObj, xCoord
-							+ i,
-							(double) yCoord + k, zCoord + j);
-						
-						if (entityitem != null)
-						{
-							TileEntityHopper.insertStackFromEntity(this, entityitem);
-						}
-					}
-				}
-			}
 		}
 	}
 	
@@ -342,17 +323,17 @@ public class TileEntityBChest extends TileEntity implements Hopper, IBetterChest
 	
 	@Override
 	public double getXPos() {
-		return xCoord;
+		return xCoord + 0.5F;
 	}
 	
 	@Override
 	public double getYPos() {
-		return yCoord;
+		return yCoord + 0.5F;
 	}
 	
 	@Override
 	public double getZPos() {
-		return zCoord;
+		return zCoord + 0.5F;
 	}
 	
 	public int getRedstoneOutput() {

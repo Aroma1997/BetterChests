@@ -112,18 +112,6 @@ public class BlockBChest extends BlockContainer {
 		return ((TileEntityBChest) world.getBlockTileEntity(x, y, z)).getLightValue();
 	}
 	
-	// @Override
-	// public IInventory getInventory(World par1World, int par2, int par3, int par4)
-	// {
-	// Object object = par1World.getBlockTileEntity(par2, par3, par4);
-	//
-	// if (object == null)
-	// {
-	// return null;
-	// }
-	// return (IInventory) object;
-	// }
-	
 	@Override
 	public void setBlockBoundsBasedOnState(IBlockAccess par1IBlockAccess, int par2, int par3,
 		int par4)
@@ -147,7 +135,7 @@ public class BlockBChest extends BlockContainer {
 	@Override
 	public void registerIcons(IconRegister par1IconRegister)
 	{
-		// blockIcon = par1IconRegister.registerIcon(Reference.MOD_ID + ":tile.betterChest");
+		
 	}
 	
 	@Override
