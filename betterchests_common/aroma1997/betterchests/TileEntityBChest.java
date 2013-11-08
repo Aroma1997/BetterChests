@@ -32,13 +32,12 @@ import net.minecraft.network.INetworkManager;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.Packet132TileEntityData;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.tileentity.Hopper;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
 
-public class TileEntityBChest extends TileEntity implements Hopper, IBetterChest {
+public class TileEntityBChest extends TileEntity implements IBetterChest {
 	
 	private String player;
 	

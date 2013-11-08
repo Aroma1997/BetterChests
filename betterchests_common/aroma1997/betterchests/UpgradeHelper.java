@@ -25,7 +25,7 @@ import net.minecraft.world.World;
 public class UpgradeHelper {
 	
 	public static void updateChest(IBetterChest inv, int tick, World world) {
-		
+		if (world.isRemote) return;
 		if (inv.isUpgradeInstalled(Upgrade.VOID)) {
 			for (int i = 0; i < inv.getSizeInventory(); i++) {
 				if (inv.getStackInSlot(i) == null) {
@@ -99,21 +99,23 @@ public class UpgradeHelper {
 			}
 		}
 		if (inv.isUpgradeInstalled(Upgrade.COLLECTOR)) {
-		      float radius = inv.getAmountUpgrade(Upgrade.COLLECTOR) - 0.2F;
+		      float radius = inv.getAmountUpgrade(Upgrade.COLLECTOR);
 		      AxisAlignedBB bounds = AxisAlignedBB.getBoundingBox(inv.getXPos() + -0.5D, inv.getYPos() + 0.0D, inv.getZPos() + -0.5D, inv.getXPos() + 0.5D, inv.getYPos() + 0.0D, inv.getZPos() + 0.5D);
 		      bounds = bounds.expand(radius, radius, radius);
 			List<EntityItem> list = world.getEntitiesWithinAABB(EntityItem.class, bounds);
 		      for (EntityItem e : list) {
-		        if (e.age >= 10)
+		    	  if (e.getEntityItem() == null) continue;
+		        if (e.age >= 10 && e.isEntityAlive())
 		        {
 		          ItemStack itemBack = InvUtil.putIntoFirstSlot(inv, e.getEntityItem());
 		        	if (itemBack == null) {
-		        		e.setDead();
+		        		world.removeEntity(e);
+//		        		e.setDead();
 		        	}
 		        	else {
 		        		e.setEntityItemStack(itemBack);
 		        	}
-		          if (world.rand.nextInt(20) == 0)
+		          if (world.rand.nextInt(10) == 0)
 		          {
 		            float pitch = 0.85F - world.rand.nextFloat() * 3.0F / 10.0F;
 		            world.playSoundEffect(e.posX, e.posY, e.posZ, "mob.endermen.portal", 0.6F, pitch);

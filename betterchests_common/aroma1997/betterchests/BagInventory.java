@@ -171,7 +171,6 @@ public class BagInventory implements IBetterChest, IAdvancedInventory {
 		
 	}
 	
-	@Override
 	public void readFromNBT(NBTTagCompound nbt) {
 		if (nbt.hasKey("display"))
 		{
@@ -188,8 +187,7 @@ public class BagInventory implements IBetterChest, IAdvancedInventory {
 		items = new ItemStack[getSizeInventory()];
 		FileUtil.readFromNBT(this, nbt);
 	}
-	
-	@Override
+
 	public void writeToNBT(NBTTagCompound nbt) {
 		FileUtil.writeToNBT(this, nbt);
 		for (Upgrade upgrade : Upgrade.values()) {

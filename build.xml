@@ -2,20 +2,22 @@
 <project name="BetterChests" default="build">
 	<property file="build.properties" />
 	<property file="version.properties" />
+	<property name="dir.build" location="..\build" />
 	
 	<target name="clean">
-		<delete file="${dir.mcp}\src\minecraft\mcmod.info" />
-		<delete dir="${dir.mcp}\src\minecraft\aroma1997" />
+		<!--<delete file="${dir.mcp}\src\minecraft\mcmod.info" />-->
 		<delete dir="${dir.mcp}\reobf\minecraft" />
+		<delete dir="${dir.mcp}\bin\minecraft" />
+		<delete dir="${dir.build}" />
 	</target>
 	
 	<target name="precompile">
-		<copy todir="${dir.mcp}\src\minecraft">
+		<copy todir="${dir.build}">
 			<fileset dir="${dir.src}\betterchests_common\" />
 			<!--<fileset dir="${dir.core}\aroma1997core_common\" />-->
 		</copy>
-		<replace dir="${dir.mcp}\src\minecraft" token="@VERSION@" value="${release.mod.version}" />
-		<replace dir="${dir.mcp}\src\minecraft" token="@MCVERSION@" value="${release.minecraft.version}" />
+		<replace dir="${dir.build}" token="@VERSION@" value="${release.mod.version}" />
+		<replace dir="${dir.build}" token="@MCVERSION@" value="${release.minecraft.version}" />
 	</target>
 	
 	<target name="recompile">
@@ -32,15 +34,22 @@
                 <fileset dir="${dir.mcp}\jars\libraries\" includes="**/*.jar" />
                 <pathelement location="${dir.mcp}\jars\versions\${minecraft.version}\${minecraft.version}.jar" />
             </classpath>
-            <src path="${dir.src}\betterchests_common\" />
+            <src path="${dir.build}" />
         </javac>
+		<jar destfile="${dir.release}\${release.mod.modname}\${release.minecraft.version}\${release.mod.version}\${release.mod.modname} MC.${release.minecraft.version} v.${release.mod.version}-DEOBF.jar">
+			<fileset dir="${dir.build}"	includes="mcmod.info" />
+			<fileset dir="${dir.mcp}\bin\minecraft" />
+			<fileset dir="${dir.src}\resources" />
+		</jar>
 	</target>
 	
 	<target name="reobfuscate">
+		<unzip src="${dir.mcp}\jars\libraries\aroma1997\Aroma1997CoreAPI.jar" dest="${dir.mcp}\bin\minecraft" />
 		<unzip src="${dir.mcp}\jars\libraries\minecraft.jar" dest="${dir.mcp}\bin\minecraft" />
 		<exec dir="${dir.mcp}" executable="cmd" os="Windows 7">
 			<arg line="/c reobfuscate_srg.bat" />
 		</exec>
+		<delete dir="${dir.mcp}\reobf\minecraft\aroma1997\core" />
 	</target>
 	
 	<target name="build">
@@ -55,7 +64,7 @@
 		
 		<mkdir dir="${dir.release}\${release.mod.modname}\${release.minecraft.version}\${release.mod.version}" />
 		<jar destfile="${dir.release}\${release.mod.modname}\${release.minecraft.version}\${release.mod.version}\${release.mod.modname} MC.${release.minecraft.version} v.${release.mod.version}.jar">
-			<fileset dir="${dir.mcp}\src\minecraft\"	includes="mcmod.info" />
+			<fileset dir="${dir.build}"	includes="mcmod.info" />
 			<fileset dir="${dir.mcp}\reobf\minecraft" />
 			<fileset dir="${dir.src}\resources" />
 		</jar>

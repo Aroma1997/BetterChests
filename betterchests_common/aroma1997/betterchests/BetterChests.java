@@ -24,7 +24,6 @@ import net.minecraft.item.ItemStack;
 
 import net.minecraftforge.common.Configuration;
 
-import cpw.mods.fml.client.registry.KeyBindingRegistry;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
