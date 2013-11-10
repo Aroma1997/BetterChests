@@ -270,4 +270,10 @@ public class BlockBChest extends BlockContainer {
 		par1World.setBlockMetadataWithNotify(par2, par3, par4, facing, 3);
 	}
 	
+	@Override
+    public boolean hasComparatorInputOverride()
+    {
+        return true;
+    }
+	
 }
