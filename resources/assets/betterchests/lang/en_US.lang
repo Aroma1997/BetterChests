@@ -66,3 +66,4 @@ item.betterchests:upgrade.TICKING.name=Ticking Upgrade
 info.betterchests:tooltip.nobag=This Upgrade cannot be put on a bag.
 info.betterchests:tooltip.maxamount=Max Upgrades per chest: %s.
 info.betterchests:tooltip.requires=Requires: %s.
+info.betterchests:tooltip.noupgrade=This is not a valid Upgrade.

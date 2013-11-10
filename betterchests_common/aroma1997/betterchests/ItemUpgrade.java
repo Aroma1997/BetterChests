@@ -47,7 +47,10 @@ public class ItemUpgrade extends Item {
 			par3List.add(StatCollector.translateToLocalFormatted(
 				"info.betterchests:tooltip.maxamount", upgrade.getMaxAmount()));
 		}
-		if (! upgrade.canBag) {
+		if (!upgrade.isValidUpgrade()) {
+			par3List.add(StatCollector.translateToLocal("info.betterchests:tooltip.noupgrade"));
+		}
+		else if (! upgrade.canBag) {
 			par3List.add(StatCollector.translateToLocal("info.betterchests:tooltip.nobag"));
 		}
 	}
