@@ -106,8 +106,10 @@ public class BetterChests {
 		Upgrade.addBagBookDescription(list);
 		list.add("book.betterchests:chapter.credits");
 		list.add("book.betterchests:credits");
-		return ItemUtil.getWrittenBook("book.betterchests:name", "Aroma1997", true,
+		ItemStack item =  ItemUtil.getWrittenBook("book.betterchests:name", "Aroma1997", true,
 			list.toArray(new String[list.size()]));
+		item.getTagCompound().setString("id", "BetterChests");
+		return item;
 	}
 	
 }

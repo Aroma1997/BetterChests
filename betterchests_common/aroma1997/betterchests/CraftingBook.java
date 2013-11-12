@@ -39,7 +39,7 @@ public class CraftingBook implements IRecipe {
 				return null;
 			}
 			if (((NBTTagString) tmp.getTagCompound().getTag("author")).data.equals("Aroma1997")
-				&& ((NBTTagString) tmp.getTagCompound().getTag("title")).data.contains("BetterChests")) {
+				&& ((NBTTagString) tmp.getTagCompound().getTag("title")).data.contains("BetterChests") || tmp.getTagCompound().getString("id").equals("BetterChests")) {
 				if (item != null) {
 					return null;
 				}
