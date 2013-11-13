@@ -5,7 +5,7 @@ book.betterchests:chapter.upgrades=Upgrade-Information
 book.betterchests:chapter.credits=Credits
 
 
-book.betterchests:introduction=Willkommen zu deinem neuen BetterChests-Benutzerhandbuch. Hier kannst du Informationen über die Verstellbare Truhe, den Rucksack und ihre Upgrades finden.
+book.betterchests:introduction=Willkommen zu deinem neuen BetterChests-Benutzerhandbuch. Hier kannst du Informationen \u00fcber die Verstellbare Truhe, den Rucksack und ihre Upgrades finden.
 
 
 book.betterchests:general.1=BetterChests ist eine Mod, die eine Verstellbare Truhe hinzuf\u00fcgt, sowie einen Verstellbaren Rucksack und Upgrades. Wie man diese benutzt, wirst du sp\u00e4ter lesen, da sie von selbst nichts besonderes machen.
@@ -14,24 +14,24 @@ book.betterchests:general.3=Wenn du die Rezepte von Truhe, Rucksack oder Upgrade
 
 book.betterchests:chest.1=Die Verstellbare Truhe kann platziert werden, um Items zu lagern. Standardm\u00e4\u00dfig hat sie 9 Slots. Du kannst sie upgraden, indem du mit einem Upgrade auf die Truhe rechtsklickst.
 
-book.betterchests:bag.1=The Adjustable Bag is basically a Chest as an Item. The Inventory can be opened by Right-Clicking it in your hand. To upgrade it, just place an Upgrade alongside with the Bag in the Crafting Grid and you will get a upgraded Bag.
-book.betterchests:bag.2=You can also open the bag by pressing a configuarable key on your keyboard. By default it's the "+" key on the NumPad, but you can change that to whatever key you want. If you open the bag that way, it doesn't have to be in your hotbar, it can be anywhere in your inventory.
+book.betterchests:bag.1=Der Verstellbare Rucksack ist quasi eine Truhe als Item. Das Inventar kann mit einem Shift-Rechtsklick mit dem Rucksack in deiner Hand ge\u00f6ffnet werden. Um ihn zu upgraden, platziere einfach den Rucksack mit einem Upgrade zusammen in eine Werkbank.
+book.betterchests:bag.2=Du kannst auch den Rucksack mit einem konfigurierbaren Knopf auf deiner Tastatur \u00f6ffnen. Standardm\u00e4\u00dfig ist es der "+"-Knopf auf deinem NumPad, aber du kannst ihn ver\u00e4ndern, wie du willst. Wenn du den Rucksack auf diese Weise \u00f6ffnest, braucht er nicht in deiner Hotbar sein, er kann irgendwo im Inventar sein.
 
 
-book.betterchests:upgrade.SLOT=Slot Upgrade: This upgrade gives your chest nine more slots. This upgrade can be inserted multiple times.
-book.betterchests:upgrade.COBBLEGEN=CobbleGen Upgrade: This upgrade lets your chest generate cobblestone if you place a bucket of Lava and a bucket of Water in there, cause that's how Cobble gets generated.
-book.betterchests:upgrade.REDSTONE=Redstone Upgrade: This Upgrade makes your chest emit a Redstone signal, whenever somebody opens the Chest. The signal strength depends on the amount of people having that chest open.
-book.betterchests:upgrade.LIGHT=Light Upgrade: This Upgrade makes your chest emit light with the brightness of Glowstone.
-book.betterchests:upgrade.BASIC=Basic Upgrade: This is the basic Upgrade. You can't use this Upgrade in a chest or bag. It's only ment for crafting purposes.
-book.betterchests:upgrade.COMPARATOR=Comparator Upgrade: If you place a Comparator next to the Chest facing away from it, the Comparator will emit a redstone signal with the strength depending on the amount of Items in that Chest.
-book.betterchests:upgrade.VOID=Void Upgrade: You have too much Cobblestone? Or too much useless stuff? Then wait no longer, you can simply put a Void Upgrade on your Chest and put that useless stuff into there and it will be gone. All it does: Deleting Items.
-book.betterchests:upgrade.UNBREAKABLE=Unbreakable Upgrade: This upgrade makes your Chest blast- and fireproof, so Creepers, TNT, (Nukes), Ender Dragon(s) or Withers can't destroy it.
-book.betterchests:upgrade.PLAYER=Player Upgrade: With this Upgrade, the Chest is only accessible for the Player who inserted the Upgrade and Admins. To the other people, well let's just say, the Chest won't be nice to them!
-book.betterchests:upgrade.RAIN=Rain Upgrade: If it rains onto your Chest and the Rain Upgrade is installed, it will automatically fill empty buckets with water.
-book.betterchests:upgrade.ENERGY=Energy Upgrade: This Upgrade is only required by other Upgrades, because it supplies Energy to your Chest. On its own, it does nothing special.
-book.betterchests:upgrade.FURNACE=Furnace Upgrade: You know that problem, you have too much stuff to smelt, but not enough furnaces? This Upgrade will solve that problem for you.
-book.betterchests:upgrade.COLLECTOR=Collector Upgrade: This Upgrade will suck items into the Chest that are dropped nearby it. You can increase the range of it by installing more upgrades.
-book.betterchests:upgrade.TICKING=Ticking Upgrade: This Upgrade will tick the contents of your chest as if they were in a Player Inventory.
+book.betterchests:upgrade.SLOT=Slot-Upgrade: Dieses Upgrade wird deine Truhe um 9 Slots vergru00f6\u00dfern. Dieses Upgrade kann mehrmals eingef\u00fcgt werden.
+book.betterchests:upgrade.COBBLEGEN=CobbleGen-Upgrade: Dieses Upgrade l\u00e4sst dich Pflasterstein generieren, wenn du einen Lava- und einen Wassereimer in die Truhe packst, denn das ist nunmal, wie Pflasterstein generiert wird.
+book.betterchests:upgrade.REDSTONE=Redstone-Upgrade: Dieses Upgrade l\u00e4sst deine Truhe ein Redstone-Signal aussenden, wenn jemand sie \u00f6ffnet. Die Signalst\u00e4rke h\u00e4ngt von der Anzahl der Spieler ab, die die Truhe ge\u00f6ffnet haben.
+book.betterchests:upgrade.LIGHT=Licht-Upgrade: Dieses Upgrade l\u00e4sst deine Truhe Licht mit der Helligkeit von Glowstone aussenden.
+book.betterchests:upgrade.BASIC=Basis-Upgrade: Dies ist das Basis-Upgrade. Du kannst es nicht mit einer Truhe oder einem Rucksack benutzen. Es wird nur zur Herstellung ben\u00f6tigt.
+book.betterchests:upgrade.COMPARATOR=Komparator-Upgrade: Wenn du einen Komparator neben der Truhe, von ihr wegzeigend, platzierst, wird er ein Redstone-Signal aussenden, wobei dessen St\u00e4rke abh\u00e4ngig von der Menge der Items in der Truhe ist.
+book.betterchests:upgrade.VOID=Leeren-Upgrade: Du hast zu viel Pflasterstein? Oder zu viel nutzloses Zeug? Dann warte nicht l\u00e4nger, platziere einfach ein Leeren-Upgrade auf deiner Truhe, packe den nutzlosen Kram hinein und er wird verschwinden. Alles, was es macht: Items l\u00f6schen.
+book.betterchests:upgrade.UNBREAKABLE=Unzerst\u00f6rbar-Upgrade: Dieses Upgrade macht deine Truhe Explosions- und Feuersicher, also k\u00f6nnen Creeper, TNT, (Atombomben), Enderdrachen oder Wither sie nicht zerst\u00f6ren.
+book.betterchests:upgrade.PLAYER=Spieler-Upgrade: Mit diesem Upgrade l\u00e4sst sich die Truhe nur noch von dem Spieler \u00f6ffnen, der das Upgrade eingef\u00fcgt hat, sowie Admins. F\u00fcr alle anderen Spieler, naja, lasst uns einfach sagen, die Truhe wird nicht nett zu ihnen sein!
+book.betterchests:upgrade.RAIN=Regen-Upgrade: Wenn es auf deine Truhe regnet und das Regen-Upgrade ist intalliert, wird sie automatisch leere Eimer mit Wasser f\u00fcllen.
+book.betterchests:upgrade.ENERGY=Energie-Upgrade: Dieses Upgrade wird nur von anderen Upgrades ben\u00f6tigt, da es deine Truhe mit Energie versorgt. Allein bringt es nichts besonderes.
+book.betterchests:upgrade.FURNACE=Ofen-Upgrade: Kennst du das Problem, dass du viel zu viel Zeug hast, das du schmelzen musst, aber nicht genug \u00d6fen? Dieses Upgrade wird das Problem f\u00fcr dich l\u00f6sen.
+book.betterchests:upgrade.COLLECTOR=Sammel-Upgrade: Dieses Upgrade wird Items in die Truhe hineinsaugen, die in der N\u00e4he herumliegen. Du kannst die Reichweite erh\u00f6hen, indem du mehr Upgrades installierst.
+book.betterchests:upgrade.TICKING=Tick-Upgrade: Dieses Upgrade wird den Inhalt deiner Truhe ticken lassen, als w\u00e4re er im Inventar eines Spielers.
 
 
 book.betterchests:credits=Danke, dass Du das Benutzerhandbuch gelesen hast. Solltest du immer noch Fragen haben, frag einfach im MCF bei http://tinyurl.com/aroma1997 nach.
@@ -51,10 +51,10 @@ item.betterchests:upgrade.SLOT.name=Slot-Upgrade
 item.betterchests:upgrade.COBBLEGEN.name=CobbleGen-Upgrade
 item.betterchests:upgrade.REDSTONE.name=Redstone-Upgrade
 item.betterchests:upgrade.LIGHT.name=Licht-Upgrade
-item.betterchests:upgrade.BASIC.name=Upgrade-Dose
+item.betterchests:upgrade.BASIC.name=Upgrade-H\u00fclle
 item.betterchests:upgrade.COMPARATOR.name=Komparator-Upgrade
 item.betterchests:upgrade.VOID.name=Leeren-Upgrade
-item.betterchests:upgrade.UNBREAKABLE.name=Unzerstörbar-Upgrade
+item.betterchests:upgrade.UNBREAKABLE.name=Unzerst\u00f6rbar-Upgrade
 item.betterchests:upgrade.PLAYER.name=Spieler-Upgrade
 item.betterchests:upgrade.RAIN.name=Regen-Upgrade
 item.betterchests:upgrade.ENERGY.name=Energie-Upgrade
