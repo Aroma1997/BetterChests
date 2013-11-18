@@ -24,6 +24,7 @@ import net.minecraft.world.World;
 
 public class UpgradeHelper {
 	
+	@SuppressWarnings("unchecked")
 	public static void updateChest(IBetterChest inv, int tick, World world) {
 		if (world.isRemote) return;
 		if (inv.isUpgradeInstalled(Upgrade.VOID)) {
@@ -108,6 +109,9 @@ public class UpgradeHelper {
 		        if (e.age >= 10 && e.isEntityAlive())
 		        {
 		          ItemStack itemBack = InvUtil.putIntoFirstSlot(inv, e.getEntityItem());
+		          e.motionX = inv.getXPos() - e.posX;
+		          e.motionY = inv.getYPos() - e.posY;
+		          e.motionZ = inv.getZPos() - e.posZ;
 		        	if (itemBack == null) {
 		        		world.removeEntity(e);
 //		        		e.setDead();

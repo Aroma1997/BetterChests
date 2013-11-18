@@ -275,7 +275,7 @@ public class BagInventory implements IBetterChest, IAdvancedInventory {
 
 	@Override
 	public double getYPos() {
-		return y;
+		return y + 1.0D;
 	}
 
 	@Override
