@@ -99,9 +99,9 @@ public enum Upgrade {
 			new ItemStack(Block.obsidian), 'U', itemUpgrade);
 		// COBBLEGEN
 		AromaRegistry.registerShapedOreRecipe(
-			new ItemStack(itemID, 1, Upgrade.COBBLEGEN.ordinal()), "CCC", "LUW",
-			"BBB", 'C', "cobblestone", 'L', new ItemStack(Item.bucketLava), 'U',
-			itemUpgrade, 'W', new ItemStack(Item.bucketWater), 'B', new ItemStack(Item.bucketEmpty));
+			new ItemStack(itemID, 1, Upgrade.COBBLEGEN.ordinal()), "CCC", "BUB",
+			"CCC", 'C', "cobblestone", 'U',
+			itemUpgrade, 'B', Item.bucketEmpty);
 		// VOID
 		AromaRegistry.registerShapedOreRecipe(new ItemStack(itemID, 1, Upgrade.VOID.ordinal()),
 			" E ", "RUR",
@@ -115,12 +115,14 @@ public enum Upgrade {
 		AromaRegistry.registerShapedOreRecipe(new ItemStack(itemID, 1, Upgrade.RAIN.ordinal()),
 			" B ", "BUB",
 			" B ", 'B', new ItemStack(Item.bucketEmpty), 'U', itemUpgrade);
-		// SOLAR
+		// ENERGY
 		AromaRegistry.registerShapedOreRecipe(new ItemStack(itemID, 1, Upgrade.ENERGY.ordinal()),
-			"QSQ", "RUR",
-			"QCQ", 'S', new ItemStack(Block.daylightSensor), 'R', new ItemStack(Item.redstone),
-			'C', new ItemStack(Item.redstoneRepeater), 'Q', new ItemStack(Item.netherQuartz), 'R',
-			new ItemStack(Item.redstone), 'U', itemUpgrade);
+			"BRB", "CUC",
+			"BRB", 'B', new ItemStack(Block.coalBlock), 'R', new ItemStack(Item.redstone),
+			'C', new ItemStack(Item.redstoneRepeater), 'U', itemUpgrade);
+		AromaRegistry.registerShapedOreRecipe(new ItemStack(itemID, 1, Upgrade.ENERGY.ordinal()), "BCB", "RUR",
+			"BCB", 'B', new ItemStack(Block.coalBlock), 'R', new ItemStack(Item.redstone),
+			'C', new ItemStack(Item.redstoneRepeater), 'U', itemUpgrade);
 		// FURNACE
 		AromaRegistry.registerShapedOreRecipe(new ItemStack(itemID, 1, Upgrade.FURNACE.ordinal()),
 			"RFR", "FUF",
