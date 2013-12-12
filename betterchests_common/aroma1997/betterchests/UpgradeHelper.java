@@ -36,7 +36,7 @@ public class UpgradeHelper {
 			}
 		}
 		
-		if (inv.isUpgradeInstalled(Upgrade.COBBLEGEN) && tick == 60) {
+		if (inv.isUpgradeInstalled(Upgrade.COBBLEGEN) && tick % 8 == 5) {
 			int bucketLava = - 1;
 			int bucketWater = - 1;
 			for (int i = 0; i < inv.getSizeInventory(); i++) {
