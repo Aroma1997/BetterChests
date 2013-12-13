@@ -129,7 +129,7 @@ public class BlockBChest extends BlockContainer {
 	@Override
 	public boolean canEntityDestroy(World world, int x, int y, int z, Entity entity)
 	{
-		return ! ((TileEntityBChest) world.getBlockTileEntity(x, y, z)).isUpgradeInstalled(Upgrade.UNBREAKABLE);
+		return ! ((TileEntityBChest) world.getBlockTileEntity(x, y, z)).isUpgradeInstalled(Upgrade.UNBREAKABLE.getItem());
 	}
 	
 	@Override
@@ -153,13 +153,13 @@ public class BlockBChest extends BlockContainer {
 	@Override
 	public boolean canConnectRedstone(IBlockAccess world, int x, int y, int z, int side)
 	{
-		return ((TileEntityBChest) world.getBlockTileEntity(x, y, z)).isUpgradeInstalled(Upgrade.REDSTONE);
+		return ((TileEntityBChest) world.getBlockTileEntity(x, y, z)).isUpgradeInstalled(Upgrade.REDSTONE.getItem());
 	}
 	
 	@Override
 	public void onBlockExploded(World world, int x, int y, int z, Explosion explosion)
 	{
-		if (((TileEntityBChest) world.getBlockTileEntity(x, y, z)).isUpgradeInstalled(Upgrade.UNBREAKABLE)) {
+		if (((TileEntityBChest) world.getBlockTileEntity(x, y, z)).isUpgradeInstalled(Upgrade.UNBREAKABLE.getItem())) {
 			return;
 		}
 		super.onBlockExploded(world, x, y, z, explosion);

@@ -27,7 +27,7 @@ public class UpgradeHelper {
 	@SuppressWarnings("unchecked")
 	public static void updateChest(IBetterChest inv, int tick, World world) {
 		if (world.isRemote) return;
-		if (inv.isUpgradeInstalled(Upgrade.VOID)) {
+		if (inv.isUpgradeInstalled(Upgrade.VOID.getItem())) {
 			for (int i = 0; i < inv.getSizeInventory(); i++) {
 				if (inv.getStackInSlot(i) == null) {
 					continue;
@@ -36,7 +36,7 @@ public class UpgradeHelper {
 			}
 		}
 		
-		if (inv.isUpgradeInstalled(Upgrade.COBBLEGEN) && tick % 8 == 5) {
+		if (inv.isUpgradeInstalled(Upgrade.COBBLEGEN.getItem()) && tick % 8 == 5) {
 			int bucketLava = - 1;
 			int bucketWater = - 1;
 			for (int i = 0; i < inv.getSizeInventory(); i++) {
@@ -58,7 +58,7 @@ public class UpgradeHelper {
 			InvUtil.putIntoFirstSlot(inv, new ItemStack(Block.cobblestone));
 		}
 		
-		if (inv.isUpgradeInstalled(Upgrade.FURNACE) && tick == 59) {
+		if (inv.isUpgradeInstalled(Upgrade.FURNACE.getItem()) && tick %2 == 2) {
 			int cooking = - 1;
 			for (int i = 0; i < inv.getSizeInventory(); i++) {
 				ItemStack stack = inv.getStackInSlot(i);
@@ -99,8 +99,8 @@ public class UpgradeHelper {
 				}
 			}
 		}
-		if (inv.isUpgradeInstalled(Upgrade.COLLECTOR)) {
-		      float radius = inv.getAmountUpgrade(Upgrade.COLLECTOR);
+		if (inv.isUpgradeInstalled(Upgrade.COLLECTOR.getItem())) {
+		      float radius = inv.getAmountUpgrade(Upgrade.COLLECTOR.getItem());
 		      AxisAlignedBB bounds = AxisAlignedBB.getBoundingBox(inv.getXPos() + -0.5D, inv.getYPos() + 0.0D, inv.getZPos() + -0.5D, inv.getXPos() + 0.5D, inv.getYPos() + 0.0D, inv.getZPos() + 0.5D);
 		      bounds = bounds.expand(radius, radius, radius);
 			List<EntityItem> list = world.getEntitiesWithinAABB(EntityItem.class, bounds);
@@ -127,6 +127,30 @@ public class UpgradeHelper {
 		        }
 		      }
 			}
+	}
+	
+	public static boolean isUpgrade(ItemStack item) {
+		return item != null && item.getItem() instanceof IUpgrade;
+	}
+	
+	public static ItemStack getDefaultItem(ItemStack item) {
+		if (!isUpgrade(item)) return null;
+		item = item.copy();
+		item.stackSize = 1;
+		return item;
+	}
+	
+	public static boolean areRequirementsInstalled(IBetterChest chest, ItemStack item) {
+		if (chest == null || item == null || !isUpgrade(item)) return false;
+		
+		IUpgrade upgrade = (IUpgrade) item.getItem();
+		if (upgrade == null) return false;
+		if (upgrade.getRequiredUpgrade(item) == null) return true;
+		for (ItemStack req : upgrade.getRequiredUpgrade(item)) {
+			if (!chest.isUpgradeInstalled(req)) return false;
+		}
+		return true;
+		
 	}
 	
 }

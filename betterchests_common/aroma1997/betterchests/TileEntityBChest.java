@@ -10,7 +10,7 @@
 package aroma1997.betterchests;
 
 
-import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
@@ -19,6 +19,7 @@ import aroma1997.core.client.inventories.GUIContainer;
 import aroma1997.core.inventories.ContainerBasic;
 import aroma1997.core.misc.FakePlayerFactory;
 import aroma1997.core.util.FileUtil;
+import aroma1997.core.util.ItemUtil;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -28,6 +29,7 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.INetworkManager;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.Packet132TileEntityData;
@@ -47,7 +49,7 @@ public class TileEntityBChest extends TileEntity implements IBetterChest {
 	
 	private int ticksSinceSync = - 1;
 	
-	private HashMap<Upgrade, Integer> upgrades = new HashMap<Upgrade, Integer>();
+	private HashSet<ItemStack> upgrades = new HashSet<ItemStack>();
 	
 	public TileEntityBChest() {
 		player = "";
@@ -112,7 +114,7 @@ public class TileEntityBChest extends TileEntity implements IBetterChest {
 			updateBlock(xCoord, yCoord - 1, zCoord);
 		};
 		
-		if (isUpgradeInstalled(Upgrade.TICKING) && tick % 8 == 0) {
+		if (isUpgradeInstalled(Upgrade.TICKING.getItem()) && tick % 8 == 0) {
 			for (int i = 0; i < getSizeInventory(); i++) {
 				ItemStack item = getStackInSlot(i);
 				if (item == null || item.getItem() == null) {
@@ -125,7 +127,7 @@ public class TileEntityBChest extends TileEntity implements IBetterChest {
 			}
 		}
 		
-		if (isUpgradeInstalled(Upgrade.RAIN) && worldObj.canBlockSeeTheSky(xCoord, yCoord, zCoord)
+		if (isUpgradeInstalled(Upgrade.RAIN.getItem()) && worldObj.canBlockSeeTheSky(xCoord, yCoord, zCoord)
 			&& worldObj.isRaining()
 			&& new Random().nextFloat() > Reference.Conf.RAIN_THINGY && tick == 20) {
 			int bucketEmpty = - 1;
@@ -174,13 +176,13 @@ public class TileEntityBChest extends TileEntity implements IBetterChest {
 	
 	@Override
 	public int getSizeInventory() {
-		return getAmountUpgrade(Upgrade.SLOT) * 9 + 9;
+		return getAmountUpgrade(Upgrade.SLOT.getItem()) * 9 + 9;
 	}
 	
 	@Override
 	public boolean isUseableByPlayer(EntityPlayer par1EntityPlayer)
 	{
-		if (! isUpgradeInstalled(Upgrade.PLAYER)) {
+		if (! isUpgradeInstalled(Upgrade.PLAYER.getItem())) {
 			return true;
 		}
 		
@@ -199,31 +201,41 @@ public class TileEntityBChest extends TileEntity implements IBetterChest {
 	}
 	
 	public boolean upgrade(EntityPlayer player) {
-		if (! (player.getHeldItem().getItem() instanceof ItemUpgrade)
-			|| ! isUseableByPlayer(player)) {
-			return false;
-		}
-		ItemStack item = player.getHeldItem();
-		Upgrade upgrade = Upgrade.values()[item.getItemDamage()];
+		if (player == null || !isUseableByPlayer(player)) return false;
+
+		ItemStack itemUpgrade = player.getHeldItem();
+		if (itemUpgrade == null || !UpgradeHelper.isUpgrade(itemUpgrade)) return false;
 		
-		if (! (getAmountUpgrade(upgrade) >= upgrade.getMaxAmount())) {
-			if (upgrade.getRequirement() == null || isUpgradeInstalled(upgrade.getRequirement())) {
-				setAmountUpgrade(upgrade, getAmountUpgrade(upgrade) + 1);
-				if (upgrade == Upgrade.PLAYER) {
-					this.player = player.username;
-				}
-				onUpgradeInserted(player);
-				return true;
-			}
-		}
+		if (!UpgradeHelper.areRequirementsInstalled(this, itemUpgrade)) return false;
 		
+		IUpgrade upgrade = (IUpgrade) itemUpgrade.getItem();
+		
+		if (upgrade.canChestTakeUpgrade(itemUpgrade) && UpgradeHelper.areRequirementsInstalled(this, itemUpgrade) && upgrade.getMaxUpgrades(itemUpgrade) > getAmountUpgrade(itemUpgrade)) {
+			setAmountUpgrade(itemUpgrade, getAmountUpgrade(itemUpgrade) + 1);
+			onUpgradeInserted(player);
+			return true;
+		}
 		return false;
 	}
 	
 	@Override
 	public void readFromNBT(NBTTagCompound nbt) {
-		for (Upgrade upgrade : Upgrade.values()) {
-			setAmountUpgrade(upgrade, nbt.getInteger(upgrade.toString()));
+		upgrades.clear();
+		if (nbt.hasKey(Upgrade.BASIC.toString())) {
+
+			for (Upgrade upgrade : Upgrade.values()) {
+				int amount = nbt.getInteger(upgrade.toString());
+				if (amount == 0) continue;
+				setAmountUpgrade(upgrade.getItem(), amount);
+			}
+		}
+		else {
+			NBTTagList list = nbt.getTagList("upgrades");
+			for (int i = 0; i < list.tagCount(); i++) {
+				NBTTagCompound upgradenbt = (NBTTagCompound) list.tagAt(i);
+				ItemStack item = ItemStack.loadItemStackFromNBT(upgradenbt);
+				upgrades.add(item);
+			}
 		}
 		items = new ItemStack[getSizeInventory()];
 		FileUtil.readFromNBT(this, nbt);
@@ -239,9 +251,13 @@ public class TileEntityBChest extends TileEntity implements IBetterChest {
 		super.writeToNBT(nbt);
 		nbt.setString("player", player);
 		FileUtil.writeToNBT(this, nbt);
-		for (Upgrade upgrade : Upgrade.values()) {
-			nbt.setInteger(upgrade.toString(), getAmountUpgrade(upgrade));
+		NBTTagList list = new NBTTagList();
+		for (ItemStack item : upgrades) {
+			NBTTagCompound upgradesbt = new NBTTagCompound();
+			item.writeToNBT(upgradesbt);
+			list.appendTag(upgradesbt);
 		}
+		nbt.setTag("upgrades", list);
 	}
 	
 	private void onUpgradeInserted(EntityPlayer player) {
@@ -256,15 +272,15 @@ public class TileEntityBChest extends TileEntity implements IBetterChest {
 	}
 	
 	public int getLightValue() {
-		return isUpgradeInstalled(Upgrade.LIGHT) ? 15 : 0;
+		return isUpgradeInstalled(Upgrade.LIGHT.getItem()) ? 15 : 0;
 	}
 	
 	public int getComparatorOutput() {
 		
-		if (! isUpgradeInstalled(Upgrade.COMPARATOR)) {
+		if (! isUpgradeInstalled(Upgrade.COMPARATOR.getItem())) {
 			return 0;
 		}
-		if (isUpgradeInstalled(Upgrade.RAIN)) {
+		if (isUpgradeInstalled(Upgrade.RAIN.getItem())) {
 			int w = 0;
 			int e = 0;
 			for (int i = 0; i < getSizeInventory(); i++) {
@@ -289,7 +305,7 @@ public class TileEntityBChest extends TileEntity implements IBetterChest {
 	}
 	
 	public void playerOpenChest(EntityPlayer player) {
-		if (! isUpgradeInstalled(Upgrade.PLAYER)) {
+		if (! isUpgradeInstalled(Upgrade.PLAYER.getItem())) {
 			return;
 		}
 		if (isUseableByPlayer(player)) {
@@ -317,7 +333,7 @@ public class TileEntityBChest extends TileEntity implements IBetterChest {
 	
 	@Override
 	public boolean hasEnergy() {
-		return isUpgradeInstalled(Upgrade.ENERGY);
+		return isUpgradeInstalled(Upgrade.ENERGY.getItem());
 	}
 	
 	@Override
@@ -336,10 +352,10 @@ public class TileEntityBChest extends TileEntity implements IBetterChest {
 	}
 	
 	public int getRedstoneOutput() {
-		if (! isUpgradeInstalled(Upgrade.REDSTONE)) {
+		if (! isUpgradeInstalled(Upgrade.REDSTONE.getItem())) {
 			return 0;
 		}
-		if (isUpgradeInstalled(Upgrade.RAIN)) {
+		if (isUpgradeInstalled(Upgrade.RAIN.getItem())) {
 			if (worldObj.isThundering()) {
 				return 2;
 			}
@@ -517,25 +533,38 @@ public class TileEntityBChest extends TileEntity implements IBetterChest {
 	}
 	
 	@Override
-	public int getAmountUpgrade(Upgrade upgrade) {
-		Integer c = upgrades.get(upgrade);
-		if (c != null) {
-			return c;
+	public int getAmountUpgrade(ItemStack upgrade) {
+		if (!UpgradeHelper.isUpgrade(upgrade)) return 0;
+		for (ItemStack item : upgrades) {
+			if (ItemUtil.areItemsSame(item, upgrade)) {
+				return item.stackSize;
+			}
 		}
 		return 0;
 	}
 	
 	@Override
-	public boolean isUpgradeInstalled(Upgrade upgrade) {
+	public boolean isUpgradeInstalled(ItemStack upgrade) {
 		return getAmountUpgrade(upgrade) > 0;
 	}
 	
 	@Override
-	public void setAmountUpgrade(Upgrade upgrade, int amount) {
-		if (upgrades.containsKey(upgrade)) {
-			upgrades.remove(upgrade);
+	public void setAmountUpgrade(ItemStack upgrade, int amount) {
+		for (ItemStack item : upgrades) {
+			if (ItemUtil.areItemsSame(item, upgrade)) {
+				if (amount <= 0) {
+					upgrades.remove(item);
+					return;
+				}
+				else {
+					item.stackSize = amount;
+					return;
+				}
+			}
 		}
-		upgrades.put(upgrade, new Integer(amount));
+		upgrade = upgrade.copy();
+		upgrade.stackSize = amount;
+		upgrades.add(upgrade);
 	}
 	
 	@Override

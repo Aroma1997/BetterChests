@@ -29,7 +29,7 @@ public class CraftingBag implements IRecipe {
 		for (int i = 0; i < inventorycrafting.getSizeInventory(); i++) {
 			ItemStack item = inventorycrafting.getStackInSlot(i);
 			if (item != null) {
-				if (item.getItem() instanceof ItemUpgrade) {
+				if (UpgradeHelper.isUpgrade(item)) {
 					if (upgrade != null) {
 						return null;
 					}
@@ -53,15 +53,13 @@ public class CraftingBag implements IRecipe {
 		if (bag == null || upgrade == null) {
 			return null;
 		}
+		IUpgrade itemUpgrade = (IUpgrade) upgrade.getItem();
 		ItemBag itemBag = (ItemBag) bag.getItem();
 		ItemStack item = bag.copy();
 		BagInventory inv = itemBag.getInventory(item);
-		Upgrade upgr = Upgrade.values()[upgrade.getItemDamage()];
-		if (inv.getAmountUpgrade(upgr) >= upgr.getMaxAmount() || ! upgr.canBagTakeUpgrade()) {
-			return null;
+		if (UpgradeHelper.areRequirementsInstalled(inv, upgrade) && itemUpgrade.canBagTakeUpgrade(upgrade) && itemUpgrade.getMaxUpgrades(upgrade) > inv.getAmountUpgrade(upgrade)) {
+			inv.setAmountUpgrade(upgrade, inv.getAmountUpgrade(upgrade) + 1);
 		}
-		inv.setAmountUpgrade(upgr, inv.getAmountUpgrade(upgr) + 1);
-		inv.writeToNBT(item.stackTagCompound);
 		return item;
 	}
 	

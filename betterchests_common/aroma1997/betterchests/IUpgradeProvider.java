@@ -9,14 +9,16 @@
 
 package aroma1997.betterchests;
 
+import net.minecraft.item.ItemStack;
+
 
 public interface IUpgradeProvider {
 	
-	public int getAmountUpgrade(Upgrade upgrade);
+	public int getAmountUpgrade(ItemStack upgrade);
 	
-	public boolean isUpgradeInstalled(Upgrade upgrade);
+	public boolean isUpgradeInstalled(ItemStack upgrade);
 	
-	public void setAmountUpgrade(Upgrade upgrade, int amount);
+	public void setAmountUpgrade(ItemStack upgrade, int amount);
 	
 	public boolean hasEnergy();
 }

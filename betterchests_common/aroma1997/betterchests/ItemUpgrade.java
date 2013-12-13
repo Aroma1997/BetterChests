@@ -10,6 +10,7 @@
 package aroma1997.betterchests;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import aroma1997.core.client.util.Colors;
@@ -21,11 +22,12 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Icon;
 import net.minecraft.util.StatCollector;
+import net.minecraft.world.World;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class ItemUpgrade extends Item {
+public class ItemUpgrade extends Item implements IUpgrade {
 	
 	public ItemUpgrade(int id) {
 		super(id);
@@ -86,6 +88,46 @@ public class ItemUpgrade extends Item {
 	public String getItemDisplayName(ItemStack par1ItemStack)
 	{
 		return Upgrade.values()[par1ItemStack.getItemDamage()].getName();
+	}
+
+	@Override
+	public boolean canChestTakeUpgrade(ItemStack item) {
+		if (item == null) return false;
+		return Upgrade.values()[item.getItemDamage()].isValidUpgrade();
+	}
+
+	@Override
+	public boolean canBagTakeUpgrade(ItemStack item) {
+		if (item == null) return false;
+		Upgrade upgrade = Upgrade.values()[item.getItemDamage()];
+		return upgrade.isValidUpgrade() && upgrade.canBagTakeUpgrade();
+	}
+
+	@Override
+	public List<ItemStack> getRequiredUpgrade(ItemStack item) {
+		if (item == null) return null;
+		Upgrade upgrade = Upgrade.values()[item.getItemDamage()];
+		if (upgrade.getRequirement() == null) return null;
+		ArrayList<ItemStack> list = new ArrayList<ItemStack>();
+		list.add(upgrade.getRequirement().getItem());
+		return list;
+	}
+
+	@Override
+	public void update(IBetterChest chest, int tick, World world) {
+		
+	}
+
+	@Override
+	public int getMaxUpgrades(ItemStack item) {
+		if (item == null) return 0;
+		return Upgrade.values()[item.getItemDamage()].getMaxAmount();
+	}
+
+	@Override
+	public String getName(ItemStack item) {
+		if (item == null || !UpgradeHelper.isUpgrade(item)) return "UNKNOWN NAME";
+		return Upgrade.values()[item.getItemDamage()].getName();
 	}
 	
 }
