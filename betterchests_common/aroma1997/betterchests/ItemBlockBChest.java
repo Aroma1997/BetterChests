@@ -13,6 +13,7 @@ package aroma1997.betterchests;
 import java.util.List;
 
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
@@ -28,12 +29,25 @@ public class ItemBlockBChest extends ItemBlock {
 		return StatCollector.translateToLocal("tile.betterchests:chest.name");
 	}
 	
+	@SuppressWarnings({"rawtypes"})
+	@Override
+	public void addInformation(ItemStack item, EntityPlayer player,
+		List list, boolean par4) {
+		if (isTagChest(item)) {
+			ItemBag.addInfo(item, list);
+		}
+	}
+	
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	@Override
 	public void getSubItems(int par1, CreativeTabs par2CreativeTabs, List par3List)
 	{
 		par3List.add(BetterChests.getHelpBook());
 		super.getSubItems(par1, par2CreativeTabs, par3List);
+	}
+	
+	static boolean isTagChest(ItemStack item) {
+		return item != null && item.hasTagCompound() && item.getTagCompound().hasKey("player");
 	}
 	
 }

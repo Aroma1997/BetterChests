@@ -13,6 +13,7 @@ package aroma1997.betterchests;
 import java.util.HashSet;
 import java.util.List;
 
+import aroma1997.betterchests.api.IUpgrade;
 import aroma1997.core.inventories.ISpecialInventory;
 import aroma1997.core.inventories.ISpecialInventoryProvider;
 import aroma1997.core.inventories.Inventories;
@@ -63,7 +64,7 @@ public class ItemBag extends Item implements ISpecialInventoryProvider {
 		return getInventory(player.inventory.getStackInSlot(id));
 	}
 	
-	public BagInventory getInventory(ItemStack item) {
+	public static BagInventory getInventory(ItemStack item) {
 		return BagInventory.getInvForItem(item);
 	}
 	
@@ -93,18 +94,24 @@ public class ItemBag extends Item implements ISpecialInventoryProvider {
 	@Override
 	public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer,
 		List par3List, boolean par4) {
-		BagInventory inv = getInventory(par1ItemStack);
+
 		par3List.add(StatCollector.translateToLocalFormatted("info.betterchests:tooltip.openwith", Keyboard.getKeyName(BetterChestsKeyHandler.openBag.keyCode)));
+		addInfo(par1ItemStack, par3List);
+	}
+	
+	@SuppressWarnings({"unchecked", "rawtypes"})
+	static void addInfo(ItemStack item, List list) {
+		BagInventory inv = getInventory(item);
 		HashSet<ItemStack> upgrades = inv.getUpgradeList();
 		for (ItemStack entry : upgrades) {
 			if (!UpgradeHelper.isUpgrade(entry)) continue;
 			if (entry.stackSize > 0) {
 				IUpgrade upgrade = (IUpgrade) entry.getItem();
 				if (upgrade.getMaxUpgrades(entry) == 1) {
-					par3List.add(upgrade.getName(entry));
+					list.add(upgrade.getName(entry));
 				}
 				else {
-					par3List.add(upgrade.getName(entry) + " (" + entry.stackSize + ")");
+					list.add(upgrade.getName(entry) + " (" + entry.stackSize + ")");
 				}
 			}
 		}

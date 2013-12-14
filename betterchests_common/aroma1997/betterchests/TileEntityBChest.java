@@ -10,11 +10,14 @@
 package aroma1997.betterchests;
 
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
+import aroma1997.betterchests.api.IUpgrade;
 import aroma1997.core.client.inventories.GUIContainer;
 import aroma1997.core.inventories.ContainerBasic;
 import aroma1997.core.misc.FakePlayerFactory;
@@ -48,6 +51,8 @@ public class TileEntityBChest extends TileEntity implements IBetterChest {
 	private EntityPlayer fplayer;
 	
 	private int ticksSinceSync = - 1;
+	
+	boolean pickedUp = false;
 	
 	private HashSet<ItemStack> upgrades = new HashSet<ItemStack>();
 	
@@ -314,21 +319,14 @@ public class TileEntityBChest extends TileEntity implements IBetterChest {
 		player.attackEntityFrom(DamageSource.outOfWorld, 5.0F);
 	}
 	
-	public ItemStack[] getItemUpgrades() {
-		int a = 0;
+	public ItemStack[] getItems() {
+		ArrayList<ItemStack> list = new ArrayList<ItemStack>();
 		for (int i = 0; i < getSizeInventory(); i++) {
 			if (getStackInSlot(i) != null) {
-				a++;
+				list.add(getStackInSlot(i));
 			}
 		}
-		int b = 0;
-		ItemStack[] item = new ItemStack[a];
-		for (int i = 0; i < getSizeInventory(); i++) {
-			if (getStackInSlot(i) != null) {
-				item[b++] = getStackInSlot(i);
-			}
-		}
-		return item;
+		return list.toArray(new ItemStack[list.size()]);
 	}
 	
 	@Override
@@ -584,9 +582,27 @@ public class TileEntityBChest extends TileEntity implements IBetterChest {
 		
 	}
 	
+	public ItemStack getDroppedFullItem() {
+		ItemStack item = new ItemStack(BetterChests.chest);
+		item.setTagCompound(new NBTTagCompound());
+		writeToNBT(item.stackTagCompound);
+		return item;
+	}
+	
+	public static TileEntityBChest loadTEFromNBT(NBTTagCompound nbt) {
+		TileEntityBChest te = new TileEntityBChest();
+		te.readFromNBT(nbt);
+		return te;
+	}
+	
 	@Override
 	public ContainerBasic getContainer(EntityPlayer player, int i) {
 		return new ContainerBasic(player.inventory, this);
+	}
+	
+	@SuppressWarnings("unchecked")
+	Set<ItemStack> getUpgrades() {
+		return (Set<ItemStack>) upgrades.clone();
 	}
 	
 }

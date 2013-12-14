@@ -13,6 +13,7 @@ package aroma1997.betterchests;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Random;
+import java.util.Set;
 
 import aroma1997.core.client.inventories.GUIContainer;
 import aroma1997.core.inventories.ContainerBasic;
@@ -255,6 +256,9 @@ public class BagInventory implements IBetterChest, IAdvancedInventory {
 				}
 			}
 		}
+		upgrade = upgrade.copy();
+		upgrade.stackSize = amount;
+		upgrades.add(upgrade);
 	}
 	
 	@Override

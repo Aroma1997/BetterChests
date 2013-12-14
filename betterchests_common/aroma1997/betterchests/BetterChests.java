@@ -50,6 +50,8 @@ public class BetterChests {
 	
 	public static ItemBag bag;
 	
+	public static ItemTool tool;
+	
 	public static CreativeTabs creativeTabBC = new CreativeTabBChest();
 	
 	@EventHandler
@@ -63,10 +65,12 @@ public class BetterChests {
 			config.getItem(Configuration.CATEGORY_ITEM, "upgradeItem", 12458,
 				"The Item id of the Upgrades").getInt() - 256);
 		bag = new ItemBag(config.getItem("bagItem", 12457, "The item id of the Bag").getInt() - 256);
+		tool = new ItemTool(config.getItem("itemTool", 12456, "The Item id of the Tool").getInt() - 256);
 		config.save();
 		GameRegistry.registerBlock(chest, ItemBlockBChest.class, "betterChest");
 		GameRegistry.registerItem(upgrade, "Upgrade");
 		GameRegistry.registerItem(bag, "Bag");
+		GameRegistry.registerItem(tool, "Tool");
 	}
 	
 	@EventHandler
@@ -80,6 +84,7 @@ public class BetterChests {
 				Block.cloth), 'C', new ItemStack(chest));
 		GameRegistry.addRecipe(new CraftingBag());
 		Upgrade.generateRecipes();
+		Tool.generateRecipes();
 		AromaRegistry.registerShapelessOreRecipe(getHelpBook(), Upgrade.BASIC.getItem(),
 			new ItemStack(Item.book));
 		GameRegistry.addRecipe(new CraftingBook());
@@ -102,6 +107,8 @@ public class BetterChests {
 		list.add("book.betterchests:chest.1");
 		list.add("book.betterchests:bag.1");
 		list.add("book.betterchests:bag.2");
+		list.add("book.betterchests:chapter.tools");
+		Tool.addBookDescription(list);
 		list.add("book.betterchests:chapter.upgrades");
 		Upgrade.addBagBookDescription(list);
 		list.add("book.betterchests:chapter.credits");

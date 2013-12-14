@@ -11,7 +11,9 @@ package aroma1997.betterchests;
 
 
 import java.util.List;
+import java.util.Set;
 
+import aroma1997.betterchests.api.IUpgrade;
 import aroma1997.core.util.InvUtil;
 
 import net.minecraft.block.Block;
@@ -58,7 +60,7 @@ public class UpgradeHelper {
 			InvUtil.putIntoFirstSlot(inv, new ItemStack(Block.cobblestone));
 		}
 		
-		if (inv.isUpgradeInstalled(Upgrade.FURNACE.getItem()) && tick %2 == 2) {
+		if (inv.isUpgradeInstalled(Upgrade.FURNACE.getItem()) && tick %32 == 5) {
 			int cooking = - 1;
 			for (int i = 0; i < inv.getSizeInventory(); i++) {
 				ItemStack stack = inv.getStackInSlot(i);
@@ -127,6 +129,20 @@ public class UpgradeHelper {
 		        }
 		      }
 			}
+		Set<ItemStack> upgrades= null;
+		if (inv instanceof TileEntityBChest) {
+			upgrades = ((TileEntityBChest)inv).getUpgrades();
+		}
+		else if (inv instanceof BagInventory) {
+			upgrades = ((BagInventory)inv).getUpgradeList();
+		}
+		if (upgrades == null) return;
+		
+		for (ItemStack item : upgrades) {
+			if (isUpgrade(item)) {
+				((IUpgrade)item.getItem()).update(inv, tick, world);
+			}
+		}
 	}
 	
 	public static boolean isUpgrade(ItemStack item) {

@@ -13,6 +13,8 @@ package aroma1997.betterchests;
 import java.util.ArrayList;
 import java.util.List;
 
+import aroma1997.betterchests.api.IUpgrade;
+import aroma1997.betterchests.api.IUpgradeProvider;
 import aroma1997.core.client.util.Colors;
 
 import net.minecraft.client.renderer.texture.IconRegister;
@@ -114,7 +116,7 @@ public class ItemUpgrade extends Item implements IUpgrade {
 	}
 
 	@Override
-	public void update(IBetterChest chest, int tick, World world) {
+	public void update(IUpgradeProvider chest, int tick, World world) {
 		
 	}
 

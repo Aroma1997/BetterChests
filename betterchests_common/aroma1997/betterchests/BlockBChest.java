@@ -10,19 +10,16 @@
 package aroma1997.betterchests;
 
 
-import java.util.Random;
-
 import aroma1997.core.inventories.Inventories;
+import aroma1997.core.util.WorldUtil;
 
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.Explosion;
@@ -188,42 +185,23 @@ public class BlockBChest extends BlockContainer {
 	@Override
 	public void breakBlock(World par1World, int par2, int par3, int par4, int par5, int par6)
 	{
-		Random random = new Random();
 		TileEntityBChest te = (TileEntityBChest) par1World.getBlockTileEntity(par2, par3, par4);
-		ItemStack[] items = te.getItemUpgrades();
+		if (te.pickedUp) {
+			super.breakBlock(par1World, par2, par3, par4, par5, par6);
+			return;
+		}
+		ItemStack[] items = te.getItems();
 		for (ItemStack item : items) {
 			ItemStack itemstack = item;
 			
 			if (itemstack != null)
 			{
-				float f = random.nextFloat() * 0.8F + 0.1F;
-				float f1 = random.nextFloat() * 0.8F + 0.1F;
-				EntityItem entityitem;
-				
-				for (float f2 = random.nextFloat() * 0.8F + 0.1F; itemstack.stackSize > 0; par1World.spawnEntityInWorld(entityitem))
-				{
-					int k1 = random.nextInt(21) + 10;
-					
-					if (k1 > itemstack.stackSize)
-					{
-						k1 = itemstack.stackSize;
-					}
-					
-					itemstack.stackSize -= k1;
-					entityitem = new EntityItem(par1World, par2 + f,
-						par3 + f1, par4 + f2, new ItemStack(
-							itemstack.itemID, k1, itemstack.getItemDamage()));
-					float f3 = 0.05F;
-					entityitem.motionX = (float) random.nextGaussian() * f3;
-					entityitem.motionY = (float) random.nextGaussian() * f3 + 0.2F;
-					entityitem.motionZ = (float) random.nextGaussian() * f3;
-					
-					if (itemstack.hasTagCompound())
-					{
-						entityitem.getEntityItem().setTagCompound(
-							(NBTTagCompound) itemstack.getTagCompound().copy());
-					}
-				}
+				WorldUtil.dropItemsRandom(par1World, item, par2, par3, par4);
+			}
+		}
+		for (ItemStack item : te.getUpgrades()) {
+			if (item != null) {
+				WorldUtil.dropItemsRandom(par1World, item, par2, par3, par4);
 			}
 		}
 		super.breakBlock(par1World, par2, par3, par4, par5, par6);
@@ -245,6 +223,13 @@ public class BlockBChest extends BlockContainer {
 	public void onBlockPlacedBy(World par1World, int par2, int par3, int par4,
 		EntityLivingBase par5EntityLivingBase, ItemStack par6ItemStack)
 	{
+    	if (ItemBlockBChest.isTagChest(par6ItemStack)) {
+    		TileEntityBChest te = TileEntityBChest.loadTEFromNBT(par6ItemStack.stackTagCompound);
+    		te.xCoord = par2;
+    		te.yCoord = par3;
+    		te.zCoord = par4;
+    		par1World.setBlockTileEntity(par2, par3, par4, te);
+    	}
 		byte facing = 0;
 		int rotation = MathHelper.floor_double(par5EntityLivingBase.rotationYaw * 4.0F / 360.0F + 0.5D) & 3;
 		

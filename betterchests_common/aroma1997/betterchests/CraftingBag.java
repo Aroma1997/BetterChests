@@ -10,6 +10,8 @@
 package aroma1997.betterchests;
 
 
+import aroma1997.betterchests.api.IUpgrade;
+
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
@@ -59,6 +61,9 @@ public class CraftingBag implements IRecipe {
 		BagInventory inv = itemBag.getInventory(item);
 		if (UpgradeHelper.areRequirementsInstalled(inv, upgrade) && itemUpgrade.canBagTakeUpgrade(upgrade) && itemUpgrade.getMaxUpgrades(upgrade) > inv.getAmountUpgrade(upgrade)) {
 			inv.setAmountUpgrade(upgrade, inv.getAmountUpgrade(upgrade) + 1);
+		}
+		else {
+			return null;
 		}
 		return item;
 	}

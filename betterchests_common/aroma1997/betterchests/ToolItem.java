@@ -9,16 +9,13 @@
 
 package aroma1997.betterchests;
 
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
 
 
-public interface IUpgradeProvider {
+public abstract class ToolItem {
 	
-	public int getAmountUpgrade(ItemStack upgrade);
+	abstract boolean onItemUseFirst(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ);
 	
-	public boolean isUpgradeInstalled(ItemStack upgrade);
-	
-	public void setAmountUpgrade(ItemStack upgrade, int amount);
-	
-	public boolean hasEnergy();
 }
