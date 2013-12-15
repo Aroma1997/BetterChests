@@ -33,6 +33,7 @@ public class ItemTool extends Item {
 		setMaxStackSize(1);
 		setContainerItem(this);
 		setFull3D();
+		setCreativeTab(BetterChests.creativeTabBC);
 	}
 	
 	@Override

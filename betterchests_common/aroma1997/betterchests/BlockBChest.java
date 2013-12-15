@@ -71,7 +71,7 @@ public class BlockBChest extends BlockContainer {
 		}
 		ItemStack item = par5EntityPlayer.getHeldItem();
 		
-		if (item == null || ! (item.getItem() instanceof ItemUpgrade)) {
+		if (item == null || !UpgradeHelper.isUpgrade(item)) {
 			return openInventory(par5EntityPlayer, par1World, par2, par3, par4);
 		}
 		if (Upgrade.values()[item.getItemDamage()].isValidUpgrade()) {
