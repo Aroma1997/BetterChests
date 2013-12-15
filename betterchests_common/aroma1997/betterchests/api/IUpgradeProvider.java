@@ -12,7 +12,7 @@ package aroma1997.betterchests.api;
 import net.minecraft.item.ItemStack;
 
 
-public interface IUpgradeProvider {
+public interface IUpgradeProvider extends IInventory {
 	
 	/**
 	 * How many of the Upgrades are installed.
