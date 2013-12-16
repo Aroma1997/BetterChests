@@ -86,7 +86,7 @@ public class BlockBChest extends BlockContainer {
 	private boolean openInventory(EntityPlayer player, World world, int x, int y, int z) {
 		TileEntityBChest te = (TileEntityBChest) world.getBlockTileEntity(x, y, z);
 		te.playerOpenChest(player);
-		Inventories.openContainerTileEntity(player, te);
+		Inventories.openContainerTileEntity(player, te, true);
 		return true;
 	}
 	

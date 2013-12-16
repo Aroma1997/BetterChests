@@ -56,9 +56,8 @@ public class CraftingBag implements IRecipe {
 			return null;
 		}
 		IUpgrade itemUpgrade = (IUpgrade) upgrade.getItem();
-		ItemBag itemBag = (ItemBag) bag.getItem();
 		ItemStack item = bag.copy();
-		BagInventory inv = itemBag.getInventory(item);
+		BagInventory inv = ItemBag.getInventory(item);
 		if (UpgradeHelper.areRequirementsInstalled(inv, upgrade) && itemUpgrade.canBagTakeUpgrade(upgrade) && itemUpgrade.getMaxUpgrades(upgrade) > inv.getAmountUpgrade(upgrade)) {
 			inv.setAmountUpgrade(upgrade, inv.getAmountUpgrade(upgrade) + 1);
 		}

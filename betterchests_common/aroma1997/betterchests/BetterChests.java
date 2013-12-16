@@ -13,6 +13,9 @@ package aroma1997.betterchests;
 import java.io.File;
 import java.util.ArrayList;
 
+import aroma1997.betterchests.client.EventListener;
+import aroma1997.core.log.AromaLog;
+import aroma1997.core.log.LogHelper;
 import aroma1997.core.util.AromaRegistry;
 import aroma1997.core.util.ItemUtil;
 import aroma1997.core.version.VersionCheck;
@@ -54,8 +57,11 @@ public class BetterChests {
 	
 	public static CreativeTabs creativeTabBC = new CreativeTabBChest();
 	
+	public static AromaLog logger;
+	
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
+		logger = LogHelper.genNewLogger(Reference.MOD_ID);
 		Configuration config = new Configuration(new File(new File(
 			event.getModConfigurationDirectory(), "aroma1997"), Reference.MOD_ID + ".cfg"));
 		config.load();
@@ -71,6 +77,7 @@ public class BetterChests {
 		GameRegistry.registerItem(upgrade, "Upgrade");
 		GameRegistry.registerItem(bag, "Bag");
 		GameRegistry.registerItem(tool, "Tool");
+		new EventListener();
 	}
 	
 	@EventHandler

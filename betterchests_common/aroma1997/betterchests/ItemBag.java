@@ -102,7 +102,7 @@ public class ItemBag extends Item implements ISpecialInventoryProvider {
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	static void addInfo(ItemStack item, List list) {
 		BagInventory inv = getInventory(item);
-		HashSet<ItemStack> upgrades = inv.getUpgradeList();
+		HashSet<ItemStack> upgrades = inv.getUpgrades();
 		for (ItemStack entry : upgrades) {
 			if (!UpgradeHelper.isUpgrade(entry)) continue;
 			if (entry.stackSize > 0) {

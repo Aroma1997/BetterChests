@@ -15,11 +15,15 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
-import java.util.Set;
 
+import aroma1997.betterchests.api.IBetterChest;
 import aroma1997.betterchests.api.IUpgrade;
+import aroma1997.betterchests.client.EventListener;
 import aroma1997.core.client.inventories.GUIContainer;
+import aroma1997.core.inventories.AromaContainer;
 import aroma1997.core.inventories.ContainerBasic;
+import aroma1997.core.inventories.ISpecialInventory;
+import aroma1997.core.inventories.Inventories;
 import aroma1997.core.misc.FakePlayerFactory;
 import aroma1997.core.util.FileUtil;
 import aroma1997.core.util.ItemUtil;
@@ -42,7 +46,10 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
 
-public class TileEntityBChest extends TileEntity implements IBetterChest {
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
+public class TileEntityBChest extends TileEntity implements IBetterChest, ISpecialInventory {
 	
 	private String player;
 	
@@ -132,7 +139,8 @@ public class TileEntityBChest extends TileEntity implements IBetterChest {
 			}
 		}
 		
-		if (isUpgradeInstalled(Upgrade.RAIN.getItem()) && worldObj.canBlockSeeTheSky(xCoord, yCoord, zCoord)
+		if (isUpgradeInstalled(Upgrade.RAIN.getItem())
+			&& worldObj.canBlockSeeTheSky(xCoord, yCoord, zCoord)
 			&& worldObj.isRaining()
 			&& new Random().nextFloat() > Reference.Conf.RAIN_THINGY && tick == 20) {
 			int bucketEmpty = - 1;
@@ -206,16 +214,18 @@ public class TileEntityBChest extends TileEntity implements IBetterChest {
 	}
 	
 	public boolean upgrade(EntityPlayer player) {
-		if (player == null || !isUseableByPlayer(player)) return false;
-
-		ItemStack itemUpgrade = player.getHeldItem();
-		if (itemUpgrade == null || !UpgradeHelper.isUpgrade(itemUpgrade)) return false;
+		if (player == null || ! isUseableByPlayer(player)) return false;
 		
-		if (!UpgradeHelper.areRequirementsInstalled(this, itemUpgrade)) return false;
+		ItemStack itemUpgrade = player.getHeldItem();
+		if (itemUpgrade == null || ! UpgradeHelper.isUpgrade(itemUpgrade)) return false;
+		
+		if (! UpgradeHelper.areRequirementsInstalled(this, itemUpgrade)) return false;
 		
 		IUpgrade upgrade = (IUpgrade) itemUpgrade.getItem();
 		
-		if (upgrade.canChestTakeUpgrade(itemUpgrade) && UpgradeHelper.areRequirementsInstalled(this, itemUpgrade) && upgrade.getMaxUpgrades(itemUpgrade) > getAmountUpgrade(itemUpgrade)) {
+		if (upgrade.canChestTakeUpgrade(itemUpgrade)
+			&& UpgradeHelper.areRequirementsInstalled(this, itemUpgrade)
+			&& upgrade.getMaxUpgrades(itemUpgrade) > getAmountUpgrade(itemUpgrade)) {
 			setAmountUpgrade(itemUpgrade, getAmountUpgrade(itemUpgrade) + 1);
 			onUpgradeInserted(player);
 			return true;
@@ -225,22 +235,16 @@ public class TileEntityBChest extends TileEntity implements IBetterChest {
 	
 	@Override
 	public void readFromNBT(NBTTagCompound nbt) {
-		upgrades.clear();
-		if (nbt.hasKey(Upgrade.BASIC.toString())) {
-
-			for (Upgrade upgrade : Upgrade.values()) {
-				int amount = nbt.getInteger(upgrade.toString());
-				if (amount == 0) continue;
-				setAmountUpgrade(upgrade.getItem(), amount);
-			}
+		for (Upgrade upgrade : Upgrade.values()) {
+			int amount = nbt.getInteger(upgrade.toString());
+			if (amount == 0) continue;
+			setAmountUpgrade(upgrade.getItem(), amount);
 		}
-		else {
-			NBTTagList list = nbt.getTagList("upgrades");
-			for (int i = 0; i < list.tagCount(); i++) {
-				NBTTagCompound upgradenbt = (NBTTagCompound) list.tagAt(i);
-				ItemStack item = ItemStack.loadItemStackFromNBT(upgradenbt);
-				upgrades.add(item);
-			}
+		NBTTagList list = nbt.getTagList("upgrades");
+		for (int i = 0; i < list.tagCount(); i++) {
+			NBTTagCompound upgradenbt = (NBTTagCompound) list.tagAt(i);
+			ItemStack item = ItemStack.loadItemStackFromNBT(upgradenbt);
+			upgrades.add(item);
 		}
 		items = new ItemStack[getSizeInventory()];
 		FileUtil.readFromNBT(this, nbt);
@@ -412,7 +416,7 @@ public class TileEntityBChest extends TileEntity implements IBetterChest {
 		if (numUsingPlayers > 0 && lidAngle == 0.0F)
 		{
 			worldObj.playSoundEffect(xCoord + 0.5D, yCoord + 0.5D, zCoord + 0.5D,
-				"random.chestopen", 0.5F, worldObj.rand.nextFloat() * 0.1F + 0.9F);
+				EventListener.SOUND_OPEN_CHEST, 0.5F, worldObj.rand.nextFloat() * 0.1F + 0.9F);
 		}
 		if (numUsingPlayers <= 0 && lidAngle > 0.0F || numUsingPlayers > 0 && lidAngle < 1.0F)
 		{
@@ -433,7 +437,7 @@ public class TileEntityBChest extends TileEntity implements IBetterChest {
 			if (lidAngle < f2 && f1 >= f2)
 			{
 				worldObj.playSoundEffect(xCoord + 0.5D, yCoord + 0.5D, zCoord + 0.5D,
-					"random.chestclosed", 0.5F, worldObj.rand.nextFloat() * 0.1F + 0.9F);
+					EventListener.SOUND_CLOSE_CHEST, 0.5F, worldObj.rand.nextFloat() * 0.1F + 0.9F);
 			}
 			if (lidAngle < 0.0F)
 			{
@@ -483,11 +487,15 @@ public class TileEntityBChest extends TileEntity implements IBetterChest {
 	
 	@Override
 	public ItemStack getStackInSlotOnClosing(int i) {
+		if (i < 0 || i >= items.length || isUpgradeInstalled(Upgrade.VOID.getItem())) return null;
 		return items[i];
 	}
 	
 	@Override
 	public void setInventorySlotContents(int i, ItemStack itemstack) {
+		if (i < 0 || i >= items.length || isUpgradeInstalled(Upgrade.VOID.getItem())) {
+			return;
+		}
 		items[i] = itemstack;
 	}
 	
@@ -532,7 +540,7 @@ public class TileEntityBChest extends TileEntity implements IBetterChest {
 	
 	@Override
 	public int getAmountUpgrade(ItemStack upgrade) {
-		if (!UpgradeHelper.isUpgrade(upgrade)) return 0;
+		if (! UpgradeHelper.isUpgrade(upgrade)) return 0;
 		for (ItemStack item : upgrades) {
 			if (ItemUtil.areItemsSame(item, upgrade)) {
 				return item.stackSize;
@@ -570,12 +578,18 @@ public class TileEntityBChest extends TileEntity implements IBetterChest {
 		return new Slot(this, index, x, y);
 	}
 	
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void drawGuiContainerForegroundLayer(GUIContainer gui, ContainerBasic container,
 		int par1, int par2) {
-		
+		for (ItemStack item : upgrades) {
+			if (UpgradeHelper.isUpgrade(item)) continue;
+			((IUpgrade) item.getItem()).drawGuiContainerForegroundLayer(gui, container, par1, par2,
+				item);
+		}
 	}
 	
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void drawGuiContainerBackgroundLayer(GUIContainer gui, ContainerBasic container,
 		float f, int i, int j) {
@@ -596,13 +610,18 @@ public class TileEntityBChest extends TileEntity implements IBetterChest {
 	}
 	
 	@Override
-	public ContainerBasic getContainer(EntityPlayer player, int i) {
-		return new ContainerBasic(player.inventory, this);
+	public AromaContainer getContainer(EntityPlayer player, int i) {
+		if (i == Inventories.ID_GUI_BLOCK) {
+			return new ContainerBasic(player.inventory, this);
+		}
+		else {
+			return new ContainerUpgrades(this, player);
+		}
 	}
 	
 	@SuppressWarnings("unchecked")
-	Set<ItemStack> getUpgrades() {
-		return (Set<ItemStack>) upgrades.clone();
+	public HashSet<ItemStack> getUpgrades() {
+		return (HashSet<ItemStack>) upgrades.clone();
 	}
 	
 }

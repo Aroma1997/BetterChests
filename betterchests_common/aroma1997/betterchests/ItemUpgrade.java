@@ -14,12 +14,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import aroma1997.betterchests.api.IUpgrade;
-import aroma1997.betterchests.api.IUpgradeProvider;
+import aroma1997.betterchests.api.IBetterChest;
 import aroma1997.core.client.util.Colors;
+import aroma1997.core.util.ItemUtil;
 
+import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.Container;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Icon;
@@ -54,7 +57,7 @@ public class ItemUpgrade extends Item implements IUpgrade {
 		if (!upgrade.isValidUpgrade()) {
 			par3List.add(StatCollector.translateToLocal("info.betterchests:tooltip.noupgrade"));
 		}
-		else if (! upgrade.canBag) {
+		else if (! upgrade.canBagTakeUpgrade()) {
 			par3List.add(StatCollector.translateToLocal("info.betterchests:tooltip.nobag"));
 		}
 	}
@@ -116,8 +119,9 @@ public class ItemUpgrade extends Item implements IUpgrade {
 	}
 
 	@Override
-	public void update(IUpgradeProvider chest, int tick, World world) {
-		
+	public void update(IBetterChest chest, int tick, World world, ItemStack item) {
+		if (!UpgradeHelper.isUpgrade(item)) return;
+		Upgrade.values()[item.getItemDamage()].getUpgrade().updateChest(chest, tick,  world, item);
 	}
 
 	@Override
@@ -130,6 +134,20 @@ public class ItemUpgrade extends Item implements IUpgrade {
 	public String getName(ItemStack item) {
 		if (item == null || !UpgradeHelper.isUpgrade(item)) return "UNKNOWN NAME";
 		return Upgrade.values()[item.getItemDamage()].getName();
+	}
+
+	@Override
+	public void onUpgradeInstalled(ItemStack item, IBetterChest chest) {
+		if (ItemUtil.areItemsSame(item, Upgrade.VOID.getItem())) {
+			
+		}
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void drawGuiContainerForegroundLayer(GuiContainer gui, Container container, int par1,
+		int par2, ItemStack item) {
+		
 	}
 	
 }

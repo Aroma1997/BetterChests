@@ -9,6 +9,7 @@
 
 package aroma1997.betterchests;
 
+import aroma1997.core.inventories.Inventories;
 import aroma1997.core.util.WorldUtil;
 
 import net.minecraft.entity.player.EntityPlayer;
@@ -34,6 +35,10 @@ public class ItemHammer extends ToolItem {
 				WorldUtil.dropItemsRandom(world, chest.getDroppedFullItem(), x, y, z);
 				chest.pickedUp = true;
 				world.setBlockToAir(x, y, z);
+				return true;
+			}
+			else {
+				Inventories.openContainerTileEntity(player, world.getBlockTileEntity(x, y, z), false);
 				return true;
 			}
 		}

@@ -13,12 +13,14 @@ package aroma1997.betterchests;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Random;
-import java.util.Set;
 
+import aroma1997.betterchests.api.IBetterChest;
+import aroma1997.betterchests.api.IUpgrade;
 import aroma1997.core.client.inventories.GUIContainer;
 import aroma1997.core.inventories.ContainerBasic;
 import aroma1997.core.inventories.ContainerItem;
 import aroma1997.core.inventories.IAdvancedInventory;
+import aroma1997.core.inventories.ISpecialInventory;
 import aroma1997.core.util.FileUtil;
 import aroma1997.core.util.ItemUtil;
 
@@ -28,7 +30,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 
-public class BagInventory implements IBetterChest, IAdvancedInventory {
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
+public class BagInventory implements IBetterChest, IAdvancedInventory, ISpecialInventory {
 	
 	private final ItemStack item;
 	
@@ -49,7 +54,7 @@ public class BagInventory implements IBetterChest, IAdvancedInventory {
 	@Override
 	public ItemStack getStackInSlot(int par1)
 	{
-		if (par1 >= items.length) {
+		if (par1 >= items.length || par1 < 0 || isUpgradeInstalled(Upgrade.VOID.getItem())) {
 			return null;
 		}
 		return items[par1];
@@ -163,12 +168,17 @@ public class BagInventory implements IBetterChest, IAdvancedInventory {
 		return new Slot(this, index, x, y);
 	}
 	
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void drawGuiContainerForegroundLayer(GUIContainer gui, ContainerBasic container,
 		int par1, int par2) {
-		
+		for (ItemStack item : upgrades) {
+			if (UpgradeHelper.isUpgrade(item)) continue;
+			((IUpgrade) item.getItem()).drawGuiContainerForegroundLayer(gui, container, par1, par2, item);
+		}
 	}
 	
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void drawGuiContainerBackgroundLayer(GUIContainer gui, ContainerBasic container,
 		float f, int i, int j) {
@@ -176,21 +186,17 @@ public class BagInventory implements IBetterChest, IAdvancedInventory {
 	}
 	
 	public void readFromNBT(NBTTagCompound nbt) {
-		if (nbt.hasKey(Upgrade.BASIC.toString())) {
-
-			for (Upgrade upgrade : Upgrade.values()) {
-				int amount = nbt.getInteger(upgrade.toString());
-				if (amount == 0) continue;
-				setAmountUpgradeWithoutNotify(upgrade.getItem(), amount);
-			}
+		for (Upgrade upgrade : Upgrade.values()) {
+			int amount = nbt.getInteger(upgrade.toString());
+			if (amount == 0) continue;
+			setAmountUpgradeWithoutNotify(upgrade.getItem(), amount);
+			nbt.removeTag(upgrade.toString());
 		}
-		else {
-			NBTTagList list = nbt.getTagList("upgrades");
-			for (int i = 0; i < list.tagCount(); i++) {
-				NBTTagCompound upgradenbt = (NBTTagCompound) list.tagAt(i);
-				ItemStack item = ItemStack.loadItemStackFromNBT(upgradenbt);
-				upgrades.add(item);
-			}
+		NBTTagList list = nbt.getTagList("upgrades");
+		for (int i = 0; i < list.tagCount(); i++) {
+			NBTTagCompound upgradenbt = (NBTTagCompound) list.tagAt(i);
+			ItemStack item = ItemStack.loadItemStackFromNBT(upgradenbt);
+			upgrades.add(item);
 		}
 		if (nbt.hasKey("display"))
 		{
@@ -298,6 +304,9 @@ public class BagInventory implements IBetterChest, IAdvancedInventory {
 
 	@Override
 	public void setStackInSlotWithoutNotify(int slot, ItemStack item) {
+		if (isUpgradeInstalled(Upgrade.VOID.getItem())) {
+			return;
+		}
 		items[slot] = item;
 		
 		if (item != null && item.stackSize > getInventoryStackLimit())
@@ -321,9 +330,10 @@ public class BagInventory implements IBetterChest, IAdvancedInventory {
 		return z;
 	}
 	
+	
 	@SuppressWarnings("unchecked")
-	HashSet<ItemStack> getUpgradeList() {
-		return (HashSet<ItemStack>)upgrades.clone();
+	public HashSet<ItemStack> getUpgrades() {
+		return (HashSet<ItemStack>) upgrades.clone();
 	}
 	
 }

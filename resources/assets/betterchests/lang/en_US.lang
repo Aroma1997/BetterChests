@@ -41,6 +41,8 @@ book.betterchests:credits=Thank you for reading the User Manual. If you still ha
 
 
 
+gui.betterchests:upgrades.name=Upgrades
+gui.betterchests:upgrades.warning=Removing Upgrades from this Chest may result in losing some of the contained Items. Shift-Right-Click to remove one Upgrade, Shift-Right-Click to remove all of them.
 
 creativetab.betterchests:creativetab.name=BetterChests
 

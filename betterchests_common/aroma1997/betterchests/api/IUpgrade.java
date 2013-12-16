@@ -11,8 +11,13 @@ package aroma1997.betterchests.api;
 
 import java.util.List;
 
+import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 /**
  * Implement this Interface in your Item and it'll be accepted by BetterChest.
@@ -48,8 +53,9 @@ public interface IUpgrade {
 	 * @param chest The Adjustable Chest or the Bag
 	 * @param tick The tick (counts from 0 to 64)
 	 * @param world The world
+	 * @param item The Upgrade
 	 */
-	public void update(IUpgradeProvider chest, int tick, World world);
+	public void update(IBetterChest chest, int tick, World world, ItemStack item);
 	
 	/**
 	 * The Max amount of Upgrades per Chest/Bag.
@@ -65,5 +71,22 @@ public interface IUpgrade {
 	 * @return The localized(!!) name of the Upgrade
 	 */
 	public String getName(ItemStack item);
+	
+	/**
+	 * Called when the Upgrade is installed.
+	 * @param item The Upgrade
+	 * @param chest The Chest/Bag
+	 */
+	public void onUpgradeInstalled(ItemStack item, IBetterChest chest) ;
+	
+	/**
+	 * The GUI's rendering
+	 * @param gui The gui
+	 * @param container The Container
+	 * @param item The upgrade
+	 */
+	@SideOnly(Side.CLIENT)
+	public void drawGuiContainerForegroundLayer(GuiContainer gui, Container container,
+		int par1, int par2, ItemStack item);
 	
 }

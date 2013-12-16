@@ -12,6 +12,13 @@ package aroma1997.betterchests;
 
 import java.util.ArrayList;
 
+import aroma1997.betterchests.upgrades.BasicUpgrade;
+import aroma1997.betterchests.upgrades.CobbleGen;
+import aroma1997.betterchests.upgrades.Collector;
+import aroma1997.betterchests.upgrades.Furnace;
+import aroma1997.betterchests.upgrades.Null;
+import aroma1997.betterchests.upgrades.Rain;
+import aroma1997.betterchests.upgrades.Ticking;
 import aroma1997.core.util.AromaRegistry;
 
 import net.minecraft.block.Block;
@@ -22,20 +29,20 @@ import net.minecraft.util.StatCollector;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public enum Upgrade {
-	SLOT(null, 9, true, true),
-	COBBLEGEN(null, 1, true, true),
-	REDSTONE(null, 1, true, false),
-	LIGHT(null, 1, true, false),
-	BASIC(null, 0, false, false),
-	COMPARATOR(null, 1, true, false),
-	VOID(null, 1, true, true),
-	UNBREAKABLE(null, 1, true, false),
-	PLAYER(UNBREAKABLE, 1, true, false),
-	RAIN(null, 1, true, false),
-	ENERGY(null, 1, true, true),
-	FURNACE(ENERGY, 1, true, true),
-	COLLECTOR(ENERGY, 8, true, true),
-	TICKING(ENERGY, 1, true, false);
+	SLOT(null, 9, true, true, Null.class),
+	COBBLEGEN(null, 1, true, true, CobbleGen.class),
+	REDSTONE(null, 1, true, false, Null.class),
+	LIGHT(null, 1, true, false, Null.class),
+	BASIC(null, 0, false, false, Null.class),
+	COMPARATOR(null, 1, true, false, Null.class),
+	VOID(null, 1, true, true, Null.class),
+	UNBREAKABLE(null, 1, true, false, Null.class),
+	PLAYER(UNBREAKABLE, 1, true, false, Null.class),
+	RAIN(null, 1, true, false, Rain.class),
+	ENERGY(null, 1, true, true, Null.class),
+	FURNACE(ENERGY, 1, true, true, Furnace.class),
+	COLLECTOR(ENERGY, 8, true, true, Collector.class),
+	TICKING(ENERGY, 1, true, false, Ticking.class);
 	
 	private Upgrade requirement;
 	
@@ -43,13 +50,22 @@ public enum Upgrade {
 	
 	private boolean validItem;
 	
-	final boolean canBag;
+	private final boolean canBag;
 	
-	private Upgrade(Upgrade requirement, int max, boolean validItem, boolean canBag) {
+	private BasicUpgrade upgrade;
+	
+	private Upgrade(Upgrade requirement, int max, boolean validItem, boolean canBag, Class<? extends BasicUpgrade> claSS) {
 		this.requirement = requirement;
 		this.max = max;
 		this.validItem = validItem;
 		this.canBag = canBag;
+		
+		try {
+			upgrade = claSS.newInstance();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public String getName() {
@@ -166,5 +182,9 @@ public enum Upgrade {
 	
 	public ItemStack getItem() {
 		return new ItemStack(BetterChests.upgrade, 1, ordinal());
+	}
+	
+	public BasicUpgrade getUpgrade() {
+		return upgrade;
 	}
 }
