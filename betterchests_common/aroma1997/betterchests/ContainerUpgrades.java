@@ -1,4 +1,6 @@
+
 package aroma1997.betterchests;
+
 
 import aroma1997.betterchests.api.IBetterChest;
 import aroma1997.core.client.inventories.GUIAromaBasic;
@@ -16,7 +18,6 @@ import net.minecraft.util.StatCollector;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-
 public class ContainerUpgrades extends AromaContainer {
 	
 	private final IBetterChest chest;
@@ -26,12 +27,14 @@ public class ContainerUpgrades extends AromaContainer {
 	private int upgrades = 0;
 	
 	private static final int bufferX = 9;
+	
 	private static final int bufferY = 18;
 	
 	public ContainerUpgrades(IBetterChest chest, EntityPlayer player) {
 		this.chest = chest;
 		for (ItemStack item : chest.getUpgrades()) {
-			addSlotToContainer(new SlotUpgrades(chest, item, upgrades % 9 * 18 + bufferX, upgrades / 9 * 18));
+			addSlotToContainer(new SlotUpgrades(chest, item, upgrades % 9 * 18 + bufferX,
+				upgrades / 9 * 18));
 			upgrades++;
 		}
 		this.player = player;
@@ -41,7 +44,7 @@ public class ContainerUpgrades extends AromaContainer {
 	public boolean canInteractWith(EntityPlayer entityplayer) {
 		return chest.isUseableByPlayer(entityplayer);
 	}
-
+	
 	@Override
 	@SideOnly(Side.CLIENT)
 	public GuiContainer getContainer() {
@@ -50,56 +53,62 @@ public class ContainerUpgrades extends AromaContainer {
 		gui.ySize = upgrades / 9 * 18 + bufferY * 2 + 45;
 		return gui;
 	}
-
+	
 	@Override
 	public void drawGuiContainerForegroundLayer(GUIAromaBasic gui, int par1, int par2) {
-		gui.getFontRender().drawString(StatCollector.translateToLocal("gui.betterchests:upgrades.name"), bufferX, - bufferY / 2 - 2, 4210752);
-		gui.getFontRender().drawSplitString(Colors.RED + StatCollector.translateToLocal("gui.betterchests:upgrades.warning"), bufferX, bufferY + upgrades / 9 * 18, gui.xSize - bufferX * 2, 4210752);
+		gui.getFontRender().drawString(
+			StatCollector.translateToLocal("gui.betterchests:upgrades.name"), bufferX,
+			- bufferY / 2 - 2, 4210752);
+		gui.getFontRender().drawSplitString(
+			Colors.RED + StatCollector.translateToLocal("gui.betterchests:upgrades.warning"),
+			bufferX, bufferY + upgrades / 9 * 18, gui.xSize - bufferX * 2, 4210752);
 	}
 	
 	@Override
 	public void detectAndSendChanges() {
 		super.detectAndSendChanges();
-		for (int i = 0; i < this.inventorySlots.size(); i++) {
-			Slot slot = this.getSlot(i);
-			if (!slot.getHasStack()) {
-				this.inventorySlots.remove(slot);
+		for (int i = 0; i < inventorySlots.size(); i++) {
+			Slot slot = getSlot(i);
+			if (! slot.getHasStack()) {
+				inventorySlots.remove(slot);
 			}
 		}
 	}
 	
 	@Override
-    public ItemStack slotClick(int par1, int par2, int par3, EntityPlayer par4EntityPlayer)
-    {
-		if (par1 >= this.inventorySlots.size()) return null;
+	public ItemStack slotClick(int par1, int par2, int par3, EntityPlayer par4EntityPlayer)
+	{
+		if (par1 >= inventorySlots.size()) {
+			return null;
+		}
 		if (par3 == 1) {
 			if (par2 == 1) {
-				ItemStack item = this.getSlot(par1).getStack();
-				this.getSlot(par1).decrStackSize(1);
+				ItemStack item = getSlot(par1).getStack();
+				getSlot(par1).decrStackSize(1);
 				item.stackSize = 1;
 				InvUtil.putIntoFirstSlot(player.inventory, item);
 			}
 			else if (par2 == 0) {
-				ItemStack item = this.getSlot(par1).getStack();
-				int amount = this.getSlot(par1).getStack().stackSize;
-				this.getSlot(par1).decrStackSize(amount);
+				ItemStack item = getSlot(par1).getStack();
+				int amount = getSlot(par1).getStack().stackSize;
+				getSlot(par1).decrStackSize(amount);
 				item.stackSize = amount;
 				InvUtil.putIntoFirstSlot(player.inventory, item);
 			}
 		}
-		for (int i = 0; i < this.inventorySlots.size(); i++) {
-			Slot slot = this.getSlot(i);
-			if (!slot.getHasStack()) {
-				this.inventorySlots.remove(slot);
+		for (int i = 0; i < inventorySlots.size(); i++) {
+			Slot slot = getSlot(i);
+			if (! slot.getHasStack()) {
+				inventorySlots.remove(slot);
 			}
 		}
 		return null;
-    }
+	}
 	
 	@Override
-    public ItemStack transferStackInSlot(EntityPlayer par1EntityPlayer, int par2)
-    {
+	public ItemStack transferStackInSlot(EntityPlayer par1EntityPlayer, int par2)
+	{
 		return null;
-    }
+	}
 	
 }

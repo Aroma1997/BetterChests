@@ -1,4 +1,6 @@
+
 package aroma1997.betterchests.upgrades;
+
 
 import aroma1997.betterchests.Upgrade;
 import aroma1997.betterchests.api.IBetterChest;
@@ -7,12 +9,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.world.World;
 
-
 public class Furnace extends BasicUpgrade {
 	
 	@Override
-	public void updateChest(IBetterChest inv, int tick, World world,  ItemStack item) {
-		if (inv.isUpgradeInstalled(Upgrade.FURNACE.getItem()) && tick %32 == 5) {
+	public void updateChest(IBetterChest inv, int tick, World world, ItemStack item) {
+		if (inv.isUpgradeInstalled(Upgrade.FURNACE.getItem()) && tick % 32 == 5) {
 			int cooking = - 1;
 			for (int i = 0; i < inv.getSizeInventory(); i++) {
 				ItemStack stack = inv.getStackInSlot(i);

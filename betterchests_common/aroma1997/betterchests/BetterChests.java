@@ -38,7 +38,7 @@ import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 @Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, version = Reference.VERSION, dependencies = "required-after:Aroma1997Core")
-@NetworkMod(channels={"BetterChests"}, clientSideRequired = true, serverSideRequired = false, packetHandler = PacketHandler.class)
+@NetworkMod(channels = {"BetterChests"}, clientSideRequired = true, serverSideRequired = false, packetHandler = PacketHandler.class)
 public class BetterChests {
 	
 	@Instance(Reference.MOD_ID)
@@ -71,7 +71,8 @@ public class BetterChests {
 			config.getItem(Configuration.CATEGORY_ITEM, "upgradeItem", 12458,
 				"The Item id of the Upgrades").getInt() - 256);
 		bag = new ItemBag(config.getItem("bagItem", 12457, "The item id of the Bag").getInt() - 256);
-		tool = new ItemTool(config.getItem("itemTool", 12456, "The Item id of the Tool").getInt() - 256);
+		tool = new ItemTool(
+			config.getItem("itemTool", 12456, "The Item id of the Tool").getInt() - 256);
 		config.save();
 		GameRegistry.registerBlock(chest, ItemBlockBChest.class, "betterChest");
 		GameRegistry.registerItem(upgrade, "Upgrade");
@@ -120,7 +121,7 @@ public class BetterChests {
 		Upgrade.addBagBookDescription(list);
 		list.add("book.betterchests:chapter.credits");
 		list.add("book.betterchests:credits");
-		ItemStack item =  ItemUtil.getWrittenBook("book.betterchests:name", "Aroma1997", true,
+		ItemStack item = ItemUtil.getWrittenBook("book.betterchests:name", "Aroma1997", true,
 			list.toArray(new String[list.size()]));
 		item.getTagCompound().setString("id", "BetterChests");
 		return item;

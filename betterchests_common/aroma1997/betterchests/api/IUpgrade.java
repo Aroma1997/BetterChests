@@ -9,6 +9,7 @@
 
 package aroma1997.betterchests.api;
 
+
 import java.util.List;
 
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -20,15 +21,17 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 /**
- * Implement this Interface in your Item and it'll be accepted by BetterChest.
- * You can also have a Multi-Item, where the Upgrades have a different metadata.
+ * Implement this Interface in your Item and it'll be accepted by BetterChest. You can also have a
+ * Multi-Item, where the Upgrades have a different metadata.
+ * 
  * @author Aroma1997
- *
+ * 
  */
 public interface IUpgrade {
 	
 	/**
 	 * If the Upgrade can be put on a Chest.
+	 * 
 	 * @param item The Upgrade to Check.
 	 * @return
 	 */
@@ -36,6 +39,7 @@ public interface IUpgrade {
 	
 	/**
 	 * If the Upgrade can be Put on a Bag.
+	 * 
 	 * @param item The item to check
 	 * @return
 	 */
@@ -43,13 +47,15 @@ public interface IUpgrade {
 	
 	/**
 	 * Get the list of Upgrades Required for this Upgrade.
+	 * 
 	 * @param item The Upgrade to check.
-	 * @return 
+	 * @return
 	 */
 	public List<ItemStack> getRequiredUpgrade(ItemStack item);
 	
 	/**
 	 * Called, whenerever the Chest gets ticked
+	 * 
 	 * @param chest The Adjustable Chest or the Bag
 	 * @param tick The tick (counts from 0 to 64)
 	 * @param world The world
@@ -59,14 +65,15 @@ public interface IUpgrade {
 	
 	/**
 	 * The Max amount of Upgrades per Chest/Bag.
+	 * 
 	 * @param item The Upgrade to Check.
 	 * @return
 	 */
 	public int getMaxUpgrades(ItemStack item);
 	
-	
 	/**
 	 * The name of The Upgrade.
+	 * 
 	 * @param item The Upgrade to check
 	 * @return The localized(!!) name of the Upgrade
 	 */
@@ -74,13 +81,15 @@ public interface IUpgrade {
 	
 	/**
 	 * Called when the Upgrade is installed.
+	 * 
 	 * @param item The Upgrade
 	 * @param chest The Chest/Bag
 	 */
-	public void onUpgradeInstalled(ItemStack item, IBetterChest chest) ;
+	public void onUpgradeInstalled(ItemStack item, IBetterChest chest);
 	
 	/**
 	 * The GUI's rendering
+	 * 
 	 * @param gui The gui
 	 * @param container The Container
 	 * @param item The upgrade

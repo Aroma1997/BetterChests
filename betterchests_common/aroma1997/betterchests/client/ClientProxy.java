@@ -23,7 +23,7 @@ public class ClientProxy extends CommonProxy {
 	public void registerRenderers() {
 		ClientRegistry.registerTileEntity(TileEntityBChest.class, "betterChest",
 			new BChestRenderer());
-
+		
 		KeyBindingRegistry.registerKeyBinding(new BetterChestsKeyHandler());
 		new EventListener();
 	}

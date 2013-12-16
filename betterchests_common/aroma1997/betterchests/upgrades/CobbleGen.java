@@ -1,4 +1,6 @@
+
 package aroma1997.betterchests.upgrades;
+
 
 import aroma1997.betterchests.Upgrade;
 import aroma1997.betterchests.api.IBetterChest;
@@ -9,9 +11,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-
 public class CobbleGen extends BasicUpgrade {
-
+	
 	@Override
 	public void updateChest(IBetterChest inv, int tick, World world, ItemStack item) {
 		if (inv.isUpgradeInstalled(Upgrade.COBBLEGEN.getItem()) && tick % 8 == 5) {

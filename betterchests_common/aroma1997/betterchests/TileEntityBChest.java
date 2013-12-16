@@ -113,7 +113,7 @@ public class TileEntityBChest extends TileEntity implements IBetterChest, ISpeci
 		if (worldObj.isRemote) {
 			return;
 		}
-		UpgradeHelper.updateChest(this, tick, this.worldObj);
+		UpgradeHelper.updateChest(this, tick, worldObj);
 		
 		if (tick-- <= 0) {
 			tick = 64;
@@ -214,12 +214,18 @@ public class TileEntityBChest extends TileEntity implements IBetterChest, ISpeci
 	}
 	
 	public boolean upgrade(EntityPlayer player) {
-		if (player == null || ! isUseableByPlayer(player)) return false;
+		if (player == null || ! isUseableByPlayer(player)) {
+			return false;
+		}
 		
 		ItemStack itemUpgrade = player.getHeldItem();
-		if (itemUpgrade == null || ! UpgradeHelper.isUpgrade(itemUpgrade)) return false;
+		if (itemUpgrade == null || ! UpgradeHelper.isUpgrade(itemUpgrade)) {
+			return false;
+		}
 		
-		if (! UpgradeHelper.areRequirementsInstalled(this, itemUpgrade)) return false;
+		if (! UpgradeHelper.areRequirementsInstalled(this, itemUpgrade)) {
+			return false;
+		}
 		
 		IUpgrade upgrade = (IUpgrade) itemUpgrade.getItem();
 		
@@ -237,7 +243,9 @@ public class TileEntityBChest extends TileEntity implements IBetterChest, ISpeci
 	public void readFromNBT(NBTTagCompound nbt) {
 		for (Upgrade upgrade : Upgrade.values()) {
 			int amount = nbt.getInteger(upgrade.toString());
-			if (amount == 0) continue;
+			if (amount == 0) {
+				continue;
+			}
 			setAmountUpgrade(upgrade.getItem(), amount);
 		}
 		NBTTagList list = nbt.getTagList("upgrades");
@@ -487,7 +495,9 @@ public class TileEntityBChest extends TileEntity implements IBetterChest, ISpeci
 	
 	@Override
 	public ItemStack getStackInSlotOnClosing(int i) {
-		if (i < 0 || i >= items.length || isUpgradeInstalled(Upgrade.VOID.getItem())) return null;
+		if (i < 0 || i >= items.length || isUpgradeInstalled(Upgrade.VOID.getItem())) {
+			return null;
+		}
 		return items[i];
 	}
 	
@@ -540,7 +550,9 @@ public class TileEntityBChest extends TileEntity implements IBetterChest, ISpeci
 	
 	@Override
 	public int getAmountUpgrade(ItemStack upgrade) {
-		if (! UpgradeHelper.isUpgrade(upgrade)) return 0;
+		if (! UpgradeHelper.isUpgrade(upgrade)) {
+			return 0;
+		}
 		for (ItemStack item : upgrades) {
 			if (ItemUtil.areItemsSame(item, upgrade)) {
 				return item.stackSize;
@@ -583,7 +595,9 @@ public class TileEntityBChest extends TileEntity implements IBetterChest, ISpeci
 	public void drawGuiContainerForegroundLayer(GUIContainer gui, ContainerBasic container,
 		int par1, int par2) {
 		for (ItemStack item : upgrades) {
-			if (UpgradeHelper.isUpgrade(item)) continue;
+			if (UpgradeHelper.isUpgrade(item)) {
+				continue;
+			}
 			((IUpgrade) item.getItem()).drawGuiContainerForegroundLayer(gui, container, par1, par2,
 				item);
 		}
@@ -619,6 +633,7 @@ public class TileEntityBChest extends TileEntity implements IBetterChest, ISpeci
 		}
 	}
 	
+	@Override
 	@SuppressWarnings("unchecked")
 	public HashSet<ItemStack> getUpgrades() {
 		return (HashSet<ItemStack>) upgrades.clone();

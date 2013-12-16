@@ -17,31 +17,36 @@ import net.minecraft.item.ItemStack;
 
 /**
  * This is implemented in the Bag and in the Chest.
+ * 
  * @author Aroma1997
- *
+ * 
  */
 public interface IBetterChest extends IInventory {
 	
 	/**
 	 * The position
+	 * 
 	 * @return x-coord
 	 */
-    public double getXPos();
-
-    /**
-     * The position
-     * @return y-coord
-     */
-    public double getYPos();
-
-    /**
-     * The position
-     * @return z-coord
-     */
-    public double getZPos();
-    
+	public double getXPos();
+	
+	/**
+	 * The position
+	 * 
+	 * @return y-coord
+	 */
+	public double getYPos();
+	
+	/**
+	 * The position
+	 * 
+	 * @return z-coord
+	 */
+	public double getZPos();
+	
 	/**
 	 * How many of the Upgrades are installed.
+	 * 
 	 * @param upgrade The upgrade to check.
 	 * @return
 	 */
@@ -49,6 +54,7 @@ public interface IBetterChest extends IInventory {
 	
 	/**
 	 * If the Amount of Upgrades installed is greater than 0
+	 * 
 	 * @param upgrade The Upgrade to check
 	 * @return
 	 */
@@ -56,19 +62,22 @@ public interface IBetterChest extends IInventory {
 	
 	/**
 	 * Set the Amount of an Upgrade
+	 * 
 	 * @param upgrade
 	 * @param amount
 	 */
 	public void setAmountUpgrade(ItemStack upgrade, int amount);
 	
-	/** 
+	/**
 	 * If the Chest has Energy. For Energy-Relying Upgrades.
+	 * 
 	 * @return
 	 */
 	public boolean hasEnergy();
 	
 	/**
 	 * Getter for the Upgrade list
+	 * 
 	 * @return The list of Upgrades
 	 */
 	public HashSet<ItemStack> getUpgrades();

@@ -9,13 +9,13 @@
 
 package aroma1997.betterchests;
 
+
 import java.util.List;
 
 import aroma1997.core.util.AromaRegistry;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
-
 
 public enum Tool {
 	
@@ -42,7 +42,7 @@ public enum Tool {
 	public String getName() {
 		return StatCollector.translateToLocal("item.betterchests:upgrade." + toString() + ".name");
 	}
-
+	
 	public String getTexture() {
 		return Reference.MOD_ID + ":" + toString().toLowerCase();
 	}

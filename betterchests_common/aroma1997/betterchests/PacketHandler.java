@@ -9,6 +9,7 @@
 
 package aroma1997.betterchests;
 
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
@@ -29,13 +30,12 @@ import cpw.mods.fml.common.network.Player;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-
 public class PacketHandler implements IPacketHandler {
 	
 	public static final int BAG_ID = 0;
 	
 	public static final String CHANNEL = "BetterChests";
-
+	
 	@Override
 	public void onPacketData(INetworkManager manager, Packet250CustomPayload packet, Player player) {
 		if (! packet.channel.equals(CHANNEL)) {
@@ -46,7 +46,7 @@ public class PacketHandler implements IPacketHandler {
 		try {
 			int key = stream.readByte();
 			switch (key) {
-				case BAG_ID : {
+				case BAG_ID: {
 					openPlayerBagGUI(manager, packet, player, stream);
 					break;
 				}
@@ -74,17 +74,18 @@ public class PacketHandler implements IPacketHandler {
 		PacketDispatcher.sendPacketToServer(packet);
 	}
 	
-	private void openPlayerBagGUI(INetworkManager manager, Packet250CustomPayload packet, Player player, DataInputStream stream) {
-		EntityPlayer thePlayer = (EntityPlayer)player;
+	private void openPlayerBagGUI(INetworkManager manager, Packet250CustomPayload packet,
+		Player player, DataInputStream stream) {
+		EntityPlayer thePlayer = (EntityPlayer) player;
 		int c;
 		try {
 			c = stream.readByte();
 		}
 		catch (IOException e) {
 			e.printStackTrace();
-			c = -1;
+			c = - 1;
 		}
-		if (c == -1) {
+		if (c == - 1) {
 			for (int i = thePlayer.inventory.getSizeInventory() - 1; i >= 0; i--) {
 				ItemStack item = thePlayer.inventory.getStackInSlot(i);
 				if (item == null) {

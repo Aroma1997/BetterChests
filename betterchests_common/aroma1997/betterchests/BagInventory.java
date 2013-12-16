@@ -173,8 +173,11 @@ public class BagInventory implements IBetterChest, IAdvancedInventory, ISpecialI
 	public void drawGuiContainerForegroundLayer(GUIContainer gui, ContainerBasic container,
 		int par1, int par2) {
 		for (ItemStack item : upgrades) {
-			if (UpgradeHelper.isUpgrade(item)) continue;
-			((IUpgrade) item.getItem()).drawGuiContainerForegroundLayer(gui, container, par1, par2, item);
+			if (UpgradeHelper.isUpgrade(item)) {
+				continue;
+			}
+			((IUpgrade) item.getItem()).drawGuiContainerForegroundLayer(gui, container, par1, par2,
+				item);
 		}
 	}
 	
@@ -188,7 +191,9 @@ public class BagInventory implements IBetterChest, IAdvancedInventory, ISpecialI
 	public void readFromNBT(NBTTagCompound nbt) {
 		for (Upgrade upgrade : Upgrade.values()) {
 			int amount = nbt.getInteger(upgrade.toString());
-			if (amount == 0) continue;
+			if (amount == 0) {
+				continue;
+			}
 			setAmountUpgradeWithoutNotify(upgrade.getItem(), amount);
 			nbt.removeTag(upgrade.toString());
 		}
@@ -210,7 +215,7 @@ public class BagInventory implements IBetterChest, IAdvancedInventory, ISpecialI
 		items = new ItemStack[getSizeInventory()];
 		FileUtil.readFromNBT(this, nbt);
 	}
-
+	
 	public void writeToNBT(NBTTagCompound nbt) {
 		FileUtil.writeToNBT(this, nbt);
 		NBTTagList list = new NBTTagList();
@@ -229,7 +234,9 @@ public class BagInventory implements IBetterChest, IAdvancedInventory, ISpecialI
 	
 	@Override
 	public int getAmountUpgrade(ItemStack upgrade) {
-		if (!UpgradeHelper.isUpgrade(upgrade)) return 0;
+		if (! UpgradeHelper.isUpgrade(upgrade)) {
+			return 0;
+		}
 		for (ItemStack item : upgrades) {
 			if (ItemUtil.areItemsSame(item, upgrade)) {
 				return item.stackSize;
@@ -275,19 +282,21 @@ public class BagInventory implements IBetterChest, IAdvancedInventory, ISpecialI
 	private int tick = new Random().nextInt(64);
 	
 	private double x;
+	
 	private double y;
+	
 	private double z;
 	
 	public void onUpdate(EntityPlayer player) {
 		if (player.worldObj.isRemote) {
-//			this.readFromNBT(item.stackTagCompound);
+			// this.readFromNBT(item.stackTagCompound);
 		}
 		if (tick-- <= 0) {
 			tick = 64;
 		}
-		this.x = player.posX;
-		this.y = player.posY;
-		this.z = player.posZ;
+		x = player.posX;
+		y = player.posY;
+		z = player.posZ;
 		UpgradeHelper.updateChest(this, tick, player.worldObj);
 	}
 	
@@ -301,7 +310,7 @@ public class BagInventory implements IBetterChest, IAdvancedInventory, ISpecialI
 		}
 		return invs.get(item);
 	}
-
+	
 	@Override
 	public void setStackInSlotWithoutNotify(int slot, ItemStack item) {
 		if (isUpgradeInstalled(Upgrade.VOID.getItem())) {
@@ -314,23 +323,23 @@ public class BagInventory implements IBetterChest, IAdvancedInventory, ISpecialI
 			item.stackSize = getInventoryStackLimit();
 		}
 	}
-
+	
 	@Override
 	public double getXPos() {
 		return x;
 	}
-
+	
 	@Override
 	public double getYPos() {
 		return y + 1.0D;
 	}
-
+	
 	@Override
 	public double getZPos() {
 		return z;
 	}
 	
-	
+	@Override
 	@SuppressWarnings("unchecked")
 	public HashSet<ItemStack> getUpgrades() {
 		return (HashSet<ItemStack>) upgrades.clone();

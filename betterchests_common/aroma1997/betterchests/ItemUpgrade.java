@@ -13,8 +13,8 @@ package aroma1997.betterchests;
 import java.util.ArrayList;
 import java.util.List;
 
-import aroma1997.betterchests.api.IUpgrade;
 import aroma1997.betterchests.api.IBetterChest;
+import aroma1997.betterchests.api.IUpgrade;
 import aroma1997.core.client.util.Colors;
 import aroma1997.core.util.ItemUtil;
 
@@ -54,7 +54,7 @@ public class ItemUpgrade extends Item implements IUpgrade {
 			par3List.add(StatCollector.translateToLocalFormatted(
 				"info.betterchests:tooltip.maxamount", upgrade.getMaxAmount()));
 		}
-		if (!upgrade.isValidUpgrade()) {
+		if (! upgrade.isValidUpgrade()) {
 			par3List.add(StatCollector.translateToLocal("info.betterchests:tooltip.noupgrade"));
 		}
 		else if (! upgrade.canBagTakeUpgrade()) {
@@ -94,55 +94,69 @@ public class ItemUpgrade extends Item implements IUpgrade {
 	{
 		return Upgrade.values()[par1ItemStack.getItemDamage()].getName();
 	}
-
+	
 	@Override
 	public boolean canChestTakeUpgrade(ItemStack item) {
-		if (item == null) return false;
+		if (item == null) {
+			return false;
+		}
 		return Upgrade.values()[item.getItemDamage()].isValidUpgrade();
 	}
-
+	
 	@Override
 	public boolean canBagTakeUpgrade(ItemStack item) {
-		if (item == null) return false;
+		if (item == null) {
+			return false;
+		}
 		Upgrade upgrade = Upgrade.values()[item.getItemDamage()];
 		return upgrade.isValidUpgrade() && upgrade.canBagTakeUpgrade();
 	}
-
+	
 	@Override
 	public List<ItemStack> getRequiredUpgrade(ItemStack item) {
-		if (item == null) return null;
+		if (item == null) {
+			return null;
+		}
 		Upgrade upgrade = Upgrade.values()[item.getItemDamage()];
-		if (upgrade.getRequirement() == null) return null;
+		if (upgrade.getRequirement() == null) {
+			return null;
+		}
 		ArrayList<ItemStack> list = new ArrayList<ItemStack>();
 		list.add(upgrade.getRequirement().getItem());
 		return list;
 	}
-
+	
 	@Override
 	public void update(IBetterChest chest, int tick, World world, ItemStack item) {
-		if (!UpgradeHelper.isUpgrade(item)) return;
-		Upgrade.values()[item.getItemDamage()].getUpgrade().updateChest(chest, tick,  world, item);
+		if (! UpgradeHelper.isUpgrade(item)) {
+			return;
+		}
+		Upgrade.values()[item.getItemDamage()].getUpgrade().updateChest(chest, tick, world, item);
 	}
-
+	
 	@Override
 	public int getMaxUpgrades(ItemStack item) {
-		if (item == null) return 0;
+		if (item == null) {
+			return 0;
+		}
 		return Upgrade.values()[item.getItemDamage()].getMaxAmount();
 	}
-
+	
 	@Override
 	public String getName(ItemStack item) {
-		if (item == null || !UpgradeHelper.isUpgrade(item)) return "UNKNOWN NAME";
+		if (item == null || ! UpgradeHelper.isUpgrade(item)) {
+			return "UNKNOWN NAME";
+		}
 		return Upgrade.values()[item.getItemDamage()].getName();
 	}
-
+	
 	@Override
 	public void onUpgradeInstalled(ItemStack item, IBetterChest chest) {
 		if (ItemUtil.areItemsSame(item, Upgrade.VOID.getItem())) {
 			
 		}
 	}
-
+	
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void drawGuiContainerForegroundLayer(GuiContainer gui, Container container, int par1,

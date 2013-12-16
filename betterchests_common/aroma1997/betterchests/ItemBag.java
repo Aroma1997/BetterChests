@@ -94,8 +94,9 @@ public class ItemBag extends Item implements ISpecialInventoryProvider {
 	@Override
 	public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer,
 		List par3List, boolean par4) {
-
-		par3List.add(StatCollector.translateToLocalFormatted("info.betterchests:tooltip.openwith", Keyboard.getKeyName(BetterChestsKeyHandler.openBag.keyCode)));
+		
+		par3List.add(StatCollector.translateToLocalFormatted("info.betterchests:tooltip.openwith",
+			Keyboard.getKeyName(BetterChestsKeyHandler.openBag.keyCode)));
 		addInfo(par1ItemStack, par3List);
 	}
 	
@@ -104,7 +105,9 @@ public class ItemBag extends Item implements ISpecialInventoryProvider {
 		BagInventory inv = getInventory(item);
 		HashSet<ItemStack> upgrades = inv.getUpgrades();
 		for (ItemStack entry : upgrades) {
-			if (!UpgradeHelper.isUpgrade(entry)) continue;
+			if (! UpgradeHelper.isUpgrade(entry)) {
+				continue;
+			}
 			if (entry.stackSize > 0) {
 				IUpgrade upgrade = (IUpgrade) entry.getItem();
 				if (upgrade.getMaxUpgrades(entry) == 1) {

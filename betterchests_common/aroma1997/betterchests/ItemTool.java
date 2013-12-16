@@ -9,6 +9,7 @@
 
 package aroma1997.betterchests;
 
+
 import java.util.List;
 
 import net.minecraft.client.renderer.texture.IconRegister;
@@ -22,11 +23,10 @@ import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-
 public class ItemTool extends Item {
 	
 	private Icon[] itemIcons = new Icon[Tool.values().length];
-
+	
 	public ItemTool(int id) {
 		super(id);
 		setHasSubtypes(true);
@@ -46,7 +46,7 @@ public class ItemTool extends Item {
 	@Override
 	public Icon getIconFromDamage(int par1)
 	{
-		return itemIcons [par1];
+		return itemIcons[par1];
 	}
 	
 	@SuppressWarnings({"unchecked", "rawtypes"})
@@ -68,8 +68,10 @@ public class ItemTool extends Item {
 	}
 	
 	@Override
-	public boolean onItemUseFirst(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ) {
-		return Tool.values()[stack.getItemDamage()].getTool().onItemUseFirst(stack, player, world, x, y, z, side, hitX, hitY, hitZ);
+	public boolean onItemUseFirst(ItemStack stack, EntityPlayer player, World world, int x, int y,
+		int z, int side, float hitX, float hitY, float hitZ) {
+		return Tool.values()[stack.getItemDamage()].getTool().onItemUseFirst(stack, player, world,
+			x, y, z, side, hitX, hitY, hitZ);
 	}
 	
 }

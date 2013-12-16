@@ -21,13 +21,17 @@ import net.minecraft.world.World;
 public class UpgradeHelper {
 	
 	static void updateChest(IBetterChest inv, int tick, World world) {
-		if (world.isRemote) return;
-		Set<ItemStack> upgrades=  inv.getUpgrades();
-		if (upgrades == null) return;
+		if (world.isRemote) {
+			return;
+		}
+		Set<ItemStack> upgrades = inv.getUpgrades();
+		if (upgrades == null) {
+			return;
+		}
 		
 		for (ItemStack item : upgrades) {
 			if (isUpgrade(item)) {
-				((IUpgrade)item.getItem()).update(inv, tick, world, item);
+				((IUpgrade) item.getItem()).update(inv, tick, world, item);
 			}
 		}
 	}
@@ -37,20 +41,30 @@ public class UpgradeHelper {
 	}
 	
 	public static ItemStack getDefaultItem(ItemStack item) {
-		if (!isUpgrade(item)) return null;
+		if (! isUpgrade(item)) {
+			return null;
+		}
 		item = item.copy();
 		item.stackSize = 1;
 		return item;
 	}
 	
 	public static boolean areRequirementsInstalled(IBetterChest chest, ItemStack item) {
-		if (chest == null || item == null || !isUpgrade(item)) return false;
+		if (chest == null || item == null || ! isUpgrade(item)) {
+			return false;
+		}
 		
 		IUpgrade upgrade = (IUpgrade) item.getItem();
-		if (upgrade == null) return false;
-		if (upgrade.getRequiredUpgrade(item) == null) return true;
+		if (upgrade == null) {
+			return false;
+		}
+		if (upgrade.getRequiredUpgrade(item) == null) {
+			return true;
+		}
 		for (ItemStack req : upgrade.getRequiredUpgrade(item)) {
-			if (!chest.isUpgradeInstalled(req)) return false;
+			if (! chest.isUpgradeInstalled(req)) {
+				return false;
+			}
 		}
 		return true;
 		

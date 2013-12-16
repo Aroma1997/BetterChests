@@ -54,7 +54,8 @@ public enum Upgrade {
 	
 	private BasicUpgrade upgrade;
 	
-	private Upgrade(Upgrade requirement, int max, boolean validItem, boolean canBag, Class<? extends BasicUpgrade> claSS) {
+	private Upgrade(Upgrade requirement, int max, boolean validItem, boolean canBag,
+		Class<? extends BasicUpgrade> claSS) {
 		this.requirement = requirement;
 		this.max = max;
 		this.validItem = validItem;
@@ -136,7 +137,8 @@ public enum Upgrade {
 			"BRB", "CUC",
 			"BRB", 'B', new ItemStack(Block.coalBlock), 'R', new ItemStack(Item.redstone),
 			'C', new ItemStack(Item.redstoneRepeater), 'U', itemUpgrade);
-		AromaRegistry.registerShapedOreRecipe(new ItemStack(itemID, 1, Upgrade.ENERGY.ordinal()), "BCB", "RUR",
+		AromaRegistry.registerShapedOreRecipe(new ItemStack(itemID, 1, Upgrade.ENERGY.ordinal()),
+			"BCB", "RUR",
 			"BCB", 'B', new ItemStack(Block.coalBlock), 'R', new ItemStack(Item.redstone),
 			'C', new ItemStack(Item.redstoneRepeater), 'U', itemUpgrade);
 		// FURNACE

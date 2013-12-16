@@ -9,6 +9,7 @@
 
 package aroma1997.betterchests;
 
+
 import java.util.EnumSet;
 
 import net.minecraft.client.Minecraft;
@@ -26,12 +27,13 @@ public class BetterChestsKeyHandler extends KeyHandler {
 	
 	public static KeyBinding openBag = new KeyBinding("Open Betterchests Bag", Keyboard.KEY_ADD);
 	
-    public static KeyBinding[] keybinds = new KeyBinding[]{openBag};
-    public static boolean[] repeats = new boolean[keybinds.length];
-    
-    public BetterChestsKeyHandler() {
-    	super(keybinds, repeats);
-    }
+	public static KeyBinding[] keybinds = new KeyBinding[] {openBag};
+	
+	public static boolean[] repeats = new boolean[keybinds.length];
+	
+	public BetterChestsKeyHandler() {
+		super(keybinds, repeats);
+	}
 	
 	@Override
 	public String getLabel() {
@@ -40,10 +42,12 @@ public class BetterChestsKeyHandler extends KeyHandler {
 	
 	@Override
 	public void keyDown(EnumSet<TickType> types, KeyBinding kb, boolean tickEnd, boolean isRepeat) {
-		if (!Minecraft.getMinecraft().inGameHasFocus) return;
-        if (kb.equals(openBag)) {
-        	PacketHandler.sendPacketBag(-1);
-        }
+		if (! Minecraft.getMinecraft().inGameHasFocus) {
+			return;
+		}
+		if (kb.equals(openBag)) {
+			PacketHandler.sendPacketBag(- 1);
+		}
 	}
 	
 	@Override
