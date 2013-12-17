@@ -186,6 +186,10 @@ public class BlockBChest extends BlockContainer {
 	public void breakBlock(World par1World, int par2, int par3, int par4, int par5, int par6)
 	{
 		TileEntityBChest te = (TileEntityBChest) par1World.getBlockTileEntity(par2, par3, par4);
+		if (te == null) {
+			super.breakBlock(par1World, par2, par3, par4, par5, par6);
+			return;
+		}
 		if (te.pickedUp) {
 			super.breakBlock(par1World, par2, par3, par4, par5, par6);
 			return;
