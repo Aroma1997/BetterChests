@@ -10,7 +10,7 @@
 package aroma1997.betterchests;
 
 
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
 
 import aroma1997.betterchests.api.IUpgrade;
@@ -103,7 +103,7 @@ public class ItemBag extends Item implements ISpecialInventoryProvider {
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	static void addInfo(ItemStack item, List list) {
 		BagInventory inv = getInventory(item);
-		HashSet<ItemStack> upgrades = inv.getUpgrades();
+		ArrayList<ItemStack> upgrades = inv.getUpgrades();
 		for (ItemStack entry : upgrades) {
 			if (! UpgradeHelper.isUpgrade(entry)) {
 				continue;

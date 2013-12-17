@@ -10,7 +10,7 @@
 package aroma1997.betterchests;
 
 
-import java.util.Set;
+import java.util.ArrayList;
 
 import aroma1997.betterchests.api.IBetterChest;
 import aroma1997.betterchests.api.IUpgrade;
@@ -24,7 +24,7 @@ public class UpgradeHelper {
 		if (world.isRemote) {
 			return;
 		}
-		Set<ItemStack> upgrades = inv.getUpgrades();
+		ArrayList<ItemStack> upgrades = inv.getUpgrades();
 		if (upgrades == null) {
 			return;
 		}

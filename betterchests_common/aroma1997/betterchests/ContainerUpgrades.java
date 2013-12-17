@@ -11,7 +11,6 @@ import aroma1997.core.util.InvUtil;
 
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
 
@@ -65,17 +64,6 @@ public class ContainerUpgrades extends AromaContainer {
 	}
 	
 	@Override
-	public void detectAndSendChanges() {
-		super.detectAndSendChanges();
-		for (int i = 0; i < inventorySlots.size(); i++) {
-			Slot slot = getSlot(i);
-			if (! slot.getHasStack()) {
-				inventorySlots.remove(slot);
-			}
-		}
-	}
-	
-	@Override
 	public ItemStack slotClick(int par1, int par2, int par3, EntityPlayer par4EntityPlayer)
 	{
 		if (par1 >= inventorySlots.size()) {
@@ -84,22 +72,18 @@ public class ContainerUpgrades extends AromaContainer {
 		if (par3 == 1) {
 			if (par2 == 1) {
 				ItemStack item = getSlot(par1).getStack();
+				if (getSlot(par1) == null || !getSlot(par1).getHasStack()) return null;
 				getSlot(par1).decrStackSize(1);
 				item.stackSize = 1;
 				InvUtil.putIntoFirstSlot(player.inventory, item);
 			}
 			else if (par2 == 0) {
 				ItemStack item = getSlot(par1).getStack();
+				if (getSlot(par1) == null || !getSlot(par1).getHasStack()) return null;
 				int amount = getSlot(par1).getStack().stackSize;
 				getSlot(par1).decrStackSize(amount);
 				item.stackSize = amount;
 				InvUtil.putIntoFirstSlot(player.inventory, item);
-			}
-		}
-		for (int i = 0; i < inventorySlots.size(); i++) {
-			Slot slot = getSlot(i);
-			if (! slot.getHasStack()) {
-				inventorySlots.remove(slot);
 			}
 		}
 		return null;

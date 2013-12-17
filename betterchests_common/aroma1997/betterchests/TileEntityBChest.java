@@ -11,7 +11,6 @@ package aroma1997.betterchests;
 
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
@@ -61,7 +60,7 @@ public class TileEntityBChest extends TileEntity implements IBetterChest, ISpeci
 	
 	boolean pickedUp = false;
 	
-	private HashSet<ItemStack> upgrades = new HashSet<ItemStack>();
+	private ArrayList<ItemStack> upgrades = new ArrayList<ItemStack>();
 	
 	public TileEntityBChest() {
 		player = "";
@@ -241,6 +240,7 @@ public class TileEntityBChest extends TileEntity implements IBetterChest, ISpeci
 	
 	@Override
 	public void readFromNBT(NBTTagCompound nbt) {
+		upgrades.clear();
 		for (Upgrade upgrade : Upgrade.values()) {
 			int amount = nbt.getInteger(upgrade.toString());
 			if (amount == 0) {
@@ -635,8 +635,8 @@ public class TileEntityBChest extends TileEntity implements IBetterChest, ISpeci
 	
 	@Override
 	@SuppressWarnings("unchecked")
-	public HashSet<ItemStack> getUpgrades() {
-		return (HashSet<ItemStack>) upgrades.clone();
+	public ArrayList<ItemStack> getUpgrades() {
+		return (ArrayList<ItemStack>) upgrades.clone();
 	}
 	
 }

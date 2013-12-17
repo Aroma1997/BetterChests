@@ -10,7 +10,7 @@
 package aroma1997.betterchests.api;
 
 
-import java.util.HashSet;
+import java.util.ArrayList;
 
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -80,6 +80,6 @@ public interface IBetterChest extends IInventory {
 	 * 
 	 * @return The list of Upgrades
 	 */
-	public HashSet<ItemStack> getUpgrades();
+	public ArrayList<ItemStack> getUpgrades();
 	
 }

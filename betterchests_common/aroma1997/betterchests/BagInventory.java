@@ -10,8 +10,8 @@
 package aroma1997.betterchests;
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Random;
 
 import aroma1997.betterchests.api.IBetterChest;
@@ -49,7 +49,7 @@ public class BagInventory implements IBetterChest, IAdvancedInventory, ISpecialI
 	
 	private String customName;
 	
-	private HashSet<ItemStack> upgrades = new HashSet<ItemStack>();
+	private ArrayList<ItemStack> upgrades = new ArrayList<ItemStack>();
 	
 	@Override
 	public ItemStack getStackInSlot(int par1)
@@ -341,8 +341,8 @@ public class BagInventory implements IBetterChest, IAdvancedInventory, ISpecialI
 	
 	@Override
 	@SuppressWarnings("unchecked")
-	public HashSet<ItemStack> getUpgrades() {
-		return (HashSet<ItemStack>) upgrades.clone();
+	public ArrayList<ItemStack> getUpgrades() {
+		return (ArrayList<ItemStack>) upgrades.clone();
 	}
 	
 }
