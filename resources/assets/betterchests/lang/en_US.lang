@@ -18,7 +18,7 @@ book.betterchests:chest.1=The Adjustable Chest can be placed down to store some 
 book.betterchests:bag.1=The Adjustable Bag is basically a Chest as an Item. The Inventory can be opened by Right-Clicking it in your hand. To upgrade it, just place an Upgrade alongside with the Bag in the Crafting Grid and you will get a upgraded Bag.
 book.betterchests:bag.2=You can also open the bag by pressing a configuarable key on your keyboard. By default it's the "+" key on the NumPad, but you can change that to whatever key you want. If you open the bag that way, it doesn't have to be in your hotbar, it can be anywhere in your inventory.
 
-book.betterchests:tool.HAMMER=You can use the Hammer to modify your Chests and Bags. With Sneak + Right-Click on a Chest, you can drop the Chest retaining all its contents.
+book.betterchests:tool.HAMMER=You can use the Hammer to modify your Chests and Bags. With Sneak + Right-Click on a Chest, you can drop the Chest retaining all its contents, if you Right-Click on a Chest, you can remove individual Upgrades from it.
 
 
 book.betterchests:upgrade.SLOT=Slot Upgrade: This upgrade gives your chest nine more slots. This upgrade can be inserted multiple times.
