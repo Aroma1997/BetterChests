@@ -30,15 +30,7 @@ public class Feeding extends BasicUpgrade {
 		for (Object obj : list) {
 			if (obj == null || ! (obj instanceof EntityAnimal)) continue;
 			EntityAnimal e = (EntityAnimal) obj;
-			try {
-				if (! e.isEntityAlive()
-					|| e.canMateWith(e.getClass().getConstructor(World.class).newInstance(world))
-					|| e.isChild()) continue;
-			}
-			catch (Exception e1) {
-				e1.printStackTrace();
-				continue;
-			}
+			if (! e.isEntityAlive() || e.isChild()) continue;
 			int slot = - 1;
 			for (int i = 0; i < inv.getSizeInventory(); i++) {
 				ItemStack feedingItem = inv.getStackInSlot(i);
