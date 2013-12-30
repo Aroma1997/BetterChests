@@ -24,6 +24,9 @@ public class Feeding extends BasicUpgrade {
 			inv.getYPos() + Reference.Conf.FEED_HEIGHT / 2, inv.getZPos()
 				+ Reference.Conf.FEED_RADIUS / 2);
 		List list = world.getEntitiesWithinAABB(EntityAnimal.class, bounds);
+		if (list == null || list.size() >= Reference.Conf.FEED_ENTITIES_TO_STOP) {
+			return;
+		}
 		for (Object obj : list) {
 			if (obj == null || ! (obj instanceof EntityAnimal)) continue;
 			EntityAnimal e = (EntityAnimal) obj;

@@ -29,6 +29,8 @@ public class Reference {
 		public static final double FEED_RADIUS = 7.0D;
 		
 		public static final double FEED_HEIGHT = 3.0D;
+		
+		public static final int FEED_ENTITIES_TO_STOP = 100;
 	}
 	
 }
