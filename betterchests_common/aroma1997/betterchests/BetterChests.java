@@ -73,7 +73,10 @@ public class BetterChests {
 		bag = new ItemBag(config.getItem("bagItem", 12457, "The item id of the Bag").getInt() - 256);
 		tool = new ItemTool(
 			config.getItem("itemTool", 12456, "The Item id of the Tool").getInt() - 256);
-		config.save();
+		if (config.hasChanged()) {
+			config.save();
+		}
+		
 		GameRegistry.registerBlock(chest, ItemBlockBChest.class, "betterChest");
 		GameRegistry.registerItem(upgrade, "Upgrade");
 		GameRegistry.registerItem(bag, "Bag");
