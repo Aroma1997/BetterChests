@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import aroma1997.betterchests.upgrades.BasicUpgrade;
 import aroma1997.betterchests.upgrades.CobbleGen;
 import aroma1997.betterchests.upgrades.Collector;
+import aroma1997.betterchests.upgrades.Feeding;
 import aroma1997.betterchests.upgrades.Furnace;
 import aroma1997.betterchests.upgrades.Null;
 import aroma1997.betterchests.upgrades.Rain;
@@ -42,7 +43,8 @@ public enum Upgrade {
 	ENERGY(null, 1, true, true, Null.class),
 	FURNACE(ENERGY, 1, true, true, Furnace.class),
 	COLLECTOR(ENERGY, 8, true, true, Collector.class),
-	TICKING(ENERGY, 1, true, false, Ticking.class);
+	TICKING(ENERGY, 1, true, false, Ticking.class),
+	FEEDING(null, 1, true, false, Feeding.class);
 	
 	private Upgrade requirement;
 	
