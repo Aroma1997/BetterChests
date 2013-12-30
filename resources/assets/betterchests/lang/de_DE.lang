@@ -1,6 +1,7 @@
 book.betterchests:name=BetterChests-Benutzerhandbuch
 
 book.betterchests:chapter.general=Generelle Information
+book.betterchests:chapter.tools=Werkzeug Information
 book.betterchests:chapter.upgrades=Upgrade-Information
 book.betterchests:chapter.credits=Credits
 
@@ -17,6 +18,8 @@ book.betterchests:chest.1=Die Verstellbare Truhe kann platziert werden, um Items
 book.betterchests:bag.1=Der Verstellbare Rucksack ist quasi eine Truhe als Item. Das Inventar kann mit einem Rechtsklick mit dem Rucksack in deiner Hand geöffnet werden. Um ihn zu upgraden, platziere einfach den Rucksack mit einem Upgrade zusammen in eine Werkbank.
 book.betterchests:bag.2=Du kannst auch den Rucksack mit einer konfigurierbaren Taste auf deiner Tastatur öffnen. Standardmäßfig ist es der "+"-Knopf auf deinem NumPad, aber du kannst ihn verändern, wie du willst. Wenn du den Rucksack auf diese Weise öffnest, braucht er nicht in deiner Hotbar zu sein, er kann irgendwo im Inventar sein.
 
+book.betterchests:tool.HAMMER=Du kannst den Hammer benutzen, um deine Kisten und Rucksäcke anzupassen. Mit Shift-Rechts-Klick auf einer Kiste, kannst du die Kiste abbauen, wobei jedoch alle Items und Upgrades in der Kiste bleiben. Mit Rechts-Click auf einer Kiste kannst du einzelne Upgrades aus der Kiste entfernen.
+
 
 book.betterchests:upgrade.SLOT=Slot-Upgrade: Dieses Upgrade wird deine Truhe um 9 Slots vergrößern. Dieses Upgrade kann mehrmals eingefügt werden.
 book.betterchests:upgrade.COBBLEGEN=CobbleGen-Upgrade: Dieses Upgrade lässt dich Pflasterstein generieren, wenn du einen Lava- und einen Wassereimer in die Truhe packst, denn das ist nunmal, wie Pflasterstein entsteht.
@@ -32,12 +35,15 @@ book.betterchests:upgrade.ENERGY=Energie-Upgrade: Dieses Upgrade wird nur von an
 book.betterchests:upgrade.FURNACE=Ofen-Upgrade: Kennst du das Problem, dass du viel zu viel Zeug hast, das du schmelzen musst, aber nicht genug Öfen? Dieses Upgrade wird das Problem für dich lösen.
 book.betterchests:upgrade.COLLECTOR=Sammel-Upgrade: Dieses Upgrade wird Items in die Truhe hineinsaugen, die in der Nähe herumliegen. Du kannst die Reichweite erhöhen, indem du mehr Upgrades installierst.
 book.betterchests:upgrade.TICKING=Tick-Upgrade: Dieses Upgrade wird den Inhalt deiner Truhe ticken lassen, als wäre er im Inventar eines Spielers.
+book.betterchests:upgrade.FEEDING=Füttern Upgrade: Diesed Upgrade füttert automatisch Tiere in einem Bereich von 5x3x5 um die Kiste mit dem Futter in der Kiste. Wenn zu viele Tiere in diesem Bereich sind, so unterbricht die Kiste automatisch ihre Arbeit.
 
 
 book.betterchests:credits=Danke, dass Du das Benutzerhandbuch gelesen hast. Solltest du immer noch Fragen haben, frag einfach im MCF bei http://tinyurl.com/aroma1997 nach. Übersetzung von Vextatos, verändert von Aroma1997.
 
 
 
+gui.betterchests:upgrades.name=Upgrades
+gui.betterchests:upgrades.warning=Upgrades aus dieser Kiste zu entfernen kann dazu führen, dass einige der Items darin verloren gehen. Shift-Rechts-Clicke um ein Upgrade zu entfernen, Shift-Links-Clicke um alle Upgrades dieser Sorte zu entfernen.
 
 creativetab.betterchests:creativetab.name=BetterChests
 
@@ -61,9 +67,13 @@ item.betterchests:upgrade.ENERGY.name=Energie-Upgrade
 item.betterchests:upgrade.FURNACE.name=Ofen-Upgrade
 item.betterchests:upgrade.COLLECTOR.name=Sammel-Upgrade
 item.betterchests:upgrade.TICKING.name=Tick-Upgrade
+item.betterchests:upgrade.FEEDING.name=Füttern Upgrade
+
+item.betterchests:upgrade.HAMMER.name=BetterChests Hammer
 
 
 info.betterchests:tooltip.nobag=Dieses Upgrade kann nicht auf einen Rucksack gepackt werden.
 info.betterchests:tooltip.maxamount=Max Upgrades pro Truhe: %s.
 info.betterchests:tooltip.requires=Erfordert: %s.
 info.betterchests:tooltip.noupgrade=Dies ist kein gültiges Upgrade.
+info.betterchests:tooltip.openwith=Öffnen mit "%s". (Außerhalb des Inventars)

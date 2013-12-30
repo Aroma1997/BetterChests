@@ -35,6 +35,7 @@ book.betterchests:upgrade.ENERGY=Energy Upgrade: This Upgrade is only required b
 book.betterchests:upgrade.FURNACE=Furnace Upgrade: You know that problem, you have too much stuff to smelt, but not enough furnaces? This Upgrade will solve that problem for you.
 book.betterchests:upgrade.COLLECTOR=Collector Upgrade: This Upgrade will suck items into the Chest that are dropped nearby it. You can increase the range of it by installing more upgrades.
 book.betterchests:upgrade.TICKING=Ticking Upgrade: This Upgrade will tick the contents of your chest as if they were in a Player Inventory.
+book.betterchests:upgrade.FEEDING=Feeding Upgrade: This Upgrade automatically feeds nearby animals in a 5x3x5 area with the food inside of the Chest. It will automatically stop if the amount of Entities in that area is too big.
 
 
 book.betterchests:credits=Thank you for reading the User Manual. If you still have questions just ask them in the MCF thread at: http://tinyurl.com/aroma1997
@@ -66,6 +67,7 @@ item.betterchests:upgrade.ENERGY.name=Energy Upgrade
 item.betterchests:upgrade.FURNACE.name=Furnace Upgrade
 item.betterchests:upgrade.COLLECTOR.name=Collector Upgrade
 item.betterchests:upgrade.TICKING.name=Ticking Upgrade
+item.betterchests:upgrade.FEEDING.name=Feeding Upgrade
 
 item.betterchests:upgrade.HAMMER.name=BetterChests Hammer
 
