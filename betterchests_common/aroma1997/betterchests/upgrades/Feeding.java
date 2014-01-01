@@ -14,6 +14,7 @@ import net.minecraft.world.World;
 
 public class Feeding extends BasicUpgrade {
 	
+	@SuppressWarnings("rawtypes")
 	@Override
 	public void updateChest(IBetterChest inv, int tick, World world, ItemStack item) {
 		if (tick != 16 || world.isRemote) return;
