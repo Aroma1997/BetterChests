@@ -26,6 +26,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 import net.minecraftforge.common.Configuration;
+import net.minecraftforge.oredict.OreDictionary;
 
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -88,15 +89,15 @@ public class BetterChests {
 	public void init(FMLInitializationEvent event) {
 		proxy.registerRenderers();
 		GameRegistry.registerTileEntity(TileEntityBChest.class, "adjustableChest");
-		AromaRegistry.registerShapedOreRecipe(new ItemStack(chest), "CCC", "CBC", "CCC", 'C',
+		AromaRegistry.registerShapedAromicRecipe(new ItemStack(chest), false, "CCC", "CBC", "CCC", 'C',
 			"cobblestone", 'B', new ItemStack(Block.chest));
-		AromaRegistry.registerShapedOreRecipe(new ItemStack(bag), "SWS", "LCL", "SWS", 'S',
+		AromaRegistry.registerShapedAromicRecipe(new ItemStack(bag), false, "SWS", "LCL", "SWS", 'S',
 			new ItemStack(Item.silk), 'L', new ItemStack(Item.leather), 'W', new ItemStack(
-				Block.cloth), 'C', new ItemStack(chest));
+				Block.cloth, 1, OreDictionary.WILDCARD_VALUE), 'C', new ItemStack(chest));
 		GameRegistry.addRecipe(new CraftingBag());
 		Upgrade.generateRecipes();
 		Tool.generateRecipes();
-		AromaRegistry.registerShapelessOreRecipe(getHelpBook(), Upgrade.BASIC.getItem(),
+		AromaRegistry.registerShapelessAromicRecipe(getHelpBook(), false, Upgrade.BASIC.getItem(),
 			new ItemStack(Item.book));
 		GameRegistry.addRecipe(new CraftingBook());
 		
