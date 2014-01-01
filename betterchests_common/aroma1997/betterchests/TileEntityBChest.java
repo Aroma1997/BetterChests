@@ -117,12 +117,6 @@ public class TileEntityBChest extends TileEntity implements IBetterChest, ISpeci
 		if (tick-- <= 0) {
 			tick = 64;
 			onInventoryChanged();
-			updateBlock(xCoord + 1, yCoord, zCoord);
-			updateBlock(xCoord - 1, yCoord, zCoord);
-			updateBlock(xCoord, yCoord, zCoord + 1);
-			updateBlock(xCoord, yCoord, zCoord - 1);
-			updateBlock(xCoord, yCoord + 1, zCoord);
-			updateBlock(xCoord, yCoord - 1, zCoord);
 		};
 		
 		if (isUpgradeInstalled(Upgrade.TICKING.getItem()) && tick % 8 == 0) {
@@ -377,6 +371,15 @@ public class TileEntityBChest extends TileEntity implements IBetterChest, ISpeci
 		return MathHelper.clamp_int(numUsingPlayers, 0, 15);
 	}
 	
+	private void updateNearbyBlocks() {
+		updateBlock(xCoord + 1, yCoord, zCoord);
+		updateBlock(xCoord - 1, yCoord, zCoord);
+		updateBlock(xCoord, yCoord, zCoord + 1);
+		updateBlock(xCoord, yCoord, zCoord - 1);
+		updateBlock(xCoord, yCoord + 1, zCoord);
+		updateBlock(xCoord, yCoord - 1, zCoord);
+	}
+	
 	private void updateBlock(int x, int y, int z) {
 		if (worldObj.isAirBlock(x, y, z)) {
 			return;
@@ -425,6 +428,7 @@ public class TileEntityBChest extends TileEntity implements IBetterChest, ISpeci
 		{
 			worldObj.playSoundEffect(xCoord + 0.5D, yCoord + 0.5D, zCoord + 0.5D,
 				EventListener.SOUND_OPEN_CHEST, 0.5F, worldObj.rand.nextFloat() * 0.1F + 0.9F);
+			updateNearbyBlocks();
 		}
 		if (numUsingPlayers <= 0 && lidAngle > 0.0F || numUsingPlayers > 0 && lidAngle < 1.0F)
 		{
@@ -446,6 +450,7 @@ public class TileEntityBChest extends TileEntity implements IBetterChest, ISpeci
 			{
 				worldObj.playSoundEffect(xCoord + 0.5D, yCoord + 0.5D, zCoord + 0.5D,
 					EventListener.SOUND_CLOSE_CHEST, 0.5F, worldObj.rand.nextFloat() * 0.1F + 0.9F);
+				updateNearbyBlocks();
 			}
 			if (lidAngle < 0.0F)
 			{
@@ -521,12 +526,15 @@ public class TileEntityBChest extends TileEntity implements IBetterChest, ISpeci
 	
 	@Override
 	public void openChest() {
+		
 		numUsingPlayers++;
+		updateNearbyBlocks();
 	}
 	
 	@Override
 	public void closeChest() {
 		numUsingPlayers--;
+		updateNearbyBlocks();
 	}
 	
 	@Override
