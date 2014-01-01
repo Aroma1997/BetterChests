@@ -59,7 +59,7 @@ public enum Tool {
 	
 	static void generateRecipes() {
 		for (Tool tool : values()) {
-			AromaRegistry.registerShapedOreRecipe(tool.getItem(), tool.crafting);
+			AromaRegistry.registerShapedAromicRecipe(tool.getItem(), false, tool.crafting);
 		}
 	}
 	
