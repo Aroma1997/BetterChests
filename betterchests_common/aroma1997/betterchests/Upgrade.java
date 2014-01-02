@@ -18,12 +18,14 @@ import aroma1997.betterchests.upgrades.Collector;
 import aroma1997.betterchests.upgrades.Feeding;
 import aroma1997.betterchests.upgrades.Furnace;
 import aroma1997.betterchests.upgrades.Null;
+import aroma1997.betterchests.upgrades.PlayerFeeding;
 import aroma1997.betterchests.upgrades.Rain;
 import aroma1997.betterchests.upgrades.Ticking;
 import aroma1997.core.util.AromaRegistry;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
 
@@ -44,23 +46,24 @@ public enum Upgrade {
 	FURNACE(ENERGY, 1, true, true, Furnace.class),
 	COLLECTOR(ENERGY, 8, true, true, Collector.class),
 	TICKING(ENERGY, 1, true, false, Ticking.class),
-	FEEDING(null, 1, true, false, Feeding.class);
+	FEEDING(null, 1, true, false, Feeding.class),
+	PLAYERFOOD(null, 1, false, true, PlayerFeeding.class);
 	
-	private Upgrade requirement;
+	private final Upgrade requirement;
 	
-	private int max;
+	private final int max;
 	
-	private boolean validItem;
+	private final boolean canChest;
 	
 	private final boolean canBag;
 	
 	private BasicUpgrade upgrade;
 	
-	private Upgrade(Upgrade requirement, int max, boolean validItem, boolean canBag,
+	private Upgrade(Upgrade requirement, int max, boolean canChest, boolean canBag,
 		Class<? extends BasicUpgrade> claSS) {
 		this.requirement = requirement;
 		this.max = max;
-		this.validItem = validItem;
+		this.canChest = canChest;
 		this.canBag = canBag;
 		
 		try {
@@ -157,6 +160,10 @@ public enum Upgrade {
 		AromaRegistry.registerShapedAromicRecipe(new ItemStack(itemID, 1, Upgrade.TICKING.ordinal()), false,
 			"QCQ", "RUR", "QCQ", 'Q', new ItemStack(Item.netherQuartz), 'C', new ItemStack(
 				Item.pocketSundial), 'R', new ItemStack(Item.comparator), 'U', itemUpgrade);
+		//FEEDING
+		AromaRegistry.registerShapedAromicRecipe(new ItemStack(itemID, 1, FEEDING.ordinal()), false, " W ", "WUW", " W ", 'W', new ItemStack(Item.wheat), 'U', itemUpgrade);
+		//PLAYERFEEDING
+		AromaRegistry.registerShapedAromicRecipe(new ItemStack(itemID, 1, PLAYERFOOD.ordinal()), false, "FFF", "FUF", "FFF", 'F', ItemFood.class, 'U', itemUpgrade);
 		
 		AromaRegistry.registerShapelessAromicRecipe(BASIC.getItem(),true, new ItemStack(itemID, 1, OreDictionary.WILDCARD_VALUE));
 	}
@@ -165,12 +172,12 @@ public enum Upgrade {
 		return max;
 	}
 	
-	public boolean isValidUpgrade() {
-		return validItem;
+	public boolean canChestTakeUpgrade() {
+		return canChest;
 	}
 	
 	public boolean canBagTakeUpgrade() {
-		return canBag && isValidUpgrade();
+		return canBag;
 	}
 	
 	public static void addBagBookDescription(ArrayList<String> list) {

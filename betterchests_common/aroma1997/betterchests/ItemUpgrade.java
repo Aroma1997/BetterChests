@@ -54,8 +54,9 @@ public class ItemUpgrade extends Item implements IUpgrade {
 			par3List.add(StatCollector.translateToLocalFormatted(
 				"info.betterchests:tooltip.maxamount", upgrade.getMaxAmount()));
 		}
-		if (! upgrade.isValidUpgrade()) {
-			par3List.add(StatCollector.translateToLocal("info.betterchests:tooltip.noupgrade"));
+		if (!upgrade.canBagTakeUpgrade() && !upgrade.canChestTakeUpgrade()) {}
+		else if (! upgrade.canChestTakeUpgrade()) {
+			par3List.add(StatCollector.translateToLocal("info.betterchests:tooltip.nochest"));
 		}
 		else if (! upgrade.canBagTakeUpgrade()) {
 			par3List.add(StatCollector.translateToLocal("info.betterchests:tooltip.nobag"));
@@ -100,7 +101,7 @@ public class ItemUpgrade extends Item implements IUpgrade {
 		if (item == null) {
 			return false;
 		}
-		return Upgrade.values()[item.getItemDamage()].isValidUpgrade();
+		return Upgrade.values()[item.getItemDamage()].canChestTakeUpgrade();
 	}
 	
 	@Override
@@ -109,7 +110,7 @@ public class ItemUpgrade extends Item implements IUpgrade {
 			return false;
 		}
 		Upgrade upgrade = Upgrade.values()[item.getItemDamage()];
-		return upgrade.isValidUpgrade() && upgrade.canBagTakeUpgrade();
+		return upgrade.canBagTakeUpgrade();
 	}
 	
 	@Override

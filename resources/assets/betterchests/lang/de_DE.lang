@@ -36,6 +36,7 @@ book.betterchests:upgrade.FURNACE=Ofen-Upgrade: Kennst du das Problem, dass du v
 book.betterchests:upgrade.COLLECTOR=Sammel-Upgrade: Dieses Upgrade wird Items in die Truhe hineinsaugen, die in der Nähe herumliegen. Du kannst die Reichweite erhöhen, indem du mehr Upgrades installierst.
 book.betterchests:upgrade.TICKING=Tick-Upgrade: Dieses Upgrade wird den Inhalt deiner Truhe ticken lassen, als wäre er im Inventar eines Spielers.
 book.betterchests:upgrade.FEEDING=Füttern Upgrade: Diesed Upgrade füttert automatisch Tiere in einem Bereich von 5x3x5 um die Kiste mit dem Futter in der Kiste. Wenn zu viele Tiere in diesem Bereich sind, so unterbricht die Kiste automatisch ihre Arbeit.
+book.betterchests:upgrade.PLAYERFOOD=Spieler-Füttern Uprgade: Dieses Upgrade füttert automatisch den Spieler, der es in einem Rucksack in seinem Inventar hat. Dazu wird das Essen aus dem Inneren des Rucksackes verwendet.
 
 
 book.betterchests:credits=Danke, dass Du das Benutzerhandbuch gelesen hast. Solltest du immer noch Fragen haben, frag einfach im MCF bei http://tinyurl.com/aroma1997 nach. Übersetzung von Vextatos, verändert von Aroma1997.
@@ -68,12 +69,13 @@ item.betterchests:upgrade.FURNACE.name=Ofen-Upgrade
 item.betterchests:upgrade.COLLECTOR.name=Sammel-Upgrade
 item.betterchests:upgrade.TICKING.name=Tick-Upgrade
 item.betterchests:upgrade.FEEDING.name=Füttern Upgrade
+item.betterchests:upgrade.PLAYERFOOD.name=Spieler-Füttern Upgrade
 
 item.betterchests:upgrade.HAMMER.name=BetterChests Hammer
 
 
 info.betterchests:tooltip.nobag=Dieses Upgrade kann nicht auf einen Rucksack gepackt werden.
+info.betterchests:tooltip.nochest=Dieses Upgrade kann nicht auf eine Kiste gepackt werden.
 info.betterchests:tooltip.maxamount=Max Upgrades pro Truhe: %s.
 info.betterchests:tooltip.requires=Erfordert: %s.
-info.betterchests:tooltip.noupgrade=Dies ist kein gültiges Upgrade.
 info.betterchests:tooltip.openwith=Öffnen mit "%s". (Außerhalb des Inventars)

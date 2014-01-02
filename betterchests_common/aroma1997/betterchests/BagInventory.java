@@ -281,11 +281,7 @@ public class BagInventory implements IBetterChest, IAdvancedInventory, ISpecialI
 	
 	private int tick = new Random().nextInt(64);
 	
-	private double x;
-	
-	private double y;
-	
-	private double z;
+	private EntityPlayer player;
 	
 	public void onUpdate(EntityPlayer player) {
 		if (player.worldObj.isRemote) {
@@ -294,9 +290,7 @@ public class BagInventory implements IBetterChest, IAdvancedInventory, ISpecialI
 		if (tick-- <= 0) {
 			tick = 64;
 		}
-		x = player.posX;
-		y = player.posY;
-		z = player.posZ;
+		this.player = player;
 		UpgradeHelper.updateChest(this, tick, player.worldObj);
 	}
 	
@@ -326,17 +320,21 @@ public class BagInventory implements IBetterChest, IAdvancedInventory, ISpecialI
 	
 	@Override
 	public double getXPos() {
-		return x;
+		return player.posX;
 	}
 	
 	@Override
 	public double getYPos() {
-		return y + 1.0D;
+		return player.posY + 1.0D;
 	}
 	
 	@Override
 	public double getZPos() {
-		return z;
+		return player.posZ;
+	}
+	
+	public EntityPlayer getPlayer() {
+		return player;
 	}
 	
 	@Override

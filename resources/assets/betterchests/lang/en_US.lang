@@ -36,6 +36,7 @@ book.betterchests:upgrade.FURNACE=Furnace Upgrade: You know that problem, you ha
 book.betterchests:upgrade.COLLECTOR=Collector Upgrade: This Upgrade will suck items into the Chest that are dropped nearby it. You can increase the range of it by installing more upgrades.
 book.betterchests:upgrade.TICKING=Ticking Upgrade: This Upgrade will tick the contents of your chest as if they were in a Player Inventory.
 book.betterchests:upgrade.FEEDING=Feeding Upgrade: This Upgrade automatically feeds nearby animals in a 5x3x5 area with the food inside of the Chest. It will automatically stop if the amount of Entities in that area is too big.
+book.betterchests:upgrade.PLAYERFOOD=Player Feeding Uprgade: This Upgrade will automatically feed the player who has the bag with the Upgrade in his inventory. It will use the food from inside the bag to do that.
 
 
 book.betterchests:credits=Thank you for reading the User Manual. If you still have questions just ask them in the MCF thread at: http://tinyurl.com/aroma1997
@@ -68,12 +69,13 @@ item.betterchests:upgrade.FURNACE.name=Furnace Upgrade
 item.betterchests:upgrade.COLLECTOR.name=Collector Upgrade
 item.betterchests:upgrade.TICKING.name=Ticking Upgrade
 item.betterchests:upgrade.FEEDING.name=Feeding Upgrade
+item.betterchests:upgrade.PLAYERFOOD.name=Player Feeding Upgrade
 
 item.betterchests:upgrade.HAMMER.name=BetterChests Hammer
 
 
 info.betterchests:tooltip.nobag=This Upgrade cannot be put on a bag.
+info.betterchests:tooltip.nochest=This Upgrade cannot be put on a chest.
 info.betterchests:tooltip.maxamount=Max Upgrades per chest: %s.
 info.betterchests:tooltip.requires=Requires: %s.
-info.betterchests:tooltip.noupgrade=This is not a valid Upgrade.
 info.betterchests:tooltip.openwith=Open with "%s". (Outside of Inventory)

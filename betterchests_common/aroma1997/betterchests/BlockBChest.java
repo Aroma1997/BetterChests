@@ -74,7 +74,7 @@ public class BlockBChest extends BlockContainer {
 		if (item == null || ! UpgradeHelper.isUpgrade(item)) {
 			return openInventory(par5EntityPlayer, par1World, par2, par3, par4);
 		}
-		if (Upgrade.values()[item.getItemDamage()].isValidUpgrade()) {
+		if (Upgrade.values()[item.getItemDamage()].canChestTakeUpgrade()) {
 			
 			TileEntityBChest te = (TileEntityBChest) par1World.getBlockTileEntity(par2, par3, par4);
 			return te.upgrade(par5EntityPlayer);
