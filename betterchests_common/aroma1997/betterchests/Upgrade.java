@@ -29,6 +29,7 @@ import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
 
+import net.minecraftforge.fluids.IFluidContainerItem;
 import net.minecraftforge.oredict.OreDictionary;
 
 public enum Upgrade {
@@ -124,6 +125,10 @@ public enum Upgrade {
 			new ItemStack(itemID, 1, Upgrade.COBBLEGEN.ordinal()), false, "CCC", "BUB",
 			"CCC", 'C', "cobblestone", 'U',
 			itemUpgrade, 'B', Item.bucketEmpty);
+		AromaRegistry.registerShapedAromicRecipe(
+			new ItemStack(itemID, 1, Upgrade.COBBLEGEN.ordinal()), false, "CCC", "BUB",
+			"CCC", 'C', "cobblestone", 'U',
+			itemUpgrade, 'B', IFluidContainerItem.class);
 		// VOID
 		AromaRegistry.registerShapedAromicRecipe(new ItemStack(itemID, 1, Upgrade.VOID.ordinal()), false,
 			" E ", "RUR",
