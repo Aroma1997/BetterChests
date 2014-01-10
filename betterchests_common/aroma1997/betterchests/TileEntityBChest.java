@@ -29,7 +29,6 @@ import aroma1997.core.util.ItemUtil;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
@@ -51,7 +50,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class TileEntityBChest extends TileEntity implements IBetterChest, ISpecialInventory {
 	
-	private String player;
+	String player;
 	
 	private int tick;
 	
@@ -189,16 +188,17 @@ public class TileEntityBChest extends TileEntity implements IBetterChest, ISpeci
 	@Override
 	public boolean isUseableByPlayer(EntityPlayer par1EntityPlayer)
 	{
-		if (! isUpgradeInstalled(Upgrade.PLAYER.getItem()) || par1EntityPlayer == null || par1EntityPlayer.worldObj.isRemote) {
+		if (! isUpgradeInstalled(Upgrade.PLAYER.getItem()) || par1EntityPlayer == null) {
 			return true;
 		}
+		if (par1EntityPlayer.worldObj.isRemote) return false;
 		
-		if (! MinecraftServer.getServer().isDedicatedServer()
+		if ((! MinecraftServer.getServer().isDedicatedServer())
 			&& par1EntityPlayer.username.equalsIgnoreCase(Minecraft.getMinecraft().thePlayer.username)) {
 			return true;
 		}
 		
-		if (MinecraftServer.getServerConfigurationManager(MinecraftServer.getServer()).getOps().contains(
+		if (MinecraftServer.getServer().getConfigurationManager().getOps().contains(
 			par1EntityPlayer.username)
 			|| player.equalsIgnoreCase(par1EntityPlayer.username)) {
 			return true;
@@ -227,6 +227,9 @@ public class TileEntityBChest extends TileEntity implements IBetterChest, ISpeci
 			&& UpgradeHelper.areRequirementsInstalled(this, itemUpgrade)
 			&& upgrade.getMaxUpgrades(itemUpgrade) > getAmountUpgrade(itemUpgrade)) {
 			setAmountUpgrade(itemUpgrade, getAmountUpgrade(itemUpgrade) + 1);
+			if (ItemUtil.areItemsSame(itemUpgrade, Upgrade.PLAYER.getItem())) {
+				this.player = player.username;
+			}
 			onUpgradeInserted(player);
 			return true;
 		}
@@ -320,7 +323,7 @@ public class TileEntityBChest extends TileEntity implements IBetterChest, ISpeci
 		if (! isUpgradeInstalled(Upgrade.PLAYER.getItem())) {
 			return;
 		}
-		if (isUseableByPlayer(player)) {
+		if (isUseableByPlayer(player) || player.worldObj.isRemote) {
 			return;
 		}
 		player.attackEntityFrom(DamageSource.outOfWorld, 5.0F);

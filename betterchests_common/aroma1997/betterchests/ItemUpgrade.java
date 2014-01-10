@@ -16,6 +16,7 @@ import java.util.List;
 import aroma1997.betterchests.api.IBetterChest;
 import aroma1997.betterchests.api.IUpgrade;
 import aroma1997.core.client.util.Colors;
+import aroma1997.core.util.InvUtil;
 import aroma1997.core.util.ItemUtil;
 
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -154,7 +155,7 @@ public class ItemUpgrade extends Item implements IUpgrade {
 	@Override
 	public void onUpgradeInstalled(ItemStack item, IBetterChest chest) {
 		if (ItemUtil.areItemsSame(item, Upgrade.VOID.getItem())) {
-			
+			InvUtil.clearInventory(chest);
 		}
 	}
 	
