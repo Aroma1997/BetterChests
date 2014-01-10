@@ -48,7 +48,8 @@ public enum Upgrade {
 	COLLECTOR(ENERGY, 8, true, true, Collector.class),
 	TICKING(ENERGY, 1, true, false, Ticking.class),
 	FEEDING(null, 1, true, false, Feeding.class),
-	PLAYERFOOD(null, 1, false, true, PlayerFeeding.class);
+	PLAYERFOOD(null, 1, false, true, PlayerFeeding.class),
+	RESUPPLY(null, 1, false, true, Resupply.class);
 	
 	private final Upgrade requirement;
 	
@@ -165,6 +166,8 @@ public enum Upgrade {
 		AromaRegistry.registerShapedAromicRecipe(new ItemStack(itemID, 1, FEEDING.ordinal()), false, " W ", "WUW", " W ", 'W', new ItemStack(Item.wheat), 'U', itemUpgrade);
 		//PLAYERFEEDING
 		AromaRegistry.registerShapedAromicRecipe(new ItemStack(itemID, 1, PLAYERFOOD.ordinal()), false, "FFF", "FUF", "FFF", 'F', ItemFood.class, 'U', itemUpgrade);
+		//RESUPPLY
+		AromaRegistry.registerShapedAromicRecipe(new ItemStack(itemID, 1, RESUPPLY.ordinal()), false, "CUC", " H ", 'C', new ItemStack(Block.chest), 'H', new ItemStack(Block.hopperBlock), 'U', itemUpgrade);
 		
 		AromaRegistry.registerShapelessAromicRecipe(BASIC.getItem(), true, new ItemStack(itemID, 1, OreDictionary.WILDCARD_VALUE));
 	}
