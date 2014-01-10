@@ -14,6 +14,7 @@ public class PlayerFeeding extends BasicUpgrade {
 	
 	@Override
 	public void updateChest(IBetterChest chest, int tick, World world, ItemStack item) {
+		if (tick != 36) { return;}
 		if (chest != null && chest instanceof BagInventory) {
 			BagInventory inv = (BagInventory) chest;
 			EntityPlayer player = inv.getPlayer();

@@ -21,7 +21,7 @@ public class ClientProxy extends CommonProxy {
 	
 	@Override
 	public void registerRenderers() {
-		ClientRegistry.registerTileEntity(TileEntityBChest.class, "betterChest",
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityBChest.class, //"betterChest",
 			new BChestRenderer());
 		
 		KeyBindingRegistry.registerKeyBinding(new BetterChestsKeyHandler());

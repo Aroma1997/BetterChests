@@ -20,6 +20,7 @@ import aroma1997.betterchests.upgrades.Furnace;
 import aroma1997.betterchests.upgrades.Null;
 import aroma1997.betterchests.upgrades.PlayerFeeding;
 import aroma1997.betterchests.upgrades.Rain;
+import aroma1997.betterchests.upgrades.Resupply;
 import aroma1997.betterchests.upgrades.Ticking;
 import aroma1997.core.util.AromaRegistry;
 
@@ -29,7 +30,6 @@ import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
 
-import net.minecraftforge.fluids.IFluidContainerItem;
 import net.minecraftforge.oredict.OreDictionary;
 
 public enum Upgrade {
@@ -125,10 +125,6 @@ public enum Upgrade {
 			new ItemStack(itemID, 1, Upgrade.COBBLEGEN.ordinal()), false, "CCC", "BUB",
 			"CCC", 'C', "cobblestone", 'U',
 			itemUpgrade, 'B', Item.bucketEmpty);
-		AromaRegistry.registerShapedAromicRecipe(
-			new ItemStack(itemID, 1, Upgrade.COBBLEGEN.ordinal()), false, "CCC", "BUB",
-			"CCC", 'C', "cobblestone", 'U',
-			itemUpgrade, 'B', IFluidContainerItem.class);
 		// VOID
 		AromaRegistry.registerShapedAromicRecipe(new ItemStack(itemID, 1, Upgrade.VOID.ordinal()), false,
 			" E ", "RUR",
@@ -170,7 +166,7 @@ public enum Upgrade {
 		//PLAYERFEEDING
 		AromaRegistry.registerShapedAromicRecipe(new ItemStack(itemID, 1, PLAYERFOOD.ordinal()), false, "FFF", "FUF", "FFF", 'F', ItemFood.class, 'U', itemUpgrade);
 		
-		AromaRegistry.registerShapelessAromicRecipe(BASIC.getItem(),true, new ItemStack(itemID, 1, OreDictionary.WILDCARD_VALUE));
+		AromaRegistry.registerShapelessAromicRecipe(BASIC.getItem(), true, new ItemStack(itemID, 1, OreDictionary.WILDCARD_VALUE));
 	}
 	
 	public int getMaxAmount() {

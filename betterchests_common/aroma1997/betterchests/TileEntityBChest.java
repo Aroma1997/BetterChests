@@ -29,6 +29,7 @@ import aroma1997.core.util.ItemUtil;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
@@ -188,7 +189,7 @@ public class TileEntityBChest extends TileEntity implements IBetterChest, ISpeci
 	@Override
 	public boolean isUseableByPlayer(EntityPlayer par1EntityPlayer)
 	{
-		if (! isUpgradeInstalled(Upgrade.PLAYER.getItem())) {
+		if (! isUpgradeInstalled(Upgrade.PLAYER.getItem()) || par1EntityPlayer == null || par1EntityPlayer.worldObj.isRemote) {
 			return true;
 		}
 		
