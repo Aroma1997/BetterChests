@@ -74,6 +74,9 @@ item.betterchests:upgrade.PLAYERFOOD.name=Player Feeding Upgrade
 item.betterchests:upgrade.HAMMER.name=BetterChests Hammer
 
 
+death.attack.betterchests:interact.player=%s shouldn't have checked that Adjustable Chest.
+
+
 info.betterchests:tooltip.nobag=This Upgrade cannot be put on a bag.
 info.betterchests:tooltip.nochest=This Upgrade cannot be put on a chest.
 info.betterchests:tooltip.maxamount=Max Upgrades per chest: %s.

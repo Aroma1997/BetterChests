@@ -42,7 +42,6 @@ import net.minecraft.network.packet.Packet132TileEntityData;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
 
 import cpw.mods.fml.relauncher.Side;
@@ -197,9 +196,8 @@ public class TileEntityBChest extends TileEntity implements IBetterChest, ISpeci
 			&& par1EntityPlayer.username.equalsIgnoreCase(Minecraft.getMinecraft().thePlayer.username)) {
 			return true;
 		}
-		
 		if (MinecraftServer.getServer().getConfigurationManager().getOps().contains(
-			par1EntityPlayer.username)
+			par1EntityPlayer.username.toLowerCase())
 			|| player.equalsIgnoreCase(par1EntityPlayer.username)) {
 			return true;
 		}
@@ -326,7 +324,7 @@ public class TileEntityBChest extends TileEntity implements IBetterChest, ISpeci
 		if (isUseableByPlayer(player) || player.worldObj.isRemote) {
 			return;
 		}
-		player.attackEntityFrom(DamageSource.outOfWorld, 5.0F);
+		player.attackEntityFrom(DamageSourceBChest.INSTANCE, 2.0F);
 	}
 	
 	public ItemStack[] getItems() {
