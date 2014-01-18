@@ -95,7 +95,7 @@ public enum Upgrade {
 		AromaRegistry.registerShapedAromicRecipe(new ItemStack(itemID, 8, Upgrade.BASIC.ordinal()), false,
 			"WIW",
 			"ISI", "WIW", 'W', "plankWood", 'I', new ItemStack(
-				Block.fenceIron), 'S', new ItemStack(Item.stick));
+				Block.fenceIron), 'S', "stickWood");
 		// SLOT
 		AromaRegistry.registerShapedAromicRecipe(new ItemStack(itemID, 1, Upgrade.SLOT.ordinal()), false,
 			" W ",
@@ -125,7 +125,7 @@ public enum Upgrade {
 		AromaRegistry.registerShapedAromicRecipe(
 			new ItemStack(itemID, 1, Upgrade.COBBLEGEN.ordinal()), false, "CCC", "BUB",
 			"CCC", 'C', "cobblestone", 'U',
-			itemUpgrade, 'B', Item.bucketEmpty);
+			itemUpgrade, 'B', new ItemStack(Item.bucketEmpty));
 		// VOID
 		AromaRegistry.registerShapedAromicRecipe(new ItemStack(itemID, 1, Upgrade.VOID.ordinal()), false,
 			" E ", "RUR",
