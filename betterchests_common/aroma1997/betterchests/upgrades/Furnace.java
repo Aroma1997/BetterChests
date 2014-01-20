@@ -29,12 +29,12 @@ public class Furnace extends BasicUpgrade {
 			}
 			if (cooking != - 1) {
 				ItemStack smelted = FurnaceRecipes.smelting().getSmeltingResult(
-					inv.getStackInSlot(cooking)).copy();
+					inv.getStackInSlot(cooking));
 				if (smelted.stackSize <= 0) {
 					smelted.stackSize = 1;
 				}
 				if (InvUtil.putIntoFirstSlot(inv, smelted, true) == null) {
-					InvUtil.putIntoFirstSlot(inv, item, false);
+					InvUtil.putIntoFirstSlot(inv, smelted, false);
 					inv.decrStackSize(cooking, 1);
 				}
 			}
