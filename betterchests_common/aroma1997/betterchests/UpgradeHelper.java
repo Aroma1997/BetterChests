@@ -11,9 +11,11 @@ package aroma1997.betterchests;
 
 
 import java.util.ArrayList;
+import java.util.List;
 
 import aroma1997.betterchests.api.IBetterChest;
 import aroma1997.betterchests.api.IUpgrade;
+import aroma1997.core.util.ItemUtil;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
@@ -34,6 +36,18 @@ public class UpgradeHelper {
 				((IUpgrade) item.getItem()).update(inv, tick, world, item);
 			}
 		}
+	}
+	
+	public static boolean isRequirement(ItemStack req, ItemStack up) {
+		if (!isUpgrade(req) || !isUpgrade(up)) return false;
+		IUpgrade iup = (IUpgrade) up.getItem();
+		List<ItemStack> reqlist = iup.getRequiredUpgrade(up);
+		if (reqlist == null) return false;
+		for (ItemStack item : reqlist) {
+			if (!isUpgrade(item)) continue;
+			if (ItemUtil.areItemsSame(item, req)) return true;
+		}
+		return false;
 	}
 	
 	public static boolean isUpgrade(ItemStack item) {

@@ -2,7 +2,10 @@
 package aroma1997.betterchests;
 
 
+import java.util.List;
+
 import aroma1997.betterchests.api.IBetterChest;
+import aroma1997.betterchests.api.IUpgrade;
 import aroma1997.core.client.inventories.GUIAromaBasic;
 import aroma1997.core.client.inventories.GUIAutoLayout;
 import aroma1997.core.client.util.Colors;
@@ -72,14 +75,14 @@ public class ContainerUpgrades extends AromaContainer {
 		if (par3 == 1) {
 			if (par2 == 1) {
 				ItemStack item = getSlot(par1).getStack();
-				if (getSlot(par1) == null || !getSlot(par1).getHasStack()) return null;
+				if (getSlot(par1) == null || !getSlot(par1).getHasStack() || isRequired(par1)) return null;
 				getSlot(par1).decrStackSize(1);
 				item.stackSize = 1;
 				InvUtil.putIntoFirstSlot(player.inventory, item, false);
 			}
 			else if (par2 == 0) {
 				ItemStack item = getSlot(par1).getStack();
-				if (getSlot(par1) == null || !getSlot(par1).getHasStack()) return null;
+				if (getSlot(par1) == null || !getSlot(par1).getHasStack() || isRequired(par1)) return null;
 				int amount = getSlot(par1).getStack().stackSize;
 				getSlot(par1).decrStackSize(amount);
 				item.stackSize = amount;
@@ -87,6 +90,21 @@ public class ContainerUpgrades extends AromaContainer {
 			}
 		}
 		return null;
+	}
+	
+	private boolean isRequired(int slot) {
+		ItemStack item = getSlot(slot).getStack();
+		if (item == null || !(item.getItem() instanceof IUpgrade)) return false;
+		
+		for (int i = 0; i < this.inventorySlots.size(); i++) {
+			ItemStack itemtmp = this.getSlot(i).getStack();
+			if (itemtmp == null || !(itemtmp.getItem() instanceof IUpgrade)) {
+				continue;
+			}
+			if (UpgradeHelper.isRequirement(item, itemtmp)) return true;
+		}
+		
+		return false;
 	}
 	
 	@Override
