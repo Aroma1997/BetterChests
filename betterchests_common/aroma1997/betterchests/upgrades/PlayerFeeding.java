@@ -18,14 +18,13 @@ public class PlayerFeeding extends BasicUpgrade {
 		if (chest != null && chest instanceof BagInventory) {
 			BagInventory inv = (BagInventory) chest;
 			EntityPlayer player = inv.getPlayer();
-//			player.getFoodStats().setFoodLevel(5);
 			if (!player.getFoodStats().needFood()) return;
 			int slot = InvUtil.getFirstItem(inv, ItemFood.class);
 			if (slot == -1) return;
 			ItemStack itemStack = inv.getStackInSlot(slot);
 			if (itemStack == null) return;
 			ItemFood food = (ItemFood)itemStack.getItem();
-			if (20 - player.getFoodStats().getFoodLevel() >= food.getHealAmount() || player.getFoodStats().getFoodLevel() <= 16) {
+			if (20 - player.getFoodStats().getFoodLevel() >= food.getHealAmount() || (player.getFoodStats().getFoodLevel() <= 17 && player.getHealth() <= 19.0F) || player.getFoodStats().getFoodLevel() <= 6) {
 				food.onEaten(itemStack.copy(), world, player);
 				inv.decrStackSize(slot, 1);
 			}
