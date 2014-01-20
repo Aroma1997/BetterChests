@@ -75,7 +75,7 @@ public class ContainerUpgrades extends AromaContainer {
 				if (getSlot(par1) == null || !getSlot(par1).getHasStack()) return null;
 				getSlot(par1).decrStackSize(1);
 				item.stackSize = 1;
-				InvUtil.putIntoFirstSlot(player.inventory, item);
+				InvUtil.putIntoFirstSlot(player.inventory, item, false);
 			}
 			else if (par2 == 0) {
 				ItemStack item = getSlot(par1).getStack();
@@ -83,7 +83,7 @@ public class ContainerUpgrades extends AromaContainer {
 				int amount = getSlot(par1).getStack().stackSize;
 				getSlot(par1).decrStackSize(amount);
 				item.stackSize = amount;
-				InvUtil.putIntoFirstSlot(player.inventory, item);
+				InvUtil.putIntoFirstSlot(player.inventory, item, false);
 			}
 		}
 		return null;

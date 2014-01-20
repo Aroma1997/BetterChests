@@ -31,7 +31,7 @@ public class Collector extends BasicUpgrade {
 				}
 				if (e.age >= 10 && e.isEntityAlive())
 				{
-					ItemStack itemBack = InvUtil.putIntoFirstSlot(inv, e.getEntityItem());
+					ItemStack itemBack = InvUtil.putIntoFirstSlot(inv, e.getEntityItem(), false);
 					e.motionX = inv.getXPos() - e.posX;
 					e.motionY = inv.getYPos() - e.posY;
 					e.motionZ = inv.getZPos() - e.posZ;

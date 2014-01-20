@@ -4,6 +4,7 @@ package aroma1997.betterchests.upgrades;
 
 import aroma1997.betterchests.Upgrade;
 import aroma1997.betterchests.api.IBetterChest;
+import aroma1997.core.util.InvUtil;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
@@ -32,25 +33,9 @@ public class Furnace extends BasicUpgrade {
 				if (smelted.stackSize <= 0) {
 					smelted.stackSize = 1;
 				}
-				int result = - 1;
-				for (int i = 0; i < inv.getSizeInventory(); i++) {
-					if (inv.getStackInSlot(i) == null
-						|| smelted.isItemEqual(inv.getStackInSlot(i)) && smelted.stackSize
-						+ inv.getStackInSlot(i).stackSize <= 64) {
-						result = i;
-						break;
-					}
-				}
-				if (result != - 1) {
+				if (InvUtil.putIntoFirstSlot(inv, smelted, true) == null) {
+					InvUtil.putIntoFirstSlot(inv, item, false);
 					inv.decrStackSize(cooking, 1);
-					ItemStack put = inv.getStackInSlot(result);
-					if (put != null) {
-						put.stackSize += smelted.stackSize;
-					}
-					else {
-						put = smelted;
-					}
-					inv.setInventorySlotContents(result, put);
 				}
 			}
 		}

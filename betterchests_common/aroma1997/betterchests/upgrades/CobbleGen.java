@@ -34,7 +34,7 @@ public class CobbleGen extends BasicUpgrade {
 			if (bucketLava == - 1 || bucketWater == - 1) {
 				return;
 			}
-			InvUtil.putIntoFirstSlot(inv, new ItemStack(Block.cobblestone));
+			InvUtil.putIntoFirstSlot(inv, new ItemStack(Block.cobblestone), false);
 		}
 	}
 	
