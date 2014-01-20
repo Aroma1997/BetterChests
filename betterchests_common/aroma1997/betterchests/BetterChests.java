@@ -13,7 +13,6 @@ package aroma1997.betterchests;
 import java.io.File;
 import java.util.ArrayList;
 
-import aroma1997.betterchests.client.EventListener;
 import aroma1997.core.log.AromaLog;
 import aroma1997.core.log.LogHelper;
 import aroma1997.core.util.AromaRegistry;

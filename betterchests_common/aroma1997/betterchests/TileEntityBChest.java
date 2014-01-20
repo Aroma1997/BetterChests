@@ -17,7 +17,7 @@ import java.util.Random;
 
 import aroma1997.betterchests.api.IBetterChest;
 import aroma1997.betterchests.api.IUpgrade;
-import aroma1997.betterchests.client.EventListener;
+import aroma1997.betterchests.client.EventListenerClient;
 import aroma1997.core.client.inventories.GUIContainer;
 import aroma1997.core.inventories.AromaContainer;
 import aroma1997.core.inventories.ContainerBasic;
@@ -429,7 +429,7 @@ public class TileEntityBChest extends TileEntity implements IBetterChest, ISpeci
 		if (numUsingPlayers > 0 && lidAngle == 0.0F)
 		{
 			worldObj.playSoundEffect(xCoord + 0.5D, yCoord + 0.5D, zCoord + 0.5D,
-				EventListener.SOUND_OPEN_CHEST, 0.5F, worldObj.rand.nextFloat() * 0.1F + 0.9F);
+				EventListenerClient.SOUND_OPEN_CHEST, 0.5F, worldObj.rand.nextFloat() * 0.1F + 0.9F);
 			updateNearbyBlocks();
 		}
 		if (numUsingPlayers <= 0 && lidAngle > 0.0F || numUsingPlayers > 0 && lidAngle < 1.0F)
@@ -451,7 +451,7 @@ public class TileEntityBChest extends TileEntity implements IBetterChest, ISpeci
 			if (lidAngle < f2 && f1 >= f2)
 			{
 				worldObj.playSoundEffect(xCoord + 0.5D, yCoord + 0.5D, zCoord + 0.5D,
-					EventListener.SOUND_CLOSE_CHEST, 0.5F, worldObj.rand.nextFloat() * 0.1F + 0.9F);
+					EventListenerClient.SOUND_CLOSE_CHEST, 0.5F, worldObj.rand.nextFloat() * 0.1F + 0.9F);
 				updateNearbyBlocks();
 			}
 			if (lidAngle < 0.0F)

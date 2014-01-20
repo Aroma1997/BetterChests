@@ -25,7 +25,7 @@ public class ClientProxy extends CommonProxy {
 			new BChestRenderer());
 		
 		KeyBindingRegistry.registerKeyBinding(new BetterChestsKeyHandler());
-		new EventListener();
+		new EventListenerClient();
 	}
 	
 }

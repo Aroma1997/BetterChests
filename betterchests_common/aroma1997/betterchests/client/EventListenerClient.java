@@ -15,9 +15,9 @@ import net.minecraftforge.event.ForgeSubscribe;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class EventListener {
+public class EventListenerClient {
 	
-	public EventListener() {
+	public EventListenerClient() {
 		MinecraftForge.EVENT_BUS.register(this);
 	}
 	
