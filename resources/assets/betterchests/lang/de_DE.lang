@@ -37,6 +37,7 @@ book.betterchests:upgrade.COLLECTOR=Sammel-Upgrade: Dieses Upgrade wird Items in
 book.betterchests:upgrade.TICKING=Tick-Upgrade: Dieses Upgrade wird den Inhalt deiner Truhe ticken lassen, als wäre er im Inventar eines Spielers.
 book.betterchests:upgrade.FEEDING=Füttern Upgrade: Diesed Upgrade füttert automatisch Tiere in einem Bereich von 5x3x5 um die Kiste mit dem Futter in der Kiste. Wenn zu viele Tiere in diesem Bereich sind, so unterbricht die Kiste automatisch ihre Arbeit.
 book.betterchests:upgrade.PLAYERFOOD=Spieler-Füttern Uprgade: Dieses Upgrade füttert automatisch den Spieler, der es in einem Rucksack in seinem Inventar hat. Dazu wird das Essen aus dem Inneren des Rucksackes verwendet.
+book.betterchests:upgrade.RESUPPLY=Nachfüllen-Upgrade: Dieses Upgrade füllt Items in deinem Inventar auf, wenn sie im Rucksack vorhanden sind und sich in deinem Inventar nicht die maximale Anzahl pro Stapel befindet.
 
 
 book.betterchests:credits=Danke, dass Du das Benutzerhandbuch gelesen hast. Solltest du immer noch Fragen haben, frag einfach im MCF bei http://tinyurl.com/aroma1997 nach. Übersetzung von Vextatos, verändert von Aroma1997.
@@ -72,6 +73,9 @@ item.betterchests:upgrade.FEEDING.name=Füttern Upgrade
 item.betterchests:upgrade.PLAYERFOOD.name=Spieler-Füttern Upgrade
 
 item.betterchests:upgrade.HAMMER.name=BetterChests Hammer
+
+
+death.attack.betterchests:interact.player=%s hätte diese Verstellbare Truhe nicht ausprobieren sollen.
 
 
 info.betterchests:tooltip.nobag=Dieses Upgrade kann nicht auf einen Rucksack gepackt werden.

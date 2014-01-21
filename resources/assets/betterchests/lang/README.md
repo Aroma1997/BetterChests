@@ -9,4 +9,4 @@ If you want to add a localization file, base it off the en_US.lang file, because
 
 ### Encoding
 
-Make sure, the localization you do is formatted in UTF-8. Everything else will most likely not work. If you don't do so, I have to reject your PR!
+Make sure, the localization you do is formatted in UTF-8 without BOM. Everything else will most likely not work. If you don't do so, I have to reject your PR!

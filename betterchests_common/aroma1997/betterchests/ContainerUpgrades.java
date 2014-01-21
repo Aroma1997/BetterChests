@@ -2,8 +2,6 @@
 package aroma1997.betterchests;
 
 
-import java.util.List;
-
 import aroma1997.betterchests.api.IBetterChest;
 import aroma1997.betterchests.api.IUpgrade;
 import aroma1997.core.client.inventories.GUIAromaBasic;
