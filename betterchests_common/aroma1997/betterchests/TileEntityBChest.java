@@ -190,9 +190,11 @@ public class TileEntityBChest extends TileEntity implements IBetterChest, ISpeci
 		if (! isUpgradeInstalled(Upgrade.PLAYER.getItem()) || par1EntityPlayer == null) {
 			return true;
 		}
-		if (par1EntityPlayer.worldObj.isRemote) return false;
+		if (par1EntityPlayer.worldObj.isRemote) {
+			return false;
+		}
 		
-		if ((! MinecraftServer.getServer().isDedicatedServer())
+		if (! MinecraftServer.getServer().isDedicatedServer()
 			&& par1EntityPlayer.username.equalsIgnoreCase(Minecraft.getMinecraft().thePlayer.username)) {
 			return true;
 		}
@@ -451,7 +453,8 @@ public class TileEntityBChest extends TileEntity implements IBetterChest, ISpeci
 			if (lidAngle < f2 && f1 >= f2)
 			{
 				worldObj.playSoundEffect(xCoord + 0.5D, yCoord + 0.5D, zCoord + 0.5D,
-					EventListenerClient.SOUND_CLOSE_CHEST, 0.5F, worldObj.rand.nextFloat() * 0.1F + 0.9F);
+					EventListenerClient.SOUND_CLOSE_CHEST, 0.5F,
+					worldObj.rand.nextFloat() * 0.1F + 0.9F);
 				updateNearbyBlocks();
 			}
 			if (lidAngle < 0.0F)

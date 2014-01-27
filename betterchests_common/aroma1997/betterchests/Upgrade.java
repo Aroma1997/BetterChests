@@ -92,20 +92,24 @@ public enum Upgrade {
 		int itemID = BetterChests.upgrade.itemID;
 		ItemStack itemUpgrade = new ItemStack(itemID, 1, Upgrade.BASIC.ordinal());
 		// BASIC
-		AromaRegistry.registerShapedAromicRecipe(new ItemStack(itemID, 8, Upgrade.BASIC.ordinal()), false,
+		AromaRegistry.registerShapedAromicRecipe(new ItemStack(itemID, 8, Upgrade.BASIC.ordinal()),
+			false,
 			"WIW",
 			"ISI", "WIW", 'W', "plankWood", 'I', new ItemStack(
 				Block.fenceIron), 'S', "stickWood");
 		// SLOT
-		AromaRegistry.registerShapedAromicRecipe(new ItemStack(itemID, 1, Upgrade.SLOT.ordinal()), false,
+		AromaRegistry.registerShapedAromicRecipe(new ItemStack(itemID, 1, Upgrade.SLOT.ordinal()),
+			false,
 			" W ",
 			"WUW", " W ", 'W', "plankWood", 'U', itemUpgrade);
 		// REDSTONE
-		AromaRegistry.registerShapedAromicRecipe(new ItemStack(itemID, 1, Upgrade.REDSTONE.ordinal()), false,
+		AromaRegistry.registerShapedAromicRecipe(
+			new ItemStack(itemID, 1, Upgrade.REDSTONE.ordinal()), false,
 			"RRR",
 			"RUR", "RRR", 'R', new ItemStack(Item.redstone), 'U', itemUpgrade);
 		// LIGHT
-		AromaRegistry.registerShapedAromicRecipe(new ItemStack(itemID, 1, Upgrade.LIGHT.ordinal()), false,
+		AromaRegistry.registerShapedAromicRecipe(new ItemStack(itemID, 1, Upgrade.LIGHT.ordinal()),
+			false,
 			" G ", "GUG", " G ", 'G', new ItemStack(Item.glowstone), 'U', itemUpgrade);
 		// COMPARATOR
 		AromaRegistry.registerShapedAromicRecipe(
@@ -117,7 +121,8 @@ public enum Upgrade {
 			" R ", "QUQ", " R ", 'Q', new ItemStack(Item.netherQuartz), 'R', new ItemStack(
 				Item.redstone), 'U', itemUpgrade);
 		// PLAYER
-		AromaRegistry.registerShapedAromicRecipe(new ItemStack(itemID, 1, Upgrade.PLAYER.ordinal()), false,
+		AromaRegistry.registerShapedAromicRecipe(
+			new ItemStack(itemID, 1, Upgrade.PLAYER.ordinal()), false,
 			"OQO",
 			"QUQ", "OQO", 'Q', new ItemStack(Item.netherQuartz), 'O',
 			new ItemStack(Block.obsidian), 'U', itemUpgrade);
@@ -127,7 +132,8 @@ public enum Upgrade {
 			"CCC", 'C', "cobblestone", 'U',
 			itemUpgrade, 'B', new ItemStack(Item.bucketEmpty));
 		// VOID
-		AromaRegistry.registerShapedAromicRecipe(new ItemStack(itemID, 1, Upgrade.VOID.ordinal()), false,
+		AromaRegistry.registerShapedAromicRecipe(new ItemStack(itemID, 1, Upgrade.VOID.ordinal()),
+			false,
 			" E ", "RUR",
 			" E ", 'E', new ItemStack(Item.enderPearl), 'R', new ItemStack(Item.redstone), 'U',
 			itemUpgrade);
@@ -136,20 +142,24 @@ public enum Upgrade {
 			new ItemStack(itemID, 1, Upgrade.UNBREAKABLE.ordinal()), false, "OOO",
 			"OUO", "OOO", 'O', new ItemStack(Block.obsidian), 'U', itemUpgrade);
 		// RAIN
-		AromaRegistry.registerShapedAromicRecipe(new ItemStack(itemID, 1, Upgrade.RAIN.ordinal()), false,
+		AromaRegistry.registerShapedAromicRecipe(new ItemStack(itemID, 1, Upgrade.RAIN.ordinal()),
+			false,
 			" B ", "BUB",
 			" B ", 'B', new ItemStack(Item.bucketEmpty), 'U', itemUpgrade);
 		// ENERGY
-		AromaRegistry.registerShapedAromicRecipe(new ItemStack(itemID, 1, Upgrade.ENERGY.ordinal()), false,
+		AromaRegistry.registerShapedAromicRecipe(
+			new ItemStack(itemID, 1, Upgrade.ENERGY.ordinal()), false,
 			"BRB", "CUC",
 			"BRB", 'B', new ItemStack(Block.coalBlock), 'R', new ItemStack(Item.redstone),
 			'C', new ItemStack(Item.redstoneRepeater), 'U', itemUpgrade);
-		AromaRegistry.registerShapedAromicRecipe(new ItemStack(itemID, 1, Upgrade.ENERGY.ordinal()), false,
+		AromaRegistry.registerShapedAromicRecipe(
+			new ItemStack(itemID, 1, Upgrade.ENERGY.ordinal()), false,
 			"BCB", "RUR",
 			"BCB", 'B', new ItemStack(Block.coalBlock), 'R', new ItemStack(Item.redstone),
 			'C', new ItemStack(Item.redstoneRepeater), 'U', itemUpgrade);
 		// FURNACE
-		AromaRegistry.registerShapedAromicRecipe(new ItemStack(itemID, 1, Upgrade.FURNACE.ordinal()), false,
+		AromaRegistry.registerShapedAromicRecipe(
+			new ItemStack(itemID, 1, Upgrade.FURNACE.ordinal()), false,
 			"RFR", "FUF",
 			"RFR", 'R', new ItemStack(Item.redstone), 'F', new ItemStack(Block.furnaceIdle), 'U',
 			itemUpgrade);
@@ -159,17 +169,23 @@ public enum Upgrade {
 			"RER", 'H', new ItemStack(Block.hopperBlock), 'R', new ItemStack(Item.redstone), 'E',
 			new ItemStack(Item.enderPearl), 'U', itemUpgrade);
 		// TICKING
-		AromaRegistry.registerShapedAromicRecipe(new ItemStack(itemID, 1, Upgrade.TICKING.ordinal()), false,
+		AromaRegistry.registerShapedAromicRecipe(
+			new ItemStack(itemID, 1, Upgrade.TICKING.ordinal()), false,
 			"QCQ", "RUR", "QCQ", 'Q', new ItemStack(Item.netherQuartz), 'C', new ItemStack(
 				Item.pocketSundial), 'R', new ItemStack(Item.comparator), 'U', itemUpgrade);
-		//FEEDING
-		AromaRegistry.registerShapedAromicRecipe(new ItemStack(itemID, 1, FEEDING.ordinal()), false, " W ", "WUW", " W ", 'W', new ItemStack(Item.wheat), 'U', itemUpgrade);
-		//PLAYERFEEDING
-		AromaRegistry.registerShapedAromicRecipe(new ItemStack(itemID, 1, PLAYERFOOD.ordinal()), false, "FFF", "FUF", "FFF", 'F', ItemFood.class, 'U', itemUpgrade);
-		//RESUPPLY
-		AromaRegistry.registerShapedAromicRecipe(new ItemStack(itemID, 1, RESUPPLY.ordinal()), false, "CUC", " H ", 'C', new ItemStack(Block.chest), 'H', new ItemStack(Block.hopperBlock), 'U', itemUpgrade);
+		// FEEDING
+		AromaRegistry.registerShapedAromicRecipe(new ItemStack(itemID, 1, FEEDING.ordinal()),
+			false, " W ", "WUW", " W ", 'W', new ItemStack(Item.wheat), 'U', itemUpgrade);
+		// PLAYERFEEDING
+		AromaRegistry.registerShapedAromicRecipe(new ItemStack(itemID, 1, PLAYERFOOD.ordinal()),
+			false, "FFF", "FUF", "FFF", 'F', ItemFood.class, 'U', itemUpgrade);
+		// RESUPPLY
+		AromaRegistry.registerShapedAromicRecipe(new ItemStack(itemID, 1, RESUPPLY.ordinal()),
+			false, "CUC", " H ", 'C', new ItemStack(Block.chest), 'H', new ItemStack(
+				Block.hopperBlock), 'U', itemUpgrade);
 		
-		AromaRegistry.registerShapelessAromicRecipe(BASIC.getItem(), true, new ItemStack(itemID, 1, OreDictionary.WILDCARD_VALUE));
+		AromaRegistry.registerShapelessAromicRecipe(BASIC.getItem(), true, new ItemStack(itemID, 1,
+			OreDictionary.WILDCARD_VALUE));
 	}
 	
 	public int getMaxAmount() {

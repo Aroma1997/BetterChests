@@ -46,16 +46,16 @@ public class ItemUpgrade extends Item implements IUpgrade {
 	public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer,
 		List par3List, boolean par4) {
 		Upgrade upgrade = Upgrade.values()[par1ItemStack.getItemDamage()];
-		if (Upgrade.values()[par1ItemStack.getItemDamage()].getRequirement() != null) {
+		if (upgrade.getRequirement() != null) {
 			par3List.add(StatCollector.translateToLocalFormatted(
 				"info.betterchests:tooltip.requires", Colors.YELLOW
-				+ Upgrade.values()[par1ItemStack.getItemDamage()].getRequirement().getName()));
+				+ upgrade.getRequirement().getName()));
 		}
 		if (upgrade.getMaxAmount() != 0) {
 			par3List.add(StatCollector.translateToLocalFormatted(
 				"info.betterchests:tooltip.maxamount", upgrade.getMaxAmount()));
 		}
-		if (!upgrade.canBagTakeUpgrade() && !upgrade.canChestTakeUpgrade()) {}
+		if (! upgrade.canBagTakeUpgrade() && ! upgrade.canChestTakeUpgrade()) {}
 		else if (! upgrade.canChestTakeUpgrade()) {
 			par3List.add(StatCollector.translateToLocal("info.betterchests:tooltip.nochest"));
 		}

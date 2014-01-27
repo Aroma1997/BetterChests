@@ -84,7 +84,7 @@ public class SlotUpgrades extends Slot {
 		ItemStack ret = item.copy();
 		ret.stackSize = Math.min(upgrades, par1);
 		chest.setAmountUpgrade(item, chest.getAmountUpgrade(item) - ret.stackSize);
-//		item.stackSize -= ret.stackSize;
+		// item.stackSize -= ret.stackSize;
 		if (ret.stackSize <= 0) {
 			return null;
 		}

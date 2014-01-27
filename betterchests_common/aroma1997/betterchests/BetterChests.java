@@ -88,9 +88,11 @@ public class BetterChests {
 	public void init(FMLInitializationEvent event) {
 		proxy.registerRenderers();
 		GameRegistry.registerTileEntity(TileEntityBChest.class, "adjustableChest");
-		AromaRegistry.registerShapedAromicRecipe(new ItemStack(chest), false, "CCC", "CBC", "CCC", 'C',
+		AromaRegistry.registerShapedAromicRecipe(new ItemStack(chest), false, "CCC", "CBC", "CCC",
+			'C',
 			"cobblestone", 'B', new ItemStack(Block.chest));
-		AromaRegistry.registerShapedAromicRecipe(new ItemStack(bag), false, "SWS", "LCL", "SWS", 'S',
+		AromaRegistry.registerShapedAromicRecipe(new ItemStack(bag), false, "SWS", "LCL", "SWS",
+			'S',
 			new ItemStack(Item.silk), 'L', new ItemStack(Item.leather), 'W', new ItemStack(
 				Block.cloth, 1, OreDictionary.WILDCARD_VALUE), 'C', new ItemStack(chest));
 		GameRegistry.addRecipe(new CraftingBag());

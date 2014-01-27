@@ -39,13 +39,21 @@ public class UpgradeHelper {
 	}
 	
 	public static boolean isRequirement(ItemStack req, ItemStack up) {
-		if (!isUpgrade(req) || !isUpgrade(up)) return false;
+		if (! isUpgrade(req) || ! isUpgrade(up)) {
+			return false;
+		}
 		IUpgrade iup = (IUpgrade) up.getItem();
 		List<ItemStack> reqlist = iup.getRequiredUpgrade(up);
-		if (reqlist == null) return false;
+		if (reqlist == null) {
+			return false;
+		}
 		for (ItemStack item : reqlist) {
-			if (!isUpgrade(item)) continue;
-			if (ItemUtil.areItemsSame(item, req)) return true;
+			if (! isUpgrade(item)) {
+				continue;
+			}
+			if (ItemUtil.areItemsSame(item, req)) {
+				return true;
+			}
 		}
 		return false;
 	}
@@ -82,6 +90,24 @@ public class UpgradeHelper {
 		}
 		return true;
 		
+	}
+	
+	public static boolean isRequirement(ItemStack item, IBetterChest inv) {
+		if (item == null || ! isUpgrade(item)) {
+			return false;
+		}
+		
+		for (int i = 0; i < inv.getUpgrades().size(); i++) {
+			ItemStack itemtmp = inv.getUpgrades().get(i);
+			if (itemtmp == null || ! isUpgrade(itemtmp)) {
+				continue;
+			}
+			if (isRequirement(item, itemtmp)) {
+				return true;
+			}
+		}
+		
+		return false;
 	}
 	
 }

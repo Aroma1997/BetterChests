@@ -1,4 +1,6 @@
+
 package aroma1997.betterchests.upgrades;
+
 
 import aroma1997.betterchests.BagInventory;
 import aroma1997.betterchests.api.IBetterChest;
@@ -9,22 +11,31 @@ import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-
 public class PlayerFeeding extends BasicUpgrade {
 	
 	@Override
 	public void updateChest(IBetterChest chest, int tick, World world, ItemStack item) {
-		if (tick != 36) { return;}
+		if (tick != 36) {
+			return;
+		}
 		if (chest != null && chest instanceof BagInventory) {
 			BagInventory inv = (BagInventory) chest;
 			EntityPlayer player = inv.getPlayer();
-			if (!player.getFoodStats().needFood()) return;
+			if (! player.getFoodStats().needFood()) {
+				return;
+			}
 			int slot = InvUtil.getFirstItem(inv, ItemFood.class);
-			if (slot == -1) return;
+			if (slot == - 1) {
+				return;
+			}
 			ItemStack itemStack = inv.getStackInSlot(slot);
-			if (itemStack == null) return;
-			ItemFood food = (ItemFood)itemStack.getItem();
-			if (20 - player.getFoodStats().getFoodLevel() >= food.getHealAmount() || (player.getFoodStats().getFoodLevel() <= 17 && player.getHealth() <= 19.0F) || player.getFoodStats().getFoodLevel() <= 6) {
+			if (itemStack == null) {
+				return;
+			}
+			ItemFood food = (ItemFood) itemStack.getItem();
+			if (20 - player.getFoodStats().getFoodLevel() >= food.getHealAmount()
+				|| player.getFoodStats().getFoodLevel() <= 17 && player.getHealth() <= 19.0F
+				|| player.getFoodStats().getFoodLevel() <= 6) {
 				food.onEaten(itemStack.copy(), world, player);
 				inv.decrStackSize(slot, 1);
 			}

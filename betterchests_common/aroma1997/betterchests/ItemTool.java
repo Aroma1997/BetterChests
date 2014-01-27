@@ -74,4 +74,9 @@ public class ItemTool extends Item {
 			x, y, z, side, hitX, hitY, hitZ);
 	}
 	
+	@Override
+	public ItemStack getContainerItemStack(ItemStack item) {
+		return item;
+	}
+	
 }
