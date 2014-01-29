@@ -10,6 +10,7 @@
 package aroma1997.betterchests;
 
 
+import aroma1997.betterchests.api.IUpgrade;
 import aroma1997.core.inventories.Inventories;
 import aroma1997.core.util.WorldUtil;
 
@@ -66,28 +67,29 @@ public class BlockBChest extends BlockContainer {
 	public boolean onBlockActivated(World par1World, int par2, int par3, int par4,
 		EntityPlayer par5EntityPlayer, int par6, float par7, float par8, float par9)
 	{
-		if (par5EntityPlayer.isSneaking()) {
+		TileEntityBChest chest = (TileEntityBChest)par1World.getBlockTileEntity(par2, par3, par4);
+		if (par5EntityPlayer.isSneaking() || chest == null) {
 			return false;
 		}
+		if (par1World.isRemote) return true;
+		if (!chest.isUseableByPlayer(par5EntityPlayer)) {
+
+			par5EntityPlayer.attackEntityFrom(DamageSourceBChest.INSTANCE, 2.0F);
+			return true;
+		}
+		
 		ItemStack item = par5EntityPlayer.getHeldItem();
 		
 		if (item == null || ! UpgradeHelper.isUpgrade(item)) {
-			return openInventory(par5EntityPlayer, par1World, par2, par3, par4);
+			Inventories.openContainerTileEntity(par5EntityPlayer, chest, true);
+			return true;
 		}
-		if (Upgrade.values()[item.getItemDamage()].canChestTakeUpgrade()) {
-			
-			TileEntityBChest te = (TileEntityBChest) par1World.getBlockTileEntity(par2, par3, par4);
-			return te.upgrade(par5EntityPlayer);
+		if (((IUpgrade)item.getItem()).canChestTakeUpgrade(item)) {
+			return chest.upgrade(par5EntityPlayer);
 		}
-		return openInventory(par5EntityPlayer, par1World, par2, par3, par4);
-		
-	}
-	
-	private boolean openInventory(EntityPlayer player, World world, int x, int y, int z) {
-		TileEntityBChest te = (TileEntityBChest) world.getBlockTileEntity(x, y, z);
-		te.playerOpenChest(player);
-		Inventories.openContainerTileEntity(player, te, true);
+		Inventories.openContainerTileEntity(par5EntityPlayer, chest, true);
 		return true;
+		
 	}
 	
 	@Override
@@ -126,7 +128,7 @@ public class BlockBChest extends BlockContainer {
 	@Override
 	public boolean canEntityDestroy(World world, int x, int y, int z, Entity entity)
 	{
-		return ! ((TileEntityBChest) world.getBlockTileEntity(x, y, z)).isUpgradeInstalled(Upgrade.UNBREAKABLE.getItem());
+		return ! ((TileEntityBChest) world.getBlockTileEntity(x, y, z)).isUpgradeInstalled(Upgrade.UNBREAKABLE.getItem()) && !super.canEntityDestroy(world, x, y, z, entity);
 	}
 	
 	@Override
@@ -173,6 +175,9 @@ public class BlockBChest extends BlockContainer {
 	public float getPlayerRelativeBlockHardness(EntityPlayer par1EntityPlayer, World par2World,
 		int par3, int par4, int par5)
 	{
+		if (par2World.isRemote) {
+			return super.getPlayerRelativeBlockHardness(par1EntityPlayer, par2World, par3, par4, par5);
+		}
 		if (! ((TileEntityBChest) par2World.getBlockTileEntity(par3, par4, par5)).isUseableByPlayer(par1EntityPlayer)) {
 			return - 1.0F;
 		}
@@ -186,11 +191,7 @@ public class BlockBChest extends BlockContainer {
 	public void breakBlock(World par1World, int par2, int par3, int par4, int par5, int par6)
 	{
 		TileEntityBChest te = (TileEntityBChest) par1World.getBlockTileEntity(par2, par3, par4);
-		if (te == null) {
-			super.breakBlock(par1World, par2, par3, par4, par5, par6);
-			return;
-		}
-		if (te.pickedUp) {
+		if (te == null || te.pickedUp) {
 			super.breakBlock(par1World, par2, par3, par4, par5, par6);
 			return;
 		}

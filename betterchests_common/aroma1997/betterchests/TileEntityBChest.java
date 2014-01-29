@@ -319,16 +319,6 @@ public class TileEntityBChest extends TileEntity implements IBetterChest, ISpeci
 		return Container.calcRedstoneFromInventory(this);
 	}
 	
-	public void playerOpenChest(EntityPlayer player) {
-		if (! isUpgradeInstalled(Upgrade.PLAYER.getItem())) {
-			return;
-		}
-		if (isUseableByPlayer(player) || player.worldObj.isRemote) {
-			return;
-		}
-		player.attackEntityFrom(DamageSourceBChest.INSTANCE, 2.0F);
-	}
-	
 	public ItemStack[] getItems() {
 		ArrayList<ItemStack> list = new ArrayList<ItemStack>();
 		for (int i = 0; i < getSizeInventory(); i++) {
@@ -608,7 +598,7 @@ public class TileEntityBChest extends TileEntity implements IBetterChest, ISpeci
 	public void drawGuiContainerForegroundLayer(GUIContainer gui, ContainerBasic container,
 		int par1, int par2) {
 		for (ItemStack item : upgrades) {
-			if (UpgradeHelper.isUpgrade(item)) {
+			if (!UpgradeHelper.isUpgrade(item)) {
 				continue;
 			}
 			((IUpgrade) item.getItem()).drawGuiContainerForegroundLayer(gui, container, par1, par2,

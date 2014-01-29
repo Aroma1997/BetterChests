@@ -33,6 +33,7 @@ public class ItemHammer extends ToolItem {
 		}
 		if (te != null && te instanceof TileEntityBChest) {
 			TileEntityBChest chest = (TileEntityBChest) te;
+			if (!chest.isUseableByPlayer(player)) return false;
 			if (player.isSneaking()) {
 				WorldUtil.dropItemsRandom(world, chest.getDroppedFullItem(), x, y, z);
 				chest.pickedUp = true;
