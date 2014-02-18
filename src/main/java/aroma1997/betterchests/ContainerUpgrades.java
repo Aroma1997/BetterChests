@@ -48,8 +48,8 @@ public class ContainerUpgrades extends AromaContainer {
 	@SideOnly(Side.CLIENT)
 	public GuiContainer getContainer() {
 		GUIAutoLayout gui = new GUIAutoLayout(this);
-		gui.xSize = 9 * 18 + bufferX * 2;
-		gui.ySize = upgrades / 9 * 18 + bufferY * 2 + 45;
+		gui.setXSize(9 * 18 + bufferX * 2);
+		gui.setYSize(upgrades / 9 * 18 + bufferY * 2 + 45);
 		return gui;
 	}
 	
@@ -60,7 +60,7 @@ public class ContainerUpgrades extends AromaContainer {
 			- bufferY / 2 - 2, 4210752);
 		gui.getFontRender().drawSplitString(
 			Colors.RED + StatCollector.translateToLocal("gui.betterchests:upgrades.warning"),
-			bufferX, bufferY + upgrades / 9 * 18, gui.xSize - bufferX * 2, 4210752);
+			bufferX, bufferY + upgrades / 9 * 18, 162, 4210752);
 	}
 	
 	@Override

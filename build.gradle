@@ -1,0 +1,68 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        maven {
+            name = "forge"
+            url = "http://files.minecraftforge.net/maven"
+        }
+    }
+    dependencies {
+        classpath 'net.minecraftforge.gradle:ForgeGradle:1.0-SNAPSHOT'
+    }
+}
+
+ext.configFile = file "build.properties"
+
+configFile.withReader {
+    def prop = new Properties()
+    prop.load(it)
+    project.ext.config = new ConfigSlurper().parse prop
+}
+
+apply plugin: 'forge'
+
+ENV = System.getenv()
+
+version = config.mod_version
+group = config.mod_group
+archivesBaseName = config.mod_name
+
+if (ENV.BUILD_NUMBER)
+	version = "${config.mod_version}.b${ENV.BUILD_NUMBER}"
+
+minecraft {
+	version = "1.6.4-9.11.1.964"
+}
+
+dependencies {
+	compile fileTree(dir:'lib',include:'*.jar')
+}
+
+processResources
+{
+    from(sourceSets.main.resources.srcDirs) {
+        include 'mcmod.info'
+		include '**/reference.properties'
+
+        expand 'version': version, 'mcversion': config.mc_version
+    }
+
+    from(sourceSets.main.resources.srcDirs) {
+        exclude 'mcmod.info'
+		exclude '**/reference.properties'
+    }
+}
+
+jar {
+	appendix = config.mc_version
+}
+
+task deobfJar(type: Jar) {
+    from sourceSets.main.output
+	appendix = config.mc_version
+    classifier = 'deobf'
+}
+
+artifacts {
+        archives deobfJar
+}
