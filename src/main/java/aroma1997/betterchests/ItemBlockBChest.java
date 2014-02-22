@@ -12,20 +12,22 @@ package aroma1997.betterchests;
 
 import java.util.List;
 
+import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
 
 public class ItemBlockBChest extends ItemBlock {
 	
-	public ItemBlockBChest(int id) {
-		super(id);
+	public ItemBlockBChest(Block block) {
+		super(block);
 	}
 	
 	@Override
-	public String getItemDisplayName(ItemStack par1ItemStack) {
+	public String getItemStackDisplayName(ItemStack par1ItemStack) {
 		return StatCollector.translateToLocal("tile.betterchests:chest.name");
 	}
 	
@@ -40,8 +42,8 @@ public class ItemBlockBChest extends ItemBlock {
 	
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	@Override
-	public void getSubItems(int par1, CreativeTabs par2CreativeTabs, List par3List)
-	{
+	public void getSubItems(Item par1, CreativeTabs par2CreativeTabs, List par3List)
+    {
 		par3List.add(BetterChests.getHelpBook());
 		super.getSubItems(par1, par2CreativeTabs, par3List);
 	}

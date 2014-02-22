@@ -10,13 +10,9 @@
 package aroma1997.betterchests;
 
 
-import aroma1997.betterchests.api.IUpgrade;
-import aroma1997.core.inventories.Inventories;
-import aroma1997.core.util.WorldUtil;
-
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -26,19 +22,26 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-
-import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.common.util.ForgeDirection;
+import aroma1997.betterchests.api.IUpgrade;
+import aroma1997.core.inventories.Inventories;
+import aroma1997.core.util.WorldUtil;
 
 public class BlockBChest extends BlockContainer {
 	
-	public BlockBChest(int id) {
-		super(id, Material.wood);
+	public BlockBChest() {
+		super(Material.wood);
 		setHardness(3.0F);
 		setCreativeTab(BetterChests.creativeTabBC);
-		setUnlocalizedName("betterChest");
+		setBlockName("betterchests:betterChest");
 		setLightOpacity(0);
 		disableStats();
 		setBlockBounds(0.0625F, 0.0F, 0.0625F, 0.9375F, 0.875F, 0.9375F);
+	}
+	
+	@Override
+	public TileEntity createNewTileEntity(World var1, int var2) {
+		return new TileEntityBChest();
 	}
 	
 	@Override
@@ -59,15 +62,10 @@ public class BlockBChest extends BlockContainer {
 	}
 	
 	@Override
-	public TileEntity createNewTileEntity(World world) {
-		return new TileEntityBChest();
-	}
-	
-	@Override
 	public boolean onBlockActivated(World par1World, int par2, int par3, int par4,
 		EntityPlayer par5EntityPlayer, int par6, float par7, float par8, float par9)
 	{
-		TileEntityBChest chest = (TileEntityBChest)par1World.getBlockTileEntity(par2, par3, par4);
+		TileEntityBChest chest = (TileEntityBChest)par1World.getTileEntity(par2, par3, par4);
 		if (par5EntityPlayer.isSneaking() || chest == null) {
 			return false;
 		}
@@ -96,7 +94,7 @@ public class BlockBChest extends BlockContainer {
 	public int isProvidingWeakPower(IBlockAccess par1IBlockAccess, int par2, int par3, int par4,
 		int par5)
 	{
-		return ((TileEntityBChest) par1IBlockAccess.getBlockTileEntity(par2, par3, par4)).getRedstoneOutput();
+		return ((TileEntityBChest) par1IBlockAccess.getTileEntity(par2, par3, par4)).getRedstoneOutput();
 	}
 	
 	@Override
@@ -108,7 +106,7 @@ public class BlockBChest extends BlockContainer {
 	@Override
 	public int getLightValue(IBlockAccess world, int x, int y, int z)
 	{
-		return ((TileEntityBChest) world.getBlockTileEntity(x, y, z)).getLightValue();
+		return ((TileEntityBChest) world.getTileEntity(x, y, z)).getLightValue();
 	}
 	
 	@Override
@@ -126,21 +124,15 @@ public class BlockBChest extends BlockContainer {
 	}
 	
 	@Override
-	public boolean canEntityDestroy(World world, int x, int y, int z, Entity entity)
-	{
-		return ! ((TileEntityBChest) world.getBlockTileEntity(x, y, z)).isUpgradeInstalled(Upgrade.UNBREAKABLE.getItem()) && !super.canEntityDestroy(world, x, y, z, entity);
-	}
-	
-	@Override
-	public void registerIcons(IconRegister par1IconRegister)
-	{
-		
+	public boolean canEntityDestroy(IBlockAccess world, int x, int y, int z, Entity entity)
+    {
+		return ! ((TileEntityBChest) world.getTileEntity(x, y, z)).isUpgradeInstalled(Upgrade.UNBREAKABLE.getItem()) && !super.canEntityDestroy(world, x, y, z, entity);
 	}
 	
 	@Override
 	public int getComparatorInputOverride(World par1World, int par2, int par3, int par4, int par5)
 	{
-		return ((TileEntityBChest) par1World.getBlockTileEntity(par2, par3, par4)).getComparatorOutput();
+		return ((TileEntityBChest) par1World.getTileEntity(par2, par3, par4)).getComparatorOutput();
 	}
 	
 	@Override
@@ -152,22 +144,21 @@ public class BlockBChest extends BlockContainer {
 	@Override
 	public boolean canConnectRedstone(IBlockAccess world, int x, int y, int z, int side)
 	{
-		return ((TileEntityBChest) world.getBlockTileEntity(x, y, z)).isUpgradeInstalled(Upgrade.REDSTONE.getItem());
+		return ((TileEntityBChest) world.getTileEntity(x, y, z)).isUpgradeInstalled(Upgrade.REDSTONE.getItem());
 	}
 	
 	@Override
 	public void onBlockExploded(World world, int x, int y, int z, Explosion explosion)
 	{
-		if (((TileEntityBChest) world.getBlockTileEntity(x, y, z)).isUpgradeInstalled(Upgrade.UNBREAKABLE.getItem())) {
+		if (((TileEntityBChest) world.getTileEntity(x, y, z)).isUpgradeInstalled(Upgrade.UNBREAKABLE.getItem())) {
 			return;
 		}
 		super.onBlockExploded(world, x, y, z, explosion);
 	}
 	
 	@Override
-	public boolean isFlammable(IBlockAccess world, int x, int y, int z, int metadata,
-		ForgeDirection face)
-	{
+	public boolean isFlammable(IBlockAccess world, int x, int y, int z, ForgeDirection face)
+    {
 		return false;
 	}
 	
@@ -178,7 +169,7 @@ public class BlockBChest extends BlockContainer {
 		if (par2World.isRemote) {
 			return super.getPlayerRelativeBlockHardness(par1EntityPlayer, par2World, par3, par4, par5);
 		}
-		if (! ((TileEntityBChest) par2World.getBlockTileEntity(par3, par4, par5)).isUseableByPlayer(par1EntityPlayer)) {
+		if (! ((TileEntityBChest) par2World.getTileEntity(par3, par4, par5)).isUseableByPlayer(par1EntityPlayer)) {
 			return - 1.0F;
 		}
 		else {
@@ -188,9 +179,9 @@ public class BlockBChest extends BlockContainer {
 	}
 	
 	@Override
-	public void breakBlock(World par1World, int par2, int par3, int par4, int par5, int par6)
-	{
-		TileEntityBChest te = (TileEntityBChest) par1World.getBlockTileEntity(par2, par3, par4);
+	public void breakBlock(World par1World, int par2, int par3, int par4, Block par5, int par6)
+    {
+		TileEntityBChest te = (TileEntityBChest) par1World.getTileEntity(par2, par3, par4);
 		if (te == null || te.pickedUp) {
 			super.breakBlock(par1World, par2, par3, par4, par5, par6);
 			return;
@@ -233,7 +224,7 @@ public class BlockBChest extends BlockContainer {
 			te.xCoord = par2;
 			te.yCoord = par3;
 			te.zCoord = par4;
-			par1World.setBlockTileEntity(par2, par3, par4, te);
+			par1World.setTileEntity(par2, par3, par4, te);
 		}
 		byte facing = 0;
 		int rotation = MathHelper.floor_double(par5EntityLivingBase.rotationYaw * 4.0F / 360.0F + 0.5D) & 3;

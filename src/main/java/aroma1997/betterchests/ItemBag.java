@@ -13,12 +13,6 @@ package aroma1997.betterchests;
 import java.util.ArrayList;
 import java.util.List;
 
-import aroma1997.betterchests.api.IUpgrade;
-import aroma1997.core.inventories.ISpecialInventory;
-import aroma1997.core.inventories.ISpecialInventoryProvider;
-import aroma1997.core.inventories.Inventories;
-
-import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -28,14 +22,21 @@ import net.minecraft.world.World;
 
 import org.lwjgl.input.Keyboard;
 
+import aroma1997.betterchests.api.IUpgrade;
+import aroma1997.betterchests.client.BetterChestsKeyBinding;
+import aroma1997.core.inventories.ISpecialInventory;
+import aroma1997.core.inventories.ISpecialInventoryProvider;
+import aroma1997.core.inventories.Inventories;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemBag extends Item implements ISpecialInventoryProvider {
 	
-	public ItemBag(int id) {
-		super(id);
+	public ItemBag() {
+		super();
+		setUnlocalizedName("betterchests:betterBag");
 		setMaxStackSize(1);
+		setTextureName(Reference.MOD_ID + ":bag");
 		setCreativeTab(BetterChests.creativeTabBC);
 	}
 	
@@ -53,7 +54,7 @@ public class ItemBag extends Item implements ISpecialInventoryProvider {
 		EntityPlayer thePlayer)
 	{
 		if (par2World.isRemote) {
-			PacketHandler.sendPacketBag(thePlayer.inventory.currentItem);
+//			PacketHandler.sendPacketBag(thePlayer.inventory.currentItem);
 		}
 		Inventories.openContainerAtPlayer(thePlayer, thePlayer.inventory.currentItem);
 		return par1ItemStack;
@@ -78,15 +79,9 @@ public class ItemBag extends Item implements ISpecialInventoryProvider {
 	}
 	
 	@Override
-	public String getItemDisplayName(ItemStack par1ItemStack) {
+	public String getItemStackDisplayName(ItemStack par1ItemStack)
+    {
 		return StatCollector.translateToLocal("item.betterchests:bag.name");
-	}
-	
-	@SideOnly(Side.CLIENT)
-	@Override
-	public void registerIcons(IconRegister par1IconRegister)
-	{
-		itemIcon = par1IconRegister.registerIcon(Reference.MOD_ID + ":bag");
 	}
 	
 	@SuppressWarnings({"unchecked", "rawtypes"})
@@ -96,7 +91,7 @@ public class ItemBag extends Item implements ISpecialInventoryProvider {
 		List par3List, boolean par4) {
 		
 		par3List.add(StatCollector.translateToLocalFormatted("info.betterchests:tooltip.openwith",
-			Keyboard.getKeyName(BetterChestsKeyHandler.openBag.keyCode)));
+			Keyboard.getKeyName(BetterChestsKeyBinding.getInstance().getKeyCode())));
 		addInfo(par1ItemStack, par3List);
 	}
 	

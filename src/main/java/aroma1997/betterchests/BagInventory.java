@@ -71,7 +71,7 @@ public class BagInventory implements IBetterChest, IAdvancedInventory, ISpecialI
 			{
 				itemstack = items[par1];
 				items[par1] = null;
-				onInventoryChanged();
+				markDirty();
 				return itemstack;
 			}
 			else
@@ -83,7 +83,7 @@ public class BagInventory implements IBetterChest, IAdvancedInventory, ISpecialI
 					items[par1] = null;
 				}
 				
-				onInventoryChanged();
+				markDirty();
 				return itemstack;
 			}
 		}
@@ -113,19 +113,13 @@ public class BagInventory implements IBetterChest, IAdvancedInventory, ISpecialI
 	{
 		setStackInSlotWithoutNotify(par1, par2ItemStack);
 		
-		onInventoryChanged();
+		markDirty();
 	}
 	
 	@Override
-	public String getInvName()
+	public String getInventoryName()
 	{
-		return isInvNameLocalized() ? customName : "inv.betterchests:bag.name";
-	}
-	
-	@Override
-	public boolean isInvNameLocalized()
-	{
-		return customName != null && customName.length() > 0;
+		return hasCustomInventoryName() ? customName : "inv.betterchests:bag.name";
 	}
 	
 	@Override
@@ -134,23 +128,8 @@ public class BagInventory implements IBetterChest, IAdvancedInventory, ISpecialI
 	}
 	
 	@Override
-	public void onInventoryChanged() {
-		writeToNBT(item.stackTagCompound);
-	}
-	
-	@Override
 	public boolean isUseableByPlayer(EntityPlayer entityplayer) {
 		return true;
-	}
-	
-	@Override
-	public void openChest() {
-		
-	}
-	
-	@Override
-	public void closeChest() {
-		
 	}
 	
 	@Override
@@ -197,9 +176,9 @@ public class BagInventory implements IBetterChest, IAdvancedInventory, ISpecialI
 			setAmountUpgradeWithoutNotify(upgrade.getItem(), amount);
 			nbt.removeTag(upgrade.toString());
 		}
-		NBTTagList list = nbt.getTagList("upgrades");
+		NBTTagList list = nbt.getTagList("upgrades", new NBTTagCompound().getId());
 		for (int i = 0; i < list.tagCount(); i++) {
-			NBTTagCompound upgradenbt = (NBTTagCompound) list.tagAt(i);
+			NBTTagCompound upgradenbt = (NBTTagCompound) list.getCompoundTagAt(i);
 			ItemStack item = ItemStack.loadItemStackFromNBT(upgradenbt);
 			upgrades.add(item);
 		}
@@ -253,7 +232,7 @@ public class BagInventory implements IBetterChest, IAdvancedInventory, ISpecialI
 	@Override
 	public void setAmountUpgrade(ItemStack upgrade, int amount) {
 		setAmountUpgradeWithoutNotify(upgrade, amount);
-		onInventoryChanged();
+		markDirty();
 	}
 	
 	public void setAmountUpgradeWithoutNotify(ItemStack upgrade, int amount) {
@@ -341,6 +320,27 @@ public class BagInventory implements IBetterChest, IAdvancedInventory, ISpecialI
 	@SuppressWarnings("unchecked")
 	public ArrayList<ItemStack> getUpgrades() {
 		return (ArrayList<ItemStack>) upgrades.clone();
+	}
+
+	@Override
+	public boolean hasCustomInventoryName() {
+		return customName != null && customName.length() > 0;
+	}
+
+	@Override
+	public void markDirty() {
+		writeToNBT(item.stackTagCompound);
+		
+	}
+
+	@Override
+	public void openInventory() {
+		
+	}
+
+	@Override
+	public void closeInventory() {
+		
 	}
 	
 }

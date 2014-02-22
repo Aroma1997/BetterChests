@@ -68,7 +68,7 @@ public class SlotUpgrades extends Slot {
 	@Override
 	public void onSlotChanged()
 	{
-		chest.onInventoryChanged();
+		chest.markDirty();
 	}
 	
 	@Override

@@ -13,20 +13,21 @@ package aroma1997.betterchests;
 import java.io.File;
 import java.util.ArrayList;
 
-import aroma1997.core.log.AromaLog;
+import net.minecraft.block.Block;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.oredict.OreDictionary;
+
+import org.apache.logging.log4j.Logger;
+
 import aroma1997.core.log.LogHelper;
 import aroma1997.core.util.AromaRegistry;
 import aroma1997.core.util.ItemUtil;
 import aroma1997.core.version.VersionCheck;
-
-import net.minecraft.block.Block;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-
-import net.minecraftforge.common.Configuration;
-import net.minecraftforge.oredict.OreDictionary;
-
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -34,11 +35,10 @@ import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 @Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, dependencies = "required-after:Aroma1997Core")
-@NetworkMod(channels = {"BetterChests"}, clientSideRequired = true, serverSideRequired = false, packetHandler = PacketHandler.class)
+//@NetworkMod(channels = {"BetterChests"}, clientSideRequired = true, serverSideRequired = false, packetHandler = PacketHandler.class)
 public class BetterChests {
 	
 	@Instance(Reference.MOD_ID)
@@ -57,7 +57,7 @@ public class BetterChests {
 	
 	public static CreativeTabs creativeTabBC = new CreativeTabBChest();
 	
-	public static AromaLog logger;
+	public static Logger logger;
 	
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
@@ -65,14 +65,10 @@ public class BetterChests {
 		Configuration config = new Configuration(new File(new File(
 			event.getModConfigurationDirectory(), "aroma1997"), Reference.MOD_ID + ".cfg"));
 		config.load();
-		chest = new BlockBChest(
-			config.getBlock("chestID", 2540, "The Block id of the BetterChest").getInt());
-		upgrade = new ItemUpgrade(
-			config.getItem(Configuration.CATEGORY_ITEM, "upgradeItem", 12458,
-				"The Item id of the Upgrades").getInt() - 256);
-		bag = new ItemBag(config.getItem("bagItem", 12457, "The item id of the Bag").getInt() - 256);
-		tool = new ItemTool(
-			config.getItem("itemTool", 12456, "The Item id of the Tool").getInt() - 256);
+		chest = new BlockBChest();
+		upgrade = new ItemUpgrade();
+		bag = new ItemBag();
+		tool = new ItemTool();
 		if (config.hasChanged()) {
 			config.save();
 		}
@@ -90,16 +86,16 @@ public class BetterChests {
 		GameRegistry.registerTileEntity(TileEntityBChest.class, "adjustableChest");
 		AromaRegistry.registerShapedAromicRecipe(new ItemStack(chest), false, "CCC", "CBC", "CCC",
 			'C',
-			"cobblestone", 'B', new ItemStack(Block.chest));
+			"cobblestone", 'B', new ItemStack(Blocks.chest));
 		AromaRegistry.registerShapedAromicRecipe(new ItemStack(bag), false, "SWS", "LCL", "SWS",
 			'S',
-			new ItemStack(Item.silk), 'L', new ItemStack(Item.leather), 'W', new ItemStack(
-				Block.cloth, 1, OreDictionary.WILDCARD_VALUE), 'C', new ItemStack(chest));
+			new ItemStack(Items.string), 'L', new ItemStack(Items.leather), 'W', new ItemStack(
+				Blocks.wool, 1, OreDictionary.WILDCARD_VALUE), 'C', new ItemStack(chest));
 		GameRegistry.addRecipe(new CraftingBag());
 		Upgrade.generateRecipes();
 		Tool.generateRecipes();
 		AromaRegistry.registerShapelessAromicRecipe(getHelpBook(), false, Upgrade.BASIC.getItem(),
-			new ItemStack(Item.book));
+			new ItemStack(Items.book));
 		GameRegistry.addRecipe(new CraftingBook());
 		
 		VersionCheck.registerVersionChecker(Reference.MOD_ID, Reference.VERSION);

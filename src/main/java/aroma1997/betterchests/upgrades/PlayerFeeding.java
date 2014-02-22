@@ -33,7 +33,7 @@ public class PlayerFeeding extends BasicUpgrade {
 				return;
 			}
 			ItemFood food = (ItemFood) itemStack.getItem();
-			if (20 - player.getFoodStats().getFoodLevel() >= food.getHealAmount()
+			if (20 - player.getFoodStats().getFoodLevel() >= food.func_150905_g(itemStack)
 				|| player.getFoodStats().getFoodLevel() <= 17 && player.getHealth() <= 19.0F
 				|| player.getFoodStats().getFoodLevel() <= 6) {
 				food.onEaten(itemStack.copy(), world, player);

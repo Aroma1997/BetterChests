@@ -15,6 +15,25 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
+import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
+import net.minecraft.inventory.Container;
+import net.minecraft.inventory.Slot;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.Packet;
+import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.MathHelper;
+import net.minecraft.world.WorldServer;
+import net.minecraftforge.common.util.FakePlayerFactory;
 import aroma1997.betterchests.api.IBetterChest;
 import aroma1997.betterchests.api.IUpgrade;
 import aroma1997.betterchests.client.EventListenerClient;
@@ -23,26 +42,10 @@ import aroma1997.core.inventories.AromaContainer;
 import aroma1997.core.inventories.ContainerBasic;
 import aroma1997.core.inventories.ISpecialInventory;
 import aroma1997.core.inventories.Inventories;
-import aroma1997.core.misc.FakePlayerFactory;
 import aroma1997.core.util.FileUtil;
 import aroma1997.core.util.ItemUtil;
 
-import net.minecraft.block.Block;
-import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.Container;
-import net.minecraft.inventory.Slot;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
-import net.minecraft.network.INetworkManager;
-import net.minecraft.network.packet.Packet;
-import net.minecraft.network.packet.Packet132TileEntityData;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.MathHelper;
+import com.mojang.authlib.GameProfile;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -68,11 +71,6 @@ public class TileEntityBChest extends TileEntity implements IBetterChest, ISpeci
 	}
 	
 	@Override
-	public String getInvName() {
-		return "inv.betterchests:chest.name";
-	}
-	
-	@Override
 	public ItemStack getStackInSlot(int slot) {
 		if (slot < 0 || slot >= items.length) {
 			return null;
@@ -84,7 +82,7 @@ public class TileEntityBChest extends TileEntity implements IBetterChest, ISpeci
 	public void validate() {
 		super.validate();
 		if (! worldObj.isRemote) {
-			fplayer = FakePlayerFactory.getFakePlayer(worldObj);
+			fplayer = FakePlayerFactory.get((WorldServer) worldObj, new GameProfile("", "Aroma1997BetterChests"));
 			fplayer.posX = xCoord;
 			fplayer.posY = yCoord;
 			fplayer.posZ = zCoord;
@@ -115,7 +113,7 @@ public class TileEntityBChest extends TileEntity implements IBetterChest, ISpeci
 		
 		if (tick-- <= 0) {
 			tick = 64;
-			onInventoryChanged();
+			markDirty();
 		};
 		
 		if (isUpgradeInstalled(Upgrade.TICKING.getItem()) && tick % 8 == 0) {
@@ -125,38 +123,10 @@ public class TileEntityBChest extends TileEntity implements IBetterChest, ISpeci
 					continue;
 				}
 				fplayer.inventory.mainInventory[0] = getStackInSlot(i);
-				fplayer.inventory.onInventoryChanged();
+				fplayer.inventory.markDirty();
 				item.getItem().onUpdate(item, worldObj, fplayer, 0, false);
-				onInventoryChanged();
+				markDirty();
 			}
-		}
-		
-		if (isUpgradeInstalled(Upgrade.RAIN.getItem())
-			&& worldObj.canBlockSeeTheSky(xCoord, yCoord, zCoord)
-			&& worldObj.isRaining()
-			&& new Random().nextFloat() > Reference.Conf.RAIN_THINGY && tick == 20) {
-			int bucketEmpty = - 1;
-			int emptySpace = - 1;
-			for (int i = 0; i < getSizeInventory(); i++) {
-				if (getStackInSlot(i) != null
-					&& getStackInSlot(i).itemID == Item.bucketEmpty.itemID && bucketEmpty == - 1) {
-					bucketEmpty = i;
-					if (getStackInSlot(i).stackSize == 1) {
-						emptySpace = i;
-						break;
-					}
-					continue;
-				}
-				if (emptySpace == - 1 && getStackInSlot(i) == null) {
-					emptySpace = i;
-					continue;
-				}
-			}
-			if (bucketEmpty == - 1 || emptySpace == - 1) {
-				return;
-			}
-			decrStackSize(bucketEmpty, 1);
-			setInventorySlotContents(emptySpace, new ItemStack(Item.bucketWater));
 		}
 	}
 	
@@ -165,18 +135,13 @@ public class TileEntityBChest extends TileEntity implements IBetterChest, ISpeci
 	{
 		NBTTagCompound nbt = new NBTTagCompound();
 		writeToNBT(nbt);
-		Packet132TileEntityData packet = new Packet132TileEntityData();
-		packet.data = nbt;
-		packet.xPosition = xCoord;
-		packet.yPosition = yCoord;
-		packet.zPosition = zCoord;
-		packet.actionType = 1;
+		S35PacketUpdateTileEntity packet = new S35PacketUpdateTileEntity(xCoord, yCoord, zCoord, worldObj.provider.dimensionId, nbt);
 		return packet;
 	}
 	
 	@Override
-	public void onDataPacket(INetworkManager net, Packet132TileEntityData packet) {
-		readFromNBT(packet.data);
+	public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity packet) {
+		readFromNBT(packet.func_148857_g());
 	}
 	
 	@Override
@@ -195,12 +160,12 @@ public class TileEntityBChest extends TileEntity implements IBetterChest, ISpeci
 		}
 		
 		if (! MinecraftServer.getServer().isDedicatedServer()
-			&& par1EntityPlayer.username.equalsIgnoreCase(Minecraft.getMinecraft().thePlayer.username)) {
+			&& par1EntityPlayer.getCommandSenderName().equalsIgnoreCase(Minecraft.getMinecraft().thePlayer.getCommandSenderName())) {
 			return true;
 		}
 		if (MinecraftServer.getServer().getConfigurationManager().getOps().contains(
-			par1EntityPlayer.username.toLowerCase())
-			|| player.equalsIgnoreCase(par1EntityPlayer.username)) {
+			par1EntityPlayer.getCommandSenderName().toLowerCase())
+			|| player.equalsIgnoreCase(par1EntityPlayer.getCommandSenderName())) {
 			return true;
 		}
 		return false;
@@ -228,7 +193,7 @@ public class TileEntityBChest extends TileEntity implements IBetterChest, ISpeci
 			&& upgrade.getMaxUpgrades(itemUpgrade) > getAmountUpgrade(itemUpgrade)) {
 			setAmountUpgrade(itemUpgrade, getAmountUpgrade(itemUpgrade) + 1);
 			if (ItemUtil.areItemsSame(itemUpgrade, Upgrade.PLAYER.getItem())) {
-				this.player = player.username;
+				this.player = player.getCommandSenderName();
 			}
 			onUpgradeInserted(player);
 			return true;
@@ -246,9 +211,9 @@ public class TileEntityBChest extends TileEntity implements IBetterChest, ISpeci
 			}
 			setAmountUpgrade(upgrade.getItem(), amount);
 		}
-		NBTTagList list = nbt.getTagList("upgrades");
+		NBTTagList list = nbt.getTagList("upgrades", new NBTTagCompound().getId());
 		for (int i = 0; i < list.tagCount(); i++) {
-			NBTTagCompound upgradenbt = (NBTTagCompound) list.tagAt(i);
+			NBTTagCompound upgradenbt = (NBTTagCompound) list.getCompoundTagAt(i);
 			ItemStack item = ItemStack.loadItemStackFromNBT(upgradenbt);
 			upgrades.add(item);
 		}
@@ -257,7 +222,7 @@ public class TileEntityBChest extends TileEntity implements IBetterChest, ISpeci
 		player = nbt.getString("player");
 		super.readFromNBT(nbt);
 		if (worldObj != null && worldObj.isRemote) {
-			worldObj.markBlockForRenderUpdate(xCoord, yCoord, zCoord);
+			worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
 		}
 	}
 	
@@ -282,7 +247,7 @@ public class TileEntityBChest extends TileEntity implements IBetterChest, ISpeci
 		NBTTagCompound nbttagcompound = new NBTTagCompound();
 		writeToNBT(nbttagcompound);
 		readFromNBT(nbttagcompound);
-		onInventoryChanged();
+		markDirty();
 		
 	}
 	
@@ -294,27 +259,6 @@ public class TileEntityBChest extends TileEntity implements IBetterChest, ISpeci
 		
 		if (! isUpgradeInstalled(Upgrade.COMPARATOR.getItem())) {
 			return 0;
-		}
-		if (isUpgradeInstalled(Upgrade.RAIN.getItem())) {
-			int w = 0;
-			int e = 0;
-			for (int i = 0; i < getSizeInventory(); i++) {
-				if (getStackInSlot(i) != null
-					&& getStackInSlot(i).itemID == Item.bucketWater.itemID) {
-					w++;
-				}
-				if (getStackInSlot(i) != null
-					&& getStackInSlot(i).itemID == Item.bucketEmpty.itemID) {
-					e += getStackInSlot(i).stackSize;
-				}
-			}
-			if (w == 0) {
-				return 0;
-			}
-			if (e == 0) {
-				return 15;
-			}
-			return (int) (w / ((float) e + (float) w) * 15);
 		}
 		return Container.calcRedstoneFromInventory(this);
 	}
@@ -365,23 +309,6 @@ public class TileEntityBChest extends TileEntity implements IBetterChest, ISpeci
 		return MathHelper.clamp_int(numUsingPlayers, 0, 15);
 	}
 	
-	private void updateNearbyBlocks() {
-		updateBlock(xCoord + 1, yCoord, zCoord);
-		updateBlock(xCoord - 1, yCoord, zCoord);
-		updateBlock(xCoord, yCoord, zCoord + 1);
-		updateBlock(xCoord, yCoord, zCoord - 1);
-		updateBlock(xCoord, yCoord + 1, zCoord);
-		updateBlock(xCoord, yCoord - 1, zCoord);
-	}
-	
-	private void updateBlock(int x, int y, int z) {
-		if (worldObj.isAirBlock(x, y, z)) {
-			return;
-		}
-		Block.blocksList[worldObj.getBlockId(x, y, z)].onNeighborBlockChange(worldObj, x, y, z,
-			BetterChests.chest.blockID);
-	}
-	
 	@SuppressWarnings("rawtypes")
 	private void doNormalChestUpdate() {
 		if (worldObj != null && ! worldObj.isRemote && numUsingPlayers > 0
@@ -411,7 +338,7 @@ public class TileEntityBChest extends TileEntity implements IBetterChest, ISpeci
 		
 		if (worldObj != null && ! worldObj.isRemote && ticksSinceSync < 0)
 		{
-			worldObj.addBlockEvent(xCoord, yCoord, zCoord, BetterChests.chest.blockID, 1,
+			worldObj.addBlockEvent(xCoord, yCoord, zCoord, BetterChests.chest, 1,
 				numUsingPlayers);
 		}
 		
@@ -422,7 +349,6 @@ public class TileEntityBChest extends TileEntity implements IBetterChest, ISpeci
 		{
 			worldObj.playSoundEffect(xCoord + 0.5D, yCoord + 0.5D, zCoord + 0.5D,
 				EventListenerClient.SOUND_OPEN_CHEST, 0.5F, worldObj.rand.nextFloat() * 0.1F + 0.9F);
-			updateNearbyBlocks();
 		}
 		if (numUsingPlayers <= 0 && lidAngle > 0.0F || numUsingPlayers > 0 && lidAngle < 1.0F)
 		{
@@ -445,7 +371,6 @@ public class TileEntityBChest extends TileEntity implements IBetterChest, ISpeci
 				worldObj.playSoundEffect(xCoord + 0.5D, yCoord + 0.5D, zCoord + 0.5D,
 					EventListenerClient.SOUND_CLOSE_CHEST, 0.5F,
 					worldObj.rand.nextFloat() * 0.1F + 0.9F);
-				updateNearbyBlocks();
 			}
 			if (lidAngle < 0.0F)
 			{
@@ -455,8 +380,8 @@ public class TileEntityBChest extends TileEntity implements IBetterChest, ISpeci
 	}
 	
 	@Override
-	public void onInventoryChanged() {
-		super.onInventoryChanged();
+	public void markDirty() {
+		super.markDirty();
 		worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
 	}
 	
@@ -471,7 +396,7 @@ public class TileEntityBChest extends TileEntity implements IBetterChest, ISpeci
 			{
 				itemstack = items[par1];
 				items[par1] = null;
-				onInventoryChanged();
+				markDirty();
 				return itemstack;
 			}
 			else
@@ -483,7 +408,7 @@ public class TileEntityBChest extends TileEntity implements IBetterChest, ISpeci
 					items[par1] = null;
 				}
 				
-				onInventoryChanged();
+				markDirty();
 				return itemstack;
 			}
 		}
@@ -510,26 +435,8 @@ public class TileEntityBChest extends TileEntity implements IBetterChest, ISpeci
 	}
 	
 	@Override
-	public boolean isInvNameLocalized() {
-		return false;
-	}
-	
-	@Override
 	public int getInventoryStackLimit() {
 		return 64;
-	}
-	
-	@Override
-	public void openChest() {
-		
-		numUsingPlayers++;
-		updateNearbyBlocks();
-	}
-	
-	@Override
-	public void closeChest() {
-		numUsingPlayers--;
-		updateNearbyBlocks();
 	}
 	
 	@Override
@@ -640,6 +547,26 @@ public class TileEntityBChest extends TileEntity implements IBetterChest, ISpeci
 	@SuppressWarnings("unchecked")
 	public ArrayList<ItemStack> getUpgrades() {
 		return (ArrayList<ItemStack>) upgrades.clone();
+	}
+
+	@Override
+	public String getInventoryName() {
+		return "inv.betterchests:chest.name";
+	}
+
+	@Override
+	public boolean hasCustomInventoryName() {
+		return false;
+	}
+
+	@Override
+	public void openInventory() {
+		numUsingPlayers++;
+	}
+
+	@Override
+	public void closeInventory() {
+		numUsingPlayers--;
 	}
 	
 }

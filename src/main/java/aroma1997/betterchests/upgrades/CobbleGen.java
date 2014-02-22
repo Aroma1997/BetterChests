@@ -2,14 +2,15 @@
 package aroma1997.betterchests.upgrades;
 
 
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
 import aroma1997.betterchests.Upgrade;
 import aroma1997.betterchests.api.IBetterChest;
 import aroma1997.core.util.InvUtil;
-
-import net.minecraft.block.Block;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
+import aroma1997.core.util.ItemUtil;
+import aroma1997.core.util.ItemUtil.ItemMatchCriteria;
 
 public class CobbleGen extends BasicUpgrade {
 	
@@ -20,13 +21,13 @@ public class CobbleGen extends BasicUpgrade {
 			int bucketWater = - 1;
 			for (int i = 0; i < inv.getSizeInventory(); i++) {
 				if (inv.getStackInSlot(i) != null
-					&& inv.getStackInSlot(i).itemID == Item.bucketWater.itemID
+					&& ItemUtil.areItemsSameMatching(inv.getStackInSlot(i), new ItemStack(Items.water_bucket), ItemMatchCriteria.ID)
 					&& bucketWater == - 1) {
 					bucketWater = i;
 					continue;
 				}
 				if (inv.getStackInSlot(i) != null && bucketLava == - 1
-					&& inv.getStackInSlot(i).itemID == Item.bucketLava.itemID) {
+					&& ItemUtil.areItemsSameMatching(inv.getStackInSlot(i), new ItemStack(Items.lava_bucket), ItemMatchCriteria.ID)) {
 					bucketLava = i;
 					continue;
 				}
@@ -34,7 +35,7 @@ public class CobbleGen extends BasicUpgrade {
 			if (bucketLava == - 1 || bucketWater == - 1) {
 				return;
 			}
-			InvUtil.putIntoFirstSlot(inv, new ItemStack(Block.cobblestone), false);
+			InvUtil.putIntoFirstSlot(inv, new ItemStack(Blocks.cobblestone), false);
 		}
 	}
 	

@@ -2,15 +2,13 @@
 package aroma1997.betterchests;
 
 
-import aroma1997.core.util.InvUtil;
-
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
+import aroma1997.core.util.InvUtil;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
 public class EventListener {
 	
@@ -18,7 +16,7 @@ public class EventListener {
 		MinecraftForge.EVENT_BUS.register(this);
 	}
 	
-	@ForgeSubscribe
+	@SubscribeEvent
 	public void pickup(EntityItemPickupEvent event) {
 		EntityPlayer player = event.entityPlayer;
 		EntityItem eitem = event.item;

@@ -54,7 +54,7 @@ public class Feeding extends BasicUpgrade {
 			}
 			if (e.getGrowingAge() == 0 && ! e.isInLove())
 			{
-				e.inLove = 600;
+				e.func_146082_f(null);
 				
 				inv.decrStackSize(slot, 1);
 			}

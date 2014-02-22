@@ -3,15 +3,15 @@ package aroma1997.betterchests.client;
 
 
 import java.lang.reflect.Field;
-import java.util.logging.Level;
-
-import aroma1997.betterchests.BetterChests;
-import aroma1997.betterchests.Reference;
 
 import net.minecraftforge.client.event.sound.SoundLoadEvent;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.ForgeSubscribe;
 
+import org.apache.logging.log4j.Level;
+
+import aroma1997.betterchests.BetterChests;
+import aroma1997.betterchests.Reference;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -28,7 +28,7 @@ public class EventListenerClient {
 	public static final String SOUND_CLOSE_CHEST = PREFIX + "bchestclose";
 	
 	@SideOnly(Side.CLIENT)
-	@ForgeSubscribe
+	@SubscribeEvent
 	public void loadSounds(SoundLoadEvent event) {
 		for (Field field : getClass().getFields()) {
 			if (! field.isAccessible()) {
@@ -43,12 +43,12 @@ public class EventListenerClient {
 			}
 			if (o != null && o instanceof String && field.getName().startsWith("SOUND_")) {
 				String str = (String) o;
-				BetterChests.logger.log(Level.FINE, "Loading sound: " + str);
+				BetterChests.logger.log(Level.TRACE, "Loading sound: " + str);
 				try {
-					event.manager.soundPoolSounds.addSound(str + ".ogg");
+//					event.manager.addSound(str + ".ogg");
 				}
 				catch (Exception e) {
-					BetterChests.logger.log(Level.SEVERE, "Failed to load sound: " + str, e);
+					BetterChests.logger.log(Level.ERROR, "Failed to load sound: " + str, e);
 				}
 			}
 		}

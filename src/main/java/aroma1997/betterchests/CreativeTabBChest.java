@@ -11,6 +11,7 @@ package aroma1997.betterchests;
 
 
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 import cpw.mods.fml.relauncher.Side;
@@ -32,6 +33,12 @@ public class CreativeTabBChest extends CreativeTabs {
 	public String getTranslatedTabLabel()
 	{
 		return "creativetab.betterchests:creativetab.name";
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public Item getTabIconItem() {
+		return BetterChests.bag;
 	}
 	
 }

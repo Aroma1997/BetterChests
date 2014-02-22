@@ -13,31 +13,30 @@ package aroma1997.betterchests;
 import java.util.ArrayList;
 import java.util.List;
 
-import aroma1997.betterchests.api.IBetterChest;
-import aroma1997.betterchests.api.IUpgrade;
-import aroma1997.core.client.util.Colors;
-import aroma1997.core.util.InvUtil;
-import aroma1997.core.util.ItemUtil;
-
 import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.Icon;
+import net.minecraft.util.IIcon;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
-
+import aroma1997.betterchests.api.IBetterChest;
+import aroma1997.betterchests.api.IUpgrade;
+import aroma1997.core.client.util.Colors;
+import aroma1997.core.util.InvUtil;
+import aroma1997.core.util.ItemUtil;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemUpgrade extends Item implements IUpgrade {
 	
-	public ItemUpgrade(int id) {
-		super(id);
+	public ItemUpgrade() {
+		super();
 		setCreativeTab(BetterChests.creativeTabBC);
+		setUnlocalizedName("betterchests:upgrades");
 		setHasSubtypes(true);
 	}
 	
@@ -66,19 +65,19 @@ public class ItemUpgrade extends Item implements IUpgrade {
 	
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	@Override
-	public void getSubItems(int par1, CreativeTabs par2CreativeTabs, List par3List)
+	public void getSubItems(Item par1, CreativeTabs par2CreativeTabs, List par3List)
 	{
 		for (int i = 0; i < Upgrade.values().length; i++) {
-			par3List.add(new ItemStack(itemID, 1, i));
+			par3List.add(new ItemStack(par1, 1, i));
 		}
 	}
 	
-	private Icon[] itemIcons;
+	private IIcon[] itemIcons;
 	
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void registerIcons(IconRegister iconRegister) {
-		itemIcons = new Icon[Upgrade.values().length];
+	public void registerIcons(IIconRegister iconRegister) {
+		itemIcons = new IIcon[Upgrade.values().length];
 		for (int i = 0; i < itemIcons.length; i++) {
 			itemIcons[i] = iconRegister.registerIcon(Upgrade.values()[i].getTexture());
 		}
@@ -86,13 +85,13 @@ public class ItemUpgrade extends Item implements IUpgrade {
 	
 	@SideOnly(Side.CLIENT)
 	@Override
-	public Icon getIconFromDamage(int par1)
+	public IIcon getIconFromDamage(int par1)
 	{
 		return itemIcons[par1];
 	}
 	
 	@Override
-	public String getItemDisplayName(ItemStack par1ItemStack)
+	public String getItemStackDisplayName(ItemStack par1ItemStack)
 	{
 		return Upgrade.values()[par1ItemStack.getItemDamage()].getName();
 	}

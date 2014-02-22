@@ -12,23 +12,25 @@ package aroma1997.betterchests;
 
 import java.util.List;
 
-import net.minecraft.client.renderer.texture.IconRegister;
+import javax.swing.Icon;
+
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.Icon;
+import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
-
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemTool extends Item {
 	
-	private Icon[] itemIcons = new Icon[Tool.values().length];
+	private IIcon[] itemIcons = new IIcon[Tool.values().length];
 	
-	public ItemTool(int id) {
-		super(id);
+	public ItemTool() {
+		super();
+		setUnlocalizedName("betterchests:tool");
 		setHasSubtypes(true);
 		setMaxStackSize(1);
 		setContainerItem(this);
@@ -37,31 +39,31 @@ public class ItemTool extends Item {
 	}
 	
 	@Override
-	public String getItemDisplayName(ItemStack par1ItemStack)
+	public String getItemStackDisplayName(ItemStack par1ItemStack)
 	{
 		return Tool.values()[par1ItemStack.getItemDamage()].getName();
 	}
 	
 	@SideOnly(Side.CLIENT)
 	@Override
-	public Icon getIconFromDamage(int par1)
+	public IIcon getIconFromDamage(int par1)
 	{
 		return itemIcons[par1];
 	}
 	
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	@Override
-	public void getSubItems(int par1, CreativeTabs par2CreativeTabs, List par3List)
+	public void getSubItems(Item par1, CreativeTabs par2CreativeTabs, List par3List)
 	{
 		for (int i = 0; i < Tool.values().length; i++) {
-			par3List.add(new ItemStack(itemID, 1, i));
+			par3List.add(new ItemStack(par1, 1, i));
 		}
 	}
 	
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void registerIcons(IconRegister iconRegister) {
-		itemIcons = new Icon[Tool.values().length];
+	public void registerIcons(IIconRegister iconRegister) {
+		itemIcons = new IIcon[Tool.values().length];
 		for (int i = 0; i < itemIcons.length; i++) {
 			itemIcons[i] = iconRegister.registerIcon(Tool.values()[i].getTexture());
 		}
@@ -75,8 +77,8 @@ public class ItemTool extends Item {
 	}
 	
 	@Override
-	public ItemStack getContainerItemStack(ItemStack item) {
-		return item;
+	public ItemStack getContainerItem(ItemStack itemStack) {
+		return itemStack;
 	}
 	
 }

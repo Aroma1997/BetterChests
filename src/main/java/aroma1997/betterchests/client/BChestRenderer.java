@@ -10,9 +10,6 @@
 package aroma1997.betterchests.client;
 
 
-import aroma1997.betterchests.Reference;
-import aroma1997.betterchests.TileEntityBChest;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockChest;
 import net.minecraft.client.model.ModelChest;
@@ -23,7 +20,8 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
-import cpw.mods.fml.common.FMLLog;
+import aroma1997.betterchests.Reference;
+import aroma1997.betterchests.TileEntityBChest;
 
 public class BChestRenderer extends TileEntitySpecialRenderer {
 	
@@ -56,19 +54,6 @@ public class BChestRenderer extends TileEntitySpecialRenderer {
 			
 			if (block instanceof BlockChest && i == 0)
 			{
-				try
-				{
-					((BlockChest) block).unifyAdjacentChests(par1TileEntityChest.getWorldObj(),
-						par1TileEntityChest.xCoord, par1TileEntityChest.yCoord,
-						par1TileEntityChest.zCoord);
-				}
-				catch (ClassCastException e)
-				{
-					FMLLog.severe(
-						"Attempted to render a BetterChests chest at %d,  %d, %d that was not a BetterChests chest.",
-						par1TileEntityChest.xCoord, par1TileEntityChest.yCoord,
-						par1TileEntityChest.zCoord);
-				}
 				i = par1TileEntityChest.getBlockMetadata();
 			}
 		}
