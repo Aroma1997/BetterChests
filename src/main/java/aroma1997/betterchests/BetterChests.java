@@ -54,8 +54,6 @@ public class BetterChests {
 	
 	public static ItemBag bag;
 	
-	public static ItemTool tool;
-	
 	public static CreativeTabs creativeTabBC = new CreativeTabBChest();
 	
 	public static Logger logger;
@@ -69,7 +67,6 @@ public class BetterChests {
 		chest = new BlockBChest();
 		upgrade = new ItemUpgrade();
 		bag = new ItemBag();
-		tool = new ItemTool();
 		if (config.hasChanged()) {
 			config.save();
 		}
@@ -77,7 +74,6 @@ public class BetterChests {
 		GameRegistry.registerBlock(chest, ItemBlockBChest.class, "betterChest");
 		GameRegistry.registerItem(upgrade, "Upgrade");
 		GameRegistry.registerItem(bag, "Bag");
-		GameRegistry.registerItem(tool, "Tool");
 		new EventListener();
 	}
 	
@@ -94,7 +90,6 @@ public class BetterChests {
 				Blocks.wool, 1, OreDictionary.WILDCARD_VALUE), 'C', new ItemStack(chest));
 		GameRegistry.addRecipe(new CraftingBag());
 		Upgrade.generateRecipes();
-		Tool.generateRecipes();
 		AromaRegistry.registerShapelessAromicRecipe(getHelpBook(), false, Upgrade.BASIC.getItem(),
 			new ItemStack(Items.book));
 		GameRegistry.addRecipe(new CraftingBook());
@@ -120,7 +115,6 @@ public class BetterChests {
 		list.add("book.betterchests:bag.1");
 		list.add("book.betterchests:bag.2");
 		list.add("book.betterchests:chapter.tools");
-		Tool.addBookDescription(list);
 		list.add("book.betterchests:chapter.upgrades");
 		Upgrade.addBagBookDescription(list);
 		list.add("book.betterchests:chapter.credits");
