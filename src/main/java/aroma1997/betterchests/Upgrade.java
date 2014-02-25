@@ -169,10 +169,10 @@ public enum Upgrade {
 			"RER", 'H', new ItemStack(Blocks.hopper), 'R', new ItemStack(Items.redstone), 'E',
 			new ItemStack(Items.ender_pearl), 'U', itemUpgrade);
 		// TICKING
-		AromaRegistry.registerShapedAromicRecipe(
-			new ItemStack(item, 1, Upgrade.TICKING.ordinal()), false,
-			"QCQ", "RUR", "QCQ", 'Q', new ItemStack(Items.quartz), 'C', new ItemStack(
-				Items.clock), 'R', new ItemStack(Items.comparator), 'U', itemUpgrade);
+//		AromaRegistry.registerShapedAromicRecipe(
+//			new ItemStack(item, 1, Upgrade.TICKING.ordinal()), false,
+//			"QCQ", "RUR", "QCQ", 'Q', new ItemStack(Items.quartz), 'C', new ItemStack(
+//				Items.clock), 'R', new ItemStack(Items.comparator), 'U', itemUpgrade);
 		// FEEDING
 		AromaRegistry.registerShapedAromicRecipe(new ItemStack(item, 1, FEEDING.ordinal()),
 			false, " W ", "WUW", " W ", 'W', new ItemStack(Items.wheat), 'U', itemUpgrade);
