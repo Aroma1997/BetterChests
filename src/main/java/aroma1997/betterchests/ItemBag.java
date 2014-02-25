@@ -17,6 +17,8 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
@@ -27,6 +29,8 @@ import aroma1997.betterchests.client.BetterChestsKeyBinding;
 import aroma1997.core.inventories.ISpecialInventory;
 import aroma1997.core.inventories.ISpecialInventoryProvider;
 import aroma1997.core.inventories.Inventories;
+import aroma1997.core.log.LogHelper;
+import aroma1997.core.network.NetworkHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -54,9 +58,8 @@ public class ItemBag extends Item implements ISpecialInventoryProvider {
 		EntityPlayer thePlayer)
 	{
 		if (par2World.isRemote) {
-//			PacketHandler.sendPacketBag(thePlayer.inventory.currentItem);
+			NetworkHelper.sendPacketToPlayers(new PacketOpenBag().setSlot(thePlayer.inventory.currentItem));
 		}
-		Inventories.openContainerAtPlayer(thePlayer, thePlayer.inventory.currentItem);
 		return par1ItemStack;
 	}
 	

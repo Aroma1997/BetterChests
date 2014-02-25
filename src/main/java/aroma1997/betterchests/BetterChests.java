@@ -25,6 +25,7 @@ import net.minecraftforge.oredict.OreDictionary;
 import org.apache.logging.log4j.Logger;
 
 import aroma1997.core.log.LogHelper;
+import aroma1997.core.network.NetworkHelper;
 import aroma1997.core.util.AromaRegistry;
 import aroma1997.core.util.ItemUtil;
 import aroma1997.core.version.VersionCheck;
@@ -97,6 +98,8 @@ public class BetterChests {
 		AromaRegistry.registerShapelessAromicRecipe(getHelpBook(), false, Upgrade.BASIC.getItem(),
 			new ItemStack(Items.book));
 		GameRegistry.addRecipe(new CraftingBook());
+		
+		NetworkHelper.registerPacket(PacketOpenBag.class);
 		
 		VersionCheck.registerVersionChecker(Reference.MOD_ID, Reference.VERSION);
 	}
