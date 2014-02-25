@@ -572,12 +572,6 @@ public class TileEntityBChest extends TileEntity implements IBetterChest, ISpeci
 	}
 
 	@Override
-	public boolean canUseWrench(ItemStack wrench, EntityPlayer player,
-			ForgeDirection side) {
-		return false;
-	}
-
-	@Override
 	public boolean onWrenchUsed(ItemStack wrench, EntityPlayer player,
 			ForgeDirection side) {
 		return false;
