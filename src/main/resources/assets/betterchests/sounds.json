@@ -1,0 +1,15 @@
+{
+  "chest.bchestopen": {
+    "category": "neutral",
+    "sounds": [
+      "chest/bchestopen"
+    ]
+  },
+  
+  "chest.bchestclose": {
+    "category": "neutral",
+    "sounds": [
+      "chest/bchestclose"
+    ]
+  }
+}

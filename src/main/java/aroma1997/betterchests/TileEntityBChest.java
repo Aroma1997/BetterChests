@@ -349,8 +349,7 @@ public class TileEntityBChest extends TileEntity implements IBetterChest, ISpeci
 		float f = 0.1F;
 		if (numUsingPlayers > 0 && lidAngle == 0.0F)
 		{
-//			worldObj.playSoundEffect(xCoord + 0.5D, yCoord + 0.5D, zCoord + 0.5D,
-//				EventListenerClient.SOUND_OPEN_CHEST, 0.5F, worldObj.rand.nextFloat() * 0.1F + 0.9F);
+			worldObj.playSoundEffect(xCoord + 0.5D, yCoord + 0.5D, zCoord + 0.5D, "betterchests:chest.bchestclose" , 0.5F, worldObj.rand.nextFloat() * 0.1F + 0.9F);
 		}
 		if (numUsingPlayers <= 0 && lidAngle > 0.0F || numUsingPlayers > 0 && lidAngle < 1.0F)
 		{
@@ -370,9 +369,9 @@ public class TileEntityBChest extends TileEntity implements IBetterChest, ISpeci
 			float f2 = 0.5F;
 			if (lidAngle < f2 && f1 >= f2)
 			{
-//				worldObj.playSoundEffect(xCoord + 0.5D, yCoord + 0.5D, zCoord + 0.5D,
-//					EventListenerClient.SOUND_CLOSE_CHEST, 0.5F,
-//					worldObj.rand.nextFloat() * 0.1F + 0.9F);
+				worldObj.playSoundEffect(xCoord + 0.5D, yCoord + 0.5D, zCoord + 0.5D,
+					"betterchests:chest.bchestopen", 0.5F,
+					worldObj.rand.nextFloat() * 0.1F + 0.9F);
 			}
 			if (lidAngle < 0.0F)
 			{
