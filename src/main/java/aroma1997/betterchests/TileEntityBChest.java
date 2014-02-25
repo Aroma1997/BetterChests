@@ -34,6 +34,7 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.FakePlayerFactory;
+import net.minecraftforge.common.util.ForgeDirection;
 import aroma1997.betterchests.api.IBetterChest;
 import aroma1997.betterchests.api.IUpgrade;
 import aroma1997.betterchests.client.EventListenerClient;
@@ -42,6 +43,7 @@ import aroma1997.core.inventories.AromaContainer;
 import aroma1997.core.inventories.ContainerBasic;
 import aroma1997.core.inventories.ISpecialInventory;
 import aroma1997.core.inventories.Inventories;
+import aroma1997.core.items.wrench.IAromaWrenchable;
 import aroma1997.core.util.FileUtil;
 import aroma1997.core.util.ItemUtil;
 
@@ -50,7 +52,7 @@ import com.mojang.authlib.GameProfile;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class TileEntityBChest extends TileEntity implements IBetterChest, ISpecialInventory {
+public class TileEntityBChest extends TileEntity implements IBetterChest, ISpecialInventory, IAromaWrenchable {
 	
 	String player;
 	
@@ -567,6 +569,24 @@ public class TileEntityBChest extends TileEntity implements IBetterChest, ISpeci
 	@Override
 	public void closeInventory() {
 		numUsingPlayers--;
+	}
+
+	@Override
+	public boolean canUseWrench(ItemStack wrench, EntityPlayer player,
+			ForgeDirection side) {
+		return false;
+	}
+
+	@Override
+	public boolean onWrenchUsed(ItemStack wrench, EntityPlayer player,
+			ForgeDirection side) {
+		return false;
+	}
+
+	@Override
+	public boolean canPickup(ItemStack wrench, EntityPlayer player,
+			ForgeDirection side) {
+		return true;
 	}
 	
 }
