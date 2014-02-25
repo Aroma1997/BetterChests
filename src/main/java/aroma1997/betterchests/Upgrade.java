@@ -33,7 +33,7 @@ import aroma1997.betterchests.upgrades.Ticking;
 import aroma1997.core.util.AromaRegistry;
 
 public enum Upgrade {
-	SLOT(null, 9, true, true, Null.class),
+	SLOT(null, 7, true, true, Null.class),
 	COBBLEGEN(null, 1, true, true, CobbleGen.class),
 	REDSTONE(null, 1, true, false, Null.class),
 	LIGHT(null, 1, true, false, Null.class),

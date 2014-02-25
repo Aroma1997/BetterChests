@@ -146,7 +146,7 @@ public class TileEntityBChest extends TileEntity implements IBetterChest, ISpeci
 	
 	@Override
 	public int getSizeInventory() {
-		return getAmountUpgrade(Upgrade.SLOT.getItem()) * 9 + 9;
+		return getAmountUpgrade(Upgrade.SLOT.getItem()) * 9 + 27;
 	}
 	
 	@Override
