@@ -296,18 +296,6 @@ public class TileEntityBChest extends TileEntity implements IBetterChest, ISpeci
 	}
 	
 	public int getRedstoneOutput() {
-		if (! isUpgradeInstalled(Upgrade.REDSTONE.getItem())) {
-			return 0;
-		}
-		if (isUpgradeInstalled(Upgrade.RAIN.getItem())) {
-			if (worldObj.isThundering()) {
-				return 2;
-			}
-			if (worldObj.isRaining()) {
-				return 1;
-			}
-			return 0;
-		}
 		return MathHelper.clamp_int(numUsingPlayers, 0, 15);
 	}
 	
