@@ -46,11 +46,20 @@ public interface IBetterChest extends IInventory {
 	
 	/**
 	 * How many of the Upgrades are installed.
+	 * This is ignoring NBT data of the stack.
 	 * 
 	 * @param upgrade The upgrade to check.
 	 * @return
 	 */
 	public int getAmountUpgrade(ItemStack upgrade);
+	
+	/**
+	 * How many of the Upgrades are installed.
+	 * 
+	 * @param upgrade The upgrade to check.
+	 * @return
+	 */
+	public int getAmountUpgradeExact(ItemStack upgrade);
 	
 	/**
 	 * If the Amount of Upgrades installed is greater than 0

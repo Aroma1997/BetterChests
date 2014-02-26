@@ -23,6 +23,7 @@ import aroma1997.core.inventories.IAdvancedInventory;
 import aroma1997.core.inventories.ISpecialInventory;
 import aroma1997.core.util.FileUtil;
 import aroma1997.core.util.ItemUtil;
+import aroma1997.core.util.ItemUtil.ItemMatchCriteria;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Slot;
@@ -217,7 +218,7 @@ public class BagInventory implements IBetterChest, IAdvancedInventory, ISpecialI
 			return 0;
 		}
 		for (ItemStack item : upgrades) {
-			if (ItemUtil.areItemsSame(item, upgrade)) {
+			if (ItemUtil.areItemsSameMatching(item, upgrade, ItemMatchCriteria.ID, ItemMatchCriteria.DAMAGE)) {
 				return item.stackSize;
 			}
 		}
@@ -237,7 +238,7 @@ public class BagInventory implements IBetterChest, IAdvancedInventory, ISpecialI
 	
 	public void setAmountUpgradeWithoutNotify(ItemStack upgrade, int amount) {
 		for (ItemStack item : upgrades) {
-			if (ItemUtil.areItemsSame(item, upgrade)) {
+			if (ItemUtil.areItemsSameMatching(item, upgrade, ItemMatchCriteria.ID, ItemMatchCriteria.DAMAGE, ItemMatchCriteria.NBT)) {
 				if (amount <= 0) {
 					upgrades.remove(item);
 					return;
@@ -341,6 +342,19 @@ public class BagInventory implements IBetterChest, IAdvancedInventory, ISpecialI
 	@Override
 	public void closeInventory() {
 		
+	}
+
+	@Override
+	public int getAmountUpgradeExact(ItemStack upgrade) {
+		if (! UpgradeHelper.isUpgrade(upgrade)) {
+			return 0;
+		}
+		for (ItemStack item : upgrades) {
+			if (ItemUtil.areItemsSameMatching(item, upgrade, ItemMatchCriteria.ID, ItemMatchCriteria.DAMAGE, ItemMatchCriteria.NBT)) {
+				return item.stackSize;
+			}
+		}
+		return 0;
 	}
 	
 }

@@ -15,13 +15,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
-import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -37,7 +34,6 @@ import net.minecraftforge.common.util.FakePlayerFactory;
 import net.minecraftforge.common.util.ForgeDirection;
 import aroma1997.betterchests.api.IBetterChest;
 import aroma1997.betterchests.api.IUpgrade;
-import aroma1997.betterchests.client.EventListenerClient;
 import aroma1997.core.client.inventories.GUIContainer;
 import aroma1997.core.inventories.AromaContainer;
 import aroma1997.core.inventories.ContainerBasic;
@@ -46,6 +42,7 @@ import aroma1997.core.inventories.Inventories;
 import aroma1997.core.items.wrench.IAromaWrenchable;
 import aroma1997.core.util.FileUtil;
 import aroma1997.core.util.ItemUtil;
+import aroma1997.core.util.ItemUtil.ItemMatchCriteria;
 
 import com.mojang.authlib.GameProfile;
 
@@ -194,7 +191,7 @@ public class TileEntityBChest extends TileEntity implements IBetterChest, ISpeci
 			&& UpgradeHelper.areRequirementsInstalled(this, itemUpgrade)
 			&& upgrade.getMaxUpgrades(itemUpgrade) > getAmountUpgrade(itemUpgrade)) {
 			setAmountUpgrade(itemUpgrade, getAmountUpgrade(itemUpgrade) + 1);
-			if (ItemUtil.areItemsSame(itemUpgrade, Upgrade.PLAYER.getItem())) {
+			if (ItemUtil.areItemsSameMatching(itemUpgrade, Upgrade.PLAYER.getItem(), ItemMatchCriteria.ID, ItemMatchCriteria.DAMAGE)) {
 				this.player = player.getCommandSenderName();
 			}
 			onUpgradeInserted(player);
@@ -453,7 +450,7 @@ public class TileEntityBChest extends TileEntity implements IBetterChest, ISpeci
 			return 0;
 		}
 		for (ItemStack item : upgrades) {
-			if (ItemUtil.areItemsSame(item, upgrade)) {
+			if (ItemUtil.areItemsSameMatching(item, upgrade, ItemMatchCriteria.ID, ItemMatchCriteria.DAMAGE)) {
 				return item.stackSize;
 			}
 		}
@@ -468,7 +465,7 @@ public class TileEntityBChest extends TileEntity implements IBetterChest, ISpeci
 	@Override
 	public void setAmountUpgrade(ItemStack upgrade, int amount) {
 		for (ItemStack item : upgrades) {
-			if (ItemUtil.areItemsSame(item, upgrade)) {
+			if (ItemUtil.areItemsSameMatching(item, upgrade, ItemMatchCriteria.ID, ItemMatchCriteria.DAMAGE, ItemMatchCriteria.NBT)) {
 				if (amount <= 0) {
 					upgrades.remove(item);
 					return;
@@ -569,6 +566,19 @@ public class TileEntityBChest extends TileEntity implements IBetterChest, ISpeci
 	public boolean canPickup(ItemStack wrench, EntityPlayer player,
 			ForgeDirection side) {
 		return true;
+	}
+
+	@Override
+	public int getAmountUpgradeExact(ItemStack upgrade) {
+		if (! UpgradeHelper.isUpgrade(upgrade)) {
+			return 0;
+		}
+		for (ItemStack item : upgrades) {
+			if (ItemUtil.areItemsSameMatching(item, upgrade, ItemMatchCriteria.ID, ItemMatchCriteria.DAMAGE, ItemMatchCriteria.NBT)) {
+				return item.stackSize;
+			}
+		}
+		return 0;
 	}
 	
 }
