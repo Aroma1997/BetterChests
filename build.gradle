@@ -35,7 +35,7 @@ if (ENV.BUILD_NUMBER)
 	version = "${config.mod_version}.b${ENV.BUILD_NUMBER}"
 
 minecraft {
-    version = "1.7.2-10.12.0.1024"
+    version = "${config.mc_version}-${config.forge_version}"
     assetDir = "eclipse/assets"
 }
 
