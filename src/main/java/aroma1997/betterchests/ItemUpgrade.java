@@ -28,6 +28,7 @@ import aroma1997.betterchests.api.IUpgrade;
 import aroma1997.core.client.util.Colors;
 import aroma1997.core.util.InvUtil;
 import aroma1997.core.util.ItemUtil;
+import aroma1997.core.util.ItemUtil.ItemMatchCriteria;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -153,7 +154,7 @@ public class ItemUpgrade extends Item implements IUpgrade {
 	
 	@Override
 	public void onUpgradeInstalled(ItemStack item, IBetterChest chest) {
-		if (ItemUtil.areItemsSame(item, Upgrade.VOID.getItem())) {
+		if (ItemUtil.areItemsSameMatching(item, Upgrade.VOID.getItem(), ItemMatchCriteria.ID, ItemMatchCriteria.DAMAGE)) {
 			InvUtil.clearInventory(chest);
 		}
 	}
