@@ -18,6 +18,7 @@ import java.util.Random;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -298,71 +299,77 @@ public class TileEntityBChest extends TileEntity implements IBetterChest, ISpeci
 	
 	@SuppressWarnings("rawtypes")
 	private void doNormalChestUpdate() {
-		if (worldObj != null && ! worldObj.isRemote && numUsingPlayers > 0
-			&& (ticksSinceSync + xCoord + yCoord + zCoord) % 200 == 0)
-		{
-			numUsingPlayers = 0;
-			float var1 = 5.0F;
-			List var2 = worldObj.getEntitiesWithinAABB(
-				EntityPlayer.class,
-				AxisAlignedBB.getAABBPool().getAABB(xCoord - var1,
-					yCoord - var1, zCoord - var1,
-					xCoord + 1 + var1,
-					yCoord + 1 + var1,
-					zCoord + 1 + var1));
-			Iterator var3 = var2.iterator();
-			
-			while (var3.hasNext())
-			{
-				EntityPlayer var4 = (EntityPlayer) var3.next();
-				
-				if (var4.openContainer instanceof ContainerBasic)
-				{
-					++numUsingPlayers;
-				}
-			}
-		}
-		
-		if (worldObj != null && ! worldObj.isRemote && ticksSinceSync < 0)
-		{
-			worldObj.addBlockEvent(xCoord, yCoord, zCoord, BetterChests.chest, 1,
-				numUsingPlayers);
-		}
-		
-		ticksSinceSync++;
-		prevLidAngle = lidAngle;
-		float f = 0.1F;
-		if (numUsingPlayers > 0 && lidAngle == 0.0F)
-		{
-			worldObj.playSoundEffect(xCoord + 0.5D, yCoord + 0.5D, zCoord + 0.5D, "betterchests:chest.bchestclose" , 0.5F, worldObj.rand.nextFloat() * 0.1F + 0.9F);
-		}
-		if (numUsingPlayers <= 0 && lidAngle > 0.0F || numUsingPlayers > 0 && lidAngle < 1.0F)
-		{
-			float f1 = lidAngle;
-			if (numUsingPlayers > 0)
-			{
-				lidAngle += f;
-			}
-			else
-			{
-				lidAngle -= f;
-			}
-			if (lidAngle > 1.0F)
-			{
-				lidAngle = 1.0F;
-			}
-			float f2 = 0.5F;
-			if (lidAngle < f2 && f1 >= f2)
-			{
-				worldObj.playSoundEffect(xCoord + 0.5D, yCoord + 0.5D, zCoord + 0.5D,
-					"betterchests:chest.bchestopen", 0.5F,
-					worldObj.rand.nextFloat() * 0.1F + 0.9F);
-			}
-			if (lidAngle < 0.0F)
-			{
-				lidAngle = 0.0F;
-			}
-		}
+        ++this.ticksSinceSync;
+        float f;
+
+        if (!this.worldObj.isRemote && this.numUsingPlayers != 0 && (this.ticksSinceSync + this.xCoord + this.yCoord + this.zCoord) % 200 == 0)
+        {
+            this.numUsingPlayers = 0;
+            f = 5.0F;
+            List list = this.worldObj.getEntitiesWithinAABB(EntityPlayer.class, AxisAlignedBB.getAABBPool().getAABB((double)((float)this.xCoord - f), (double)((float)this.yCoord - f), (double)((float)this.zCoord - f), (double)((float)(this.xCoord + 1) + f), (double)((float)(this.yCoord + 1) + f), (double)((float)(this.zCoord + 1) + f)));
+            Iterator iterator = list.iterator();
+
+            while (iterator.hasNext())
+            {
+                EntityPlayer entityplayer = (EntityPlayer)iterator.next();
+
+                if (entityplayer.openContainer instanceof ContainerBasic)
+                {
+                    IInventory iinventory = ((ContainerBasic)entityplayer.openContainer).inv;
+
+                    if (iinventory == this)
+                    {
+                        ++this.numUsingPlayers;
+                    }
+                }
+            }
+        }
+
+        this.prevLidAngle = this.lidAngle;
+        f = 0.1F;
+        double d2;
+
+        if (this.numUsingPlayers > 0 && this.lidAngle == 0.0F)
+        {
+            double d1 = (double)this.xCoord + 0.5D;
+            d2 = (double)this.zCoord + 0.5D;
+
+            this.worldObj.playSoundEffect(d1, (double)this.yCoord + 0.5D, d2, "betterchests:chest.bchestopen", 0.5F, this.worldObj.rand.nextFloat() * 0.1F + 0.9F);
+        }
+
+        if (this.numUsingPlayers == 0 && this.lidAngle > 0.0F || this.numUsingPlayers > 0 && this.lidAngle < 1.0F)
+        {
+            float f1 = this.lidAngle;
+
+            if (this.numUsingPlayers > 0)
+            {
+                this.lidAngle += f;
+            }
+            else
+            {
+                this.lidAngle -= f;
+            }
+
+            if (this.lidAngle > 1.0F)
+            {
+                this.lidAngle = 1.0F;
+            }
+
+            float f2 = 0.5F;
+
+            if (this.lidAngle < f2 && f1 >= f2)
+            {
+                d2 = (double)this.xCoord + 0.5D;
+                double d0 = (double)this.zCoord + 0.5D;
+
+                this.worldObj.playSoundEffect(d2, (double)this.yCoord + 0.5D, d0, "betterchests:chest.bchestclode", 0.5F, this.worldObj.rand.nextFloat() * 0.1F + 0.9F);
+            }
+
+            if (this.lidAngle < 0.0F)
+            {
+                this.lidAngle = 0.0F;
+            }
+        }
 	}
 	
 	@Override
@@ -548,11 +555,13 @@ public class TileEntityBChest extends TileEntity implements IBetterChest, ISpeci
 	@Override
 	public void openInventory() {
 		numUsingPlayers++;
+		this.worldObj.addBlockEvent(this.xCoord, this.yCoord, this.zCoord, this.getBlockType(), 1, this.numUsingPlayers);
 	}
 
 	@Override
 	public void closeInventory() {
 		numUsingPlayers--;
+		this.worldObj.addBlockEvent(this.xCoord, this.yCoord, this.zCoord, this.getBlockType(), 1, this.numUsingPlayers);
 	}
 
 	@Override
