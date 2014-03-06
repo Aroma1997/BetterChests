@@ -47,7 +47,7 @@ public class Collector extends BasicUpgrade {
 					inv.getYPos() + 0.0D, inv.getZPos() + - 0.5D, inv.getXPos() + 0.5D,
 					inv.getYPos() + 0.0D, inv.getZPos() + 0.5D);
 				boundsNew = boundsNew.expand(0.2D, 0.2D, 0.2D);
-			List<EntityItem> listNew = world.getEntitiesWithinAABB(EntityItem.class, bounds);
+			List<EntityItem> listNew = world.getEntitiesWithinAABB(EntityItem.class, boundsNew);
 			
 			for (EntityItem e : listNew) {
 				if (e.age > 10 && e.isEntityAlive()) {
