@@ -219,13 +219,6 @@ public class BlockBChest extends BlockContainer {
 	public void onBlockPlacedBy(World par1World, int par2, int par3, int par4,
 		EntityLivingBase par5EntityLivingBase, ItemStack par6ItemStack)
 	{
-		if (ItemBlockBChest.isTagChest(par6ItemStack)) {
-			TileEntityBChest te = TileEntityBChest.loadTEFromNBT(par6ItemStack.stackTagCompound);
-			te.xCoord = par2;
-			te.yCoord = par3;
-			te.zCoord = par4;
-			par1World.setTileEntity(par2, par3, par4, te);
-		}
 		byte facing = 0;
 		int rotation = MathHelper.floor_double(par5EntityLivingBase.rotationYaw * 4.0F / 360.0F + 0.5D) & 3;
 		
