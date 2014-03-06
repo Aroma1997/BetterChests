@@ -556,14 +556,15 @@ public class TileEntityBChest extends TileEntity implements IBetterChest, ISpeci
 	public void openInventory() {
 		numUsingPlayers++;
 		this.worldObj.addBlockEvent(this.xCoord, this.yCoord, this.zCoord, this.getBlockType(), 1, this.numUsingPlayers);
-		this.markDirty();
+		this.worldObj.notifyBlocksOfNeighborChange(this.xCoord, this.yCoord, this.zCoord, this.getBlockType());
 	}
 
 	@Override
 	public void closeInventory() {
 		numUsingPlayers--;
 		this.worldObj.addBlockEvent(this.xCoord, this.yCoord, this.zCoord, this.getBlockType(), 1, this.numUsingPlayers);
-		this.markDirty();
+		this.worldObj.notifyBlocksOfNeighborChange(this.xCoord, this.yCoord, this.zCoord, this.getBlockType());
+        this.worldObj.notifyBlocksOfNeighborChange(this.xCoord, this.yCoord - 1, this.zCoord, this.getBlockType());
 	}
 
 	@Override
