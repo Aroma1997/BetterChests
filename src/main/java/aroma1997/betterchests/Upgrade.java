@@ -25,7 +25,9 @@ import aroma1997.betterchests.upgrades.CobbleGen;
 import aroma1997.betterchests.upgrades.Collector;
 import aroma1997.betterchests.upgrades.Feeding;
 import aroma1997.betterchests.upgrades.Furnace;
+import aroma1997.betterchests.upgrades.Harvesting;
 import aroma1997.betterchests.upgrades.Null;
+import aroma1997.betterchests.upgrades.Planting;
 import aroma1997.betterchests.upgrades.PlayerFeeding;
 import aroma1997.betterchests.upgrades.Rain;
 import aroma1997.betterchests.upgrades.Resupply;
@@ -49,7 +51,9 @@ public enum Upgrade {
 	TICKING(ENERGY, 1, true, false, Ticking.class),
 	FEEDING(null, 1, true, false, Feeding.class),
 	PLAYERFOOD(null, 1, false, true, PlayerFeeding.class),
-	RESUPPLY(null, 1, false, true, Resupply.class);
+	RESUPPLY(null, 1, false, true, Resupply.class),
+	PLANTING(ENERGY, 5, true, false, Planting.class),
+	HARVESTING(ENERGY, 5, true, false, Harvesting.class);
 	
 	private final Upgrade requirement;
 	

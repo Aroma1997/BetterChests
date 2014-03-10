@@ -38,6 +38,8 @@ book.betterchests:upgrade.TICKING=Ticking Upgrade: This Upgrade will tick the co
 book.betterchests:upgrade.FEEDING=Feeding Upgrade: This Upgrade automatically feeds nearby animals in a 5x3x5 area with the food inside of the Chest. It will automatically stop if the amount of Entities in that area is too big.
 book.betterchests:upgrade.PLAYERFOOD=Player Feeding Uprgade: This Upgrade will automatically feed the player who has the bag with the Upgrade in his inventory. It will use the food from inside the bag to do that.
 book.betterchests:upgrade.RESUPPLY=Resupply Upgrade: This Upgrade will automatically resupply Items from your Bag into your Inventory. It will do that if there is still space on the ItemStack in your Inventory. Recommended to use with Collector Upgrade!
+book.betterchests:upgrade.PLANTING=Planting Upgrade: This Upgrade will automatically plant any seeds in it. You probably want to combine it with the Harvesting Upgrade. The more Upgrades you put into it, the larger the radius is.
+book.betterchests:upgrade.HARVESTING=Harvesting Upgrade: This Upgrade will automatically harvest any crops near it. The more Upgrades you put into it, the larger the radius is.
 
 
 book.betterchests:credits=Thank you for reading the User Manual. If you still have questions just ask them in the MCF thread at: http://tinyurl.com/aroma1997
@@ -72,6 +74,8 @@ item.betterchests:upgrade.TICKING.name=Ticking Upgrade
 item.betterchests:upgrade.FEEDING.name=Feeding Upgrade
 item.betterchests:upgrade.PLAYERFOOD.name=Player Feeding Upgrade
 item.betterchests:upgrade.RESUPPLY.name=Resupply Upgrade
+item.betterchests:upgrade.PLANTING.name=Planting Upgrade
+item.betterchests:upgrade.HARVESTING.name=Harvesting Upgrade
 
 item.betterchests:upgrade.HAMMER.name=BetterChests Hammer
 

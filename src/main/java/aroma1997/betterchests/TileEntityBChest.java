@@ -362,7 +362,7 @@ public class TileEntityBChest extends TileEntity implements IBetterChest, ISpeci
                 d2 = (double)this.xCoord + 0.5D;
                 double d0 = (double)this.zCoord + 0.5D;
 
-                this.worldObj.playSoundEffect(d2, (double)this.yCoord + 0.5D, d0, "betterchests:chest.bchestclode", 0.5F, this.worldObj.rand.nextFloat() * 0.1F + 0.9F);
+                this.worldObj.playSoundEffect(d2, (double)this.yCoord + 0.5D, d0, "betterchests:chest.bchestclose", 0.5F, this.worldObj.rand.nextFloat() * 0.1F + 0.9F);
             }
 
             if (this.lidAngle < 0.0F)
