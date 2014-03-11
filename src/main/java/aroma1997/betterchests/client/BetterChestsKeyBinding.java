@@ -18,14 +18,15 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class BetterChestsKeyBinding extends KeyBinding {
-	
+
 	private static BetterChestsKeyBinding instance;
 
 	public BetterChestsKeyBinding() {
-		super("betterchests:key.openBag", Keyboard.KEY_ADD, "key.categories.inventory");
-		this.instance = this;
+		super("betterchests:key.openBag", Keyboard.KEY_ADD,
+				"key.categories.inventory");
+		BetterChestsKeyBinding.instance = this;
 	}
-	
+
 	public static BetterChestsKeyBinding getInstance() {
 		return instance;
 	}

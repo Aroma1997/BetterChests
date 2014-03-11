@@ -9,7 +9,6 @@
 
 package aroma1997.betterchests.api;
 
-
 import java.util.ArrayList;
 
 import net.minecraft.inventory.IInventory;
@@ -22,53 +21,56 @@ import net.minecraft.item.ItemStack;
  * 
  */
 public interface IBetterChest extends IInventory {
-	
+
 	/**
 	 * The position
 	 * 
 	 * @return x-coord
 	 */
 	public double getXPos();
-	
+
 	/**
 	 * The position
 	 * 
 	 * @return y-coord
 	 */
 	public double getYPos();
-	
+
 	/**
 	 * The position
 	 * 
 	 * @return z-coord
 	 */
 	public double getZPos();
-	
+
 	/**
-	 * How many of the Upgrades are installed.
-	 * This is ignoring NBT data of the stack.
+	 * How many of the Upgrades are installed. This is ignoring NBT data of the
+	 * stack.
 	 * 
-	 * @param upgrade The upgrade to check.
+	 * @param upgrade
+	 *            The upgrade to check.
 	 * @return
 	 */
 	public int getAmountUpgrade(ItemStack upgrade);
-	
+
 	/**
 	 * How many of the Upgrades are installed.
 	 * 
-	 * @param upgrade The upgrade to check.
+	 * @param upgrade
+	 *            The upgrade to check.
 	 * @return
 	 */
 	public int getAmountUpgradeExact(ItemStack upgrade);
-	
+
 	/**
 	 * If the Amount of Upgrades installed is greater than 0
 	 * 
-	 * @param upgrade The Upgrade to check
+	 * @param upgrade
+	 *            The Upgrade to check
 	 * @return
 	 */
 	public boolean isUpgradeInstalled(ItemStack upgrade);
-	
+
 	/**
 	 * Set the Amount of an Upgrade
 	 * 
@@ -76,19 +78,19 @@ public interface IBetterChest extends IInventory {
 	 * @param amount
 	 */
 	public void setAmountUpgrade(ItemStack upgrade, int amount);
-	
+
 	/**
 	 * If the Chest has Energy. For Energy-Relying Upgrades.
 	 * 
 	 * @return
 	 */
 	public boolean hasEnergy();
-	
+
 	/**
 	 * Getter for the Upgrade list
 	 * 
 	 * @return The list of Upgrades
 	 */
 	public ArrayList<ItemStack> getUpgrades();
-	
+
 }

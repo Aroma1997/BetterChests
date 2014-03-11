@@ -1,6 +1,4 @@
-
 package aroma1997.betterchests.upgrades;
-
 
 import aroma1997.betterchests.BagInventory;
 import aroma1997.betterchests.api.IBetterChest;
@@ -11,9 +9,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 public class Resupply extends BasicUpgrade {
-	
+
 	@Override
-	public void updateChest(IBetterChest chest, int tick, World world, ItemStack item) {
+	public void updateChest(IBetterChest chest, int tick, World world,
+			ItemStack item) {
 		if (tick % 8 != 2) {
 			return;
 		}
@@ -33,5 +32,5 @@ public class Resupply extends BasicUpgrade {
 			}
 		}
 	}
-	
+
 }

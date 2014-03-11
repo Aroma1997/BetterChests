@@ -9,7 +9,6 @@
 
 package aroma1997.betterchests;
 
-
 import java.util.List;
 
 import net.minecraft.block.Block;
@@ -21,35 +20,36 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
 
 public class ItemBlockBChest extends ItemBlock {
-	
+
 	public ItemBlockBChest(Block block) {
 		super(block);
 	}
-	
+
 	@Override
 	public String getItemStackDisplayName(ItemStack par1ItemStack) {
 		return StatCollector.translateToLocal("tile.betterchests:chest.name");
 	}
-	
-	@SuppressWarnings({"rawtypes"})
+
+	@SuppressWarnings({ "rawtypes" })
 	@Override
-	public void addInformation(ItemStack item, EntityPlayer player,
-		List list, boolean par4) {
+	public void addInformation(ItemStack item, EntityPlayer player, List list,
+			boolean par4) {
 		if (isTagChest(item)) {
 			ItemBag.addInfo(item, list);
 		}
 	}
-	
-	@SuppressWarnings({"unchecked", "rawtypes"})
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
-	public void getSubItems(Item par1, CreativeTabs par2CreativeTabs, List par3List)
-    {
+	public void getSubItems(Item par1, CreativeTabs par2CreativeTabs,
+			List par3List) {
 		par3List.add(BetterChests.getHelpBook());
 		super.getSubItems(par1, par2CreativeTabs, par3List);
 	}
-	
+
 	static boolean isTagChest(ItemStack item) {
-		return item != null && item.hasTagCompound() && item.getTagCompound().hasKey("player");
+		return item != null && item.hasTagCompound()
+				&& item.getTagCompound().hasKey("player");
 	}
-	
+
 }

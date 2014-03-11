@@ -20,24 +20,30 @@ public class Harvesting extends BasicUpgrade {
 			for (int x = -range; x <= range; x++) {
 				for (int z = -range; z <= range; z++) {
 					for (int y = -2; y < 4; y++) {
-						int xcoord = (int)chest.getXPos() + x;
-						int ycoord = (int)chest.getYPos() + y;
-						int zcoord = (int)chest.getZPos() + z;
+						int xcoord = (int) chest.getXPos() + x;
+						int ycoord = (int) chest.getYPos() + y;
+						int zcoord = (int) chest.getZPos() + z;
 						Block block = world.getBlock(xcoord, ycoord, zcoord);
 						if (block != null && block instanceof IGrowable) {
 							IGrowable gr = (IGrowable) block;
-							if (!gr.func_149851_a(world, xcoord, ycoord, zcoord, false)) {
-								ArrayList<ItemStack> items = block.getDrops(world, xcoord, ycoord, zcoord, world.getBlockMetadata(xcoord, ycoord, zcoord), 0);
+							if (!gr.func_149851_a(world, xcoord, ycoord,
+									zcoord, false)) {
+								ArrayList<ItemStack> items = block.getDrops(
+										world, xcoord, ycoord, zcoord, world
+												.getBlockMetadata(xcoord,
+														ycoord, zcoord), 0);
 								boolean b = false;
 								for (ItemStack itemGet : items) {
-									if (InvUtil.putIntoFirstSlot(chest, itemGet, true) != null) {
+									if (InvUtil.putIntoFirstSlot(chest,
+											itemGet, true) != null) {
 										b = true;
 										break;
 									}
 								}
 								if (!b) {
 									for (ItemStack itemGet : items) {
-										InvUtil.putIntoFirstSlot(chest, itemGet, false);
+										InvUtil.putIntoFirstSlot(chest,
+												itemGet, false);
 									}
 									world.setBlockToAir(xcoord, ycoord, zcoord);
 								}

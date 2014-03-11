@@ -7,12 +7,12 @@ import aroma1997.core.inventories.Inventories;
 import aroma1997.core.network.IBasePacket;
 
 public class PacketOpenBag implements IBasePacket {
-	
+
 	public PacketOpenBag setSlot(int slot) {
 		this.slot = slot;
 		return this;
 	}
-	
+
 	private int slot;
 
 	@Override
