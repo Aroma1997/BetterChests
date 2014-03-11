@@ -35,6 +35,7 @@ public class Planting extends BasicUpgrade {
 							Block blockAbove = world.getBlock(xcoord, ycoord + 1, zcoord);
 							if (blockAbove == null || blockAbove == Blocks.air || blockAbove instanceof BlockTallGrass || blockAbove instanceof BlockFlower) {
 								world.setBlock(xcoord, ycoord, zcoord, Blocks.farmland);
+								world.setBlockToAir(xcoord, ycoord + 1, zcoord);
 							}
 						}
 						else if (block instanceof BlockFarmland) {
