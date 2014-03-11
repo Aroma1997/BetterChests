@@ -280,6 +280,9 @@ public class TileEntityBChest extends TileEntity implements IBetterChest, ISpeci
 	
 	@Override
 	public double getXPos() {
+		if (xCoord <= 0) {
+			return xCoord - 0.5F;
+		}
 		return xCoord + 0.5F;
 	}
 	
@@ -290,6 +293,9 @@ public class TileEntityBChest extends TileEntity implements IBetterChest, ISpeci
 	
 	@Override
 	public double getZPos() {
+		if (zCoord <= 0) {
+			return zCoord - 0.5F;
+		}
 		return zCoord + 0.5F;
 	}
 	
