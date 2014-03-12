@@ -28,22 +28,6 @@ public class Rain extends BasicUpgrade {
 				InvUtil.getFirstItem(chest, bucket, false);
 			}
 		}
-		if (InvUtil.getFirstItem(chest, new ItemStack(Items.water_bucket), true) != null && chest.isUpgradeInstalled(Upgrade.PLANTING.getItem())) {
-			int range = chest.getAmountUpgrade(Upgrade.PLANTING.getItem()) * Reference.Conf.PLANTS_RANGE_MULTIPLIER;
-			 for (int x = -range; x <= range; x++) {
-				 for (int z = -range; z <= range; z++) {
-					 for (int y = Reference.Conf.PLANTS_START; y <= Reference.Conf.PLANTS_HEIGHT + Reference.Conf.PLANTS_START; y++) {
-						 int xcoord = (int) chest.getXPos() + x;
-						 int ycoord = (int) chest.getYPos() + y;
-						 int zcoord = (int) chest.getYPos() + y;
-						 Block block = world.getBlock(xcoord, ycoord, zcoord);
-						 if (block == Blocks.farmland) {
-							 world.setBlock(xcoord, ycoord, zcoord, block, 10, 0);
-						 }
-					 }
-				 }
-			 }
-		}
 	}
 
 }

@@ -1,6 +1,7 @@
 package aroma1997.betterchests.upgrades;
 
 import aroma1997.betterchests.Reference;
+import aroma1997.betterchests.Upgrade;
 import aroma1997.betterchests.api.IBetterChest;
 import aroma1997.core.util.InvUtil;
 
@@ -9,6 +10,7 @@ import net.minecraft.block.BlockFarmland;
 import net.minecraft.block.BlockFlower;
 import net.minecraft.block.BlockTallGrass;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
@@ -51,6 +53,9 @@ public class Planting extends BasicUpgrade {
 		}
 		block = world.getBlock(xcoord, ycoord, zcoord);
 		if (block instanceof BlockFarmland) {
+			if (world.getBlockMetadata(xcoord, ycoord, zcoord)  <= 2 && chest.isUpgradeInstalled(Upgrade.RAIN.getItem()) && InvUtil.getFirstItem(chest, new ItemStack(Items.water_bucket), true) != null) {
+				world.setBlock(xcoord, ycoord, zcoord, block, 5, 2);
+			}
 			Block blockAboveNew = world.getBlock(xcoord,
 					ycoord + 1, zcoord);
 			if (blockAboveNew == null || blockAboveNew == Blocks.air
