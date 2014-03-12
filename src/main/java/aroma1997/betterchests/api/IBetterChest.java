@@ -92,5 +92,12 @@ public interface IBetterChest extends IInventory {
 	 * @return The list of Upgrades
 	 */
 	public ArrayList<ItemStack> getUpgrades();
+	
+	/**
+	 * Getter for the long tick.
+	 * This will increase by 1 every tick. (Used to have a greater tick than 64)
+	 * @return The long tick
+	 */
+	public long getLongTick();
 
 }

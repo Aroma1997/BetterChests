@@ -55,6 +55,8 @@ public class TileEntityBChest extends TileEntity implements IBetterChest,
 	String player;
 
 	private int tick;
+	
+	private long longTick;
 
 	private EntityPlayer fplayer;
 
@@ -112,6 +114,7 @@ public class TileEntityBChest extends TileEntity implements IBetterChest,
 		}
 		UpgradeHelper.updateChest(this, tick, worldObj);
 
+		longTick++;
 		if (tick-- <= 0) {
 			tick = 64;
 			markDirty();
@@ -293,7 +296,7 @@ public class TileEntityBChest extends TileEntity implements IBetterChest,
 
 	@Override
 	public double getXPos() {
-		if (xCoord <= 0) {
+		if (xCoord < 0) {
 			return xCoord - 0.5F;
 		}
 		return xCoord + 0.5F;
@@ -306,7 +309,7 @@ public class TileEntityBChest extends TileEntity implements IBetterChest,
 
 	@Override
 	public double getZPos() {
-		if (zCoord <= 0) {
+		if (zCoord < 0) {
 			return zCoord - 0.5F;
 		}
 		return zCoord + 0.5F;
@@ -611,6 +614,11 @@ public class TileEntityBChest extends TileEntity implements IBetterChest,
 			}
 		}
 		return 0;
+	}
+
+	@Override
+	public long getLongTick() {
+		return longTick;
 	}
 
 }

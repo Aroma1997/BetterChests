@@ -37,6 +37,8 @@ public class BagInventory implements IBetterChest, IAdvancedInventory,
 		ISpecialInventory {
 
 	private final ItemStack item;
+	
+	private long longTick = 0;
 
 	public BagInventory(ItemStack item) {
 		this.item = item;
@@ -345,6 +347,11 @@ public class BagInventory implements IBetterChest, IAdvancedInventory,
 			}
 		}
 		return 0;
+	}
+
+	@Override
+	public long getLongTick() {
+		return longTick;
 	}
 
 }
