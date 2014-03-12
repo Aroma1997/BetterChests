@@ -30,6 +30,7 @@ import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
 
+import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.ArrayList;
@@ -181,6 +182,10 @@ public enum Upgrade {
 				RESUPPLY.ordinal()), false, "CUC", " H ", 'C', new ItemStack(
 				Blocks.chest), 'H', new ItemStack(Blocks.hopper), 'U',
 				itemUpgrade);
+		// PLANTING
+		AromaRegistry.registerShapedAromicRecipe(new ItemStack(item, 1, PLANTING.ordinal()), false, "SHS", "HUH", "SHS", 'S', IPlantable.class, 'H', new ItemStack(Items.iron_hoe), 'U', itemUpgrade);
+		// HARVESTING
+		AromaRegistry.registerShapedAromicRecipe(new ItemStack(item, 1, HARVESTING.ordinal()), false, "WWW", "WUW", "WWW", 'W', new ItemStack(Items.wheat), 'U', itemUpgrade);
 
 		AromaRegistry.registerShapelessAromicRecipe(BASIC.getItem(), true,
 				new ItemStack(item, 1, OreDictionary.WILDCARD_VALUE));
