@@ -17,26 +17,26 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class CreativeTabBChest extends CreativeTabs {
-
+	
 	public CreativeTabBChest() {
 		super("creativeTabBC");
 	}
-
+	
 	@Override
 	public ItemStack getIconItemStack() {
 		return new ItemStack(BetterChests.chest);
 	}
-
+	
 	@SideOnly(Side.CLIENT)
 	@Override
 	public String getTranslatedTabLabel() {
 		return "creativetab.betterchests:creativetab.name";
 	}
-
+	
 	@Override
 	@SideOnly(Side.CLIENT)
 	public Item getTabIconItem() {
 		return BetterChests.bag;
 	}
-
+	
 }

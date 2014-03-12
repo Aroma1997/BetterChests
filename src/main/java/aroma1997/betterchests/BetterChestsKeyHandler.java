@@ -52,5 +52,5 @@ public class BetterChestsKeyHandler {// extends KeyHandler {
 	// public EnumSet<TickType> ticks() {
 	// return EnumSet.of(TickType.CLIENT);
 	// }
-
+	
 }

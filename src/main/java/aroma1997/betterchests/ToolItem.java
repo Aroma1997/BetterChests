@@ -14,9 +14,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 public abstract class ToolItem {
-
-	abstract boolean onItemUseFirst(ItemStack stack, EntityPlayer player,
-			World world, int x, int y, int z, int side, float hitX, float hitY,
-			float hitZ);
-
+	
+	abstract boolean onItemUseFirst(ItemStack stack, EntityPlayer player, World world, int x,
+	        int y, int z, int side, float hitX, float hitY, float hitZ);
+	
 }

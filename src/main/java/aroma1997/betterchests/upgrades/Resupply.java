@@ -9,17 +9,16 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 public class Resupply extends BasicUpgrade {
-
+	
 	@Override
-	public void updateChest(IBetterChest chest, int tick, World world,
-			ItemStack item) {
+	public void updateChest(IBetterChest chest, int tick, World world, ItemStack item) {
 		if (tick % 8 != 2) {
 			return;
 		}
 		if (chest != null && chest instanceof BagInventory) {
 			BagInventory inv = (BagInventory) chest;
 			EntityPlayer player = inv.getPlayer();
-			for (int i = 0; i < player.inventory.getSizeInventory(); i++) {
+			for (int i = 0; i < player.inventory.getSizeInventory(); i++ ) {
 				ItemStack itemStack = player.inventory.getStackInSlot(i);
 				if (itemStack == null) {
 					continue;
@@ -32,5 +31,5 @@ public class Resupply extends BasicUpgrade {
 			}
 		}
 	}
-
+	
 }
