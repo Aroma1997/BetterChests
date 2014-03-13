@@ -21,10 +21,11 @@ public class EventListenerClient {
 		FMLCommonHandler.instance().bus().register(this);
 	}
 	
+	boolean pressedBefore = false;
+	
 	@SubscribeEvent
 	public void tick(ClientTickEvent event) {
-		if (BetterChestsKeyBinding.getInstance().getIsKeyPressed()) {
-			NBTTagCompound nbt = new NBTTagCompound();
+		if (BetterChestsKeyBinding.getInstance().getIsKeyPressed() && !pressedBefore) {
 			EntityPlayer player = Minecraft.getMinecraft().thePlayer;
 			for (int i = 0; i < player.inventory.getSizeInventory(); i++ ) {
 				if (player.inventory.getStackInSlot(i) != null
@@ -34,6 +35,7 @@ public class EventListenerClient {
 				}
 			}
 		}
+		pressedBefore = BetterChestsKeyBinding.getInstance().getIsKeyPressed();
 	}
 	
 }
