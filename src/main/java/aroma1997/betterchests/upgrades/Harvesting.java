@@ -27,7 +27,7 @@ public class Harvesting extends BasicUpgrade {
 		int slot = InvUtil.getFirstItem(chest, IPlantable.class);
 		for (int i = Reference.Conf.PLANTS_START + 1; i <= Reference.Conf.PLANTS_START
 		        + Reference.Conf.PLANTS_HEIGHT + 1; i++ ) {
-			doBlock(chest, tick, world, item, xcoord, ycoord + i + 1, zcoord, slot);
+			doBlock(chest, tick, world, item, xcoord, ycoord + i, zcoord, slot);
 		}
 		
 	}
