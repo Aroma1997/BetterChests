@@ -44,19 +44,20 @@ public class Planting extends BasicUpgrade {
 		if (block == null) {
 			return;
 		}
+		boolean hydrate = chest.isUpgradeInstalled(Upgrade.RAIN.getItem())
+		        && InvUtil.getFirstItem(chest, new ItemStack(Items.water_bucket), true) != null;
 		if (block == Blocks.dirt || block == Blocks.grass) {
 			Block blockAbove = world.getBlock(xcoord, ycoord + 1, zcoord);
 			if (blockAbove == null || blockAbove == Blocks.air
 			        || blockAbove instanceof BlockTallGrass || blockAbove instanceof BlockFlower) {
-				world.setBlock(xcoord, ycoord, zcoord, Blocks.farmland, 10, 3);
+				world.setBlock(xcoord, ycoord, zcoord, Blocks.farmland, hydrate ? 10 : 0, 3);
 				world.setBlockToAir(xcoord, ycoord + 1, zcoord);
 			}
 		}
 		block = world.getBlock(xcoord, ycoord, zcoord);
 		if (block instanceof BlockFarmland) {
 			if (world.getBlockMetadata(xcoord, ycoord, zcoord) <= 2
-			        && chest.isUpgradeInstalled(Upgrade.RAIN.getItem())
-			        && InvUtil.getFirstItem(chest, new ItemStack(Items.water_bucket), true) != null) {
+			        && hydrate) {
 				world.setBlock(xcoord, ycoord, zcoord, block, 5, 2);
 			}
 			Block blockAboveNew = world.getBlock(xcoord, ycoord + 1, zcoord);
