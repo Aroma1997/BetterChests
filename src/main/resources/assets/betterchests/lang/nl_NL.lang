@@ -65,8 +65,8 @@ book.betterchests:credits=Dank je voor het lezen van de Gebruikers Handboek. Als
 death.attack.betterchests:interact.player=%s Het was niet slim om te kijken wat daar in zat!
 
 info.betterchests:tooltip.nobag=Deze upgrade kan niet in een rugzak.
-info.betterchests:tooltip.nochest=Deze upgrade kan niet in een heast.
-info.betterchests:tooltip.maxamount=Max Upgrades per chest: %s.
+info.betterchests:tooltip.nochest=Deze upgrade kan niet in een kist.
+info.betterchests:tooltip.maxamount=Max Upgrades per kist: %s.
 info.betterchests:tooltip.requires=Heeft Nodig: %s.
 info.betterchests:tooltip.openwith=Open met "%s". (Buiten Inventory)
 
