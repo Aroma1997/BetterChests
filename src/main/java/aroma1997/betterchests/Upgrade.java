@@ -9,6 +9,7 @@
 
 package aroma1997.betterchests;
 
+import aroma1997.betterchests.upgrades.Animal;
 import aroma1997.betterchests.upgrades.BasicUpgrade;
 import aroma1997.betterchests.upgrades.CobbleGen;
 import aroma1997.betterchests.upgrades.Collector;
@@ -54,7 +55,8 @@ public enum Upgrade {
 	PLAYERFOOD(null, 1, false, true, PlayerFeeding.class),
 	RESUPPLY(null, 1, false, true, Resupply.class),
 	PLANTING(ENERGY, 5, true, false, Planting.class),
-	HARVESTING(ENERGY, 5, true, false, Harvesting.class), ;
+	HARVESTING(ENERGY, 5, true, false, Harvesting.class),
+	ANIMAL(ENERGY, 1, true, false, Animal.class);
 	
 	private final Upgrade requirement;
 	
