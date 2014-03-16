@@ -25,12 +25,18 @@ book.betterchests:upgrade.BASIC=Basis Upgrade: Dit is de basis Upgrade. U kunt g
 book.betterchests:upgrade.COMPARATOR=Comparator Upgrade: Als je een Comparator afgekeerd van de Kist plaatst, zal de Comparator een redstone signaal uitzenden met de kracht afhankelijk van de hoeveelheid van de items in de Kist.
 book.betterchests:upgrade.VOID=Void Upgrade: Je hebt te veel Keisteen? Of te veel nutteloze spullen? Wacht dan niet langer, je kunt gewoon een Void Upgrade op je Kist en zet die nutteloze spullen daar in en het zal van de wereld verwijderd worden.
 book.betterchests:upgrade.UNBREAKABLE=Onbreekbare Upgrade: Deze upgrade maakt uw Kist brandwerend en zo, dus Creepers, TNT, (Vernietiging), Ender Dragon (s) of Withers kunnen het niet vernietigen.
-book.betterchests:upgrade.PLAYER=Speler Upgrade: Met deze upgrade, is de Kist alleen toegankelijk voor de speler die de Upgrade geplaatst hebben (of Ops). Aan de andere mensen, zegt de Kist gewoon, de Kist zal niet lief zijn voor jou en zal dus niet openen!
+book.betterchests:upgrade.PLAYER=Speler Upgrade: Met deze upgrade, is de Kist alleen toegankelijk voor de speler die de Upgrade geplaatst hebben (of Op's). Aan de andere mensen, zegt de Kist gewoon, de Kist zal niet lief zijn voor jou en zal dus niet openen!
 book.betterchests:upgrade.RAIN=Regen Upgrade: Als het regent op je Kist met deze Upgrade geïnstalleerd, zal het automatisch lege emmers met water vullen.
 book.betterchests:upgrade.ENERGY=Energie Upgrade: Deze upgrade gebruik je voor andere Upgrades die energie nodig hebben.
 book.betterchests:upgrade.FURNACE=Fornuis Upgrade: Weet je dat probleem, je hebt te veel spullen te smelten, maar niet genoeg ovens? Deze upgrade zal dat probleem op te lossen voor je.
 book.betterchests:upgrade.COLLECTOR=Verzamelaars Upgrade: Deze upgrade zal items opzuigen in de Kist die in de buurt waren gevallen. Je kunt het bereik ervan uitbreiden door meer upgrades erin te doen.
 book.betterchests:upgrade.TICKING=Ticking Upgrade: De naam zegt het al, doe hier een item in o.a. van TC en zie hem opladen
+book.betterchests:upgrade.FEEDING=Voeding Upgrade:Deze upgrade geeft eten aan dieren in een 5x3x5 gebied met het eten dat in de chest zit.
+book.betterchests:upgrade.PLAYERFOOD=Speler Voeding Upgrade:Deze upgrade zal de drager ven de tas automatisch voeden, het gebruikt het voedsel uit de tas.
+book.betterchests:upgrade.RESUPPLY=Herbevoorraadings Upgrade:Deze upgrade zal automatisch bevoorraden met items uit je tas in je inventaris. Het doet het als er nog ruimte op de Item Stack in je inventaris. Aanbevolen om te gebruiken met de Verzamelaars Upgrade!
+book.betterchests:upgrade.PLANTING=Plant Upgrade: Deze upgrade zal automatisch de zaden planten, het formaat van het gebied dat het zal omschoffelen en bezaden ligt aan het aantal Upgrades dat je er in zet. het is aangeraden om dit the combineren met het Oogst Upgrade. Met behulp van deze met de Regen upgrade zal het boerenland helpen gehydrateerd te houden als er een emmer water in de inventaris is.
+book.betterchests:upgrade.HARVESTING=Oogst Upgrade: Deze upgrade zal automatisch de gewassen oogsten. Hoe meer upgrades je erin steekt, hoe groter het gebied is.
+
 
 item.betterchests:upgrade.SLOT.name=Slot Upgrade
 item.betterchests:upgrade.COBBLEGEN.name=Keisteen Generator Upgrade
@@ -46,11 +52,23 @@ item.betterchests:upgrade.ENERGY.name=Energie Upgrade
 item.betterchests:upgrade.FURNACE.name=Fornuis Upgrade
 item.betterchests:upgrade.COLLECTOR.name=Verzamelaars Upgrade
 item.betterchests:upgrade.TICKING.name=Ticking Upgrade
+item.betterchests:upgrade.FEEDING.name=Voeding Upgrade
+item.betterchests:upgrade.PLAYERFOOD.name=Speler Voeding Upgrade
+item.betterchests:upgrade.RESUPPLY.name=Herbevoorraadings Upgrade
+item.betterchests:upgrade.PLANTING.name=Plant Upgrade
+item.betterchests:upgrade.HARVESTING.name=Oogst Upgrade
 
+item.betterchests:upgrade.HAMMER.name=BetterChests Hamer
 
-book.betterchests:credits=Dank je voor het lezen van de Gebruikers Handboek. Als je nog vragen hebt, vraag ze dan op de Minecraft Forums: http://tinyurl.com/aroma1997 | Vertaling Door: Matthew Smeets (MattMc)
+book.betterchests:credits=Dank je voor het lezen van de Gebruikers Handboek. Als je nog vragen hebt, vraag ze dan op de Minecraft Forums: http://tinyurl.com/aroma1997 | Vertaling Door: Matthew Smeets (MattMc),Kayne Saridjo (JustKayneNL)
 
+death.attack.betterchests:interact.player=%s Het was niet slim om te kijken wat daar in zat!
 
+info.betterchests:tooltip.nobag=Deze upgrade kan niet in een rugzak.
+info.betterchests:tooltip.nochest=Deze upgrade kan niet in een kist.
+info.betterchests:tooltip.maxamount=Max Upgrades per kist: %s.
+info.betterchests:tooltip.requires=Heeft Nodig: %s.
+info.betterchests:tooltip.openwith=Open met "%s". (Buiten Inventory)
 
 
 creativetab.betterchests:creativetab.name=BetterChests
