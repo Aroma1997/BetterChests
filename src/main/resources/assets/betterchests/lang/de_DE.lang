@@ -10,7 +10,7 @@ book.betterchests:introduction=Willkommen zu deinem neuen BetterChests-Benutzerh
 
 
 book.betterchests:general.1=BetterChests ist eine Mod, die eine Verstellbare Truhe hinzufügt, sowie einen Verstellbaren Rucksack und Upgrades. Wie man diese benutzt, wirst du später lesen, da sie von selbst nichts besonderes machen.
-book.betterchests:general.2=Dieses Benutzerhandbuch wird sich nicht auomatisch bei Versionsänderung aktualisieren. Zum manuellen Updaten platziere das Buch einfach in einer Werkbank.
+book.betterchests:general.2=Dieses Benutzerhandbuch wird sich nicht automatisch bei Versionsänderung aktualisieren. Zum manuellen Updaten platziere das Buch einfach in einer Werkbank.
 book.betterchests:general.3=Wenn du die Rezepte von Truhe, Rucksack oder Upgrades nicht weißt, installiere NEI oder CraftGuide. Die Rezepte werden hier nicht gezeigt.
 
 book.betterchests:chest.1=Die Verstellbare Truhe kann platziert werden, um Items zu lagern. Standardmäßig hat sie 9 Slots. Du kannst sie upgraden, indem du mit einem Upgrade auf die Truhe rechtsklickst.
