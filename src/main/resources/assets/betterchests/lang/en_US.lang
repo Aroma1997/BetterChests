@@ -40,6 +40,7 @@ book.betterchests:upgrade.PLAYERFOOD=Player Feeding Uprgade: This Upgrade will a
 book.betterchests:upgrade.RESUPPLY=Resupply Upgrade: This Upgrade will automatically resupply Items from your Bag into your Inventory. It will do that if there is still space on the ItemStack in your Inventory. Recommended to use with Collector Upgrade!
 book.betterchests:upgrade.PLANTING=Planting Upgrade: This Upgrade will automatically plant any seeds in it. You probably want to combine it with the Harvesting Upgrade. Using this with the Rain Upgrade will keep the farmland around it hydrated, if there is a bucket of water in the inventory.
 book.betterchests:upgrade.HARVESTING=Harvesting Upgrade: This Upgrade will automatically harvest any crops near it. The more Upgrades you put into it, the larger the radius is.
+book.betterchests:upgrade.ANIMAL=Animal Upgrade:This Upgrade will milk the nearby Cows/Mooshrooms and shear earby Sheeps.
 
 
 book.betterchests:credits=Thank you for reading the User Manual. If you still have questions just ask them in the MCF thread at: http://tinyurl.com/aroma1997
@@ -76,6 +77,7 @@ item.betterchests:upgrade.PLAYERFOOD.name=Player Feeding Upgrade
 item.betterchests:upgrade.RESUPPLY.name=Resupply Upgrade
 item.betterchests:upgrade.PLANTING.name=Planting Upgrade
 item.betterchests:upgrade.HARVESTING.name=Harvesting Upgrade
+item.betterchests:upgrade.ANIMAL.name=Animal Upgrade
 
 item.betterchests:upgrade.HAMMER.name=BetterChests Hammer
 
