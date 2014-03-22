@@ -36,7 +36,7 @@ book.betterchests:upgrade.PLAYERFOOD=Speler Voeding Upgrade:Deze upgrade zal de 
 book.betterchests:upgrade.RESUPPLY=Herbevoorraadings Upgrade:Deze upgrade zal automatisch bevoorraden met items uit je tas in je inventaris. Het doet het als er nog ruimte op de Item Stack in je inventaris. Aanbevolen om te gebruiken met de Verzamelaars Upgrade!
 book.betterchests:upgrade.PLANTING=Plant Upgrade: Deze upgrade zal automatisch de zaden planten, het formaat van het gebied dat het zal omschoffelen en bezaden ligt aan het aantal Upgrades dat je er in zet. het is aangeraden om dit the combineren met het Oogst Upgrade. Met behulp van deze met de Regen upgrade zal het boerenland helpen gehydrateerd te houden als er een emmer water in de inventaris is.
 book.betterchests:upgrade.HARVESTING=Oogst Upgrade: Deze upgrade zal automatisch de gewassen oogsten. Hoe meer upgrades je erin steekt, hoe groter het gebied is.
-
+book.betterchests:upgrade.ANIMAL=Dieren Upgrade: Deze upgrade zal de Koeien / Loeizwammen in de buurt melken en het zal de schapen in de buurt scheren. Hoe meer upgrades je erin steekt, hoe groter het gebied is.
 
 item.betterchests:upgrade.SLOT.name=Slot Upgrade
 item.betterchests:upgrade.COBBLEGEN.name=Keisteen Generator Upgrade
@@ -57,6 +57,7 @@ item.betterchests:upgrade.PLAYERFOOD.name=Speler Voeding Upgrade
 item.betterchests:upgrade.RESUPPLY.name=Herbevoorraadings Upgrade
 item.betterchests:upgrade.PLANTING.name=Plant Upgrade
 item.betterchests:upgrade.HARVESTING.name=Oogst Upgrade
+item.betterchests:upgrade.ANIMAL.name=Dieren Upgrade
 
 item.betterchests:upgrade.HAMMER.name=BetterChests Hamer
 
