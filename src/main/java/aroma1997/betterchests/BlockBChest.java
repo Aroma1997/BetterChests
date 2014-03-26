@@ -20,6 +20,7 @@ import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -260,9 +261,9 @@ public class BlockBChest extends BlockContainer {
 	
 	@Override
 	@SideOnly(Side.CLIENT)
-	public IIcon getIcon(IBlockAccess p_149673_1_, int p_149673_2_, int p_149673_3_,
-	        int p_149673_4_, int p_149673_5_) {
-		return Item.getItemFromBlock(this).getIconFromDamage(0);
-	}
+    public IIcon getIcon(int p_149691_1_, int p_149691_2_)
+    {
+		return Blocks.cobblestone.getIcon(p_149691_1_, p_149691_2_);
+    }
 	
 }
