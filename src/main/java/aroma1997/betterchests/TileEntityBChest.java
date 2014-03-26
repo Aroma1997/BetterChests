@@ -71,7 +71,7 @@ public class TileEntityBChest extends TileEntity implements IBetterChest, ISpeci
 	public TileEntityBChest() {
 		player = "";
 		tick = new Random().nextInt(64);
-		items = new ItemStack[9];
+		items = new ItemStack[27];
 	}
 	
 	@Override
