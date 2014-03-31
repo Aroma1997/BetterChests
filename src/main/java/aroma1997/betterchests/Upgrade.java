@@ -184,6 +184,9 @@ public enum Upgrade {
 		// HARVESTING
 		AromaRegistry.registerShapedAromicRecipe(new ItemStack(item, 1, HARVESTING.ordinal()),
 		        false, "WWW", "WUW", "WWW", 'W', new ItemStack(Items.wheat), 'U', itemUpgrade);
+		// ANIMAL
+		AromaRegistry.registerShapedAromicRecipe(new ItemStack(item, 1, ANIMAL.ordinal()), false, " S ", "BUB", " S ",
+				'S', new ItemStack(Items.shears), 'B', new ItemStack(Items.bucket), 'U', itemUpgrade);
 		
 		AromaRegistry.registerShapelessAromicRecipe(BASIC.getItem(), true, new ItemStack(item, 1,
 		        OreDictionary.WILDCARD_VALUE));
