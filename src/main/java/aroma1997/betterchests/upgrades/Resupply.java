@@ -23,11 +23,22 @@ public class Resupply extends BasicUpgrade {
 				if (itemStack == null) {
 					continue;
 				}
-				ItemStack get = InvUtil.getFirstItem(inv, itemStack);
+				ItemStack get = InvUtil.getFirstItem(inv, itemStack, true);
 				if (get == null) {
 					continue;
 				}
-				itemStack.stackSize += get.stackSize;
+				
+				if (itemStack.stackSize + get.stackSize > itemStack.getMaxStackSize()) {
+					int over = itemStack.getMaxStackSize() - itemStack.stackSize;
+					if (over > 0) {
+						get.stackSize -= over;
+						itemStack.stackSize += over;
+					}
+				}
+				else {
+					itemStack.stackSize += get.stackSize;
+					InvUtil.getFirstItem(inv, itemStack, false);
+				}
 			}
 		}
 	}
