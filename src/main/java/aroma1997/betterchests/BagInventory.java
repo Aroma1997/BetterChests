@@ -350,5 +350,20 @@ public class BagInventory implements IBetterChest, IAdvancedInventory, ISpecialI
 	public long getLongTick() {
 		return longTick;
 	}
+
+	@Override
+	public int getXCoord() {
+		return (int) getXPos();
+	}
+
+	@Override
+	public int getYCoord() {
+		return (int) getYPos();
+	}
+
+	@Override
+	public int getZCoord() {
+		return (int) getZPos();
+	}
 	
 }

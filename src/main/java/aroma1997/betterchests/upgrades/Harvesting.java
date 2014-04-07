@@ -20,10 +20,10 @@ public class Harvesting extends BasicUpgrade {
 		int range = Reference.Conf.PLANTS_RANGE_MULTIPLIER * item.stackSize;
 		int doubleRange = range * 2 + 1;
 		
-		int num = (int) (chest.getLongTick() % (doubleRange * doubleRange));
-		int xcoord = (int) chest.getXPos() + num / doubleRange - range;
-		int zcoord = (int) chest.getZPos() + num % doubleRange - range;
-		int ycoord = (int) chest.getYPos();
+		int num = (int)(chest.getLongTick() % (doubleRange * doubleRange));
+		int xcoord = chest.getXCoord() + num / doubleRange - range;
+		int zcoord = chest.getZCoord() + num % doubleRange - range;
+		int ycoord = chest.getYCoord();
 		int slot = InvUtil.getFirstItem(chest, IPlantable.class);
 		for (int i = Reference.Conf.PLANTS_START + 1; i <= Reference.Conf.PLANTS_START
 		        + Reference.Conf.PLANTS_HEIGHT + 1; i++ ) {

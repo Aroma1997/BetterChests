@@ -25,9 +25,9 @@ public class Planting extends BasicUpgrade {
 		int doubleRange = range * 2 + 1;
 		
 		int num = (int) (chest.getLongTick() % (doubleRange * doubleRange));
-		int xcoord = (int) chest.getXPos() + num / doubleRange - range;
-		int zcoord = (int) chest.getZPos() + num % doubleRange - range;
-		int ycoord = (int) chest.getYPos();
+		int xcoord = chest.getXCoord() + num / doubleRange - range;
+		int zcoord = chest.getZCoord() + num % doubleRange - range;
+		int ycoord = chest.getYCoord();
 		int slot = InvUtil.getFirstItem(chest, IPlantable.class);
 		for (int i = Reference.Conf.PLANTS_START; i <= Reference.Conf.PLANTS_START
 		        + Reference.Conf.PLANTS_HEIGHT; i++ ) {

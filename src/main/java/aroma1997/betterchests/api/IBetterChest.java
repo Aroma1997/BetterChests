@@ -43,6 +43,12 @@ public interface IBetterChest extends IInventory {
 	 */
 	public double getZPos();
 	
+	public int getXCoord();
+	
+	public int getYCoord();
+	
+	public int getZCoord();
+	
 	/**
 	 * How many of the Upgrades are installed. This is ignoring NBT data of the stack.
 	 * 
