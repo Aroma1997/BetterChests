@@ -11,9 +11,9 @@ book.betterchests:introduction=Welcome to your new BetterChests User Manual. Her
 
 book.betterchests:general.1=BetterChests is a mod, that adds an Adjustable Chest, an Adjustable Bag and some Upgrades. How to use them you'll see later on, because they don't do anything special on their own.
 book.betterchests:general.2=This User Manual will not automatically update itself between versions. To update it manually just place it into a crafting grid.
-book.betterchests:general.3=If you don't know the recipes of the Chest, Bag or the Upgrades, install NEI or CraftGuide. The Crafting recipes won't be shown here.
+book.betterchests:general.3=If you don't know the recipes of the Chest, Bag or the Upgrades, install NEI. The Crafting recipes won't be shown here.
 
-book.betterchests:chest.1=The Adjustable Chest can be placed down to store some Items. By default it has 9 Slots. You can upgrade it by right-clicking with an Upgrade on the Chest.
+book.betterchests:chest.1=The Adjustable Chest can be placed down to store some Items. By default it has 27 Slots. You can upgrade it by right-clicking with an Upgrade on the Chest.
 
 book.betterchests:bag.1=The Adjustable Bag is basically a Chest as an Item. The Inventory can be opened by Right-Clicking it in your hand. To upgrade it, just place an Upgrade alongside with the Bag in the Crafting Grid and you will get a upgraded Bag.
 book.betterchests:bag.2=You can also open the bag by pressing a configuarable key on your keyboard. By default it's the "+" key on the NumPad, but you can change that to whatever key you want. If you open the bag that way, it doesn't have to be in your hotbar, it can be anywhere in your inventory.
@@ -25,7 +25,7 @@ book.betterchests:upgrade.SLOT=Slot Upgrade: This upgrade gives your chest nine 
 book.betterchests:upgrade.COBBLEGEN=CobbleGen Upgrade: This upgrade lets your chest generate cobblestone if you place a bucket of Lava and a bucket of Water in there, cause that's how Cobble gets generated.
 book.betterchests:upgrade.REDSTONE=Redstone Upgrade: This Upgrade makes your chest emit a Redstone signal, whenever somebody opens the Chest. The signal strength depends on the amount of people having that chest open.
 book.betterchests:upgrade.LIGHT=Light Upgrade: This Upgrade makes your chest emit light with the brightness of Glowstone.
-book.betterchests:upgrade.BASIC=Basic Upgrade: This is the basic Upgrade. You can't use this Upgrade in a chest or bag. It's only ment for crafting purposes.
+book.betterchests:upgrade.BASIC=Upgrade Case: This is the Basic Upgrade. You can't use this Upgrade in a chest or bag. It's only ment for crafting purposes.
 book.betterchests:upgrade.COMPARATOR=Comparator Upgrade: If you place a Comparator next to the Chest facing away from it, the Comparator will emit a redstone signal with the strength depending on the amount of Items in that Chest.
 book.betterchests:upgrade.VOID=Void Upgrade: You have too much Cobblestone? Or too much useless stuff? Then wait no longer, you can simply put a Void Upgrade on your Chest and put that useless stuff into there and it will be gone. All it does: Deleting Items.
 book.betterchests:upgrade.UNBREAKABLE=Unbreakable Upgrade: This upgrade makes your Chest blast- and fireproof, so Creepers, TNT, (Nukes), Ender Dragon(s) or Withers can't destroy it.
