@@ -34,9 +34,9 @@ public class Animal extends BasicUpgrade {
 	    	List<EntityAnimal> list = world.getEntitiesWithinAABB(EntityAnimal.class, bounds);
 	    	
 	    	for (EntityAnimal entity : list) {
-	    		if (!entity.isEntityAlive() || entity.isChild()) continue;
+	    		if (entity == null || !entity.isEntityAlive() || entity.isChild()) continue;
 	    		if (entity instanceof IShearable && !(entity instanceof EntityMooshroom)) {
-	    			IShearable sheep = (EntitySheep) entity;
+	    			IShearable sheep = (IShearable) entity;
 	    			if (sheep.isShearable(null, world, entity.serverPosX, entity.serverPosY, entity.serverPosZ))
 	    		    {
 	    				//If I ever implement that it uses Shears, then this would be the place to damage it.
@@ -46,7 +46,7 @@ public class Animal extends BasicUpgrade {
 	    				}
 	    			}
 	    		}
-	    		else if (entity instanceof EntityCow ) {
+	    		else if (entity instanceof EntityCow) {
 	    			ItemStack bucket = InvUtil.getFirstItem(chest, new ItemStack(Items.bucket), true);
 	    			if (bucket != null) {
 	    				if (InvUtil.putIntoFirstSlot(chest, new ItemStack(Items.milk_bucket), false) == null) {
