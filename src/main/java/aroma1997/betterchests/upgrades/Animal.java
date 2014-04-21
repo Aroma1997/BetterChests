@@ -37,10 +37,10 @@ public class Animal extends BasicUpgrade {
 	    		if (entity == null || !entity.isEntityAlive() || entity.isChild()) continue;
 	    		if (entity instanceof IShearable && !(entity instanceof EntityMooshroom)) {
 	    			IShearable sheep = (IShearable) entity;
-	    			if (sheep.isShearable(null, world, entity.serverPosX, entity.serverPosY, entity.serverPosZ))
+	    			if (sheep.isShearable(null, world, (int)entity.posX, (int)entity.posY, (int)entity.posZ))
 	    		    {
 	    				//If I ever implement that it uses Shears, then this would be the place to damage it.
-	    				ArrayList<ItemStack> items = sheep.onSheared(null, world, entity.serverPosX, entity.serverPosY, entity.serverPosZ, 1);
+	    				ArrayList<ItemStack> items = sheep.onSheared(null, world, (int)entity.posX, (int)entity.posY, (int)entity.posZ, 1);
 	    				for (ItemStack wool : items) {
 	    					if (InvUtil.putIntoFirstSlot(chest, wool, false) != null) break;
 	    				}

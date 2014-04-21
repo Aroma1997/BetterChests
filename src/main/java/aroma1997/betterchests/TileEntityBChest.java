@@ -606,5 +606,10 @@ public class TileEntityBChest extends TileEntity implements IBetterChest, ISpeci
 	public int getZCoord() {
 		return zCoord;
 	}
+
+	@Override
+	public ItemStack shouldBeExact() {
+		return null;
+	}
 	
 }
