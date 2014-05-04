@@ -58,6 +58,8 @@ public class BetterChests {
 	
 	public static Logger logger;
 	
+	public static ItemBetterChestUpgrade upgradeChest = new ItemBetterChestUpgrade();
+	
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		logger = LogHelperPre.genNewLogger(Reference.MOD_ID);
@@ -74,6 +76,7 @@ public class BetterChests {
 		GameRegistry.registerBlock(chest, ItemBlockBChest.class, "betterChest");
 		GameRegistry.registerItem(upgrade, "Upgrade");
 		GameRegistry.registerItem(bag, "Bag");
+		GameRegistry.registerItem(upgradeChest, "upgradeChest");
 		new EventListener();
 	}
 	

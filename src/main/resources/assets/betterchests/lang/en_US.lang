@@ -81,6 +81,8 @@ item.betterchests:upgrade.ANIMAL.name=Animal Upgrade
 
 item.betterchests:upgrade.HAMMER.name=BetterChests Hammer
 
+item.betterchests:chestUpgrade.name=Adjustable Upgrade
+
 
 death.attack.betterchests:interact.player=%s shouldn't have checked that Adjustable Chest.
 
