@@ -9,28 +9,29 @@
 
 package aroma1997.betterchests;
 
-import aroma1997.betterchests.api.IUpgrade;
-import aroma1997.betterchests.client.BetterChestsKeyBinding;
-import aroma1997.core.inventories.ISpecialInventory;
-import aroma1997.core.inventories.ISpecialInventoryProvider;
-import aroma1997.core.network.NetworkHelper;
+import java.util.ArrayList;
+import java.util.List;
 
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
+import org.lwjgl.input.Keyboard;
+
+import aroma1997.betterchests.api.IUpgrade;
+import aroma1997.betterchests.client.BetterChestsKeyBinding;
+import aroma1997.core.inventories.AromaContainer;
+import aroma1997.core.inventories.ISpecialGUIProvider;
+import aroma1997.core.items.wrench.ItemWrench;
+import aroma1997.core.network.NetworkHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.lwjgl.input.Keyboard;
-
-public class ItemBag extends Item implements ISpecialInventoryProvider {
+public class ItemBag extends Item implements ISpecialGUIProvider {
 	
 	public ItemBag() {
 		super();
@@ -56,11 +57,6 @@ public class ItemBag extends Item implements ISpecialInventoryProvider {
 			        .setSlot(thePlayer.inventory.currentItem));
 		}
 		return par1ItemStack;
-	}
-	
-	@Override
-	public ISpecialInventory getInventory(EntityPlayer player, int id) {
-		return getInventory(player.inventory.getStackInSlot(id));
 	}
 	
 	public static BagInventory getInventory(ItemStack item) {
@@ -110,6 +106,32 @@ public class ItemBag extends Item implements ISpecialInventoryProvider {
 				}
 			}
 		}
+	}
+	
+	@Override
+	public boolean hasCustomEntity(ItemStack stack)
+    {
+		return true;
+    }
+	
+	@Override
+	public Entity createEntity(World world, Entity location, ItemStack itemstack)
+    {
+		EntityBag e = new EntityBag(world, location.posX, location.posY, location.posZ, itemstack);
+		e.delayBeforeCanPickup = ((EntityItem) location).delayBeforeCanPickup;
+		e.motionX = location.motionX;
+		e.motionY = location.motionY;
+		e.motionZ = location.motionZ;
+		return e;
+    }
+
+	@Override
+	public AromaContainer getContainer(EntityPlayer player, int i) {
+		BagInventory inv = getInventory(player.inventory.getStackInSlot(i));
+		if (player.isSneaking() && ItemWrench.hasPlayerWrench(player)) {
+			return new ContainerUpgrades(inv, player);
+		}
+		return inv.getContainer(player, i);
 	}
 	
 }

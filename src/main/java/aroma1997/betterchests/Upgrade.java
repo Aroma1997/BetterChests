@@ -44,7 +44,7 @@ public enum Upgrade {
 	BASIC(null, 0, false, false, Null.class),
 	COMPARATOR(null, 1, true, false, Null.class),
 	VOID(null, 1, true, true, Null.class),
-	UNBREAKABLE(null, 1, true, false, Null.class),
+	UNBREAKABLE(null, 1, true, true, Null.class),
 	PLAYER(UNBREAKABLE, 1, true, false, Null.class),
 	RAIN(null, 1, true, false, Rain.class),
 	ENERGY(null, 1, true, true, Null.class),
