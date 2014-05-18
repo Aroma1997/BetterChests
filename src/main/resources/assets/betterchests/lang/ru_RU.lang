@@ -38,6 +38,9 @@ book.betterchests:upgrade.TICKING=Улучшение «Отметка»: Это 
 book.betterchests:upgrade.FEEDING=Улучшение «Кормление»: Это улучшение автоматически кормит животных в области 5x3x5 едой из сундука. Автоматически останавливается, если количество сущностей в этой области слишком велико.
 book.betterchests:upgrade.PLAYERFOOD=Улучшение «Кормление игрока»: Это улучшение будет автоматически кормить игрока, который имеет мешочек с этим улучшением в инвентаре. Оно будет использовать еду вне мешочка.
 book.betterchests:upgrade.RESUPPLY=Улучшение «Снабжение»: Это улучшение будет автоматически пополнять запасы предметов Вашего инвентаря из мешочка. Оно будет делать это, если в Вашем инвентаре ещё есть место(ItemStack). Рекомендуется использовать с улучшением «Собиратель»!
+book.betterchests:upgrade.PLANTING=Улучшение «Посадка»: Это улучшение будет автоматически сажать любые семена в нём. Вы, наверное, захотите объединить его с улучшением «Сбор». Используя его с улучшением «Дождь» можно будет держать почву вокруг него увлажнённой, если есть ведро воды в инвентаре.
+book.betterchests:upgrade.HARVESTING=Улучшение «Сбор»: Это улучшение будет автоматически собирать любые культуры рядом с ним. Чем больше улучшений Вы поставите, тем больше радиус.
+book.betterchests:upgrade.ANIMAL=Улучшение «Животное»: Это улучшение будет доить ближайших коров/грибных коров и стричь ближайших овец.
 
 
 book.betterchests:credits=Спасибо за прочтение руководства пользователя. Если у Вас ещё остались вопросы, просто спросите об этом в теме MCF: http://tinyurl.com/aroma1997
@@ -72,8 +75,14 @@ item.betterchests:upgrade.TICKING.name=Улучшение «Отметка»
 item.betterchests:upgrade.FEEDING.name=Улучшение «Кормление»
 item.betterchests:upgrade.PLAYERFOOD.name=Улучшение «Кормление игрока»
 item.betterchests:upgrade.RESUPPLY.name=Улучшение «Снабжение»
+item.betterchests:upgrade.PLANTING.name=Улучшение «Посадка»
+item.betterchests:upgrade.HARVESTING.name=Улучшение «Сбор»
+item.betterchests:upgrade.ANIMAL.name=Улучшение «Животное»
 
 item.betterchests:upgrade.HAMMER.name=Молоток BetterChests
+
+
+death.attack.betterchests:interact.player=%s не должен был проверять этот регулируемый сундук.
 
 
 info.betterchests:tooltip.nobag=Это улучшение нельзя установить на мешочек.
