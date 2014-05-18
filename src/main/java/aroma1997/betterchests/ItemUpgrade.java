@@ -164,5 +164,10 @@ public class ItemUpgrade extends Item implements IUpgrade {
 	        int par2, ItemStack item) {
 		
 	}
+
+	@Override
+	public boolean canBeDisabled(ItemStack stack) {
+		return Upgrade.values()[stack.getItemDamage()].canBeDisabled();
+	}
 	
 }

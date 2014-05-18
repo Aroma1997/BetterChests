@@ -37,26 +37,26 @@ import net.minecraftforge.oredict.OreDictionary;
 import java.util.ArrayList;
 
 public enum Upgrade {
-	SLOT(null, 7, true, true, Null.class),
-	COBBLEGEN(null, 1, true, true, CobbleGen.class),
-	REDSTONE(null, 1, true, false, Null.class),
-	LIGHT(null, 1, true, false, Null.class),
-	BASIC(null, 0, false, false, Null.class),
-	COMPARATOR(null, 1, true, false, Null.class),
-	VOID(null, 1, true, true, Null.class),
-	UNBREAKABLE(null, 1, true, true, Null.class),
-	PLAYER(UNBREAKABLE, 1, true, false, Null.class),
-	RAIN(null, 1, true, false, Rain.class),
-	ENERGY(null, 1, true, true, Null.class),
-	FURNACE(ENERGY, 1, true, true, Furnace.class),
-	COLLECTOR(ENERGY, 8, true, true, Collector.class),
-	TICKING(ENERGY, 1, true, false, Ticking.class),
-	FEEDING(null, 1, true, false, Feeding.class),
-	PLAYERFOOD(null, 1, false, true, PlayerFeeding.class),
-	RESUPPLY(null, 1, false, true, Resupply.class),
-	PLANTING(ENERGY, 5, true, false, Planting.class),
-	HARVESTING(ENERGY, 5, true, false, Harvesting.class),
-	ANIMAL(ENERGY, 1, true, false, Animal.class);
+	SLOT(null, 7, true, true, Null.class, false),
+	COBBLEGEN(null, 1, true, true, CobbleGen.class, true),
+	REDSTONE(null, 1, true, false, Null.class, false),
+	LIGHT(null, 1, true, false, Null.class, false),
+	BASIC(null, 0, false, false, Null.class, false),
+	COMPARATOR(null, 1, true, false, Null.class, false),
+	VOID(null, 1, true, true, Null.class, false),
+	UNBREAKABLE(null, 1, true, true, Null.class, false),
+	PLAYER(UNBREAKABLE, 1, true, false, Null.class, false),
+	RAIN(null, 1, true, false, Rain.class, true),
+	ENERGY(null, 1, true, true, Null.class, false),
+	FURNACE(ENERGY, 1, true, true, Furnace.class, true),
+	COLLECTOR(ENERGY, 8, true, true, Collector.class, true),
+	TICKING(ENERGY, 1, true, false, Ticking.class, true),
+	FEEDING(null, 1, true, false, Feeding.class, true),
+	PLAYERFOOD(null, 1, false, true, PlayerFeeding.class, true),
+	RESUPPLY(null, 1, false, true, Resupply.class, true),
+	PLANTING(ENERGY, 5, true, false, Planting.class, true),
+	HARVESTING(ENERGY, 5, true, false, Harvesting.class, true),
+	ANIMAL(ENERGY, 1, true, false, Animal.class, true);
 	
 	private final Upgrade requirement;
 	
@@ -68,12 +68,15 @@ public enum Upgrade {
 	
 	private BasicUpgrade upgrade;
 	
+	private final boolean disableable;
+	
 	private Upgrade(Upgrade requirement, int max, boolean canChest, boolean canBag,
-	        Class<? extends BasicUpgrade> claSS) {
+	        Class<? extends BasicUpgrade> claSS, boolean disablable) {
 		this.requirement = requirement;
 		this.max = max;
 		this.canChest = canChest;
 		this.canBag = canBag;
+		this.disableable = disablable;
 		
 		try {
 			upgrade = claSS.newInstance();
@@ -216,5 +219,9 @@ public enum Upgrade {
 	
 	public BasicUpgrade getUpgrade() {
 		return upgrade;
+	}
+	
+	public boolean canBeDisabled() {
+		return disableable;
 	}
 }

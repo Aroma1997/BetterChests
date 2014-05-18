@@ -31,7 +31,7 @@ public class UpgradeHelper {
 		}
 		
 		for (ItemStack item : upgrades) {
-			if (isUpgrade(item)) {
+			if (isUpgrade(item) && !inv.isUpgradeDisabled(item)) {
 				((IUpgrade) item.getItem()).update(inv, tick, world, item);
 			}
 		}
@@ -107,6 +107,17 @@ public class UpgradeHelper {
 		}
 		
 		return false;
+	}
+	
+	public static void enableUpgrade(ItemStack upgrade) {
+		if (isUpgrade(upgrade)) {
+			if (upgrade.hasTagCompound() && upgrade.stackTagCompound.getBoolean("disabled")) {
+				upgrade.stackTagCompound.removeTag("disabled");
+				if (upgrade.stackTagCompound.hasNoTags()) {
+					upgrade.stackTagCompound = null;
+				}
+			}
+		}
 	}
 	
 }

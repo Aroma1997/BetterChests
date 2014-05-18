@@ -106,4 +106,8 @@ public interface IBetterChest extends IInventory {
 	 */
 	public long getLongTick();
 	
+	public boolean isUpgradeDisabled(ItemStack stack);
+	
+	public void setUpgradeDisabled(ItemStack stack, boolean value);
+	
 }

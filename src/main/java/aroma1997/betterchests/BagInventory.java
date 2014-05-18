@@ -19,13 +19,11 @@ import aroma1997.core.inventories.ISpecialInventory;
 import aroma1997.core.util.FileUtil;
 import aroma1997.core.util.ItemUtil;
 import aroma1997.core.util.ItemUtil.ItemMatchCriteria;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -364,6 +362,46 @@ public class BagInventory implements IBetterChest, IAdvancedInventory, ISpecialI
 	@Override
 	public int getZCoord() {
 		return (int) getZPos();
+	}
+	
+	@Override
+	public boolean isUpgradeDisabled(ItemStack stack) {
+		for (ItemStack item : upgrades) {
+			if (ItemUtil.areItemsSameMatching(item, stack, ItemMatchCriteria.ID,
+			        ItemMatchCriteria.DAMAGE)) {
+				return item.hasTagCompound() && item.stackTagCompound.hasKey("disabled");
+			}
+		}
+		return false;
+	}
+
+	@Override
+	public void setUpgradeDisabled(ItemStack stack, boolean value) {
+		if (isUpgradeInstalled(stack)) {
+			for (ItemStack item : upgrades) {
+				if (ItemUtil.areItemsSameMatching(item, stack, ItemMatchCriteria.ID,
+				        ItemMatchCriteria.DAMAGE)) {
+					if (value) {
+						if (!item.hasTagCompound()) {
+							item.setTagCompound(new NBTTagCompound());
+						}
+						item.stackTagCompound.setBoolean("disabled", true);
+						markDirty();
+						return;
+					}
+					else {
+						if (item.hasTagCompound() && item.stackTagCompound.hasKey("disabled")) {
+							item.stackTagCompound.removeTag("disabled");
+							if(item.stackTagCompound.hasNoTags()) {
+								item.stackTagCompound = null;
+							}
+						}
+						markDirty();
+						return;
+					}
+				}
+			}
+		}
 	}
 	
 }

@@ -111,4 +111,11 @@ public interface IUpgrade {
 	public void drawGuiContainerForegroundLayer(GuiContainer gui, Container container, int par1,
 	        int par2, ItemStack item);
 	
+	/**
+	 * USed to check if the upgrade can be disabled in the {@link}ContainerUpgrades
+	 * @param stack The upgrade
+	 * @return if it can be disabled.
+	 */
+	public boolean canBeDisabled(ItemStack stack);
+	
 }

@@ -1,17 +1,19 @@
 package aroma1997.betterchests;
 
+import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.Slot;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.StatCollector;
 import aroma1997.betterchests.api.IBetterChest;
+import aroma1997.betterchests.api.IUpgrade;
 import aroma1997.core.client.inventories.GUIAromaBasic;
 import aroma1997.core.client.inventories.GUIAutoLayout;
+import aroma1997.core.client.inventories.RenderHelper;
+import aroma1997.core.client.inventories.RenderHelper.Tex;
 import aroma1997.core.client.util.Colors;
 import aroma1997.core.inventories.AromaContainer;
 import aroma1997.core.util.InvUtil;
-
-import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.StatCollector;
-
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -59,6 +61,12 @@ public class ContainerUpgrades extends AromaContainer {
 		gui.getFontRender().drawSplitString(
 		        Colors.RED + StatCollector.translateToLocal("gui.betterchests:upgrades.warning"),
 		        bufferX, bufferY + upgrades / 9 * 18, 162, 4210752);
+		for (Object o : inventorySlots) {
+			Slot slot = (Slot) o;
+			if (slot != null && chest.isUpgradeDisabled(slot.getStack())) {
+				RenderHelper.renderTex(gui, Tex.REDCROSS, slot.xDisplayPosition - 1, slot.yDisplayPosition - 1);
+			}
+		}
 	}
 	
 	@Override
@@ -66,25 +74,41 @@ public class ContainerUpgrades extends AromaContainer {
 		if (par1 >= inventorySlots.size()) {
 			return null;
 		}
+		ItemStack item = getSlot(par1).getStack();
+		if (item != null) {
+			item = item.copy();
+		}
 		if (par3 == 1) {
 			if (par2 == 1) {
-				ItemStack item = getSlot(par1).getStack();
-				if (getSlot(par1) == null || ! getSlot(par1).getHasStack() || isRequired(par1)) {
+				if (item == null || isRequired(par1)) {
 					return null;
 				}
+				UpgradeHelper.enableUpgrade(item);
 				getSlot(par1).decrStackSize(1);
 				item.stackSize = 1;
 				InvUtil.putIntoFirstSlot(player.inventory, item, false);
 			}
 			else if (par2 == 0) {
-				ItemStack item = getSlot(par1).getStack();
-				if (getSlot(par1) == null || ! getSlot(par1).getHasStack() || isRequired(par1)) {
+				if (item == null || isRequired(par1)) {
 					return null;
 				}
 				int amount = getSlot(par1).getStack().stackSize;
+				UpgradeHelper.enableUpgrade(item);
 				getSlot(par1).decrStackSize(amount);
 				item.stackSize = amount;
 				InvUtil.putIntoFirstSlot(player.inventory, item, false);
+			}
+		}
+		else if (par3 == 0) {
+			if ((par2 == 0 || par2 == 1) && !par4EntityPlayer.worldObj.isRemote) {
+				if (item != null && UpgradeHelper.isUpgrade(item)) {
+					IUpgrade upgr = (IUpgrade) item.getItem();
+					if (upgr.canBeDisabled(item)) {
+						boolean s = !chest.isUpgradeDisabled(item);
+						chest.setUpgradeDisabled(item, s);
+						return null;
+					}
+				}
 			}
 		}
 		return null;
