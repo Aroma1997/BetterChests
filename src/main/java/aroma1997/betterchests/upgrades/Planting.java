@@ -29,10 +29,7 @@ public class Planting extends BasicUpgrade {
 		int zcoord = chest.getZCoord() + num % doubleRange - range;
 		int ycoord = chest.getYCoord();
 		int slot = InvUtil.getFirstItem(chest, IPlantable.class);
-		for (int i = Reference.Conf.PLANTS_START; i <= Reference.Conf.PLANTS_START
-		        + Reference.Conf.PLANTS_HEIGHT; i++ ) {
-			doBlock(chest, tick, world, item, xcoord, ycoord + i, zcoord, slot);
-		}
+		doBlock(chest, tick, world, item, xcoord, ycoord - 1, zcoord, slot);
 	}
 	
 	private static void doBlock(IBetterChest chest, int tick, World world, ItemStack item,

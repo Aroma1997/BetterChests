@@ -48,10 +48,6 @@ public class Reference {
 		
 		public static final int FEED_ENTITIES_TO_STOP = 50;
 		
-		public static final int PLANTS_HEIGHT = 1;
-		
-		public static final int PLANTS_START = - 1;
-		
 		public static final int PLANTS_RANGE_MULTIPLIER = 2;
 	}
 	
