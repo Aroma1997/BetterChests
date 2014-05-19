@@ -1,3 +1,12 @@
+/**
+ * The code of BetterChests and all related materials like textures is copyrighted material.
+ * It may only be redistributed or used for Commercial purposes with the permission of Aroma1997.
+ * 
+ * All Rights reserved (c) by Aroma1997
+ * 
+ * See https://github.com/Aroma1997/BetterChests/blob/master/LICENSE.md for more information.
+ */
+
 package aroma1997.betterchests;
 
 import net.minecraft.entity.player.EntityPlayer;
@@ -7,7 +16,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.world.World;
 import aroma1997.core.items.AromicItem;
-import cpw.mods.fml.common.ObfuscationReflectionHelper;
 
 public class ItemBetterChestUpgrade extends AromicItem {
 
