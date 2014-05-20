@@ -63,6 +63,7 @@ public class ContainerUpgrades extends AromaContainer {
 	}
 	
 	@Override
+	@SideOnly(Side.CLIENT)
 	public void drawGuiContainerForegroundLayer(GUIAromaBasic gui, int par1, int par2) {
 		gui.getFontRender().drawString(
 		        StatCollector.translateToLocal("gui.betterchests:upgrades.name"), bufferX,
