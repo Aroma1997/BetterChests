@@ -18,7 +18,12 @@ book.betterchests:chest.1=The Adjustable Chest can be placed down to store some 
 book.betterchests:bag.1=The Adjustable Bag is basically a Chest as an Item. The Inventory can be opened by Right-Clicking it in your hand. To upgrade it, just place an Upgrade alongside with the Bag in the Crafting Grid and you will get a upgraded Bag.
 book.betterchests:bag.2=You can also open the bag by pressing a configuarable key on your keyboard. By default it's the "+" key on the NumPad, but you can change that to whatever key you want. If you open the bag that way, it doesn't have to be in your hotbar, it can be anywhere in your inventory.
 
-book.betterchests:tool.HAMMER=You can use the Hammer to modify your Chests and Bags. With Sneak + Right-Click on a Chest, you can drop the Chest retaining all its contents, if you Right-Click on a Chest, you can remove individual Upgrades from it.
+book.betterchests:hammer.chest.1=If you want to remove Upgrades from a Adjustable Chest or temporarily disable them, you can do so by Right-Clicking the Chest with an Aromic Hammer. Shift-Right-Click to remove one upgrade, Shift-Left-Click to remove all of that type, Right-Click to disable an Upgrade.
+book.betterchests:hammer.bag.1=If you want to remove or disable Upgrades form a Bag, you can do so by having a Aromic Hammer in your inventory and Shift-Right-Clicking the Bag then. Same controls that on the chest.
+book.betterchests:hammer.chest.2=You can pick up the chest with all of its contents by Shift-Right-Clicking the Chest with an Aromic Hammer.
+
+book.betterchests:upgrade.1=If you have a lot of stuff in your normal wooden Chests and want to upgrade them to Adjustable Chests without breaking them, you can do so by using the Adjustable Upgrade on the wooden chests.
+
 
 
 book.betterchests:upgrade.SLOT=Slot Upgrade: This upgrade gives your chest nine more slots. This upgrade can be inserted multiple times.

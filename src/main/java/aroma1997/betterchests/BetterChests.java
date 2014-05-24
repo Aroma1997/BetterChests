@@ -115,6 +115,10 @@ public class BetterChests {
 		list.add("book.betterchests:chest.1");
 		list.add("book.betterchests:bag.1");
 		list.add("book.betterchests:bag.2");
+		list.add("book.betterchests:hammer.chest.1");
+		list.add("book.betterchests:hammer.bag.1");
+		list.add("book.betterchests:hammer.chest.2");
+		list.add("book.betterchests:upgrade.1");
 		list.add("book.betterchests:chapter.upgrades");
 		Upgrade.addBagBookDescription(list);
 		list.add("book.betterchests:chapter.credits");
