@@ -81,9 +81,10 @@ public class ContainerUpgrades extends AromaContainer {
 	
 	@Override
 	public ItemStack slotClick(int par1, int par2, int par3, EntityPlayer par4EntityPlayer) {
-		if (par1 >= inventorySlots.size()) {
+		if (par1 >= inventorySlots.size() || par1 < 0) {
 			return null;
 		}
+		
 		ItemStack item = getSlot(par1).getStack();
 		if (item != null) {
 			item = item.copy();
