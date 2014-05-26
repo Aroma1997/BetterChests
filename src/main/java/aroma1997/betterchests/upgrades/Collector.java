@@ -1,9 +1,9 @@
 package aroma1997.betterchests.upgrades;
 
+import aroma1997.betterchests.EntityBag;
 import aroma1997.betterchests.Upgrade;
 import aroma1997.betterchests.api.IBetterChest;
 import aroma1997.core.util.InvUtil;
-
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.AxisAlignedBB;
@@ -46,7 +46,7 @@ public class Collector extends BasicUpgrade {
 			List<EntityItem> listNew = world.getEntitiesWithinAABB(EntityItem.class, boundsNew);
 			
 			for (EntityItem e : listNew) {
-				if (e.age > 10 && e.isEntityAlive()) {
+				if (e.age > 10 && e.isEntityAlive() && !(e instanceof EntityBag)) {
 					if (e.getEntityItem() == null) {
 						continue;
 					}
