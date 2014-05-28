@@ -12,7 +12,7 @@ package aroma1997.betterchests;
 import aroma1997.betterchests.api.IBetterChest;
 import aroma1997.betterchests.api.IUpgrade;
 import aroma1997.core.util.ItemUtil;
-
+import aroma1997.core.util.ItemUtil.ItemMatchCriteria;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
@@ -50,7 +50,7 @@ public class UpgradeHelper {
 			if (! isUpgrade(item)) {
 				continue;
 			}
-			if (ItemUtil.areItemsSame(item, req)) {
+			if (ItemUtil.areItemsSameMatching(item, req, ItemMatchCriteria.ID, ItemMatchCriteria.DAMAGE)){
 				return true;
 			}
 		}

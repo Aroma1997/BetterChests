@@ -1,22 +1,19 @@
 package aroma1997.betterchests.upgrades;
 
-import aroma1997.betterchests.Reference;
-import aroma1997.betterchests.api.IBetterChest;
-import aroma1997.core.util.InvUtil;
+import java.util.ArrayList;
+import java.util.List;
 
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.passive.EntityCow;
 import net.minecraft.entity.passive.EntityMooshroom;
-import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
-
 import net.minecraftforge.common.IShearable;
-
-import java.util.ArrayList;
-import java.util.List;
+import aroma1997.betterchests.Reference;
+import aroma1997.betterchests.api.IBetterChest;
+import aroma1997.core.util.InvUtil;
 
 
 public class Animal extends BasicUpgrade {
