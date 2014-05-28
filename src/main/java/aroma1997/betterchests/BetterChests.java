@@ -11,6 +11,7 @@ package aroma1997.betterchests;
 
 import aroma1997.core.log.LogHelperPre;
 import aroma1997.core.network.NetworkHelper;
+import aroma1997.core.network.PacketHandler;
 import aroma1997.core.util.AromaRegistry;
 import aroma1997.core.util.ItemUtil;
 import aroma1997.core.version.VersionCheck;
@@ -27,6 +28,7 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.relauncher.Side;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.oredict.OreDictionary;
 
@@ -79,6 +81,8 @@ public class BetterChests {
 		new EventListener();
 	}
 	
+	public static PacketHandler ph = NetworkHelper.getPacketHandler(Reference.MOD_ID);
+	
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
 		proxy.registerRenderers();
@@ -94,9 +98,7 @@ public class BetterChests {
 		AromaRegistry.registerShapelessAromicRecipe(getHelpBook(), false, Upgrade.BASIC.getItem(),
 		        new ItemStack(Items.book));
 		GameRegistry.addRecipe(new CraftingBook());
-		
-		NetworkHelper.registerPacket(PacketOpenBag.class);
-		
+		ph.registerMessage(PacketOpenBag.class, PacketOpenBag.class, 0, Side.CLIENT);
 		VersionCheck.registerVersionChecker(Reference.MOD_ID, Reference.VERSION);
 	}
 	

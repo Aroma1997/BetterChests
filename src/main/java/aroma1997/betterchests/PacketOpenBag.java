@@ -10,14 +10,12 @@
 package aroma1997.betterchests;
 
 import aroma1997.core.inventories.Inventories;
-import aroma1997.core.network.IBasePacket;
-
-import net.minecraft.entity.player.EntityPlayer;
-
 import io.netty.buffer.ByteBuf;
-import io.netty.channel.ChannelHandlerContext;
+import cpw.mods.fml.common.network.simpleimpl.IMessage;
+import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
+import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 
-public class PacketOpenBag implements IBasePacket {
+public class PacketOpenBag implements IMessage, IMessageHandler<PacketOpenBag, IMessage> {
 	
 	public PacketOpenBag setSlot(int slot) {
 		this.slot = slot;
@@ -25,25 +23,21 @@ public class PacketOpenBag implements IBasePacket {
 	}
 	
 	private int slot;
-	
+
 	@Override
-	public void encodeInto(ChannelHandlerContext ctx, ByteBuf buffer) {
-		buffer.writeByte(slot);
+	public void fromBytes(ByteBuf buf) {
+		slot = buf.readByte();
 	}
-	
+
 	@Override
-	public void decodeInto(ChannelHandlerContext ctx, ByteBuf slice) {
-		slot = slice.readByte();
+	public void toBytes(ByteBuf buf) {
+		buf.writeByte(slot);
 	}
-	
+
 	@Override
-	public void handleClientSide(EntityPlayer player) {
-		
+	public IMessage onMessage(PacketOpenBag message, MessageContext ctx) {
+		Inventories.openContainerAtPlayer(ctx.getServerHandler().playerEntity, slot);
+		return null;
 	}
-	
-	@Override
-	public void handleServerSide(EntityPlayer player) {
-		Inventories.openContainerAtPlayer(player, slot);
-	}
-	
+
 }
