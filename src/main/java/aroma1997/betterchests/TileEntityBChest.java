@@ -421,6 +421,7 @@ public class TileEntityBChest extends TileEntity implements IBetterChest, ISpeci
 			return;
 		}
 		items[i] = itemstack;
+		markDirty();
 	}
 	
 	@Override
