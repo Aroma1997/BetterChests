@@ -16,6 +16,7 @@ import aroma1997.betterchests.upgrades.Collector;
 import aroma1997.betterchests.upgrades.Feeding;
 import aroma1997.betterchests.upgrades.Furnace;
 import aroma1997.betterchests.upgrades.Harvesting;
+import aroma1997.betterchests.upgrades.Mining;
 import aroma1997.betterchests.upgrades.Null;
 import aroma1997.betterchests.upgrades.Planting;
 import aroma1997.betterchests.upgrades.PlayerFeeding;
@@ -23,14 +24,12 @@ import aroma1997.betterchests.upgrades.Rain;
 import aroma1997.betterchests.upgrades.Resupply;
 import aroma1997.betterchests.upgrades.Ticking;
 import aroma1997.core.util.AromaRegistry;
-
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
-
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.oredict.OreDictionary;
 
@@ -56,7 +55,9 @@ public enum Upgrade {
 	RESUPPLY(null, 1, false, true, Resupply.class, true),
 	PLANTING(ENERGY, 5, true, false, Planting.class, true),
 	HARVESTING(ENERGY, 5, true, false, Harvesting.class, true),
-	ANIMAL(ENERGY, 1, true, false, Animal.class, true);
+	ANIMAL(ENERGY, 1, true, false, Animal.class, true),
+	AI(null, 1, true, true, Null.class, false),
+	MINING(AI, 1, true, false, Mining.class, true);
 	
 	private final Upgrade requirement;
 	
