@@ -14,13 +14,13 @@ import aroma1997.betterchests.api.IUpgrade;
 import aroma1997.core.client.inventories.GUIContainer;
 import aroma1997.core.inventories.AromaContainer;
 import aroma1997.core.inventories.ContainerBasic;
+import aroma1997.core.inventories.IAdvancedInventory;
 import aroma1997.core.inventories.ISpecialInventory;
 import aroma1997.core.inventories.Inventories;
 import aroma1997.core.items.wrench.IAromaWrenchable;
 import aroma1997.core.util.FileUtil;
 import aroma1997.core.util.ItemUtil;
 import aroma1997.core.util.ItemUtil.ItemMatchCriteria;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
@@ -37,10 +37,8 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.WorldServer;
-
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-
 import net.minecraftforge.common.util.FakePlayerFactory;
 import net.minecraftforge.common.util.ForgeDirection;
 
@@ -52,7 +50,7 @@ import java.util.Random;
 import com.mojang.authlib.GameProfile;
 
 public class TileEntityBChest extends TileEntity implements IBetterChest, ISpecialInventory,
-        IAromaWrenchable {
+        IAromaWrenchable, IAdvancedInventory {
 	
 	String player;
 	
@@ -417,10 +415,7 @@ public class TileEntityBChest extends TileEntity implements IBetterChest, ISpeci
 	
 	@Override
 	public void setInventorySlotContents(int i, ItemStack itemstack) {
-		if (i < 0 || i >= items.length || isUpgradeInstalled(Upgrade.VOID.getItem())) {
-			return;
-		}
-		items[i] = itemstack;
+		setStackInSlotWithoutNotify(i, itemstack);
 		markDirty();
 	}
 	
@@ -651,6 +646,15 @@ public class TileEntityBChest extends TileEntity implements IBetterChest, ISpeci
 				}
 			}
 		}
+	}
+
+	@Override
+	public void setStackInSlotWithoutNotify(int i, ItemStack itemstack) {
+
+		if (i < 0 || i >= items.length || isUpgradeInstalled(Upgrade.VOID.getItem())) {
+			return;
+		}
+		items[i] = itemstack;
 	}
 	
 }
