@@ -41,14 +41,14 @@ public class Harvesting extends BasicUpgrade {
 			if (! gr.func_149851_a(world, xcoord, ycoord, zcoord, false)) {
 				ArrayList<ItemStack> items = block.getDrops(world, xcoord, ycoord, zcoord,
 				        world.getBlockMetadata(xcoord, ycoord, zcoord), 0);
-				boolean b = false;
+				boolean b = true;
 				for (ItemStack itemGet : items) {
 					if (InvUtil.putIntoFirstSlot(chest, itemGet, true) != null) {
-						b = true;
+						b = false;
 						break;
 					}
 				}
-				if (! b) {
+				if (b) {
 					for (ItemStack itemGet : items) {
 						InvUtil.putIntoFirstSlot(chest, itemGet, false);
 					}
