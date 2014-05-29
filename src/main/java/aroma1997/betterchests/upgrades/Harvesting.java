@@ -22,7 +22,8 @@ public class Harvesting extends BasicUpgrade {
 		int range = Reference.Conf.PLANTS_RANGE_MULTIPLIER * item.stackSize;
 		int doubleRange = range * 2 + 1;
 		
-		int num = (int)(chest.getLongTick() % (doubleRange * doubleRange));
+		int num = (int)(chest.getLongTick() % (doubleRange * doubleRange * 2));
+		if (num > doubleRange * doubleRange) return;
 		int xcoord = chest.getXCoord() + num / doubleRange - range;
 		int zcoord = chest.getZCoord() + num % doubleRange - range;
 		int ycoord = chest.getYCoord();
