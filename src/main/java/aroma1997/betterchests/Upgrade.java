@@ -24,11 +24,13 @@ import aroma1997.betterchests.upgrades.Rain;
 import aroma1997.betterchests.upgrades.Resupply;
 import aroma1997.betterchests.upgrades.Ticking;
 import aroma1997.core.util.AromaRegistry;
+import net.minecraft.block.BlockOre;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemTool;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.oredict.OreDictionary;
@@ -191,6 +193,11 @@ public enum Upgrade {
 		// ANIMAL
 		AromaRegistry.registerShapedAromicRecipe(new ItemStack(item, 1, ANIMAL.ordinal()), false, " S ", "BUB", " S ",
 				'S', new ItemStack(Items.shears), 'B', new ItemStack(Items.bucket), 'U', itemUpgrade);
+		// AI
+		AromaRegistry.registerShapedAromicRecipe(new ItemStack(item, 1, AI.ordinal()), false, "QDQ", "GUG", "QDQ", 'Q', Items.quartz, 'D', Items.diamond, 'G', Items.gold_ingot, 'U', itemUpgrade);
+		AromaRegistry.registerShapedAromicRecipe(new ItemStack(item, 1, AI.ordinal()), false, "QGQ", "DUD", "QGQ", 'Q', Items.quartz, 'D', Items.diamond, 'G', Items.gold_ingot, 'U', itemUpgrade);
+		// MINING
+		AromaRegistry.registerShapedAromicRecipe(new ItemStack(item, 1, MINING.ordinal()), false, "OTO", "TUT", "OTO", 'O', BlockOre.class, 'T', ItemTool.class, 'U', itemUpgrade);
 		
 		AromaRegistry.registerShapelessAromicRecipe(BASIC.getItem(), true, new ItemStack(item, 1,
 		        OreDictionary.WILDCARD_VALUE));

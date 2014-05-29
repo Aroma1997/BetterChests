@@ -45,7 +45,9 @@ book.betterchests:upgrade.PLAYERFOOD=Player Feeding Upgrade: This Upgrade will a
 book.betterchests:upgrade.RESUPPLY=Resupply Upgrade: This Upgrade will automatically resupply Items from your Bag into your Inventory. It will do that if there is still space on the ItemStack in your Inventory. Recommended to use with Collector Upgrade!
 book.betterchests:upgrade.PLANTING=Planting Upgrade: This Upgrade will automatically plant any seeds in it. You probably want to combine it with the Harvesting Upgrade. Using this with the Rain Upgrade will keep the farmland around it hydrated, if there is a bucket of water in the inventory.
 book.betterchests:upgrade.HARVESTING=Harvesting Upgrade: This Upgrade will automatically harvest any crops near it. The more Upgrades you put into it, the larger the radius is.
-book.betterchests:upgrade.ANIMAL=Animal Upgrade:This Upgrade will milk the nearby Cows/Mooshrooms and shear nearby Sheeps.
+book.betterchests:upgrade.ANIMAL=Animal Upgrade: This Upgrade will milk the nearby Cows/Mooshrooms and shear nearby Sheeps.
+book.betterchests:upgrade.AI=Similar to the Energy Upgrade, this Upgrade doesn't do anything. It is just an Upgrade required by other Upgrades that do complex stuff.
+book.betterchests:upgrade.MINING=Mining Upgrade: This Upgrade will break the blocks that are inside of the chest with the tool that is inside the chest applying the Enchantments of the tool.
 
 
 book.betterchests:credits=Thank you for reading the User Manual. If you still have questions just ask them in the MCF thread at: http://tinyurl.com/aroma1997
@@ -83,6 +85,8 @@ item.betterchests:upgrade.RESUPPLY.name=Resupply Upgrade
 item.betterchests:upgrade.PLANTING.name=Planting Upgrade
 item.betterchests:upgrade.HARVESTING.name=Harvesting Upgrade
 item.betterchests:upgrade.ANIMAL.name=Animal Upgrade
+item.betterchests:upgrade.AI.name=AI Upgrade
+item.betterchests:upgrade.MINING.name=Mining Upgrade
 
 item.betterchests:upgrade.HAMMER.name=BetterChests Hammer
 
