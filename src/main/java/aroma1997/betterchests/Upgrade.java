@@ -16,6 +16,7 @@ import aroma1997.betterchests.upgrades.Collector;
 import aroma1997.betterchests.upgrades.Feeding;
 import aroma1997.betterchests.upgrades.Furnace;
 import aroma1997.betterchests.upgrades.Harvesting;
+import aroma1997.betterchests.upgrades.Killing;
 import aroma1997.betterchests.upgrades.Mining;
 import aroma1997.betterchests.upgrades.Null;
 import aroma1997.betterchests.upgrades.Planting;
@@ -30,6 +31,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemSword;
 import net.minecraft.item.ItemTool;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.common.IPlantable;
@@ -59,7 +61,8 @@ public enum Upgrade {
 	HARVESTING(ENERGY, 5, true, false, Harvesting.class, true),
 	ANIMAL(ENERGY, 1, true, false, Animal.class, true),
 	AI(null, 1, true, true, Null.class, false),
-	MINING(AI, 1, true, false, Mining.class, true);
+	MINING(AI, 1, true, false, Mining.class, true),
+	KILLING(ENERGY, 1, true, false, Killing.class, true);
 	
 	private final Upgrade requirement;
 	
@@ -198,7 +201,8 @@ public enum Upgrade {
 		AromaRegistry.registerShapedAromicRecipe(new ItemStack(item, 1, AI.ordinal()), false, "QGQ", "DUD", "QGQ", 'Q', new ItemStack(Items.quartz), 'D', new ItemStack(Items.diamond), 'G', new ItemStack(Items.gold_ingot), 'U', itemUpgrade);
 		// MINING
 		AromaRegistry.registerShapedAromicRecipe(new ItemStack(item, 1, MINING.ordinal()), false, "OTO", "TUT", "OTO", 'O', BlockOre.class, 'T', ItemTool.class, 'U', itemUpgrade);
-		
+		//KILLING
+		AromaRegistry.registerShapedAromicRecipe(new ItemStack(item, 1, KILLING.ordinal()), false, " S ", "SUS", " S ", 'S', ItemSword.class, 'S', itemUpgrade);
 		AromaRegistry.registerShapelessAromicRecipe(BASIC.getItem(), true, new ItemStack(item, 1,
 		        OreDictionary.WILDCARD_VALUE));
 	}
