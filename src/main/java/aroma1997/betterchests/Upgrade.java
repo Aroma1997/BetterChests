@@ -194,8 +194,8 @@ public enum Upgrade {
 		AromaRegistry.registerShapedAromicRecipe(new ItemStack(item, 1, ANIMAL.ordinal()), false, " S ", "BUB", " S ",
 				'S', new ItemStack(Items.shears), 'B', new ItemStack(Items.bucket), 'U', itemUpgrade);
 		// AI
-		AromaRegistry.registerShapedAromicRecipe(new ItemStack(item, 1, AI.ordinal()), false, "QDQ", "GUG", "QDQ", 'Q', Items.quartz, 'D', Items.diamond, 'G', Items.gold_ingot, 'U', itemUpgrade);
-		AromaRegistry.registerShapedAromicRecipe(new ItemStack(item, 1, AI.ordinal()), false, "QGQ", "DUD", "QGQ", 'Q', Items.quartz, 'D', Items.diamond, 'G', Items.gold_ingot, 'U', itemUpgrade);
+		AromaRegistry.registerShapedAromicRecipe(new ItemStack(item, 1, AI.ordinal()), false, "QDQ", "GUG", "QDQ", 'Q', new ItemStack(Items.quartz), 'D', new ItemStack(Items.diamond), 'G', new ItemStack(Items.gold_ingot), 'U', itemUpgrade);
+		AromaRegistry.registerShapedAromicRecipe(new ItemStack(item, 1, AI.ordinal()), false, "QGQ", "DUD", "QGQ", 'Q', new ItemStack(Items.quartz), 'D', new ItemStack(Items.diamond), 'G', new ItemStack(Items.gold_ingot), 'U', itemUpgrade);
 		// MINING
 		AromaRegistry.registerShapedAromicRecipe(new ItemStack(item, 1, MINING.ordinal()), false, "OTO", "TUT", "OTO", 'O', BlockOre.class, 'T', ItemTool.class, 'U', itemUpgrade);
 		
