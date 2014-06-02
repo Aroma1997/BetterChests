@@ -98,7 +98,7 @@ public class BetterChests {
 		AromaRegistry.registerShapelessAromicRecipe(getHelpBook(), false, Upgrade.BASIC.getItem(),
 		        new ItemStack(Items.book));
 		GameRegistry.addRecipe(new CraftingBook());
-		ph.registerMessage(PacketOpenBag.class, PacketOpenBag.class, 0, Side.CLIENT);
+		ph.registerMessage(PacketOpenBag.class, PacketOpenBag.class, 0, Side.SERVER);
 		VersionCheck.registerVersionChecker(Reference.MOD_ID, Reference.VERSION);
 	}
 	
