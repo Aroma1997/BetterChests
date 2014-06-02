@@ -12,7 +12,7 @@ public class Furnace extends BasicUpgrade {
 	
 	@Override
 	public void updateChest(IBetterChest inv, int tick, World world, ItemStack item) {
-		if (inv.isUpgradeInstalled(Upgrade.FURNACE.getItem()) && tick % 32 == 5) {
+		if (inv.isUpgradeInstalled(Upgrade.FURNACE.getItem()) && tick  == 5) {
 			int cooking = - 1;
 			for (int i = 0; i < inv.getSizeInventory(); i++ ) {
 				ItemStack stack = inv.getStackInSlot(i);
