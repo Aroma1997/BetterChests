@@ -34,7 +34,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class BlockBChest extends BlockContainer {
 	
 	public BlockBChest() {
-		super(Material.wood);
+		super(Material.rock);
 		setHardness(3.0F);
 		setCreativeTab(BetterChests.creativeTabBC);
 		setBlockName("betterchests:betterChest");
