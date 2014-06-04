@@ -25,7 +25,7 @@ public class Planting extends BasicUpgrade {
 		int doubleRange = range * 2 + 1;
 		
 		int num = (int)(chest.getLongTick() % (doubleRange * doubleRange * 2));
-		if (num > doubleRange * doubleRange) return;
+		if (num >= doubleRange * doubleRange) return;
 		int xcoord = chest.getXCoord() + num / doubleRange - range;
 		int zcoord = chest.getZCoord() + num % doubleRange - range;
 		int ycoord = chest.getYCoord();
