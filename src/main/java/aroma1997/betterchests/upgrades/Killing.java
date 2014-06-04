@@ -32,6 +32,9 @@ public class Killing extends BasicUpgrade {
 					continue;
 				}
 				if (e instanceof EntityAnimal) {
+					if (e.isChild()) {
+						continue;
+					}
 					if (map.containsKey(e.getClass())) {
 						map.put(e.getClass(), map.remove(e.getClass()) + 1);
 					}
