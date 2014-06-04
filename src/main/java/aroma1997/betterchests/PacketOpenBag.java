@@ -36,7 +36,7 @@ public class PacketOpenBag implements IMessage, IMessageHandler<PacketOpenBag, I
 
 	@Override
 	public IMessage onMessage(PacketOpenBag message, MessageContext ctx) {
-		Inventories.openContainerAtPlayer(ctx.getServerHandler().playerEntity, slot);
+		Inventories.openContainerAtPlayer(ctx.getServerHandler().playerEntity, message.slot);
 		return null;
 	}
 
