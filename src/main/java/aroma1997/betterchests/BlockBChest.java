@@ -184,7 +184,7 @@ public class BlockBChest extends BlockContainer {
 	@Override
 	public void breakBlock(World par1World, int par2, int par3, int par4, Block par5, int par6) {
 		TileEntityBChest te = (TileEntityBChest) par1World.getTileEntity(par2, par3, par4);
-		if (te == null || te.pickedUp) {
+		if (te == null) {
 			super.breakBlock(par1World, par2, par3, par4, par5, par6);
 			return;
 		}

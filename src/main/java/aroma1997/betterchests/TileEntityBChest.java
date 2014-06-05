@@ -62,8 +62,6 @@ public class TileEntityBChest extends TileEntity implements IBetterChest, ISpeci
 	
 	private int ticksSinceSync = - 1;
 	
-	boolean pickedUp = false;
-	
 	private ArrayList<ItemStack> upgrades = new ArrayList<ItemStack>();
 	
 	public TileEntityBChest() {
@@ -80,19 +78,7 @@ public class TileEntityBChest extends TileEntity implements IBetterChest, ISpeci
 		return items[slot];
 	}
 	
-	@Override
-	public void validate() {
-		super.validate();
-		if (! worldObj.isRemote) {
-			fplayer = FakePlayerFactory.get((WorldServer) worldObj, new GameProfile("",
-			        "Aroma1997BetterChests"));
-			fplayer.posX = xCoord;
-			fplayer.posY = yCoord;
-			fplayer.posZ = zCoord;
-		}
-	}
-	
-	private boolean firstInit = false;
+	private boolean firstTick = true;
 	
 	private int numUsingPlayers;
 	
@@ -106,8 +92,15 @@ public class TileEntityBChest extends TileEntity implements IBetterChest, ISpeci
 	public void updateEntity() {
 		super.updateEntity();
 		doNormalChestUpdate();
-		if (firstInit) {
-			worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+		if (firstTick) {
+			if (! worldObj.isRemote) {
+				fplayer = FakePlayerFactory.get((WorldServer) worldObj, new GameProfile("",
+				        "Aroma1997BetterChests"));
+				fplayer.posX = xCoord;
+				fplayer.posY = yCoord;
+				fplayer.posZ = zCoord;
+			}
+			firstTick = false;
 		}
 		if (worldObj.isRemote) {
 			return;
