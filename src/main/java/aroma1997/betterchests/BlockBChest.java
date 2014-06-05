@@ -198,6 +198,7 @@ public class BlockBChest extends BlockContainer {
 		}
 		for (ItemStack item : te.getUpgrades()) {
 			if (item != null) {
+				UpgradeHelper.enableUpgrade(item);
 				WorldUtil.dropItemsRandom(par1World, item, par2, par3, par4);
 			}
 		}
