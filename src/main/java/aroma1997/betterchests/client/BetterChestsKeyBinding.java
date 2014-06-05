@@ -22,7 +22,7 @@ public class BetterChestsKeyBinding extends KeyBinding {
 	private static BetterChestsKeyBinding instance;
 	
 	public BetterChestsKeyBinding() {
-		super("betterchests:key.openBag", Keyboard.KEY_ADD, "key.categories.inventory");
+		super("key.betterchests.openBag", Keyboard.KEY_ADD, "key.categories.inventory");
 		BetterChestsKeyBinding.instance = this;
 	}
 	
