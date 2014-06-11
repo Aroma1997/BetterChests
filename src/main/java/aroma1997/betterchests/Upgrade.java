@@ -202,7 +202,8 @@ public enum Upgrade {
 		// MINING
 		AromaRegistry.registerShapedAromicRecipe(new ItemStack(item, 1, MINING.ordinal()), false, "OTO", "TUT", "OTO", 'O', BlockOre.class, 'T', ItemTool.class, 'U', itemUpgrade);
 		//KILLING
-		AromaRegistry.registerShapedAromicRecipe(new ItemStack(item, 1, KILLING.ordinal()), false, " S ", "SUS", " S ", 'S', ItemSword.class, 'S', itemUpgrade);
+		AromaRegistry.registerShapedAromicRecipe(new ItemStack(item, 1, KILLING.ordinal()), false, " S ", "SUS", " S ", 'S', ItemSword.class, 'U', itemUpgrade);
+		
 		AromaRegistry.registerShapelessAromicRecipe(BASIC.getItem(), true, new ItemStack(item, 1,
 		        OreDictionary.WILDCARD_VALUE));
 	}
