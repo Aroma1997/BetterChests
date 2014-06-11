@@ -17,6 +17,7 @@ public class Ticking extends BasicUpgrade {
 		}
 		catch (NullPointerException e) {
 			LogHelper.logException("Failed to use ticking upgrade on chest: " + chest.toString() + " Coords: x=" + chest.getXCoord() + " y=" + chest.getYCoord() + " z=" + chest.getZCoord(), e);
+			chest.setUpgradeDisabled(item, true);
 		}
 		
 	}
