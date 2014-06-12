@@ -40,7 +40,7 @@ book.betterchests:upgrade.ENERGY=Energy Upgrade: This Upgrade is only required b
 book.betterchests:upgrade.FURNACE=Furnace Upgrade: You know that problem, you have too much stuff to smelt, but not enough furnaces? This Upgrade will solve that problem for you.
 book.betterchests:upgrade.COLLECTOR=Collector Upgrade: This Upgrade will suck items into the Chest that are dropped nearby it. You can increase the range of it by installing more upgrades.
 book.betterchests:upgrade.TICKING=Ticking Upgrade: This Upgrade will tick the contents of your chest as if they were in a Player Inventory.
-book.betterchests:upgrade.FEEDING=Feeding Upgrade: This Upgrade automatically feeds nearby animals in a 5x3x5 area with the food inside of the Chest. It will automatically stop if the amount of Entities in that area is too big.
+book.betterchests:upgrade.FEEDING=Feeding Upgrade: This Upgrade automatically feeds nearby animals in a 7x3x7 area with the food inside of the Chest. It will automatically stop if the amount of Entities in that area is too big.
 book.betterchests:upgrade.PLAYERFOOD=Player Feeding Upgrade: This Upgrade will automatically feed the player who has the bag with the Upgrade in his inventory. It will use the food from inside the bag to do that.
 book.betterchests:upgrade.RESUPPLY=Resupply Upgrade: This Upgrade will automatically resupply Items from your Bag into your Inventory. It will do that if there is still space on the ItemStack in your Inventory. Recommended to use with Collector Upgrade!
 book.betterchests:upgrade.PLANTING=Planting Upgrade: This Upgrade will automatically plant any seeds in it. You probably want to combine it with the Harvesting Upgrade. Using this with the Rain Upgrade will keep the farmland around it hydrated, if there is a bucket of water in the inventory.
@@ -48,6 +48,7 @@ book.betterchests:upgrade.HARVESTING=Harvesting Upgrade: This Upgrade will autom
 book.betterchests:upgrade.ANIMAL=Animal Upgrade: This Upgrade will milk the nearby Cows/Mooshrooms and shear nearby Sheeps.
 book.betterchests:upgrade.AI=Similar to the Energy Upgrade, this Upgrade doesn't do anything. It is just an Upgrade required by other Upgrades that do complex stuff.
 book.betterchests:upgrade.MINING=Mining Upgrade: This Upgrade will break the blocks that are inside of the chest with the tool that is inside the chest applying the Enchantments of the tool.
+book.betterchests:upgrade.KILLING=Killing Upgrade: This Upgrade will kill living entities within an area of 7x3x7 blocks. When used on animals, it will always leave two of each kind.
 
 
 book.betterchests:credits=Thank you for reading the User Manual. If you still have questions just ask them in the MCF thread at: http://tinyurl.com/aroma1997
@@ -87,6 +88,7 @@ item.betterchests:upgrade.HARVESTING.name=Harvesting Upgrade
 item.betterchests:upgrade.ANIMAL.name=Animal Upgrade
 item.betterchests:upgrade.AI.name=AI Upgrade
 item.betterchests:upgrade.MINING.name=Mining Upgrade
+item.betterchests:upgrade.KILLING.name=Killing Upgrade
 
 item.betterchests:upgrade.HAMMER.name=BetterChests Hammer
 
