@@ -12,7 +12,7 @@ public class Ticking extends BasicUpgrade {
 	
 	@Override
 	public void updateChest(IBetterChest chest, int tick, World world, ItemStack item) {
-		if (tick != 56) {
+		if (tick % 8 == 2) {
 			return;
 		}
 		try {
