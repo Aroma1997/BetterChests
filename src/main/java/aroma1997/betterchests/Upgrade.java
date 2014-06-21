@@ -14,6 +14,7 @@ import aroma1997.betterchests.upgrades.BasicUpgrade;
 import aroma1997.betterchests.upgrades.CobbleGen;
 import aroma1997.betterchests.upgrades.Collector;
 import aroma1997.betterchests.upgrades.Feeding;
+import aroma1997.betterchests.upgrades.Fishing;
 import aroma1997.betterchests.upgrades.Furnace;
 import aroma1997.betterchests.upgrades.Harvesting;
 import aroma1997.betterchests.upgrades.Killing;
@@ -62,7 +63,8 @@ public enum Upgrade {
 	ANIMAL(ENERGY, 1, true, false, Animal.class, true),
 	AI(null, 1, true, true, Null.class, false),
 	MINING(AI, 1, true, false, Mining.class, true),
-	KILLING(ENERGY, 1, true, false, Killing.class, true);
+	KILLING(ENERGY, 1, true, false, Killing.class, true),
+	FISHING(AI, 1, true, false, Fishing.class, true);
 	
 	private final Upgrade requirement;
 	
