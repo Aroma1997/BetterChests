@@ -9,9 +9,10 @@
 
 package aroma1997.betterchests.client;
 
+import net.minecraftforge.client.MinecraftForgeClient;
+import aroma1997.betterchests.BetterChests;
 import aroma1997.betterchests.CommonProxy;
 import aroma1997.betterchests.TileEntityBChest;
-
 import cpw.mods.fml.client.registry.ClientRegistry;
 
 public class ClientProxy extends CommonProxy {
@@ -20,6 +21,8 @@ public class ClientProxy extends CommonProxy {
 	public void registerRenderers() {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityBChest.class, // "betterChest",
 		        new BChestRenderer());
+		
+		MinecraftForgeClient.registerItemRenderer(BetterChests.bag, new BagRenderer());
 		
 		ClientRegistry.registerKeyBinding(new BetterChestsKeyBinding());
 		new EventListenerClient();
