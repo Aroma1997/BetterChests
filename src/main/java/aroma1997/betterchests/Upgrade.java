@@ -9,23 +9,8 @@
 
 package aroma1997.betterchests;
 
-import aroma1997.betterchests.upgrades.Animal;
-import aroma1997.betterchests.upgrades.BasicUpgrade;
-import aroma1997.betterchests.upgrades.CobbleGen;
-import aroma1997.betterchests.upgrades.Collector;
-import aroma1997.betterchests.upgrades.Feeding;
-import aroma1997.betterchests.upgrades.Fishing;
-import aroma1997.betterchests.upgrades.Furnace;
-import aroma1997.betterchests.upgrades.Harvesting;
-import aroma1997.betterchests.upgrades.Killing;
-import aroma1997.betterchests.upgrades.Mining;
-import aroma1997.betterchests.upgrades.Null;
-import aroma1997.betterchests.upgrades.Planting;
-import aroma1997.betterchests.upgrades.PlayerFeeding;
-import aroma1997.betterchests.upgrades.Rain;
-import aroma1997.betterchests.upgrades.Resupply;
-import aroma1997.betterchests.upgrades.Ticking;
-import aroma1997.core.util.AromaRegistry;
+import java.util.ArrayList;
+
 import net.minecraft.block.BlockOre;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -37,8 +22,22 @@ import net.minecraft.item.ItemTool;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.oredict.OreDictionary;
-
-import java.util.ArrayList;
+import aroma1997.betterchests.upgrades.Animal;
+import aroma1997.betterchests.upgrades.BasicUpgrade;
+import aroma1997.betterchests.upgrades.CobbleGen;
+import aroma1997.betterchests.upgrades.Collector;
+import aroma1997.betterchests.upgrades.Feeding;
+import aroma1997.betterchests.upgrades.Furnace;
+import aroma1997.betterchests.upgrades.Harvesting;
+import aroma1997.betterchests.upgrades.Killing;
+import aroma1997.betterchests.upgrades.Mining;
+import aroma1997.betterchests.upgrades.Null;
+import aroma1997.betterchests.upgrades.Planting;
+import aroma1997.betterchests.upgrades.PlayerFeeding;
+import aroma1997.betterchests.upgrades.Rain;
+import aroma1997.betterchests.upgrades.Resupply;
+import aroma1997.betterchests.upgrades.Ticking;
+import aroma1997.core.util.AromaRegistry;
 
 public enum Upgrade {
 	SLOT(null, 7, true, true, Null.class, false),
@@ -63,8 +62,7 @@ public enum Upgrade {
 	ANIMAL(ENERGY, 1, true, false, Animal.class, true),
 	AI(null, 1, true, true, Null.class, false),
 	MINING(AI, 1, true, false, Mining.class, true),
-	KILLING(ENERGY, 1, true, false, Killing.class, true),
-	FISHING(AI, 1, true, false, Fishing.class, true);
+	KILLING(ENERGY, 1, true, false, Killing.class, true);
 	
 	private final Upgrade requirement;
 	
