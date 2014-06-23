@@ -62,7 +62,7 @@ public class TileEntityBChest extends TileEntity implements IBetterChest, ISpeci
 	
 	private long longTick;
 	
-	private EntityPlayer fplayer;
+	public EntityPlayer fplayer;
 	
 	private int ticksSinceSync = - 1;
 	
@@ -115,19 +115,6 @@ public class TileEntityBChest extends TileEntity implements IBetterChest, ISpeci
 			tick = 64;
 			markDirty();
 		};
-		
-		if (isUpgradeInstalled(Upgrade.TICKING.getItem()) && tick % 8 == 0) {
-			for (int i = 0; i < getSizeInventory(); i++ ) {
-				ItemStack item = getStackInSlot(i);
-				if (item == null || item.getItem() == null) {
-					continue;
-				}
-				fplayer.inventory.mainInventory[0] = getStackInSlot(i);
-				fplayer.inventory.markDirty();
-				item.getItem().onUpdate(item, worldObj, fplayer, 0, false);
-				markDirty();
-			}
-		}
 	}
 	
 	@Override
@@ -222,7 +209,9 @@ public class TileEntityBChest extends TileEntity implements IBetterChest, ISpeci
 		if (nbt.getTag("player") != null && nbt.getTag("player") instanceof NBTTagString) {
 			player = Util.getUUID(nbt.getString("player"));
 		}
-		player = UUID.fromString(nbt.getString("playerUUID"));
+		if (nbt.hasKey("playerUUID")) {
+			player = UUID.fromString(nbt.getString("playerUUID"));
+		}
 		super.readFromNBT(nbt);
 		if (worldObj != null && worldObj.isRemote) {
 			worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
@@ -232,7 +221,9 @@ public class TileEntityBChest extends TileEntity implements IBetterChest, ISpeci
 	@Override
 	public void writeToNBT(NBTTagCompound nbt) {
 		super.writeToNBT(nbt);
-		nbt.setString("playerUUID", player.toString());
+		if (player != null) {
+			nbt.setString("playerUUID", player.toString());
+		}
 		FileUtil.writeToNBT(this, nbt);
 		NBTTagList list = new NBTTagList();
 		for (ItemStack item : upgrades) {
