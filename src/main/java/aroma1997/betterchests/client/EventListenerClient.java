@@ -1,7 +1,6 @@
 package aroma1997.betterchests.client;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.common.MinecraftForge;
@@ -31,14 +30,10 @@ public class EventListenerClient {
 	
 	@SubscribeEvent
 	public void tick(ClientTickEvent event) {
-		if (BetterChestsKeyBinding.getInstance().getIsKeyPressed() && !pressedBefore) {
-			EntityPlayer player = Minecraft.getMinecraft().thePlayer;
-			for (int i = 0; i < player.inventory.getSizeInventory(); i++ ) {
-				if (player.inventory.getStackInSlot(i) != null
-				        && player.inventory.getStackInSlot(i).getItem() instanceof ItemBag) {
-					BetterChests.ph.sendPacketToPlayers(new PacketOpenBag().setSlot(i));
-					break;
-				}
+		if (BetterChestsKeyBinding.getInstance().getIsKeyPressed() && !pressedBefore && Minecraft.getMinecraft().theWorld != null) {
+			int i = InvUtil.getFirstItem(Minecraft.getMinecraft().thePlayer.inventory, ItemBag.class);
+			if (i != -1) {
+				BetterChests.ph.sendPacketToPlayers(new PacketOpenBag().setSlot(i));
 			}
 		}
 		pressedBefore = BetterChestsKeyBinding.getInstance().getIsKeyPressed();
