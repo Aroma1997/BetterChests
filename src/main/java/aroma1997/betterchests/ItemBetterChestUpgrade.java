@@ -42,7 +42,7 @@ public class ItemBetterChestUpgrade extends AromicItem {
             TileEntityBChest newchest = new TileEntityBChest();
             
             for (int i = 0; i < tec.getSizeInventory(); i++) {
-            	newchest.setInventorySlotContents(i, tec.getStackInSlot(i));
+            	newchest.setStackInSlotWithoutNotify(i, tec.getStackInSlot(i));
             	tec.setInventorySlotContents(i, null);
             }
             int facing = tec.getBlockMetadata();
