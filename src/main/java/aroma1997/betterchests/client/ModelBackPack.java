@@ -11,7 +11,10 @@ import org.lwjgl.opengl.GL11;
 import aroma1997.betterchests.BagInventory;
 import aroma1997.betterchests.ItemBag;
 import aroma1997.betterchests.Upgrade;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
+@SideOnly(Side.CLIENT)
 public class ModelBackPack extends ModelBase {
 
 	public static ModelBackPack instance = new ModelBackPack();

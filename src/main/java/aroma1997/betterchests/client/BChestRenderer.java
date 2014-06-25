@@ -9,9 +9,6 @@
 
 package aroma1997.betterchests.client;
 
-import aroma1997.betterchests.Reference;
-import aroma1997.betterchests.TileEntityBChest;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockChest;
 import net.minecraft.client.model.ModelChest;
@@ -22,6 +19,12 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
+import aroma1997.betterchests.Reference;
+import aroma1997.betterchests.TileEntityBChest;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
+@SideOnly(Side.CLIENT)
 public class BChestRenderer extends TileEntitySpecialRenderer {
 	
 	private ResourceLocation model = new ResourceLocation(Reference.MOD_ID

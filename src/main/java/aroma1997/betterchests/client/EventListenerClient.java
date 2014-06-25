@@ -15,7 +15,11 @@ import aroma1997.core.util.InvUtil;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent.ClientTickEvent;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
+
+@SideOnly(Side.CLIENT)
 public class EventListenerClient {
 	
 	public EventListenerClient() {
