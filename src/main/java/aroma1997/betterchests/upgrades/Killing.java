@@ -4,7 +4,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import cpw.mods.fml.relauncher.ReflectionHelper;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.AxisAlignedBB;
@@ -12,6 +14,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import aroma1997.betterchests.Reference;
 import aroma1997.betterchests.api.IBetterChest;
+import aroma1997.core.coremod.CoreMod;
 
 public class Killing extends BasicUpgrade {
 
@@ -42,10 +45,12 @@ public class Killing extends BasicUpgrade {
 						map.put(e.getClass(), 1);
 					}
 					if (map.get(e.getClass()) > 2) {
+						ReflectionHelper.setPrivateValue(EntityLivingBase.class, e, 100, CoreMod.runtimeDeobfuscationEnabled ? "field_70718_bc" : "recentlyHit");
 						e.attackEntityFrom(DamageSource.generic, 20.0F);
 					}
 				}
 				else {
+					ReflectionHelper.setPrivateValue(EntityLivingBase.class, e, 100, CoreMod.runtimeDeobfuscationEnabled ? "field_70718_bc" : "recentlyHit");
 					e.attackEntityFrom(DamageSource.generic, 20.0F);
 				}
 			}
