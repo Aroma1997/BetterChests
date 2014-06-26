@@ -46,9 +46,9 @@ book.betterchests:upgrade.RESUPPLY=Resupply Upgrade: This Upgrade will automatic
 book.betterchests:upgrade.PLANTING=Planting Upgrade: This Upgrade will automatically plant any seeds in it. You probably want to combine it with the Harvesting Upgrade. Using this with the Rain Upgrade will keep the farmland around it hydrated, if there is a bucket of water in the inventory.
 book.betterchests:upgrade.HARVESTING=Harvesting Upgrade: This Upgrade will automatically harvest any crops near it. The more Upgrades you put into it, the larger the radius is.
 book.betterchests:upgrade.ANIMAL=Animal Upgrade: This Upgrade will milk the nearby Cows/Mooshrooms and shear nearby Sheeps.
-book.betterchests:upgrade.AI=Similar to the Energy Upgrade, this Upgrade doesn't do anything. It is just an Upgrade required by other Upgrades that do complex stuff.
+book.betterchests:upgrade.AI=AI Upgrade: Similar to the Energy Upgrade, this Upgrade doesn't do anything. It is just an Upgrade required by other Upgrades that do complex stuff.
 book.betterchests:upgrade.MINING=Mining Upgrade: This Upgrade will break the blocks that are inside of the chest with the tool that is inside the chest applying the Enchantments of the tool.
-book.betterchests:upgrade.KILLING=Killing Upgrade: This Upgrade will kill living entities within an area of 7x3x7 blocks. When used on animals, it will always leave two of each kind.
+book.betterchests:upgrade.KILLING=Killing Upgrade: This Upgrade will kill living entities within an area of 7x3x7 blocks. When used on animals, it will always leave two of each kind. If you install the AI Upgrade as well, killed Creatures will also drop RareDrops such as Blaze Rods and Ender Pearls.
 
 
 book.betterchests:credits=Thank you for reading the User Manual. If you still have questions just ask them in the MCF thread at: http://tinyurl.com/aroma1997
