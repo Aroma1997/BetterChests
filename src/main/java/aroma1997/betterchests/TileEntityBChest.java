@@ -21,6 +21,8 @@ import aroma1997.core.items.wrench.IAromaWrenchable;
 import aroma1997.core.util.FileUtil;
 import aroma1997.core.util.ItemUtil;
 import aroma1997.core.util.ItemUtil.ItemMatchCriteria;
+import aroma1997.core.util.ServerUtil;
+import aroma1997.core.util.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
@@ -29,6 +31,7 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.NBTTagString;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
@@ -46,13 +49,14 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
+import java.util.UUID;
 
 import com.mojang.authlib.GameProfile;
 
 public class TileEntityBChest extends TileEntity implements IBetterChest, ISpecialInventory,
         IAromaWrenchable, IAdvancedInventory {
 	
-	String player;
+	UUID player;
 	
 	private int tick;
 	
@@ -65,7 +69,6 @@ public class TileEntityBChest extends TileEntity implements IBetterChest, ISpeci
 	private ArrayList<ItemStack> upgrades = new ArrayList<ItemStack>();
 	
 	public TileEntityBChest() {
-		player = "";
 		tick = new Random().nextInt(64);
 		items = new ItemStack[27];
 	}
@@ -94,7 +97,7 @@ public class TileEntityBChest extends TileEntity implements IBetterChest, ISpeci
 		doNormalChestUpdate();
 		if (firstTick) {
 			if (! worldObj.isRemote) {
-				fplayer = FakePlayerFactory.get((WorldServer) worldObj, new GameProfile("",
+				fplayer = FakePlayerFactory.get((WorldServer) worldObj, new GameProfile(null,
 				        "Aroma1997BetterChests"));
 				fplayer.posX = xCoord;
 				fplayer.posY = yCoord;
@@ -160,9 +163,8 @@ public class TileEntityBChest extends TileEntity implements IBetterChest, ISpeci
 		                Minecraft.getMinecraft().thePlayer.getCommandSenderName())) {
 			return true;
 		}
-		if (MinecraftServer.getServer().getConfigurationManager().getOps()
-		        .contains(par1EntityPlayer.getCommandSenderName().toLowerCase())
-		        || player.equalsIgnoreCase(par1EntityPlayer.getCommandSenderName())) {
+		if (ServerUtil.isPlayerAdmin(par1EntityPlayer.getCommandSenderName())
+		        || player != null && player.equals(par1EntityPlayer.getUniqueID())) {
 			return true;
 		}
 		return false;
@@ -191,7 +193,7 @@ public class TileEntityBChest extends TileEntity implements IBetterChest, ISpeci
 			setAmountUpgrade(itemUpgrade, getAmountUpgrade(itemUpgrade) + 1);
 			if (ItemUtil.areItemsSameMatching(itemUpgrade, Upgrade.PLAYER.getItem(),
 			        ItemMatchCriteria.ID, ItemMatchCriteria.DAMAGE)) {
-				this.player = player.getCommandSenderName();
+				this.player = player.getUniqueID();
 			}
 			onUpgradeInserted(player);
 			return true;
@@ -217,7 +219,10 @@ public class TileEntityBChest extends TileEntity implements IBetterChest, ISpeci
 		}
 		items = new ItemStack[getSizeInventory()];
 		FileUtil.readFromNBT(this, nbt);
-		player = nbt.getString("player");
+		if (nbt.getTag("player") != null && nbt.getTag("player") instanceof NBTTagString) {
+			player = Util.getUUID(nbt.getString("player"));
+		}
+		player = UUID.fromString(nbt.getString("playerUUID"));
 		super.readFromNBT(nbt);
 		if (worldObj != null && worldObj.isRemote) {
 			worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
@@ -227,7 +232,7 @@ public class TileEntityBChest extends TileEntity implements IBetterChest, ISpeci
 	@Override
 	public void writeToNBT(NBTTagCompound nbt) {
 		super.writeToNBT(nbt);
-		nbt.setString("player", player);
+		nbt.setString("playerUUID", player.toString());
 		FileUtil.writeToNBT(this, nbt);
 		NBTTagList list = new NBTTagList();
 		for (ItemStack item : upgrades) {
@@ -306,7 +311,7 @@ public class TileEntityBChest extends TileEntity implements IBetterChest, ISpeci
 			f = 5.0F;
 			List list = worldObj.getEntitiesWithinAABB(
 			        EntityPlayer.class,
-			        AxisAlignedBB.getAABBPool().getAABB(xCoord - f, yCoord - f, zCoord - f,
+			        AxisAlignedBB.getBoundingBox(xCoord - f, yCoord - f, zCoord - f,
 			                xCoord + 1 + f, yCoord + 1 + f, zCoord + 1 + f));
 			Iterator iterator = list.iterator();
 			
