@@ -1,48 +1,70 @@
-book.betterchests:name=BetterChests Gebruikers Handboek
+book.betterchests:name=BetterChests Gebruikershandleiding
 
-book.betterchests:chapter.general=Algemene Informatie
-book.betterchests:chapter.upgrades=Upgrade Informatie
+book.betterchests:chapter.general=Algemene informatie
+book.betterchests:chapter.upgrades=Upgrade informatie
 book.betterchests:chapter.credits=Credits
 
 
-book.betterchests:introduction=Welkom bij je nieuwe BetterChests Handboek. Je kan hier inforatie vinden over de Verstelbare Kist, Rugzak en hun Upgrades.
+book.betterchests:introduction=Welkom bij je nieuwe BetterChests Handleiding. Hier kun je informatie vinden over de Aanpasbare Kist, Rugzak en hun Upgrades.
 
 
-book.betterchests:general.1=BetterChests is een mod, dat een Verstelbare Kist, een Verstelbare Rugzak en Upgrades toevoegt. Hoe je ze moet gebruiken lees je later, omdat zonder een upgrade doen ze niets speciaal.
-book.betterchests:general.2=Deze Gebruikers Handboek zal NIET auto updaten. als je hem wil upgraden moet je hem gewoon in een werkbank doen.
-book.betterchests:general.3=Als je de recept van de kist, rugzak of wat dan ook niet weet wordt NEI of CraftGuide aangeraden, de Recepten zullen niet vertoond worden in dit boek.
+book.betterchests:general.1=BetterChests is een mod, die een Aanpasbare Kist, een Aanpasbare Rugzak en Upgrades toevoegt. Hoe je ze gebruikt, zie je verderop, omdat ze op zichzelf niks bijzonders doen.
+book.betterchests:general.2=Deze Gebruikershandleiding zal niet automatisch updaten bij nieuwe versies. Om hem te updaten, moet je hem gewoon in je werkrooster plaatsen.
+book.betterchests:general.3=Als je niet weet hoe je de Kist, Rugzak of Upgrades vervaardigt, moet je NEI installeren. De recepten worden hier niet weergegeven.
 
-book.betterchests:chest.1=De Verstelbare Kist kan geplaatst worden om dingen erin te doen. Zonder upgrades heeft hij maar 9 Slots. Je kan hem upgraden door te klicken met een upgrade.
+book.betterchests:chest.1=De Aanpasbare Kist kan geplaatst worden om spullen in op te slaan. Standaard heeft hij 27 vakken. Je kunt hem upgraden door met een Upgrade rechts te klikken op de Kist.
 
-book.betterchests:bag.1=De Verstelbare Rugzak is in principe een Kist maar als een Item. De Inventaris kan geopend worden door recht te klicken met de Rugzak in je hand. Als je hem wil upgraden, plaats je een Upgrade naast de Rugzak in de Werkbank en je krijgt dan een geupgrade rugzak.
+book.betterchests:bag.1=De Aanpasbare Rugzak is in principe een Kist maar als een Item. De inventaris kan geopend worden door recht te klikken met de Rugzak in je hand. Om het te upgraden plaats je hem gewoon met een upgrade in het werkrooster en zul je een geüpgradede Rugzak krijgen.
+book.betterchests:bag.2=Je kunt de rugzak ook openen door po een instelbare knop te drukken op je toetsenbord. Standaard is het de "+" toets op je NumPad, maar je kunt het aanpassen naar wat je maar wilt. Als je de rugzak op die manier opent, hoeft hij niet in je hotbar te zijn, hij kan overal in e Inventaris zijn.
 
+book.betterchests:hammer.chest.1=Als je Upgrades van een Aanpasbare Kist wilt verwijderen of tijdelijk uitzetten, kun je dat doen door de kist rechts te klikken met een Aromic Hamer. Shift-rechts klikken om één upgrade te verwijderen, shift-links klikken om alles van dat type te verwijderen, rechts klikken om een upgrade uit te zetten.
+book.betterchests:hammer.bag.1=Als je upgrades van een rugzak wilt verwijderen of uitzetten, kun je dat doen door een Aromic Hamer in je inventaris te hebben en dan shift-rechts te klikken met de rugzak. Werkt op dezelfde manier als de kist.
+book.betterchests:hammer.chest.2=Je kan de kist met al zijn inhoud oppakken door shift-rechts te klikken op de kist met een Armomic Hamer.
 
-book.betterchests:upgrade.SLOT=Slot Upgrade: Deze upgrade geeft je kist negen meer slots. Deze upgrade kan meerdere keren worden geplaatst.
-book.betterchests:upgrade.COBBLEGEN=KeiSteen Generator Upgrade: Deze upgrade kun je je kist Cobble laten genereren als je een emmer Lava en een emmer water er in doet, want dat is hoe Cobble in de normale wereld wordt gegenereerd.
-book.betterchests:upgrade.REDSTONE=Redstone Upgrade: Deze upgrade laat zorgt ervoor dat je Kist een Redstone signaal output, de signaal sterkte is sterker afhankelijk van hoeveel mensen de kist geopend hebben.
-book.betterchests:upgrade.LIGHT=Licht Upgrade: Deze Upgrade maakt uw Kist licht gevend met de helderheid van Glowstone.
-book.betterchests:upgrade.BASIC=Basis Upgrade: Dit is de basis Upgrade. U kunt geen gebruik maken van deze Upgrade in een Kist of Rugzak. Het is alleen bedoeld voor het maken van upgrades
-book.betterchests:upgrade.COMPARATOR=Comparator Upgrade: Als je een Comparator afgekeerd van de Kist plaatst, zal de Comparator een redstone signaal uitzenden met de kracht afhankelijk van de hoeveelheid van de items in de Kist.
-book.betterchests:upgrade.VOID=Void Upgrade: Je hebt te veel Keisteen? Of te veel nutteloze spullen? Wacht dan niet langer, je kunt gewoon een Void Upgrade op je Kist en zet die nutteloze spullen daar in en het zal van de wereld verwijderd worden.
-book.betterchests:upgrade.UNBREAKABLE=Onbreekbare Upgrade: Deze upgrade maakt uw Kist brandwerend en zo, dus Creepers, TNT, (Vernietiging), Ender Dragon (s) of Withers kunnen het niet vernietigen.
-book.betterchests:upgrade.PLAYER=Speler Upgrade: Met deze upgrade, is de Kist alleen toegankelijk voor de speler die de Upgrade geplaatst hebben (of Op's). Aan de andere mensen, zegt de Kist gewoon, de Kist zal niet lief zijn voor jou en zal dus niet openen!
+book.betterchests:upgrade.SLOT=Vakken Upgrade: Deze upgrade geeft je kist negen vakken extra. Deze upgrade kan meerdere keren worden toegevoegd.
+book.betterchests:upgrade.COBBLEGEN=Keisteen Generator Upgrade: Deze upgrade laat je kist keisteen maken als je een emmer water en een emmer lava erin zet, want dat is hoe keisteen gemaakt wordt.
+book.betterchests:upgrade.REDSTONE=Redstone Upgrade: Deze upgrade laat je kist een redstone signaal afgeven, als er iemand de kist opent. De sterkte van het signaal hang af van de hoeveelheid mensen die de kist open hebben.
+book.betterchests:upgrade.LIGHT=Licht Upgrade: Deze upgrade laat je kist licht geven met de sterkte van gloeisteen.
+book.betterchests:upgrade.BASIC=Upgrade Huls: Dit is de Basis Upgrade. Je kunt geen gebruik maken van deze Upgrade in een Kist of Rugzak. Het is alleen bedoeld voor het maken van upgrades.
+book.betterchests:upgrade.COMPARATOR=Comparator Upgrade: Als je een Comparator afgekeerd van de Kist plaatst, zal de Comparator een redstone signaal uitzenden met een sterkte afhankelijk van de hoeveelheid van de spullen in de Kist.
+book.betterchests:upgrade.VOID=Void Upgrade: Je hebt te veel Keisteen? Of te veel nutteloze spullen? Wacht dan niet langer, je kan gewoon een Void Upgrade op je kist plaatsen en vervolgens alle nutteloze spullen erin doen en het zal worden verwijderd. Alles wat het doet: Spullen verwijderen.
+book.betterchests:upgrade.UNBREAKABLE=Onbreekbare Upgrade: Deze upgrade maakt je kist explosie- en vuurveilig, zodat Creepers, TNT, (kernbommen,) Ender Draken en Withers hem niet op kunnen vernietigen. Op de rugzak zorgt de upgrade ervoor dat de rugzak niet verdwijnt en niet wordt vernietigd in lava, etc.
+book.betterchests:upgrade.PLAYER=Speler Upgrade: Met deze upgrade is de kist alleen toegankelijk voor de speler die de upgrade toegevoegd heeft en administrators. Voor andere mensen, laten we zeggen, zal de kist niet aardig zijn!
 book.betterchests:upgrade.RAIN=Regen Upgrade: Als het regent op je Kist met deze Upgrade geïnstalleerd, zal het automatisch lege emmers met water vullen.
-book.betterchests:upgrade.ENERGY=Energie Upgrade: Deze upgrade gebruik je voor andere Upgrades die energie nodig hebben.
-book.betterchests:upgrade.FURNACE=Fornuis Upgrade: Weet je dat probleem, je hebt te veel spullen te smelten, maar niet genoeg ovens? Deze upgrade zal dat probleem op te lossen voor je.
-book.betterchests:upgrade.COLLECTOR=Verzamelaars Upgrade: Deze upgrade zal items opzuigen in de Kist die in de buurt waren gevallen. Je kunt het bereik ervan uitbreiden door meer upgrades erin te doen.
-book.betterchests:upgrade.TICKING=Ticking Upgrade: De naam zegt het al, doe hier een item in o.a. van TC en zie hem opladen
-book.betterchests:upgrade.FEEDING=Voeding Upgrade:Deze upgrade geeft eten aan dieren in een 5x3x5 gebied met het eten dat in de chest zit.
-book.betterchests:upgrade.PLAYERFOOD=Speler Voeding Upgrade:Deze upgrade zal de drager ven de tas automatisch voeden, het gebruikt het voedsel uit de tas.
-book.betterchests:upgrade.RESUPPLY=Herbevoorraadings Upgrade:Deze upgrade zal automatisch bevoorraden met items uit je tas in je inventaris. Het doet het als er nog ruimte op de Item Stack in je inventaris. Aanbevolen om te gebruiken met de Verzamelaars Upgrade!
-book.betterchests:upgrade.PLANTING=Plant Upgrade: Deze upgrade zal automatisch de zaden planten, het formaat van het gebied dat het zal omschoffelen en bezaden ligt aan het aantal Upgrades dat je er in zet. het is aangeraden om dit the combineren met het Oogst Upgrade. Met behulp van deze met de Regen upgrade zal het boerenland helpen gehydrateerd te houden als er een emmer water in de inventaris is.
-book.betterchests:upgrade.HARVESTING=Oogst Upgrade: Deze upgrade zal automatisch de gewassen oogsten. Hoe meer upgrades je erin steekt, hoe groter het gebied is.
-book.betterchests:upgrade.ANIMAL=Dieren Upgrade: Deze upgrade zal de Koeien / Loeizwammen in de buurt melken en het zal de schapen in de buurt scheren.
+book.betterchests:upgrade.ENERGY=Energie Upgrade: Deze upgrade is alleen nodig voor andere upgrades, omdat het energie levert aan je kist. Op zichzelf doet het niks speciaals.
+book.betterchests:upgrade.FURNACE=Fornuis Upgrade: Ken je dat probleem, je hebt te veel spullen te smelten, maar niet genoeg ovens? Deze upgrade zal dat probleem op te lossen voor je.
+book.betterchests:upgrade.COLLECTOR=Verzamel Upgrade: Deze upgrade zal items opzuigen in de Kist die er dichtbij gevallen zijn. Je kunt het bereik uitbreiden door meer upgrades te installeren.
+book.betterchests:upgrade.TICKING=Ticking Upgrade: Deze upgrade zal de inhoud van de kist ticken alsof het in de inventaris van een speler is. Als je er iets in plaatst wat niet graag getickt wordt, zal de Ticking upgrade zichzelf uitschakelen.
+book.betterchests:upgrade.FEEDING=Voer Upgrade: Deze upgrade voert automatisch dieren in een gebied van 7x3x7 met het eten in de kist. Hij zal automatisch stoppen als het aantal Entities in het gebied te groot is.
+book.betterchests:upgrade.PLAYERFOOD=Speler Voeding Upgrade: Deze upgrade zal de drager ven de tas automatisch voeden, het gebruikt het voedsel uit de tas.
+book.betterchests:upgrade.RESUPPLY=Hervul Upgrade: Deze upgrade zal automatisch spullen hervullen vanuit je rugzak naar je inventaris. Hij doet dit zolang er nog ruimte is op de ItemStack in je inventaris. Aanbevolen om te gebruiken in combinatie met de Verzamel Upgrade!
+book.betterchests:upgrade.PLANTING=Plant Upgrade: Deze upgrade zal automatisch alle zaden planten uit de kist. Het is een goed idee deze upgrade te combineren met de Oogst upgrade. Als je deze upgrade gebruikt in combinatie met de Regen Upgrade, zal hij het land eromheen nat houden als er een volle emmer met water in de kist zit.
+book.betterchests:upgrade.HARVESTING=Oogst Upgrade: Deze upgrade zal automatisch gewassen vlakbij de kist oogsten. Hoe meer upgrades je erin stopt, hoe groter het gebied is waarin hij dit doet.
+book.betterchests:upgrade.ANIMAL=Dieren Upgrade: Deze upgrade zal de Koeien/Loeizwammen in de buurt melken en het zal de schapen in de buurt scheren.
+book.betterchests:upgrade.AI=AI Upgrade: Net als de Energie Upgrade doet deze upgrade niks. De upgrade is alleen nodig voor andere upgrades die complexe dingen doen.
+book.betterchests:upgrade.MINING=Mijnbouw Upgrade: Deze upgrade breekt automatisch de blokken uit de kist. Hierbij gebruikt hij het gereedschap en zijn enchantments uit de kist.
+book.betterchests:upgrade.KILLING=Dood Upgrade:Deze upgrade dood alle levende entities in een gebied van 7x3x7 blokken. Bij gebruik op dieren zullen er altijd 2 over blijven. Als je de AI Upgrade installeert, zullen monsters ook zeldzame spullen droppen zoals enderparels en blazerods.
 
-item.betterchests:upgrade.SLOT.name=Slot Upgrade
+
+book.betterchests:credits=Bedankt voor het lezen van de Gebruikershandleiding. Als je nog vragen hebt, kun je ze stellen in de MCF thread: http://tinyurl.com/aroma1997 | Vertaling Door: Grovert11 (Matthew Smeets (MattMc),Kayne Saridjo (JustKayneNL) hebben een begin gemaakt, maar er klopte weinig van ;) )
+
+
+gui.betterchests:upgrades.name=Upgrades
+gui.betterchests:upgrades.warning=Het verwijderen van upgrades van deze kist kan veroorzaken dat je spullen verliest uit de kist. Shift-Rechts klikken om één upgrade te verwijderen, Shift-links klikken om za allemaal te verwijderen.
+
+creativetab.betterchests:creativetab.name=BetterChests
+
+inv.betterchests:chest.name=Aanpasbare Kist
+inv.betterchests:bag.name=Aanpasbare Rugzak
+
+tile.betterchests:chest.name=Aanpasbare Kist
+item.betterchests:bag.name=Aanpasbare Rugzak
+
+item.betterchests:upgrade.SLOT.name=Vakken Upgrade
 item.betterchests:upgrade.COBBLEGEN.name=Keisteen Generator Upgrade
 item.betterchests:upgrade.REDSTONE.name=Redstone Upgrade
 item.betterchests:upgrade.LIGHT.name=Licht Upgrade
-item.betterchests:upgrade.BASIC.name=Upgrade Case
+item.betterchests:upgrade.BASIC.name=Upgrade Huls
 item.betterchests:upgrade.COMPARATOR.name=Comparator Upgrade
 item.betterchests:upgrade.VOID.name=Void Upgrade
 item.betterchests:upgrade.UNBREAKABLE.name=Onbreekbare Upgrade
@@ -50,33 +72,30 @@ item.betterchests:upgrade.PLAYER.name=Speler Upgrade
 item.betterchests:upgrade.RAIN.name=Regen Upgrade
 item.betterchests:upgrade.ENERGY.name=Energie Upgrade
 item.betterchests:upgrade.FURNACE.name=Fornuis Upgrade
-item.betterchests:upgrade.COLLECTOR.name=Verzamelaars Upgrade
+item.betterchests:upgrade.COLLECTOR.name=Verzamel Upgrade
 item.betterchests:upgrade.TICKING.name=Ticking Upgrade
-item.betterchests:upgrade.FEEDING.name=Voeding Upgrade
+item.betterchests:upgrade.FEEDING.name=Voer Upgrade
 item.betterchests:upgrade.PLAYERFOOD.name=Speler Voeding Upgrade
-item.betterchests:upgrade.RESUPPLY.name=Herbevoorraadings Upgrade
+item.betterchests:upgrade.RESUPPLY.name=Hervul Upgrade
 item.betterchests:upgrade.PLANTING.name=Plant Upgrade
 item.betterchests:upgrade.HARVESTING.name=Oogst Upgrade
 item.betterchests:upgrade.ANIMAL.name=Dieren Upgrade
+item.betterchests:upgrade.AI.name=AI Upgrade
+item.betterchests:upgrade.MINING.name=Mining Upgrade
+item.betterchests:upgrade.KILLING.name=Killing Upgrade
 
 item.betterchests:upgrade.HAMMER.name=BetterChests Hamer
 
-book.betterchests:credits=Dank je voor het lezen van de Gebruikers Handboek. Als je nog vragen hebt, vraag ze dan op de Minecraft Forums: http://tinyurl.com/aroma1997 | Vertaling Door: Matthew Smeets (MattMc),Kayne Saridjo (JustKayneNL)
+item.betterchests:chestUpgrade.name=Aanpasbare Upgrade
 
-death.attack.betterchests:interact.player=%s Het was niet slim om te kijken wat daar in zat!
+
+death.attack.betterchests:interact.player=%s had niet moeten kijken in de Aanpasbare Kist!
+
 
 info.betterchests:tooltip.nobag=Deze upgrade kan niet in een rugzak.
 info.betterchests:tooltip.nochest=Deze upgrade kan niet in een kist.
 info.betterchests:tooltip.maxamount=Max Upgrades per kist: %s.
 info.betterchests:tooltip.requires=Heeft Nodig: %s.
-info.betterchests:tooltip.openwith=Open met "%s". (Buiten Inventory)
+info.betterchests:tooltip.openwith=Open met "%s". (Buiten Inventaris)
 
-
-creativetab.betterchests:creativetab.name=BetterChests
-
-inv.betterchests:chest.name=Verstelbare Kist
-inv.betterchests:bag.name=Verstelbare Rugzak
-
-tile.betterchests:chest.name=Verstelbare Kist
-item.betterchests:bag.name=Verstelbare Rugzak
-
+key.betterchests.openBag=Open BetterChests Rugzak
