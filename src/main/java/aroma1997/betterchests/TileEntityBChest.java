@@ -288,7 +288,7 @@ public class TileEntityBChest extends TileEntity implements IBetterChest, ISpeci
 	}
 	
 	public int getRedstoneOutput() {
-		return MathHelper.clamp_int(numUsingPlayers, 0, 15);
+		return  isUpgradeInstalled(Upgrade.REDSTONE.getItem()) ? MathHelper.clamp_int(numUsingPlayers, 0, 15) : 0;
 	}
 	
 	@SuppressWarnings("rawtypes")
