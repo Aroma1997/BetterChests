@@ -40,8 +40,8 @@ public class Collector extends BasicUpgrade {
 			}
 			
 			AxisAlignedBB boundsNew = AxisAlignedBB.getBoundingBox(inv.getXPos() + - 0.5D,
-			        inv.getYPos() + 0.0D, inv.getZPos() + - 0.5D, inv.getXPos() + 0.5D,
-			        inv.getYPos() + 0.0D, inv.getZPos() + 0.5D);
+			        inv.getYPos() - 1.0D, inv.getZPos() + - 0.5D, inv.getXPos() + 0.5D,
+			        inv.getYPos() + 0.5D, inv.getZPos() + 0.5D);
 			boundsNew = boundsNew.expand(0.2D, 0.2D, 0.2D);
 			List<EntityItem> listNew = world.getEntitiesWithinAABB(EntityItem.class, boundsNew);
 			
