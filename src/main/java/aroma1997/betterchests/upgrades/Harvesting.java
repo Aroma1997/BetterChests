@@ -27,13 +27,13 @@ public class Harvesting extends BasicUpgrade {
 		int xcoord = chest.getXCoord() + num / doubleRange - range;
 		int zcoord = chest.getZCoord() + num % doubleRange - range;
 		int ycoord = chest.getYCoord();
-		int slot = InvUtil.getFirstItem(chest, IPlantable.class);
-			doBlock(chest, tick, world, item, xcoord, ycoord, zcoord, slot);
+		if (!InvUtil.hasSpace(chest)) return;
+		doBlock(chest, tick, world, item, xcoord, ycoord, zcoord);
 		
 	}
 	
 	private static void doBlock(IBetterChest chest, int tick, World world, ItemStack item,
-	        int xcoord, int ycoord, int zcoord, int slot) {
+	        int xcoord, int ycoord, int zcoord) {
 		Block block = world.getBlock(xcoord, ycoord, zcoord);
 		int meta = world.getBlockMetadata(xcoord, ycoord, zcoord);
 		if (block != null && block instanceof IGrowable) {
