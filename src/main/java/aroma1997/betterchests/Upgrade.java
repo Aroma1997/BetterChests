@@ -12,6 +12,7 @@ package aroma1997.betterchests;
 import java.util.ArrayList;
 
 import net.minecraft.block.BlockOre;
+import net.minecraft.block.BlockWall;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -24,6 +25,7 @@ import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.oredict.OreDictionary;
 import aroma1997.betterchests.upgrades.Animal;
 import aroma1997.betterchests.upgrades.BasicUpgrade;
+import aroma1997.betterchests.upgrades.Blocking;
 import aroma1997.betterchests.upgrades.CobbleGen;
 import aroma1997.betterchests.upgrades.Collector;
 import aroma1997.betterchests.upgrades.Feeding;
@@ -62,7 +64,8 @@ public enum Upgrade {
 	ANIMAL(ENERGY, 1, true, false, Animal.class, true),
 	AI(null, 1, true, true, Null.class, false),
 	MINING(AI, 1, true, false, Mining.class, true),
-	KILLING(ENERGY, 1, true, false, Killing.class, true);
+	KILLING(ENERGY, 1, true, false, Killing.class, true),
+	BLOCKER(SLOT, 4, true, false, Blocking.class, false);
 	
 	private final Upgrade requirement;
 	
@@ -201,8 +204,10 @@ public enum Upgrade {
 		AromaRegistry.registerShapedAromicRecipe(new ItemStack(item, 1, AI.ordinal()), false, "QGQ", "DUD", "QGQ", 'Q', new ItemStack(Items.quartz), 'D', new ItemStack(Items.diamond), 'G', new ItemStack(Items.gold_ingot), 'U', itemUpgrade);
 		// MINING
 		AromaRegistry.registerShapedAromicRecipe(new ItemStack(item, 1, MINING.ordinal()), false, "OTO", "TUT", "OTO", 'O', BlockOre.class, 'T', ItemTool.class, 'U', itemUpgrade);
-		//KILLING
+		// KILLING
 		AromaRegistry.registerShapedAromicRecipe(new ItemStack(item, 1, KILLING.ordinal()), false, " S ", "SUS", " S ", 'S', ItemSword.class, 'U', itemUpgrade);
+		// BLOCKER
+		AromaRegistry.registerShapedAromicRecipe(new ItemStack(item, 1, BLOCKER.ordinal()), false, "WWW", "WUW", "WWW", 'W', BlockWall.class, 'U', itemUpgrade);
 		
 		AromaRegistry.registerShapelessAromicRecipe(BASIC.getItem(), true, new ItemStack(item, 1,
 		        OreDictionary.WILDCARD_VALUE));

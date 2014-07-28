@@ -12,10 +12,10 @@ package aroma1997.betterchests;
 import aroma1997.betterchests.api.IBetterChest;
 import aroma1997.betterchests.api.IUpgrade;
 import aroma1997.core.client.util.Colors;
+import aroma1997.core.inventories.ContainerBasic;
 import aroma1997.core.util.InvUtil;
 import aroma1997.core.util.ItemUtil;
 import aroma1997.core.util.ItemUtil.ItemMatchCriteria;
-
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
@@ -26,7 +26,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
-
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -162,7 +161,7 @@ public class ItemUpgrade extends Item implements IUpgrade {
 	@SideOnly(Side.CLIENT)
 	public void drawGuiContainerForegroundLayer(GuiContainer gui, Container container, int par1,
 	        int par2, ItemStack item) {
-		
+		Upgrade.values()[item.getItemDamage()].getUpgrade().draw(gui, (ContainerBasic) container, par1, par2, item);
 	}
 
 	@Override

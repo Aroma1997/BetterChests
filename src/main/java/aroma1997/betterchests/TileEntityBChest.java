@@ -27,6 +27,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -54,7 +55,7 @@ import java.util.UUID;
 import com.mojang.authlib.GameProfile;
 
 public class TileEntityBChest extends TileEntity implements IBetterChest, ISpecialInventory,
-        IAromaWrenchable, IAdvancedInventory {
+        IAromaWrenchable, IAdvancedInventory, ISidedInventory {
 	
 	UUID player;
 	
@@ -644,6 +645,28 @@ public class TileEntityBChest extends TileEntity implements IBetterChest, ISpeci
 			return;
 		}
 		items[i] = itemstack;
+	}
+
+	@Override
+	public int[] getAccessibleSlotsFromSide(int p_94128_1_) {
+		int red = getAmountUpgrade(Upgrade.BLOCKER.getItem()) * 9;
+		int[] slots = new int[getSizeInventory() - red];
+		for (int i = 0; i < slots.length; i++) {
+			slots[i] = i + red;
+		}
+		return slots;
+	}
+
+	@Override
+	public boolean canInsertItem(int slot, ItemStack stack,
+			int side) {
+		return slot >= getAmountUpgrade(Upgrade.BLOCKER.getItem()) * 9;
+	}
+
+	@Override
+	public boolean canExtractItem(int slot, ItemStack stack,
+			int side) {
+		return canInsertItem(slot, stack, side);
 	}
 	
 }
