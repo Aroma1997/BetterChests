@@ -4,7 +4,6 @@ import aroma1997.betterchests.Reference;
 import aroma1997.betterchests.Upgrade;
 import aroma1997.betterchests.api.IBetterChest;
 import aroma1997.core.util.InvUtil;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFarmland;
 import net.minecraft.block.BlockFlower;
@@ -14,8 +13,8 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-
 import net.minecraftforge.common.IPlantable;
+import net.minecraftforge.common.util.ForgeDirection;
 
 public class Planting extends BasicUpgrade {
 	
@@ -42,12 +41,14 @@ public class Planting extends BasicUpgrade {
 		if (block == null) {
 			return;
 		}
+		ItemStack itemPlant = chest.getStackInSlot(slot);
+		Item pl = itemPlant.getItem();
 		boolean hydrate = chest.isUpgradeInstalled(Upgrade.RAIN.getItem())
 		        && InvUtil.getFirstItem(chest, new ItemStack(Items.water_bucket), true) != null;
 		if (block == Blocks.dirt || block == Blocks.grass) {
 			Block blockAbove = world.getBlock(xcoord, ycoord + 1, zcoord);
 			if (blockAbove == null || blockAbove == Blocks.air
-			        || blockAbove instanceof BlockTallGrass || blockAbove instanceof BlockFlower) {
+			        || blockAbove instanceof BlockTallGrass || blockAbove instanceof BlockFlower || blockAbove.isReplaceable(world, xcoord, ycoord + 1, zcoord)) {
 				world.setBlock(xcoord, ycoord, zcoord, Blocks.farmland, hydrate ? 10 : 0, 3);
 				world.setBlockToAir(xcoord, ycoord + 1, zcoord);
 			}
@@ -58,20 +59,20 @@ public class Planting extends BasicUpgrade {
 			        && hydrate) {
 				world.setBlock(xcoord, ycoord, zcoord, block, 5, 2);
 			}
+		}
+		if (block.canSustainPlant(world, xcoord, ycoord, zcoord, ForgeDirection.UP, (IPlantable) pl)) {
+
 			Block blockAboveNew = world.getBlock(xcoord, ycoord + 1, zcoord);
 			if (blockAboveNew == null || blockAboveNew == Blocks.air
-			        || blockAboveNew instanceof BlockTallGrass
-			        || blockAboveNew instanceof BlockFlower) {
-				ItemStack itemPlant = chest.getStackInSlot(slot);
+			        || blockAboveNew.isReplaceable(world, xcoord, ycoord, zcoord)) {
 				if (itemPlant == null || itemPlant.stackSize <= 0) {
 					return;
 				}
-				IPlantable pl = (IPlantable) itemPlant.getItem();
-				if (Block.getBlockFromItem((Item) pl).canPlaceBlockAt(world, xcoord, ycoord + 1,
+				if (Block.getBlockFromItem(pl).canPlaceBlockAt(world, xcoord, ycoord + 1,
 				        zcoord)) {
 					world.setBlock(xcoord, ycoord + 1, zcoord,
-					        pl.getPlant(world, xcoord, ycoord + 1, zcoord),
-					        pl.getPlantMetadata(world, xcoord, ycoord, zcoord), 3);
+					        ((IPlantable) pl).getPlant(world, xcoord, ycoord + 1, zcoord),
+					        ((IPlantable) pl).getPlantMetadata(world, xcoord, ycoord, zcoord), 3);
 					chest.decrStackSize(slot, 1);
 				}
 			}
