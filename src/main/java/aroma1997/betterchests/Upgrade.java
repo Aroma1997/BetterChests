@@ -32,6 +32,7 @@ import aroma1997.betterchests.upgrades.Feeding;
 import aroma1997.betterchests.upgrades.Furnace;
 import aroma1997.betterchests.upgrades.Harvesting;
 import aroma1997.betterchests.upgrades.Killing;
+import aroma1997.betterchests.upgrades.LightWeight;
 import aroma1997.betterchests.upgrades.Mining;
 import aroma1997.betterchests.upgrades.Null;
 import aroma1997.betterchests.upgrades.Planting;
@@ -65,7 +66,8 @@ public enum Upgrade {
 	AI(null, 1, true, true, Null.class, false),
 	MINING(AI, 1, true, false, Mining.class, true),
 	KILLING(ENERGY, 1, true, false, Killing.class, true),
-	BLOCKER(SLOT, 4, true, false, Blocking.class, false);
+	BLOCKER(SLOT, 4, true, false, Blocking.class, false),
+	LIGHTWEIGHT(null, 1, false, true, LightWeight.class, true);
 	
 	private final Upgrade requirement;
 	
@@ -208,6 +210,9 @@ public enum Upgrade {
 		AromaRegistry.registerShapedAromicRecipe(new ItemStack(item, 1, KILLING.ordinal()), false, " S ", "SUS", " S ", 'S', ItemSword.class, 'U', itemUpgrade);
 		// BLOCKER
 		AromaRegistry.registerShapedAromicRecipe(new ItemStack(item, 1, BLOCKER.ordinal()), false, "WWW", "WUW", "WWW", 'W', BlockWall.class, 'U', itemUpgrade);
+		// LIGHTWEIGHT
+		AromaRegistry.registerShapedAromicRecipe(new ItemStack(item, 1, LIGHTWEIGHT.ordinal()), false, "GFG", "FUF", "GFG", 'G', new ItemStack(Items.gold_nugget), 'F', new ItemStack(Items.feather), 'U', itemUpgrade);
+		AromaRegistry.registerShapedAromicRecipe(new ItemStack(item, 1, LIGHTWEIGHT.ordinal()), false, "FGF", "GUG", "FGF", 'G', new ItemStack(Items.gold_nugget), 'F', new ItemStack(Items.feather), 'U', itemUpgrade);
 		
 		AromaRegistry.registerShapelessAromicRecipe(BASIC.getItem(), true, new ItemStack(item, 1,
 		        OreDictionary.WILDCARD_VALUE));

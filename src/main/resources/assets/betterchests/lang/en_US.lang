@@ -50,6 +50,7 @@ book.betterchests:upgrade.AI=AI Upgrade: Similar to the Energy Upgrade, this Upg
 book.betterchests:upgrade.MINING=Mining Upgrade: This Upgrade will break the blocks that are inside of the chest with the tool that is inside the chest applying the Enchantments of the tool.
 book.betterchests:upgrade.KILLING=Killing Upgrade: This Upgrade will kill living entities within an area of 7x3x7 blocks. When used on animals, it will always leave two of each kind. If you install the AI Upgrade as well, killed Creatures will also drop RareDrops such as Blaze Rods and Ender Pearls.
 book.betterchests:upgrade.BLOCKER=Blocking Upgrade: This Upgrade will block other blocks from being able to interact with this chest. For each applied Upgrade, the amount of Slots that can not be accessed from other blocks increases by one. Note: Upgrades and Players can still access these slots.
+book.betterchests:upgrade.LIGHTWEIGHT=Lightweight Upgrade: This Upgrade makes your bag light as air, almost lifting you off the ground, increasing your movement speed by 40%.
 
 
 book.betterchests:credits=Thank you for reading the User Manual. If you still have questions just ask them in the MCF thread at: http://tinyurl.com/aroma1997
@@ -91,6 +92,7 @@ item.betterchests:upgrade.AI.name=AI Upgrade
 item.betterchests:upgrade.MINING.name=Mining Upgrade
 item.betterchests:upgrade.KILLING.name=Killing Upgrade
 item.betterchests:upgrade.BLOCKER.name=Blocking Upgrade
+item.betterchests:upgrade.LIGHTWEIGHT.name=Lightweight Upgrade
 
 item.betterchests:chestUpgrade.name=Adjustable Upgrade
 
