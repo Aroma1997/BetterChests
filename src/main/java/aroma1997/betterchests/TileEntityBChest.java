@@ -57,7 +57,7 @@ import com.mojang.authlib.GameProfile;
 public class TileEntityBChest extends TileEntity implements IBetterChest, ISpecialInventory,
         IAromaWrenchable, IAdvancedInventory, ISidedInventory {
 	
-	UUID player;
+	private String player;
 	
 	private int tick;
 	
@@ -151,7 +151,7 @@ public class TileEntityBChest extends TileEntity implements IBetterChest, ISpeci
 		                Minecraft.getMinecraft().thePlayer.getCommandSenderName())) {
 			return true;
 		}
-		if (ServerUtil.isPlayerAdmin(par1EntityPlayer.getCommandSenderName())
+		if (ServerUtil.isPlayerAdmin(par1EntityPlayer)
 		        || player != null && player.equals(par1EntityPlayer.getUniqueID())) {
 			return true;
 		}
@@ -160,7 +160,7 @@ public class TileEntityBChest extends TileEntity implements IBetterChest, ISpeci
 	}
 	
 	public boolean upgrade(EntityPlayer player) {
-		if (player == null || ! isUseableByPlayer(player)) {
+		if (player == null || ! isUseableByPlayer(player) || numUsingPlayers > 0) {
 			return false;
 		}
 		
@@ -181,7 +181,7 @@ public class TileEntityBChest extends TileEntity implements IBetterChest, ISpeci
 			setAmountUpgrade(itemUpgrade, getAmountUpgrade(itemUpgrade) + 1);
 			if (ItemUtil.areItemsSameMatching(itemUpgrade, Upgrade.PLAYER.getItem(),
 			        ItemMatchCriteria.ID, ItemMatchCriteria.DAMAGE)) {
-				this.player = player.getUniqueID();
+				this.player = player.getCommandSenderName();
 			}
 			onUpgradeInserted(player);
 			return true;
@@ -208,10 +208,7 @@ public class TileEntityBChest extends TileEntity implements IBetterChest, ISpeci
 		items = new ItemStack[getSizeInventory()];
 		FileUtil.readFromNBT(this, nbt);
 		if (nbt.getTag("player") != null && nbt.getTag("player") instanceof NBTTagString) {
-			player = Util.getUUID(nbt.getString("player"));
-		}
-		if (nbt.hasKey("playerUUID")) {
-			player = UUID.fromString(nbt.getString("playerUUID"));
+			player = nbt.getString("player");
 		}
 		super.readFromNBT(nbt);
 		if (worldObj != null && worldObj.isRemote) {
