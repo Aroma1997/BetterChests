@@ -18,7 +18,9 @@ public class Ticking extends BasicUpgrade {
 		try {
 			for (int i = 0; i < chest.getSizeInventory(); i++) {
 				ItemStack t = chest.getStackInSlot(i);
-				t.updateAnimation(world, null, i, true);
+				if (t != null) {
+					t.updateAnimation(world, null, i, true);
+				}
 			}
 		}
 		catch (NullPointerException e) {
