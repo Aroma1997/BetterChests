@@ -37,7 +37,7 @@ public class EventListener {
 				ItemStack stack = player.inventory.getStackInSlot(i);
 				if (stack != null && stack.getItem() instanceof ItemBag) {
 					BagInventory inv = ItemBag.getInventory(stack);
-					if (inv.isUpgradeInstalled(Upgrade.COLLECTOR.getItem())) {
+					if (inv.isUpgradeInstalled(Upgrade.COLLECTOR.getItem()) && inv.isUpgradeDisabled(Upgrade.COLLECTOR.getItem())) {
 						c = i;
 						break;
 					}
