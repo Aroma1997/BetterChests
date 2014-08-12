@@ -116,6 +116,7 @@ public class ItemBag extends Item implements ISpecialGUIProvider {
 	@Override
 	public Entity createEntity(World world, Entity location, ItemStack itemstack)
     {
+		if (world.isRemote) return null;
 		EntityBag e = new EntityBag(world, location.posX, location.posY, location.posZ, itemstack);
 		e.delayBeforeCanPickup = ((EntityItem) location).delayBeforeCanPickup;
 		e.motionX = location.motionX;
