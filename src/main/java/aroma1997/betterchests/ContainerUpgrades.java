@@ -111,7 +111,7 @@ public class ContainerUpgrades extends AromaContainer {
 			}
 		}
 		else if (par3 == 0) {
-			if ((par2 == 0 || par2 == 1) && !par4EntityPlayer.worldObj.isRemote) {
+			if ((par2 == 0 || par2 == 1) ) {
 				if (item != null && UpgradeHelper.isUpgrade(item)) {
 					IUpgrade upgr = (IUpgrade) item.getItem();
 					if (upgr.canBeDisabled(item)) {
