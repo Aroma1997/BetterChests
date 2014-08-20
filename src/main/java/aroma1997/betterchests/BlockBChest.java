@@ -96,7 +96,9 @@ public class BlockBChest extends BlockContainer {
 	@Override
 	public int isProvidingWeakPower(IBlockAccess par1IBlockAccess, int par2, int par3, int par4,
 	        int par5) {
-		return ((TileEntityBChest) par1IBlockAccess.getTileEntity(par2, par3, par4))
+		TileEntity te = par1IBlockAccess.getTileEntity(par2, par3, par4);
+		if (te == null) return 0;
+		return ((TileEntityBChest) te)
 		        .getRedstoneOutput();
 	}
 	
