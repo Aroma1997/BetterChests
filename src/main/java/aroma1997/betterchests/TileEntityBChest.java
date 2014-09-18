@@ -432,13 +432,14 @@ public class TileEntityBChest extends TileEntity implements IBetterChest, ISpeci
 		if (! UpgradeHelper.isUpgrade(upgrade)) {
 			return 0;
 		}
+		int num = 0;
 		for (ItemStack item : upgrades) {
 			if (ItemUtil.areItemsSameMatching(item, upgrade, ItemMatchCriteria.ID,
 			        ItemMatchCriteria.DAMAGE)) {
-				return item.stackSize;
+				num += item.stackSize;
 			}
 		}
-		return 0;
+		return num;
 	}
 	
 	@Override
