@@ -11,6 +11,7 @@ package aroma1997.betterchests;
 
 import aroma1997.betterchests.api.IBetterChest;
 import aroma1997.betterchests.api.IUpgrade;
+import aroma1997.core.log.LogHelper;
 import aroma1997.core.util.ItemUtil;
 import aroma1997.core.util.ItemUtil.ItemMatchCriteria;
 import net.minecraft.item.ItemStack;
@@ -32,7 +33,13 @@ public class UpgradeHelper {
 		
 		for (ItemStack item : upgrades) {
 			if (isUpgrade(item) && !inv.isUpgradeDisabled(item)) {
-				((IUpgrade) item.getItem()).update(inv, tick, world, item);
+				try {
+					((IUpgrade) item.getItem()).update(inv, tick, world, item);
+				}
+				catch (Throwable t) {
+					LogHelper.logException("Failed to do Upgrade ticking: " + item.toString() + " at " + inv.toString(), t);
+					inv.setUpgradeDisabled(item, true);
+				}
 			}
 		}
 	}
