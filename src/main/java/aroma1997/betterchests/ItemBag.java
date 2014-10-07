@@ -23,7 +23,7 @@ import net.minecraft.world.World;
 import org.lwjgl.input.Keyboard;
 
 import aroma1997.betterchests.api.IUpgrade;
-import aroma1997.betterchests.client.BetterChestsKeyBinding;
+import aroma1997.betterchests.client.ClientProxy;
 import aroma1997.core.inventories.AromaContainer;
 import aroma1997.core.inventories.ISpecialGUIProvider;
 import aroma1997.core.items.wrench.ItemWrench;
@@ -83,7 +83,7 @@ public class ItemBag extends Item implements ISpecialGUIProvider {
 	        List par3List, boolean par4) {
 		
 		par3List.add(StatCollector.translateToLocalFormatted("info.betterchests:tooltip.openwith",
-		        Keyboard.getKeyName(BetterChestsKeyBinding.getInstance().getKeyCode())));
+		        Keyboard.getKeyName(ClientProxy.openBag.getKeyCode())));
 		addInfo(par1ItemStack, par3List);
 	}
 	

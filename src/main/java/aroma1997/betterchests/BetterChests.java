@@ -38,8 +38,6 @@ import java.util.ArrayList;
 import org.apache.logging.log4j.Logger;
 
 @Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, dependencies = "required-after:Aroma1997Core")
-// @NetworkMod(channels = {"BetterChests"}, clientSideRequired = true,
-// serverSideRequired = false, packetHandler = PacketHandler.class)
 public class BetterChests {
 	
 	@Instance(Reference.MOD_ID)

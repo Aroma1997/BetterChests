@@ -30,13 +30,13 @@ public class EventListenerClient {
 	
 	@SubscribeEvent
 	public void tick(ClientTickEvent event) {
-		if (BetterChestsKeyBinding.getInstance().getIsKeyPressed() && !pressedBefore && Minecraft.getMinecraft().theWorld != null) {
+		if (ClientProxy.openBag.getIsKeyPressed() && !pressedBefore && Minecraft.getMinecraft().theWorld != null) {
 			int i = InvUtil.getFirstItem(Minecraft.getMinecraft().thePlayer.inventory, ItemBag.class);
 			if (i != -1) {
 				BetterChests.ph.sendPacketToPlayers(new PacketOpenBag().setSlot(i));
 			}
 		}
-		pressedBefore = BetterChestsKeyBinding.getInstance().getIsKeyPressed();
+		pressedBefore = ClientProxy.openBag.getIsKeyPressed();
 	}
 	
 	@SubscribeEvent
