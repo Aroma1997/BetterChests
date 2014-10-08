@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import cpw.mods.fml.relauncher.ReflectionHelper;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.passive.EntityAnimal;
@@ -16,6 +15,7 @@ import aroma1997.betterchests.Reference;
 import aroma1997.betterchests.Upgrade;
 import aroma1997.betterchests.api.IBetterChest;
 import aroma1997.core.coremod.CoreMod;
+import cpw.mods.fml.relauncher.ReflectionHelper;
 
 public class Killing extends BasicUpgrade {
 
@@ -24,12 +24,14 @@ public class Killing extends BasicUpgrade {
 			ItemStack item) {
 		if (chest.getLongTick() % 128 == 100) {
 			AxisAlignedBB bounds = AxisAlignedBB.getBoundingBox(chest.getXPos()
-			        - Reference.Conf.FEED_RADIUS / 2, chest.getYPos() - Reference.Conf.FEED_HEIGHT / 2,
-			        chest.getZPos() - Reference.Conf.FEED_RADIUS / 2, chest.getXPos()
-			                + Reference.Conf.FEED_RADIUS / 2, chest.getYPos()
-			                + Reference.Conf.FEED_HEIGHT / 2, chest.getZPos()
-			                + Reference.Conf.FEED_RADIUS / 2);
-			List<EntityLiving> entities = world.getEntitiesWithinAABB(EntityLiving.class, bounds);
+					- Reference.Conf.FEED_RADIUS / 2, chest.getYPos()
+					- Reference.Conf.FEED_HEIGHT / 2, chest.getZPos()
+					- Reference.Conf.FEED_RADIUS / 2, chest.getXPos()
+					+ Reference.Conf.FEED_RADIUS / 2, chest.getYPos()
+					+ Reference.Conf.FEED_HEIGHT / 2, chest.getZPos()
+					+ Reference.Conf.FEED_RADIUS / 2);
+			List<EntityLiving> entities = world.getEntitiesWithinAABB(
+					EntityLiving.class, bounds);
 			Map<Class<? extends EntityLiving>, Integer> map = new HashMap<Class<? extends EntityLiving>, Integer>();
 			boolean ai = chest.isUpgradeInstalled(Upgrade.AI.getItem());
 			for (EntityLiving e : entities) {
@@ -42,20 +44,30 @@ public class Killing extends BasicUpgrade {
 					}
 					if (map.containsKey(e.getClass())) {
 						map.put(e.getClass(), map.remove(e.getClass()) + 1);
-					}
-					else {
+					} else {
 						map.put(e.getClass(), 1);
 					}
 					if (map.get(e.getClass()) > 2) {
 						if (ai) {
-							ReflectionHelper.setPrivateValue(EntityLivingBase.class, e, 100, CoreMod.runtimeDeobfuscationEnabled ? "field_70718_bc" : "recentlyHit");
+							ReflectionHelper
+									.setPrivateValue(
+											EntityLivingBase.class,
+											e,
+											100,
+											CoreMod.runtimeDeobfuscationEnabled ? "field_70718_bc"
+													: "recentlyHit");
 						}
 						e.attackEntityFrom(DamageSource.generic, 20.0F);
 					}
-				}
-				else {
+				} else {
 					if (ai) {
-						ReflectionHelper.setPrivateValue(EntityLivingBase.class, e, 100, CoreMod.runtimeDeobfuscationEnabled ? "field_70718_bc" : "recentlyHit");
+						ReflectionHelper
+								.setPrivateValue(
+										EntityLivingBase.class,
+										e,
+										100,
+										CoreMod.runtimeDeobfuscationEnabled ? "field_70718_bc"
+												: "recentlyHit");
 					}
 					e.attackEntityFrom(DamageSource.generic, 20.0F);
 				}

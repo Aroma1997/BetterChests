@@ -9,16 +9,21 @@
 
 package aroma1997.betterchests;
 
+import java.io.File;
+import java.util.ArrayList;
+
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.ItemStack;
+import net.minecraftforge.common.config.Configuration;
+
+import org.apache.logging.log4j.Logger;
+
 import aroma1997.core.log.LogHelperPre;
 import aroma1997.core.network.NetworkHelper;
 import aroma1997.core.network.PacketHandler;
 import aroma1997.core.util.AromaRegistry;
 import aroma1997.core.util.ItemUtil;
 import aroma1997.core.version.VersionCheck;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -27,84 +32,54 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.registry.EntityRegistry;
-import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
-import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.oredict.OreDictionary;
-
-import java.io.File;
-import java.util.ArrayList;
-
-import org.apache.logging.log4j.Logger;
 
 @Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, dependencies = "required-after:Aroma1997Core")
 public class BetterChests {
-	
+
 	@Instance(Reference.MOD_ID)
 	public static BetterChests instance;
-	
+
 	@SidedProxy(clientSide = "aroma1997.betterchests.client.ClientProxy", serverSide = "aroma1997.betterchests.CommonProxy")
 	public static CommonProxy proxy;
-	
-	public static BlockBChest chest;
-	
-	public static ItemUpgrade upgrade;
-	
-	public static ItemBag bag;
-	
+
 	public static CreativeTabs creativeTabBC = new CreativeTabBChest();
-	
+
 	public static Logger logger;
-	
-	public static ItemBetterChestUpgrade upgradeChest = new ItemBetterChestUpgrade();
-	
+
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		logger = LogHelperPre.genNewLogger(Reference.MOD_ID);
 		Configuration config = new Configuration(new File(new File(
-		        event.getModConfigurationDirectory(), "aroma1997"), Reference.MOD_ID + ".cfg"));
+				event.getModConfigurationDirectory(), "aroma1997"),
+				Reference.MOD_ID + ".cfg"));
 		config.load();
-		chest = new BlockBChest();
-		upgrade = new ItemUpgrade();
-		bag = new ItemBag();
+		AromaRegistry.register(BetterChestsItems.class);
 		if (config.hasChanged()) {
 			config.save();
 		}
-		
-		GameRegistry.registerBlock(chest, ItemBlockBChest.class, "betterChest");
-		GameRegistry.registerItem(upgrade, "Upgrade");
-		GameRegistry.registerItem(bag, "Bag");
-		GameRegistry.registerItem(upgradeChest, "upgradeChest");
-		EntityRegistry.registerGlobalEntityID(EntityBag.class, "betterchests:bag", EntityRegistry.findGlobalUniqueEntityId());
+		EntityRegistry.registerGlobalEntityID(EntityBag.class,
+				"betterchests:bag", EntityRegistry.findGlobalUniqueEntityId());
 		new EventListener();
 	}
-	
-	public static PacketHandler ph = NetworkHelper.getPacketHandler(Reference.MOD_ID);
-	
+
+	public static PacketHandler ph = NetworkHelper
+			.getPacketHandler(Reference.MOD_ID);
+
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
 		proxy.registerRenderers();
-		GameRegistry.registerTileEntity(TileEntityBChest.class, "adjustableChest");
-		AromaRegistry.registerShapedAromicRecipe(new ItemStack(chest), false, "CCC", "CBC", "CCC",
-		        'C', "cobblestone", 'B', new ItemStack(Blocks.chest));
-		AromaRegistry.registerShapedAromicRecipe(new ItemStack(bag), false, "SWS", "LCL", "SWS",
-		        'S', new ItemStack(Items.string), 'L', new ItemStack(Items.leather), 'W',
-		        new ItemStack(Blocks.wool, 1, OreDictionary.WILDCARD_VALUE), 'C', new ItemStack(
-		                chest));
-		GameRegistry.addRecipe(new CraftingBag());
-		Upgrade.generateRecipes();
-		AromaRegistry.registerShapelessAromicRecipe(getHelpBook(), false, Upgrade.BASIC.getItem(),
-		        new ItemStack(Items.book));
-		GameRegistry.addRecipe(new CraftingBook());
-		ph.registerMessage(PacketOpenBag.class, PacketOpenBag.class, 0, Side.SERVER);
-		VersionCheck.registerVersionChecker(Reference.MOD_ID, Reference.VERSION);
+		ph.registerMessage(PacketOpenBag.class, PacketOpenBag.class, 0,
+				Side.SERVER);
+		VersionCheck
+				.registerVersionChecker(Reference.MOD_ID, Reference.VERSION);
 	}
-	
+
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event) {
-		
+
 	}
-	
+
 	public static ItemStack getHelpBook() {
 		ArrayList<String> list = new ArrayList<String>();
 		list.add("book.betterchests:introduction");
@@ -123,10 +98,10 @@ public class BetterChests {
 		Upgrade.addBagBookDescription(list);
 		list.add("book.betterchests:chapter.credits");
 		list.add("book.betterchests:credits");
-		ItemStack item = ItemUtil.getWrittenBook("book.betterchests:name", "Aroma1997", true,
-		        list.toArray(new String[list.size()]));
+		ItemStack item = ItemUtil.getWrittenBook("book.betterchests:name",
+				"Aroma1997", true, list.toArray(new String[list.size()]));
 		item.getTagCompound().setString("id", "BetterChests");
 		return item;
 	}
-	
+
 }

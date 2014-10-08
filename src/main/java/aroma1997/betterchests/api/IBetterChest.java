@@ -9,10 +9,10 @@
 
 package aroma1997.betterchests.api;
 
+import java.util.ArrayList;
+
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
-
-import java.util.ArrayList;
 
 /**
  * This is implemented in the Bag and in the Chest.
@@ -21,43 +21,44 @@ import java.util.ArrayList;
  * 
  */
 public interface IBetterChest extends IInventory {
-	
+
 	/**
 	 * The position
 	 * 
 	 * @return x-coord
 	 */
 	public double getXPos();
-	
+
 	/**
 	 * The position
 	 * 
 	 * @return y-coord
 	 */
 	public double getYPos();
-	
+
 	/**
 	 * The position
 	 * 
 	 * @return z-coord
 	 */
 	public double getZPos();
-	
+
 	public int getXCoord();
-	
+
 	public int getYCoord();
-	
+
 	public int getZCoord();
-	
+
 	/**
-	 * How many of the Upgrades are installed. This is ignoring NBT data of the stack.
+	 * How many of the Upgrades are installed. This is ignoring NBT data of the
+	 * stack.
 	 * 
 	 * @param upgrade
 	 *            The upgrade to check.
 	 * @return
 	 */
 	public int getAmountUpgrade(ItemStack upgrade);
-	
+
 	/**
 	 * How many of the Upgrades are installed.
 	 * 
@@ -66,7 +67,7 @@ public interface IBetterChest extends IInventory {
 	 * @return
 	 */
 	public int getAmountUpgradeExact(ItemStack upgrade);
-	
+
 	/**
 	 * If the Amount of Upgrades installed is greater than 0
 	 * 
@@ -75,7 +76,7 @@ public interface IBetterChest extends IInventory {
 	 * @return
 	 */
 	public boolean isUpgradeInstalled(ItemStack upgrade);
-	
+
 	/**
 	 * Set the Amount of an Upgrade
 	 * 
@@ -83,31 +84,31 @@ public interface IBetterChest extends IInventory {
 	 * @param amount
 	 */
 	public void setAmountUpgrade(ItemStack upgrade, int amount);
-	
+
 	/**
 	 * If the Chest has Energy. For Energy-Relying Upgrades.
 	 * 
 	 * @return
 	 */
 	public boolean hasEnergy();
-	
+
 	/**
 	 * Getter for the Upgrade list
 	 * 
 	 * @return The list of Upgrades
 	 */
 	public ArrayList<ItemStack> getUpgrades();
-	
+
 	/**
-	 * Getter for the long tick. This will increase by 1 every tick. (Used to have a greater tick
-	 * than 64)
+	 * Getter for the long tick. This will increase by 1 every tick. (Used to
+	 * have a greater tick than 64)
 	 * 
 	 * @return The long tick
 	 */
 	public long getLongTick();
-	
+
 	public boolean isUpgradeDisabled(ItemStack stack);
-	
+
 	public void setUpgradeDisabled(ItemStack stack, boolean value);
-	
+
 }

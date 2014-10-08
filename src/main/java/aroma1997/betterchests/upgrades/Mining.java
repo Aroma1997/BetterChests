@@ -29,11 +29,15 @@ public class Mining extends BasicUpgrade {
 				Block b = Block.getBlockFromItem(blS.getItem());
 				ItemTool t = (ItemTool) tS.getItem();
 				if (t.canHarvestBlock(b, tS)) {
-					int fortune = EnchantmentHelper.getEnchantmentLevel(Enchantment.fortune.effectId, tS);
-					ItemStack drop = new ItemStack(b.getItemDropped(blS.getItemDamage(), new Random(), fortune), b.quantityDroppedWithBonus(fortune, new Random()), b.damageDropped(blS.getItemDamage()));
+					int fortune = EnchantmentHelper.getEnchantmentLevel(
+							Enchantment.fortune.effectId, tS);
+					ItemStack drop = new ItemStack(b.getItemDropped(
+							blS.getItemDamage(), new Random(), fortune),
+							b.quantityDroppedWithBonus(fortune, new Random()),
+							b.damageDropped(blS.getItemDamage()));
 					if (InvUtil.putIntoFirstSlot(chest, drop, true) == null) {
 						InvUtil.putIntoFirstSlot(chest, drop, false);
-						
+
 						if (tS.attemptDamageItem(1, new Random())) {
 							chest.setInventorySlotContents(tool, null);
 						}

@@ -31,7 +31,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemBag extends Item implements ISpecialGUIProvider {
-	
+
 	public ItemBag() {
 		super();
 		setUnlocalizedName("betterchests:betterBag");
@@ -39,91 +39,92 @@ public class ItemBag extends Item implements ISpecialGUIProvider {
 		setTextureName(Reference.MOD_ID + ":bag");
 		setCreativeTab(BetterChests.creativeTabBC);
 	}
-	
+
 	@Override
-	public boolean onItemUse(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer,
-	        World par3World, int par4, int par5, int par6, int par7, float par8, float par9,
-	        float par10) {
+	public boolean onItemUse(ItemStack par1ItemStack,
+			EntityPlayer par2EntityPlayer, World par3World, int par4, int par5,
+			int par6, int par7, float par8, float par9, float par10) {
 		onItemRightClick(par1ItemStack, par3World, par2EntityPlayer);
 		return true;
 	}
-	
+
 	@Override
 	public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World,
-	        EntityPlayer thePlayer) {
+			EntityPlayer thePlayer) {
 		if (par2World.isRemote) {
 			BetterChests.ph.sendPacketToPlayers(new PacketOpenBag()
-			        .setSlot(thePlayer.inventory.currentItem));
+					.setSlot(thePlayer.inventory.currentItem));
 		}
 		return par1ItemStack;
 	}
-	
+
 	public static BagInventory getInventory(ItemStack item) {
 		return BagInventory.getInvForItem(item);
 	}
-	
+
 	@Override
-	public void onUpdate(ItemStack par1ItemStack, World par2World, Entity par3Entity, int par4,
-	        boolean par5) {
+	public void onUpdate(ItemStack par1ItemStack, World par2World,
+			Entity par3Entity, int par4, boolean par5) {
 		if (par3Entity instanceof EntityPlayer) {
 			BagInventory inv = getInventory(par1ItemStack);
 			inv.onUpdate((EntityPlayer) par3Entity);
 		}
 	}
-	
+
 	@Override
 	public String getItemStackDisplayName(ItemStack par1ItemStack) {
 		return StatCollector.translateToLocal("item.betterchests:bag.name");
 	}
-	
-	@SuppressWarnings({"unchecked", "rawtypes"})
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@SideOnly(Side.CLIENT)
 	@Override
-	public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer,
-	        List par3List, boolean par4) {
-		
-		par3List.add(StatCollector.translateToLocalFormatted("info.betterchests:tooltip.openwith",
-		        Keyboard.getKeyName(ClientProxy.openBag.getKeyCode())));
+	public void addInformation(ItemStack par1ItemStack,
+			EntityPlayer par2EntityPlayer, List par3List, boolean par4) {
+
+		par3List.add(StatCollector.translateToLocalFormatted(
+				"info.betterchests:tooltip.openwith",
+				Keyboard.getKeyName(ClientProxy.openBag.getKeyCode())));
 		addInfo(par1ItemStack, par3List);
 	}
-	
-	@SuppressWarnings({"unchecked", "rawtypes"})
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	static void addInfo(ItemStack item, List list) {
 		BagInventory inv = getInventory(item);
 		ArrayList<ItemStack> upgrades = inv.getUpgrades();
 		for (ItemStack entry : upgrades) {
-			if (! UpgradeHelper.isUpgrade(entry)) {
+			if (!UpgradeHelper.isUpgrade(entry)) {
 				continue;
 			}
 			if (entry.stackSize > 0) {
 				IUpgrade upgrade = (IUpgrade) entry.getItem();
 				if (upgrade.getMaxUpgrades(entry) == 1) {
-					list.add(upgrade.getName(entry));
-				}
-				else {
-					list.add(upgrade.getName(entry) + " (" + entry.stackSize + ")");
+					list.add(entry.getItem().getItemStackDisplayName(entry));
+				} else {
+					list.add(entry.getItem().getItemStackDisplayName(entry)
+							+ " (" + entry.stackSize + ")");
 				}
 			}
 		}
 	}
-	
+
 	@Override
-	public boolean hasCustomEntity(ItemStack stack)
-    {
+	public boolean hasCustomEntity(ItemStack stack) {
 		return true;
-    }
-	
+	}
+
 	@Override
-	public Entity createEntity(World world, Entity location, ItemStack itemstack)
-    {
-		if (world.isRemote) return null;
-		EntityBag e = new EntityBag(world, location.posX, location.posY, location.posZ, itemstack);
+	public Entity createEntity(World world, Entity location, ItemStack itemstack) {
+		if (world.isRemote)
+			return null;
+		EntityBag e = new EntityBag(world, location.posX, location.posY,
+				location.posZ, itemstack);
 		e.delayBeforeCanPickup = ((EntityItem) location).delayBeforeCanPickup;
 		e.motionX = location.motionX;
 		e.motionY = location.motionY;
 		e.motionZ = location.motionZ;
 		return e;
-    }
+	}
 
 	@Override
 	public AromaContainer getContainer(EntityPlayer player, int i) {
@@ -133,5 +134,5 @@ public class ItemBag extends Item implements ISpecialGUIProvider {
 		}
 		return inv.getContainer(player, i);
 	}
-	
+
 }

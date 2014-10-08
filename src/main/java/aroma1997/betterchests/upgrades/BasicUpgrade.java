@@ -9,10 +9,13 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public abstract class BasicUpgrade {
-	
-	public abstract void updateChest(IBetterChest chest, int tick, World world, ItemStack item);
-	
+
+	public abstract void updateChest(IBetterChest chest, int tick, World world,
+			ItemStack item);
+
 	@SideOnly(Side.CLIENT)
-	public void draw(GuiContainer gui, ContainerBasic container, int par1, int par2, ItemStack item) {}
-	
+	public void draw(GuiContainer gui, ContainerBasic container, int par1,
+			int par2, ItemStack item) {
+	}
+
 }

@@ -9,19 +9,20 @@
 
 package aroma1997.betterchests;
 
-import aroma1997.core.inventories.Inventories;
 import io.netty.buffer.ByteBuf;
+import aroma1997.core.inventories.Inventories;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 
-public class PacketOpenBag implements IMessage, IMessageHandler<PacketOpenBag, IMessage> {
-	
+public class PacketOpenBag implements IMessage,
+		IMessageHandler<PacketOpenBag, IMessage> {
+
 	public PacketOpenBag setSlot(int slot) {
 		this.slot = slot;
 		return this;
 	}
-	
+
 	private int slot;
 
 	@Override
@@ -36,7 +37,8 @@ public class PacketOpenBag implements IMessage, IMessageHandler<PacketOpenBag, I
 
 	@Override
 	public IMessage onMessage(PacketOpenBag message, MessageContext ctx) {
-		Inventories.openContainerAtPlayer(ctx.getServerHandler().playerEntity, message.slot);
+		Inventories.openContainerAtPlayer(ctx.getServerHandler().playerEntity,
+				message.slot);
 		return null;
 	}
 

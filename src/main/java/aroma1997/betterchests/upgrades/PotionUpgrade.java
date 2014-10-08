@@ -8,9 +8,9 @@ import aroma1997.betterchests.BagInventory;
 import aroma1997.betterchests.api.IBetterChest;
 
 public class PotionUpgrade extends BasicUpgrade {
-	
+
 	private final Potion effect;
-	
+
 	protected PotionUpgrade(Potion effect) {
 		this.effect = effect;
 	}

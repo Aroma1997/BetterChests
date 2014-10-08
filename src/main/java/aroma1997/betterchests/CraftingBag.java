@@ -9,32 +9,30 @@
 
 package aroma1997.betterchests;
 
-import aroma1997.betterchests.api.IUpgrade;
-
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;
+import aroma1997.betterchests.api.IUpgrade;
 
 public class CraftingBag implements IRecipe {
-	
+
 	@Override
 	public boolean matches(InventoryCrafting inventorycrafting, World world) {
 		return getCraftingResult(inventorycrafting) != null;
 	}
-	
+
 	@Override
 	public ItemStack getCraftingResult(InventoryCrafting inventorycrafting) {
 		ItemStack bag = null;
 		ItemStack upgrade = null;
-		for (int i = 0; i < inventorycrafting.getSizeInventory(); i++ ) {
+		for (int i = 0; i < inventorycrafting.getSizeInventory(); i++) {
 			ItemStack item = inventorycrafting.getStackInSlot(i);
 			if (item != null) {
 				if (UpgradeHelper.isUpgrade(item)) {
 					if (upgrade != null) {
 						return null;
-					}
-					else {
+					} else {
 						upgrade = item;
 						continue;
 					}
@@ -42,13 +40,12 @@ public class CraftingBag implements IRecipe {
 				if (item.getItem() instanceof ItemBag) {
 					if (bag != null) {
 						return null;
-					}
-					else {
+					} else {
 						bag = item;
 						continue;
 					}
 				}
-				
+
 			}
 		}
 		if (bag == null || upgrade == null) {
@@ -59,24 +56,24 @@ public class CraftingBag implements IRecipe {
 		upgrade = UpgradeHelper.getDefaultItem(upgrade);
 		BagInventory inv = ItemBag.getInventory(item);
 		if (UpgradeHelper.areRequirementsInstalled(inv, upgrade)
-		        && itemUpgrade.canBagTakeUpgrade(upgrade)
-		        && itemUpgrade.getMaxUpgrades(upgrade) > inv.getAmountUpgrade(upgrade)) {
+				&& itemUpgrade.canBagTakeUpgrade(upgrade)
+				&& itemUpgrade.getMaxUpgrades(upgrade) > inv
+						.getAmountUpgrade(upgrade)) {
 			inv.setAmountUpgrade(upgrade, inv.getAmountUpgrade(upgrade) + 1);
-		}
-		else {
+		} else {
 			return null;
 		}
 		return item;
 	}
-	
+
 	@Override
 	public int getRecipeSize() {
 		return 2;
 	}
-	
+
 	@Override
 	public ItemStack getRecipeOutput() {
 		return null;
 	}
-	
+
 }

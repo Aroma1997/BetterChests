@@ -25,44 +25,41 @@ public class ItemBetterChestUpgrade extends AromicItem {
 		setNameAndTexture("betterchests:chestUpgrade");
 		setRecipe("CCC", "CWC", "CCC", 'C', "cobblestone", 'W', "plankWood");
 	}
-	
-	@Override
-    public boolean onItemUseFirst(ItemStack stack, EntityPlayer player, World world, int X, int Y, int Z, int side, float hitX, float hitY, float hitZ)
-    {
-        if (world.isRemote) return false;
-        TileEntity te = world.getTileEntity(X, Y, Z);
-        if (te != null && te instanceof TileEntityChest)
-        {
-            TileEntityChest tec = (TileEntityChest) te;
-            if (tec.numPlayersUsing > 0)
-            {
-                return false;
-            }
-            
-            TileEntityBChest newchest = new TileEntityBChest();
-            
-            for (int i = 0; i < tec.getSizeInventory(); i++) {
-            	newchest.setStackInSlotWithoutNotify(i, tec.getStackInSlot(i));
-            	tec.setInventorySlotContents(i, null);
-            }
-            int facing = tec.getBlockMetadata();
-            world.setBlock(X, Y, Z, Blocks.air, 0, 3);
-            tec.updateContainingBlockInfo();
-            tec.checkForAdjacentChests();
-            world.setBlock(X, Y, Z, BetterChests.chest, facing, 3);
-            
 
-            world.setTileEntity(X, Y, Z, newchest);
-            if (!player.capabilities.isCreativeMode) {
-                stack.stackSize--;
-            	
-            }
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
+	@Override
+	public boolean onItemUseFirst(ItemStack stack, EntityPlayer player,
+			World world, int X, int Y, int Z, int side, float hitX, float hitY,
+			float hitZ) {
+		if (world.isRemote)
+			return false;
+		TileEntity te = world.getTileEntity(X, Y, Z);
+		if (te != null && te instanceof TileEntityChest) {
+			TileEntityChest tec = (TileEntityChest) te;
+			if (tec.numPlayersUsing > 0) {
+				return false;
+			}
+
+			TileEntityBChest newchest = new TileEntityBChest();
+
+			for (int i = 0; i < tec.getSizeInventory(); i++) {
+				newchest.setStackInSlotWithoutNotify(i, tec.getStackInSlot(i));
+				tec.setInventorySlotContents(i, null);
+			}
+			int facing = tec.getBlockMetadata();
+			world.setBlock(X, Y, Z, Blocks.air, 0, 3);
+			tec.updateContainingBlockInfo();
+			tec.checkForAdjacentChests();
+			world.setBlock(X, Y, Z, BetterChestsItems.chest, facing, 3);
+
+			world.setTileEntity(X, Y, Z, newchest);
+			if (!player.capabilities.isCreativeMode) {
+				stack.stackSize--;
+
+			}
+			return true;
+		} else {
+			return false;
+		}
+	}
 
 }

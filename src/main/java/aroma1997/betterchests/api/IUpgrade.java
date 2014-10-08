@@ -9,25 +9,24 @@
 
 package aroma1997.betterchests.api;
 
+import java.util.List;
+
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-import java.util.List;
-
 /**
- * Implement this Interface in your Item and it'll be accepted by BetterChest. You can also have a
- * Multi-Item, where the Upgrades have a different metadata.
+ * Implement this Interface in your Item and it'll be accepted by BetterChest.
+ * You can also have a Multi-Item, where the Upgrades have a different metadata.
  * 
  * @author Aroma1997
  * 
  */
 public interface IUpgrade {
-	
+
 	/**
 	 * If the Upgrade can be put on a Chest.
 	 * 
@@ -36,7 +35,7 @@ public interface IUpgrade {
 	 * @return
 	 */
 	public boolean canChestTakeUpgrade(ItemStack item);
-	
+
 	/**
 	 * If the Upgrade can be Put on a Bag.
 	 * 
@@ -45,7 +44,7 @@ public interface IUpgrade {
 	 * @return
 	 */
 	public boolean canBagTakeUpgrade(ItemStack item);
-	
+
 	/**
 	 * Get the list of Upgrades Required for this Upgrade.
 	 * 
@@ -54,7 +53,7 @@ public interface IUpgrade {
 	 * @return
 	 */
 	public List<ItemStack> getRequiredUpgrade(ItemStack item);
-	
+
 	/**
 	 * Called, whenerever the Chest gets ticked
 	 * 
@@ -68,7 +67,7 @@ public interface IUpgrade {
 	 *            The Upgrade
 	 */
 	public void update(IBetterChest chest, int tick, World world, ItemStack item);
-	
+
 	/**
 	 * The Max amount of Upgrades per Chest/Bag.
 	 * 
@@ -77,16 +76,16 @@ public interface IUpgrade {
 	 * @return
 	 */
 	public int getMaxUpgrades(ItemStack item);
-	
-	/**
-	 * The name of The Upgrade.
-	 * 
-	 * @param item
-	 *            The Upgrade to check
-	 * @return The localized(!!) name of the Upgrade
-	 */
-	public String getName(ItemStack item);
-	
+
+	// /**
+	// * The name of The Upgrade.
+	// *
+	// * @param item
+	// * The Upgrade to check
+	// * @return The localized(!!) name of the Upgrade
+	// */
+	// public String getName(ItemStack item);
+
 	/**
 	 * Called when the Upgrade is installed.
 	 * 
@@ -96,7 +95,7 @@ public interface IUpgrade {
 	 *            The Chest/Bag
 	 */
 	public void onUpgradeInstalled(ItemStack item, IBetterChest chest);
-	
+
 	/**
 	 * The GUI's rendering
 	 * 
@@ -108,14 +107,17 @@ public interface IUpgrade {
 	 *            The upgrade
 	 */
 	@SideOnly(Side.CLIENT)
-	public void drawGuiContainerForegroundLayer(GuiContainer gui, Container container, int par1,
-	        int par2, ItemStack item);
-	
+	public void drawGuiContainerForegroundLayer(GuiContainer gui,
+			Container container, int par1, int par2, ItemStack item);
+
 	/**
-	 * USed to check if the upgrade can be disabled in the {@link}ContainerUpgrades
-	 * @param stack The upgrade
+	 * USed to check if the upgrade can be disabled in the {@link}
+	 * ContainerUpgrades
+	 * 
+	 * @param stack
+	 *            The upgrade
 	 * @return if it can be disabled.
 	 */
 	public boolean canBeDisabled(ItemStack stack);
-	
+
 }
