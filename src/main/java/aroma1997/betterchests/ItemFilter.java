@@ -15,6 +15,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import aroma1997.betterchests.api.ItemUpgradeBasic;
 import aroma1997.core.inventories.AromaContainer;
@@ -97,6 +98,18 @@ public class ItemFilter extends ItemUpgradeBasic implements ISpecialGUIProvider 
 			List par3List) {
 		for (int i = 0; i <= 1; i++) {
 			par3List.add(new ItemStack(par1, 1, i));
+		}
+	}
+	
+	@Override
+	public void addInformation(ItemStack par1ItemStack,
+			EntityPlayer par2EntityPlayer, List par3List, boolean par4) {
+		super.addInformation(par1ItemStack, par2EntityPlayer, par3List, par4);
+		
+		InventoryFilter inv = getInventory(par1ItemStack);
+		
+		if (inv.getStackInSlot(InventoryFilter.SLOT_UPGRADE) != null) {
+			par3List.add(StatCollector.translateToLocalFormatted("info.betterchests:tooltip.filter.upgrade", inv.getStackInSlot(InventoryFilter.SLOT_UPGRADE).getDisplayName()));
 		}
 	}
 

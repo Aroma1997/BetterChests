@@ -10,6 +10,8 @@ import aroma1997.core.util.ItemUtil;
 import aroma1997.core.util.ItemUtil.ItemMatchCriteria;
 
 public class InventoryFilter extends InventoryItem {
+	
+	public static final int SLOT_UPGRADE = 7;
 
 	public InventoryFilter(ItemStack item) {
 		super(item);
@@ -17,12 +19,15 @@ public class InventoryFilter extends InventoryItem {
 
 	@Override
 	public int getSizeInventory() {
-		return 9;
+		return 8;
 	}
 	
 	@Override
 	public Slot getSlot(int slot, int index, int x, int y) {
-		return new SlotGhost(this, index, x, y);
+		if (slot != SLOT_UPGRADE) {
+			return new SlotGhost(this, index, x - 9, y);
+		}
+		return new SlotFilterUpgrade(this, index, x + 9, y);
 	}
 
 	@Override
@@ -36,7 +41,13 @@ public class InventoryFilter extends InventoryItem {
 	}
 	
 	public boolean matchesUpgrade(ItemStack upgrade) {
-		return true;
+		if (!UpgradeHelper.isUpgrade(upgrade)) {
+			return false;
+		}
+		if (getStackInSlot(SLOT_UPGRADE) == null) {
+			return true;
+		}
+		return ItemUtil.areItemsSameMatching(upgrade, getStackInSlot(SLOT_UPGRADE), ItemMatchCriteria.ID, ItemMatchCriteria.DAMAGE);
 	}
 	
 	public boolean isWhitelist() {

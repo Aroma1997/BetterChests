@@ -93,6 +93,9 @@ public class ItemBag extends Item implements ISpecialGUIProvider {
 	static void addInfo(ItemStack item, List list) {
 		BagInventory inv = getInventory(item);
 		ArrayList<ItemStack> upgrades = inv.getUpgrades();
+		if (upgrades.size() > 0) {
+			list.add(StatCollector.translateToLocal("info.betterchests:tooltip.upgradesinstalled"));
+		}
 		for (ItemStack entry : upgrades) {
 			if (!UpgradeHelper.isUpgrade(entry)) {
 				continue;

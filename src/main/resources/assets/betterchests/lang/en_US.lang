@@ -109,5 +109,7 @@ info.betterchests:tooltip.maxamount=Max Upgrades per chest: %s.
 info.betterchests:tooltip.infinite=You can have only one of this exact item per chest.
 info.betterchests:tooltip.requires=Requires: %s.
 info.betterchests:tooltip.openwith=Open with "%s". (Outside of Inventory)
+info.betterchests:tooltip.upgradesinstalled=Installed Upgrades:
+info.betterchests:tooltip.filter.upgrade=Dedicated Upgrade: %s
 
 key.betterchests.openBag=Open BetterChests Bag
