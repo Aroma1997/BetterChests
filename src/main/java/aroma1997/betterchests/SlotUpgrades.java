@@ -56,7 +56,7 @@ public class SlotUpgrades extends Slot {
 	@Override
 	public ItemStack getStack() {
 		ItemStack stack = item.copy();
-		stack.stackSize = chest.getAmountUpgrade(item);
+		stack.stackSize = chest.getAmountUpgradeExact(item);
 		if (stack.stackSize <= 0) {
 			return null;
 		}
@@ -83,7 +83,7 @@ public class SlotUpgrades extends Slot {
 		int upgrades = chest.getAmountUpgrade(item);
 		ItemStack ret = item.copy();
 		ret.stackSize = Math.min(upgrades, par1);
-		chest.setAmountUpgrade(item, chest.getAmountUpgrade(item)
+		chest.setAmountUpgrade(item, chest.getAmountUpgradeExact(item)
 				- ret.stackSize);
 		// item.stackSize -= ret.stackSize;
 		if (ret.stackSize <= 0) {

@@ -8,18 +8,25 @@
  */
 package aroma1997.betterchests;
 
+import java.util.HashMap;
+import java.util.List;
+
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import aroma1997.betterchests.api.ItemUpgradeBasic;
 import aroma1997.core.inventories.AromaContainer;
 import aroma1997.core.inventories.ISpecialGUIProvider;
+import aroma1997.core.inventories.Inventories;
 
 public class ItemFilter extends ItemUpgradeBasic implements ISpecialGUIProvider {
 
 	public ItemFilter() {
 		super();
 		setCreativeTab(BetterChests.creativeTabBC);
+		setMaxStackSize(1);
 		setNameAndTexture("betterchests:filter");
 		setHasSubtypes(true);
 	}
@@ -36,8 +43,7 @@ public class ItemFilter extends ItemUpgradeBasic implements ISpecialGUIProvider 
 	public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World,
 			EntityPlayer thePlayer) {
 		if (par2World.isRemote) {
-			BetterChests.ph.sendPacketToPlayers(new PacketOpenBag()
-					.setSlot(thePlayer.inventory.currentItem));
+			Inventories.sendItemInventoryOpen(thePlayer.inventory.currentItem);
 		}
 		return par1ItemStack;
 	}
@@ -54,17 +60,44 @@ public class ItemFilter extends ItemUpgradeBasic implements ISpecialGUIProvider 
 
 	@Override
 	public int getMaxUpgrades(ItemStack item) {
-		return 10;
+		return -1;
 	}
 
 	@Override
 	public boolean canBeDisabled(ItemStack stack) {
 		return false;
 	}
-
+	
 	@Override
 	public AromaContainer getContainer(EntityPlayer player, int i) {
-		return null;
+		InventoryFilter inv = getInventory(player.inventory.getStackInSlot(i));
+		return inv.getContainer(player, i);
+	}
+	
+	private static HashMap<ItemStack, InventoryFilter> invs = new HashMap<ItemStack, InventoryFilter>();
+
+	public static InventoryFilter getInventory(ItemStack item) {
+		if (!invs.containsKey(item)) {
+			InventoryFilter inv = new InventoryFilter(item);
+			invs.put(item, inv);
+			return inv;
+		}
+		return invs.get(item);
+	}
+	
+	@Override
+    public String getUnlocalizedName(ItemStack item)
+    {
+        return super.getUnlocalizedName(item) + (item.getItemDamage() == 0 ? ".whitelist" : ".blacklist");
+    }
+	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@Override
+	public void getSubItems(Item par1, CreativeTabs par2CreativeTabs,
+			List par3List) {
+		for (int i = 0; i <= 1; i++) {
+			par3List.add(new ItemStack(par1, 1, i));
+		}
 	}
 
 }

@@ -9,8 +9,10 @@
 
 package aroma1997.betterchests;
 
+import java.io.FilterInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Random;
 
 import net.minecraft.entity.player.EntityPlayer;
@@ -227,7 +229,7 @@ public class BagInventory implements IBetterChest, IAdvancedInventory,
 		for (ItemStack item : upgrades) {
 			if (ItemUtil.areItemsSameMatching(item, upgrade,
 					ItemMatchCriteria.ID, ItemMatchCriteria.DAMAGE,
-					ItemMatchCriteria.NBT)) {
+					UpgradeHelper.BC_NBT)) {
 				if (amount <= 0) {
 					upgrades.remove(item);
 					return;
@@ -339,7 +341,7 @@ public class BagInventory implements IBetterChest, IAdvancedInventory,
 		for (ItemStack item : upgrades) {
 			if (ItemUtil.areItemsSameMatching(item, upgrade,
 					ItemMatchCriteria.ID, ItemMatchCriteria.DAMAGE,
-					ItemMatchCriteria.NBT)) {
+					UpgradeHelper.BC_NBT)) {
 				return item.stackSize;
 			}
 		}
@@ -405,6 +407,22 @@ public class BagInventory implements IBetterChest, IAdvancedInventory,
 				}
 			}
 		}
+	}
+
+	@Override
+	public List<InventoryFilter> getFiltersForUpgrade(ItemStack item) {
+		ItemStack filter = new ItemStack(BetterChestsItems.filter, 1, 0);
+		List<InventoryFilter> filterlist = new ArrayList<InventoryFilter>();
+		for (ItemStack upgrade : upgrades) {
+			if (ItemUtil.areItemsSameMatching(upgrade, filter,
+					ItemMatchCriteria.ID, ItemMatchCriteria.DAMAGE)) {
+				InventoryFilter inv = ItemFilter.getInventory(upgrade);
+				if (inv.matchesUpgrade(item)) {
+					filterlist.add(inv);
+				}
+			}
+		}
+		return filterlist;
 	}
 
 }

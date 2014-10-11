@@ -26,7 +26,9 @@ import aroma1997.betterchests.api.IUpgrade;
 import aroma1997.betterchests.client.ClientProxy;
 import aroma1997.core.inventories.AromaContainer;
 import aroma1997.core.inventories.ISpecialGUIProvider;
+import aroma1997.core.inventories.Inventories;
 import aroma1997.core.items.wrench.ItemWrench;
+import aroma1997.core.network.packets.PacketOpenInv;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -52,8 +54,7 @@ public class ItemBag extends Item implements ISpecialGUIProvider {
 	public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World,
 			EntityPlayer thePlayer) {
 		if (par2World.isRemote) {
-			BetterChests.ph.sendPacketToPlayers(new PacketOpenBag()
-					.setSlot(thePlayer.inventory.currentItem));
+			Inventories.sendItemInventoryOpen(thePlayer.inventory.currentItem);
 		}
 		return par1ItemStack;
 	}

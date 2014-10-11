@@ -180,10 +180,8 @@ public class TileEntityBChest extends TileEntity implements IBetterChest,
 
 		IUpgrade upgrade = (IUpgrade) itemUpgrade.getItem();
 
-		if (upgrade.canChestTakeUpgrade(itemUpgrade)
-				&& UpgradeHelper.areRequirementsInstalled(this, itemUpgrade)
-				&& upgrade.getMaxUpgrades(itemUpgrade) > getAmountUpgrade(itemUpgrade)) {
-			setAmountUpgrade(itemUpgrade, getAmountUpgrade(itemUpgrade) + 1);
+		if (UpgradeHelper.canUpgradeGoInChest(this, itemUpgrade)) {
+			setAmountUpgrade(itemUpgrade, getAmountUpgradeExact(itemUpgrade) + 1);
 			if (ItemUtil.areItemsSameMatching(itemUpgrade,
 					Upgrade.PLAYER.getItem(), ItemMatchCriteria.ID,
 					ItemMatchCriteria.DAMAGE)) {
@@ -462,7 +460,7 @@ public class TileEntityBChest extends TileEntity implements IBetterChest,
 		for (ItemStack item : upgrades) {
 			if (ItemUtil.areItemsSameMatching(item, upgrade,
 					ItemMatchCriteria.ID, ItemMatchCriteria.DAMAGE,
-					ItemMatchCriteria.NBT)) {
+					UpgradeHelper.BC_NBT)) {
 				if (amount <= 0) {
 					upgrades.remove(item);
 					return;
@@ -581,7 +579,7 @@ public class TileEntityBChest extends TileEntity implements IBetterChest,
 		for (ItemStack item : upgrades) {
 			if (ItemUtil.areItemsSameMatching(item, upgrade,
 					ItemMatchCriteria.ID, ItemMatchCriteria.DAMAGE,
-					ItemMatchCriteria.NBT)) {
+					UpgradeHelper.BC_NBT)) {
 				return item.stackSize;
 			}
 		}
@@ -682,6 +680,22 @@ public class TileEntityBChest extends TileEntity implements IBetterChest,
 	@Override
 	public boolean canExtractItem(int slot, ItemStack stack, int side) {
 		return canInsertItem(slot, stack, side);
+	}
+
+	@Override
+	public List<InventoryFilter> getFiltersForUpgrade(ItemStack item) {
+		ItemStack filter = new ItemStack(BetterChestsItems.filter, 1, 0);
+		List<InventoryFilter> filterlist = new ArrayList<InventoryFilter>();
+		for (ItemStack upgrade : upgrades) {
+			if (ItemUtil.areItemsSameMatching(upgrade, filter,
+					ItemMatchCriteria.ID, ItemMatchCriteria.DAMAGE)) {
+				InventoryFilter inv = ItemFilter.getInventory(upgrade);
+				if (inv.matchesUpgrade(item)) {
+					filterlist.add(inv);
+				}
+			}
+		}
+		return filterlist;
 	}
 
 }

@@ -19,6 +19,7 @@ import aroma1997.betterchests.api.IUpgrade;
 import aroma1997.core.log.LogHelper;
 import aroma1997.core.util.ItemUtil;
 import aroma1997.core.util.ItemUtil.ItemMatchCriteria;
+import aroma1997.core.util.ItemUtil.ItemMatchCriteria.ICompareItems;
 
 public class UpgradeHelper {
 
@@ -74,6 +75,7 @@ public class UpgradeHelper {
 			return null;
 		}
 		item = item.copy();
+		enableUpgrade(item);
 		item.stackSize = 1;
 		return item;
 	}
@@ -128,6 +130,29 @@ public class UpgradeHelper {
 				}
 			}
 		}
+	}
+	
+	public static boolean canUpgradeGoInChest(IBetterChest chest, ItemStack item) {
+		if (item == null || chest == null || !isUpgrade(item)) return false;
+		IUpgrade upgrade = (IUpgrade) item.getItem();
+		return ((chest instanceof TileEntityBChest && upgrade.canChestTakeUpgrade(item)) || (chest instanceof BagInventory && upgrade.canBagTakeUpgrade(item))) && areRequirementsInstalled(chest, item) && (upgrade.getMaxUpgrades(item) > chest.getAmountUpgrade(item) || (upgrade.getMaxUpgrades(item) == -1 && chest.getAmountUpgradeExact(item) == 0));
+	}
+	
+	public static ItemMatchCriteria BC_NBT = new ItemMatchCriteria(BetterChestsNBT.class);
+	
+	public static class BetterChestsNBT implements ICompareItems {
+
+		@Override
+		public boolean checkFor(ItemStack item1, ItemStack item2) {
+			if (item1 == null || item2 == null) return false;
+			ItemStack item1c = item1.copy();
+			ItemStack item2c = item2.copy();
+			enableUpgrade(item1c);
+			enableUpgrade(item2c);
+			
+			return ItemUtil.areItemsSameMatching(item1c, item2c, ItemMatchCriteria.NBT);
+		}
+		
 	}
 
 }

@@ -68,6 +68,9 @@ inv.betterchests:bag.name=Adjustable Bag
 tile.betterchests:chest.name=Adjustable Chest
 item.betterchests:bag.name=Adjustable Bag
 
+item.betterchests:filter.whitelist.name=Whitelist Filter Upgrade
+item.betterchests:filter.blacklist.name=Blacklist Filter Upgrade
+
 item.betterchests:upgrade.SLOT.name=Slot Upgrade
 item.betterchests:upgrade.COBBLEGEN.name=CobbleGen Upgrade
 item.betterchests:upgrade.REDSTONE.name=Redstone Upgrade
@@ -103,6 +106,7 @@ death.attack.betterchests:interact.player=%s shouldn't have checked that Adjusta
 info.betterchests:tooltip.nobag=This Upgrade cannot be put on a bag.
 info.betterchests:tooltip.nochest=This Upgrade cannot be put on a chest.
 info.betterchests:tooltip.maxamount=Max Upgrades per chest: %s.
+info.betterchests:tooltip.infinite=You can have only one of this exact item per chest.
 info.betterchests:tooltip.requires=Requires: %s.
 info.betterchests:tooltip.openwith=Open with "%s". (Outside of Inventory)
 

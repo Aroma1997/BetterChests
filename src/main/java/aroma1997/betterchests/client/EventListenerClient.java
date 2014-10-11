@@ -7,9 +7,8 @@ import net.minecraftforge.common.MinecraftForge;
 
 import org.lwjgl.opengl.GL11;
 
-import aroma1997.betterchests.BetterChests;
 import aroma1997.betterchests.ItemBag;
-import aroma1997.betterchests.PacketOpenBag;
+import aroma1997.core.inventories.Inventories;
 import aroma1997.core.util.InvUtil;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
@@ -35,8 +34,7 @@ public class EventListenerClient {
 					.getFirstItem(Minecraft.getMinecraft().thePlayer.inventory,
 							ItemBag.class);
 			if (i != -1) {
-				BetterChests.ph.sendPacketToPlayers(new PacketOpenBag()
-						.setSlot(i));
+				Inventories.sendItemInventoryOpen(i);
 			}
 		}
 		pressedBefore = ClientProxy.openBag.getIsKeyPressed();

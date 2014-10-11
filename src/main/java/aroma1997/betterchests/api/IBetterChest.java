@@ -10,9 +10,11 @@
 package aroma1997.betterchests.api;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
+import aroma1997.betterchests.InventoryFilter;
 
 /**
  * This is implemented in the Bag and in the Chest.
@@ -107,8 +109,25 @@ public interface IBetterChest extends IInventory {
 	 */
 	public long getLongTick();
 
+	/**
+	 * Checks if this Upgrade is disabled.
+	 * @param stack
+	 * @return
+	 */
 	public boolean isUpgradeDisabled(ItemStack stack);
 
+	/**
+	 * Disables or enables this Upgrade.
+	 * @param stack
+	 * @param value
+	 */
 	public void setUpgradeDisabled(ItemStack stack, boolean value);
+	
+	/**
+	 * This will return a list of filterUpgrades for this Upgrade.
+	 * @param item
+	 * @return
+	 */
+	public List<InventoryFilter> getFiltersForUpgrade(ItemStack item);
 
 }

@@ -63,14 +63,9 @@ public class BetterChests {
 		new EventListener();
 	}
 
-	public static PacketHandler ph = NetworkHelper
-			.getPacketHandler(Reference.MOD_ID);
-
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
 		proxy.registerRenderers();
-		ph.registerMessage(PacketOpenBag.class, PacketOpenBag.class, 0,
-				Side.SERVER);
 		VersionCheck
 				.registerVersionChecker(Reference.MOD_ID, Reference.VERSION);
 	}

@@ -14,12 +14,14 @@ public class BetterChestsItems {
 	public static BlockBChest chest = new BlockBChest();
 
 	public static ItemUpgrade upgrade = new ItemUpgrade();
+	
+	public static ItemFilter filter = new ItemFilter();
 
 	public static ItemBag bag = new ItemBag();
 
 	public static ItemBetterChestUpgrade upgradeChest = new ItemBetterChestUpgrade();
 
-	public void init() {
+	public static void init() {
 		GameRegistry.registerTileEntity(TileEntityBChest.class,
 				"adjustableChest");
 		AromaRegistry.registerShapedAromicRecipe(new ItemStack(chest), false,
@@ -32,6 +34,8 @@ public class BetterChestsItems {
 						chest));
 		GameRegistry.addRecipe(new CraftingBag());
 		Upgrade.generateRecipes();
+		AromaRegistry.registerShapedAromicRecipe(new ItemStack(filter), false, " H ", "PUP", " P ", 'H', new ItemStack(Blocks.hopper), 'P', new ItemStack(Items.paper), 'U', new ItemStack(upgrade, 1, Upgrade.BASIC.ordinal()));
+		GameRegistry.addRecipe(new CraftingFilter());
 		AromaRegistry.registerShapelessAromicRecipe(BetterChests.getHelpBook(),
 				false, Upgrade.BASIC.getItem(), new ItemStack(Items.book));
 		GameRegistry.addRecipe(new CraftingBook());
