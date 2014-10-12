@@ -10,6 +10,7 @@ import net.minecraft.block.BlockReed;
 import net.minecraft.block.IGrowable;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import aroma1997.betterchests.InventoryFilter;
 import aroma1997.betterchests.Reference;
 import aroma1997.betterchests.api.IBetterChest;
 import aroma1997.core.util.InvUtil;
@@ -46,7 +47,7 @@ public class Harvesting extends BasicUpgrade {
 						world.getBlockMetadata(xcoord, ycoord, zcoord), 0);
 				boolean b = false;
 				for (ItemStack itemGet : items) {
-					if (InvUtil.putIntoFirstSlot(chest, itemGet, true) != null) {
+					if (InvUtil.putIntoFirstSlot(chest, itemGet, true) != null && InventoryFilter.isItemAllowed(itemGet, chest.getFiltersForUpgrade(item))) {
 						b = true;
 						break;
 					}
@@ -63,7 +64,7 @@ public class Harvesting extends BasicUpgrade {
 			ItemStack itemS = new ItemStack(block.getItemDropped(meta,
 					world.rand, 0), block.quantityDropped(meta, 0, world.rand),
 					block.damageDropped(meta));
-			if (InvUtil.putIntoFirstSlot(chest, itemS, true) == null) {
+			if (InvUtil.putIntoFirstSlot(chest, itemS, true) == null && InventoryFilter.isItemAllowed(itemS, chest.getFiltersForUpgrade(item))) {
 				InvUtil.putIntoFirstSlot(chest, itemS, false);
 				world.setBlockToAir(xcoord, ycoord, zcoord);
 			}
@@ -78,7 +79,7 @@ public class Harvesting extends BasicUpgrade {
 				ItemStack itemS = new ItemStack(block.getItemDropped(meta,
 						world.rand, 0), block.quantityDropped(meta, 0,
 						world.rand), block.damageDropped(meta));
-				if (InvUtil.putIntoFirstSlot(chest, itemS, true) == null) {
+				if (InvUtil.putIntoFirstSlot(chest, itemS, true) == null && InventoryFilter.isItemAllowed(itemS, chest.getFiltersForUpgrade(item))) {
 					InvUtil.putIntoFirstSlot(chest, itemS, false);
 					world.setBlockToAir(xcoord, ycoord + i - 1, zcoord);
 				}

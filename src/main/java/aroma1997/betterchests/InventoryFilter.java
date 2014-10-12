@@ -6,6 +6,7 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import aroma1997.core.inventories.SlotGhost;
 import aroma1997.core.items.inventory.InventoryItem;
+import aroma1997.core.util.InvUtil.IFilter;
 import aroma1997.core.util.ItemUtil;
 import aroma1997.core.util.ItemUtil.ItemMatchCriteria;
 
@@ -85,6 +86,21 @@ public class InventoryFilter extends InventoryItem {
 			return isOnWhitelist;
 		}
 		return true;
+		
+	}
+	
+	public static class BCFilterFilter implements IFilter {
+		
+		private List<InventoryFilter> list;
+		
+		public BCFilterFilter(List<InventoryFilter> list) {
+			this.list = list;
+		}
+
+		@Override
+		public boolean isOk(ItemStack items) {
+			return isItemAllowed(items, list);
+		}
 		
 	}
 

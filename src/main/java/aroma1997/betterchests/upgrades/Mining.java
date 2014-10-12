@@ -9,6 +9,7 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTool;
 import net.minecraft.world.World;
+import aroma1997.betterchests.InventoryFilter.BCFilterFilter;
 import aroma1997.betterchests.api.IBetterChest;
 import aroma1997.core.util.InvUtil;
 
@@ -20,7 +21,7 @@ public class Mining extends BasicUpgrade {
 		if (tick != 38) {
 			return;
 		}
-		int block = InvUtil.getFirstItem(chest, ItemBlock.class);
+		int block = InvUtil.getFirstItem(chest, ItemBlock.class, null, new BCFilterFilter(chest.getFiltersForUpgrade(item)));
 		if (block != -1) {
 			int tool = InvUtil.getFirstItem(chest, ItemTool.class);
 			if (tool != -1) {

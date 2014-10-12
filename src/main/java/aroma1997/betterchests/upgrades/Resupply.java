@@ -4,6 +4,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import aroma1997.betterchests.BagInventory;
+import aroma1997.betterchests.InventoryFilter.BCFilterFilter;
 import aroma1997.betterchests.api.IBetterChest;
 import aroma1997.core.util.InvUtil;
 
@@ -23,7 +24,7 @@ public class Resupply extends BasicUpgrade {
 				if (itemStack == null) {
 					continue;
 				}
-				ItemStack get = InvUtil.getFirstItem(inv, itemStack, true);
+				ItemStack get = InvUtil.getFirstItem(inv, itemStack, true, null, new BCFilterFilter(inv.getFiltersForUpgrade(item)));
 				if (get == null) {
 					continue;
 				}

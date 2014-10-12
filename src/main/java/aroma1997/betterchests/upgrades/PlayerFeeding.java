@@ -5,6 +5,7 @@ import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import aroma1997.betterchests.BagInventory;
+import aroma1997.betterchests.InventoryFilter.BCFilterFilter;
 import aroma1997.betterchests.api.IBetterChest;
 import aroma1997.core.util.InvUtil;
 
@@ -22,7 +23,7 @@ public class PlayerFeeding extends BasicUpgrade {
 			if (!player.getFoodStats().needFood()) {
 				return;
 			}
-			int slot = InvUtil.getFirstItem(inv, ItemFood.class);
+			int slot = InvUtil.getFirstItem(inv, ItemFood.class, null, new BCFilterFilter(chest.getFiltersForUpgrade(item)));
 			if (slot == -1) {
 				return;
 			}

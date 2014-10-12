@@ -1,8 +1,11 @@
 package aroma1997.betterchests.upgrades;
 
+import java.io.FilterInputStream;
+
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.world.World;
+import aroma1997.betterchests.InventoryFilter;
 import aroma1997.betterchests.Upgrade;
 import aroma1997.betterchests.api.IBetterChest;
 import aroma1997.core.util.InvUtil;
@@ -19,7 +22,7 @@ public class Furnace extends BasicUpgrade {
 				if (stack == null) {
 					continue;
 				}
-				if (FurnaceRecipes.smelting().getSmeltingResult(stack) == null) {
+				if (FurnaceRecipes.smelting().getSmeltingResult(stack) == null || !InventoryFilter.isItemAllowed(stack, inv.getFiltersForUpgrade(item))) {
 					continue;
 				}
 				cooking = i;

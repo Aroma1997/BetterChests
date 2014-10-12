@@ -1,9 +1,12 @@
 package aroma1997.betterchests.upgrades;
 
+import java.util.List;
+
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import aroma1997.betterchests.InventoryFilter;
 import aroma1997.betterchests.Upgrade;
 import aroma1997.betterchests.api.IBetterChest;
 import aroma1997.core.util.InvUtil;
@@ -39,8 +42,15 @@ public class CobbleGen extends BasicUpgrade {
 			if (bucketLava == -1 || bucketWater == -1) {
 				return;
 			}
-			InvUtil.putIntoFirstSlot(inv, new ItemStack(Blocks.cobblestone),
+			List<InventoryFilter> list = inv.getFiltersForUpgrade(item);
+			if (InventoryFilter.isItemAllowed(new ItemStack(Blocks.cobblestone), list)) {
+				InvUtil.putIntoFirstSlot(inv, new ItemStack(Blocks.cobblestone),
 					false);
+			}
+			else if (InventoryFilter.isItemAllowed(new ItemStack(Blocks.stone), list)) {
+				InvUtil.putIntoFirstSlot(inv, new ItemStack(Blocks.stone),
+						false);
+			}
 		}
 	}
 

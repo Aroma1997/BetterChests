@@ -1,11 +1,14 @@
 package aroma1997.betterchests.upgrades;
 
+import java.util.List;
+
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 import org.apache.logging.log4j.Level;
 
 import aroma1997.betterchests.BetterChests;
+import aroma1997.betterchests.InventoryFilter;
 import aroma1997.betterchests.api.IBetterChest;
 import aroma1997.core.log.LogHelper;
 
@@ -17,10 +20,11 @@ public class Ticking extends BasicUpgrade {
 		if (tick % 8 == 2) {
 			return;
 		}
+		List<InventoryFilter> list = chest.getFiltersForUpgrade(item);
 		try {
 			for (int i = 0; i < chest.getSizeInventory(); i++) {
 				ItemStack t = chest.getStackInSlot(i);
-				if (t != null) {
+				if (t != null && InventoryFilter.isItemAllowed(t, list)) {
 					t.updateAnimation(world, null, i, true);
 				}
 			}

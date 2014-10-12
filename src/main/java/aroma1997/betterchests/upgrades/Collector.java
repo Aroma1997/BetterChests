@@ -7,6 +7,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
 import aroma1997.betterchests.EntityBag;
+import aroma1997.betterchests.InventoryFilter;
 import aroma1997.betterchests.Upgrade;
 import aroma1997.betterchests.api.IBetterChest;
 import aroma1997.core.util.InvUtil;
@@ -53,7 +54,7 @@ public class Collector extends BasicUpgrade {
 			for (EntityItem e : listNew) {
 				if (e.age > 10 && e.isEntityAlive()
 						&& !(e instanceof EntityBag)) {
-					if (e.getEntityItem() == null) {
+					if (e.getEntityItem() == null || InventoryFilter.isItemAllowed(e.getEntityItem(), inv.getFiltersForUpgrade(item))) {
 						continue;
 					}
 					ItemStack itemBack = InvUtil.putIntoFirstSlot(inv,

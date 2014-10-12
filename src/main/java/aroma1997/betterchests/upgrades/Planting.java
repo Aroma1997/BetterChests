@@ -11,6 +11,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.util.ForgeDirection;
+import aroma1997.betterchests.InventoryFilter.BCFilterFilter;
 import aroma1997.betterchests.Reference;
 import aroma1997.betterchests.Upgrade;
 import aroma1997.betterchests.api.IBetterChest;
@@ -30,7 +31,7 @@ public class Planting extends BasicUpgrade {
 		int xcoord = chest.getXCoord() + num / doubleRange - range;
 		int zcoord = chest.getZCoord() + num % doubleRange - range;
 		int ycoord = chest.getYCoord();
-		int slot = InvUtil.getFirstItem(chest, IPlantable.class);
+		int slot = InvUtil.getFirstItem(chest, IPlantable.class, null, new BCFilterFilter(chest.getFiltersForUpgrade(item)));
 		doBlock(chest, tick, world, item, xcoord, ycoord - 1, zcoord, slot);
 	}
 
