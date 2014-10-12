@@ -70,6 +70,7 @@ public class InventoryFilter extends InventoryItem {
 				hasWhitelist = true;
 			}
 			for (int i = 0; i < filter.getSizeInventory(); i++) {
+				if (i == SLOT_UPGRADE) continue;
 				if (ItemUtil.areItemsSameMatching(item, filter.getStackInSlot(i), ItemMatchCriteria.ID, ItemMatchCriteria.DAMAGE)) {
 					if (filter.isWhitelist()) {
 						isOnWhitelist = true;

@@ -688,7 +688,7 @@ public class TileEntityBChest extends TileEntity implements IBetterChest,
 		List<InventoryFilter> filterlist = new ArrayList<InventoryFilter>();
 		for (ItemStack upgrade : upgrades) {
 			if (ItemUtil.areItemsSameMatching(upgrade, filter,
-					ItemMatchCriteria.ID, ItemMatchCriteria.DAMAGE)) {
+					ItemMatchCriteria.ID)) {
 				InventoryFilter inv = ItemFilter.getInventory(upgrade);
 				if (inv.matchesUpgrade(item)) {
 					filterlist.add(inv);
