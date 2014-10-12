@@ -260,6 +260,7 @@ public class BagInventory implements IBetterChest, IAdvancedInventory,
 		if (tick-- <= 0) {
 			tick = 64;
 		}
+		longTick += 1;
 		this.player = player;
 		UpgradeHelper.updateChest(this, tick, player.worldObj);
 	}
