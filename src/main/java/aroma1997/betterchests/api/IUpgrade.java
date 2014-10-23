@@ -119,5 +119,13 @@ public interface IUpgrade {
 	 * @return if it can be disabled.
 	 */
 	public boolean canBeDisabled(ItemStack stack);
+	
+	/**
+	 * If this Upgrade can use the filter Upgrade.
+	 * @param stack The upgrade
+	 * @param inverted If the Filter is inverted (false = Whitelist, true = Blacklist)
+	 * @return
+	 */
+	public boolean supportsFilter(ItemStack stack, boolean inverted);
 
 }

@@ -68,6 +68,9 @@ public abstract class ItemUpgradeBasic extends AromicItem implements IUpgrade {
 						upgrade.getMaxUpgrades(par1ItemStack)));
 			}
 		}
+		if (upgrade.supportsFilter(par1ItemStack, false) || upgrade.supportsFilter(par1ItemStack, true)) {
+			par3List.add(StatCollector.translateToLocal("info.betterchests:tooltip.supportsfilter"));
+		}
 		if (!upgrade.canBagTakeUpgrade(par1ItemStack)
 				&& !upgrade.canChestTakeUpgrade(par1ItemStack)) {
 		} else if (!upgrade.canChestTakeUpgrade(par1ItemStack)) {

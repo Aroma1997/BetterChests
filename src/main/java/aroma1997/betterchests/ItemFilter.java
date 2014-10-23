@@ -113,4 +113,9 @@ public class ItemFilter extends ItemUpgradeBasic implements ISpecialGUIProvider 
 		}
 	}
 
+	@Override
+	public boolean supportsFilter(ItemStack stack, boolean inverted) {
+		return false;
+	}
+
 }

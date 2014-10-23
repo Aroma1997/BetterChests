@@ -51,6 +51,12 @@ public class ItemUpgrade extends Item implements IUpgrade {
 					"info.betterchests:tooltip.requires", Colors.YELLOW
 							+ upgrade.getRequirement().getName()));
 		}
+		
+
+		if (upgrade.canUseFilter()) {
+			par3List.add(StatCollector.translateToLocal("info.betterchests:tooltip.supportsfilter"));
+		}
+		
 		if (upgrade.getMaxAmount() != 0) {
 			par3List.add(StatCollector.translateToLocalFormatted(
 					"info.betterchests:tooltip.maxamount",
@@ -165,6 +171,11 @@ public class ItemUpgrade extends Item implements IUpgrade {
 	@Override
 	public boolean canBeDisabled(ItemStack stack) {
 		return Upgrade.values()[stack.getItemDamage()].canBeDisabled();
+	}
+
+	@Override
+	public boolean supportsFilter(ItemStack stack, boolean inverted) {
+		return Upgrade.values()[stack.getItemDamage()].canUseFilter() && (stack.getItemDamage() != Upgrade.CRAFTING.ordinal() || !inverted);
 	}
 
 }

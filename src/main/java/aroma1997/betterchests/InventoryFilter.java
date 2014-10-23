@@ -1,9 +1,23 @@
+/**
+ * The code of BetterChests and all related materials like textures is copyrighted material.
+ * It may only be redistributed or used for Commercial purposes with the permission of Aroma1997.
+ * 
+ * All Rights reserved (c) by Aroma1997
+ * 
+ * See https://github.com/Aroma1997/BetterChests/blob/master/LICENSE.md for more information.
+ */
 package aroma1997.betterchests;
 
 import java.util.List;
 
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.StatCollector;
+import aroma1997.core.client.inventories.GUIContainer;
+import aroma1997.core.inventories.AromaContainer;
+import aroma1997.core.inventories.ContainerBasic;
+import aroma1997.core.inventories.ContainerItem;
 import aroma1997.core.inventories.SlotGhost;
 import aroma1997.core.items.inventory.InventoryItem;
 import aroma1997.core.util.InvUtil.IFilter;
@@ -12,7 +26,7 @@ import aroma1997.core.util.ItemUtil.ItemMatchCriteria;
 
 public class InventoryFilter extends InventoryItem {
 	
-	public static final int SLOT_UPGRADE = 7;
+	public static final int SLOT_UPGRADE = 9;
 
 	public InventoryFilter(ItemStack item) {
 		super(item);
@@ -20,15 +34,15 @@ public class InventoryFilter extends InventoryItem {
 
 	@Override
 	public int getSizeInventory() {
-		return 8;
+		return 10;
 	}
 	
 	@Override
 	public Slot getSlot(int slot, int index, int x, int y) {
 		if (slot != SLOT_UPGRADE) {
-			return new SlotGhost(this, index, x - 9, y);
+			return new SlotGhost(this, index, x - 36, y);
 		}
-		return new SlotFilterUpgrade(this, index, x + 9, y);
+		return new SlotFilterUpgrade(this, index, 129, 30);
 	}
 
 	@Override
@@ -87,6 +101,17 @@ public class InventoryFilter extends InventoryItem {
 		}
 		return true;
 		
+	}
+	
+	@Override
+	public AromaContainer getContainer(EntityPlayer player, int i) {
+		return new ContainerFilter(player.inventory, this, i);
+	}
+	
+	@Override
+	public void drawGuiContainerForegroundLayer(GUIContainer gui,
+			ContainerBasic container, int par1, int par2) {
+		gui.getFontRender().drawString(StatCollector.translateToLocal("gui.betterchests:filter.upgrade"), 120, 18, 0x404040);
 	}
 	
 	public static class BCFilterFilter implements IFilter {

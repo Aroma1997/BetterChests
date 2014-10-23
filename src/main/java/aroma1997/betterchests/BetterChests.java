@@ -91,6 +91,8 @@ public class BetterChests {
 		list.add("book.betterchests:upgrade.1");
 		list.add("book.betterchests:chapter.upgrades");
 		Upgrade.addBagBookDescription(list);
+		list.add("book.betterchests:upgrade.filter.1");
+		list.add("book.betterchests:upgrade.filter.2");
 		list.add("book.betterchests:chapter.credits");
 		list.add("book.betterchests:credits");
 		ItemStack item = ItemUtil.getWrittenBook("book.betterchests:name",

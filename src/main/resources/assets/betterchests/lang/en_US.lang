@@ -51,6 +51,7 @@ book.betterchests:upgrade.MINING=Mining Upgrade: This Upgrade will break the blo
 book.betterchests:upgrade.KILLING=Killing Upgrade: This Upgrade will kill living entities within an area of 7x3x7 blocks. When used on animals, it will always leave two of each kind. If you install the AI Upgrade as well, killed Creatures will also drop RareDrops such as Blaze Rods and Ender Pearls.
 book.betterchests:upgrade.BLOCKER=Blocking Upgrade: This Upgrade will block other blocks from being able to interact with this chest. For each applied Upgrade, the amount of Slots that can not be accessed from other blocks increases by one. Note: Upgrades and Players can still access these slots.
 book.betterchests:upgrade.LIGHTWEIGHT=Lightweight Upgrade: This Upgrade makes your bag light as air, almost lifting you off the ground, increasing your movement speed by 40%.
+book.betterchests:upgrade.CRAFTING=Crafting Upgrade: This Upgrade will automatically craft recipes specified with Filter Upgrades if all the crafting ingredients are in the chest.
 
 
 book.betterchests:credits=Thank you for reading the User Manual. If you still have questions just ask them in the MCF thread at: http://tinyurl.com/aroma1997
@@ -59,6 +60,7 @@ book.betterchests:credits=Thank you for reading the User Manual. If you still ha
 
 gui.betterchests:upgrades.name=Upgrades
 gui.betterchests:upgrades.warning=Removing Upgrades from this Chest may result in losing some of the contained Items. Shift-Right-Click to remove one Upgrade, Shift-Left-Click to remove all of them.
+gui.betterchests:filter.upgrade=Upgrade:
 
 creativetab.betterchests:creativetab.name=BetterChests
 
@@ -96,6 +98,7 @@ item.betterchests:upgrade.MINING.name=Mining Upgrade
 item.betterchests:upgrade.KILLING.name=Killing Upgrade
 item.betterchests:upgrade.BLOCKER.name=Blocking Upgrade
 item.betterchests:upgrade.LIGHTWEIGHT.name=Lightweight Upgrade
+item.betterchests:upgrade.CRAFTING.name=Crafting Upgrade
 
 item.betterchests:chestUpgrade.name=Adjustable Upgrade
 
@@ -110,6 +113,7 @@ info.betterchests:tooltip.infinite=You can have only one of this exact item per 
 info.betterchests:tooltip.requires=Requires: %s.
 info.betterchests:tooltip.openwith=Open with "%s". (Outside of Inventory)
 info.betterchests:tooltip.upgradesinstalled=Installed Upgrades:
+info.betterchests:tooltip.supportsfilter=Supports Filter Upgrade
 info.betterchests:tooltip.filter.upgrade=Dedicated Upgrade: %s
 
 key.betterchests.openBag=Open BetterChests Bag
