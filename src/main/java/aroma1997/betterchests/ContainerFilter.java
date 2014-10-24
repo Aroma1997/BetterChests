@@ -19,23 +19,10 @@ import aroma1997.core.inventories.ContainerItem;
 import aroma1997.core.inventories.ISpecialInventory;
 
 public class ContainerFilter extends ContainerItem {
-	
-	public static final int indexCrafting = -375;
 
 	protected ContainerFilter(InventoryPlayer playerInv, ISpecialInventory inv,
 			int c) {
 		super(playerInv, inv, c, true);
-	}
-	
-	@Override
-	public ItemStack slotClick(int par1, int par2, int par3,
-			EntityPlayer par4EntityPlayer) {
-		if (par1 == indexCrafting) {
-			this.inv.setInventorySlotContents(InventoryFilter.SLOT_UPGRADE, new ItemStack(BetterChestsItems.upgrade, 1, Upgrade.CRAFTING.ordinal()));
-			
-			return null;
-		}
-		return super.slotClick(par1, par2, par3, par4EntityPlayer);
 	}
 	
 	@SideOnly(Side.CLIENT)

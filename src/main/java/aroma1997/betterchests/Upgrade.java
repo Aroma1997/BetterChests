@@ -28,7 +28,6 @@ import aroma1997.betterchests.upgrades.BasicUpgrade;
 import aroma1997.betterchests.upgrades.Blocking;
 import aroma1997.betterchests.upgrades.CobbleGen;
 import aroma1997.betterchests.upgrades.Collector;
-import aroma1997.betterchests.upgrades.Crafting;
 import aroma1997.betterchests.upgrades.Feeding;
 import aroma1997.betterchests.upgrades.Furnace;
 import aroma1997.betterchests.upgrades.Harvesting;
@@ -68,8 +67,7 @@ public enum Upgrade {
 	MINING(AI, 1, true, false, Mining.class, true, true),
 	KILLING(ENERGY, 1, true, false, Killing.class, true, false),
 	BLOCKER(SLOT, 4, true, false, Blocking.class, false, false),
-	LIGHTWEIGHT(null, 1, false, true, LightWeight.class, true, false),
-	CRAFTING(null, 1, true, true, Crafting.class, true, true);
+	LIGHTWEIGHT(null, 1, false, true, LightWeight.class, true, false);
 
 	private final Upgrade requirement;
 

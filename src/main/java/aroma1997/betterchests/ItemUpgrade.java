@@ -175,7 +175,7 @@ public class ItemUpgrade extends Item implements IUpgrade {
 
 	@Override
 	public boolean supportsFilter(ItemStack stack, boolean inverted) {
-		return Upgrade.values()[stack.getItemDamage()].canUseFilter() && (stack.getItemDamage() != Upgrade.CRAFTING.ordinal() || !inverted);
+		return Upgrade.values()[stack.getItemDamage()].canUseFilter();
 	}
 
 }
