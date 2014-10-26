@@ -11,16 +11,20 @@ package aroma1997.betterchests;
 import java.util.HashMap;
 import java.util.List;
 
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.IIcon;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import aroma1997.betterchests.api.ItemUpgradeBasic;
 import aroma1997.core.inventories.AromaContainer;
 import aroma1997.core.inventories.ISpecialGUIProvider;
 import aroma1997.core.inventories.Inventories;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemFilter extends ItemUpgradeBasic implements ISpecialGUIProvider {
 
@@ -117,5 +121,23 @@ public class ItemFilter extends ItemUpgradeBasic implements ISpecialGUIProvider 
 	public boolean supportsFilter(ItemStack stack, boolean inverted) {
 		return false;
 	}
+	
+	private IIcon[] icon;
+	
+    @SideOnly(Side.CLIENT)
+    @Override
+    public void registerIcons(IIconRegister iconregister)
+    {
+        icon = new IIcon[2];
+        icon[0] = iconregister.registerIcon(getIconString() + ".whitelist");
+        icon[1] = iconregister.registerIcon(getIconString() + ".blacklist");
+    }
+    
+    @SideOnly(Side.CLIENT)
+    @Override
+    public IIcon getIconFromDamage(int damage)
+    {
+        return icon[damage];
+    }
 
 }
