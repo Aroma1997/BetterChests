@@ -28,7 +28,7 @@ public class Collector extends BasicUpgrade {
 			List<EntityItem> list = world.getEntitiesWithinAABB(
 					EntityItem.class, bounds);
 			for (EntityItem e : list) {
-				if (e.getEntityItem() == null) {
+				if (e.getEntityItem() == null || !InventoryFilter.isItemAllowed(e.getEntityItem(), inv.getFiltersForUpgrade(item))) {
 					continue;
 				}
 				if (e.age >= 10 && e.isEntityAlive()) {
@@ -54,7 +54,7 @@ public class Collector extends BasicUpgrade {
 			for (EntityItem e : listNew) {
 				if (e.age > 10 && e.isEntityAlive()
 						&& !(e instanceof EntityBag)) {
-					if (e.getEntityItem() == null || InventoryFilter.isItemAllowed(e.getEntityItem(), inv.getFiltersForUpgrade(item))) {
+					if (e.getEntityItem() == null || !InventoryFilter.isItemAllowed(e.getEntityItem(), inv.getFiltersForUpgrade(item))) {
 						continue;
 					}
 					ItemStack itemBack = InvUtil.putIntoFirstSlot(inv,
