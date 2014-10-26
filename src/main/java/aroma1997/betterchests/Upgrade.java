@@ -40,6 +40,7 @@ import aroma1997.betterchests.upgrades.PlayerFeeding;
 import aroma1997.betterchests.upgrades.Rain;
 import aroma1997.betterchests.upgrades.Resupply;
 import aroma1997.betterchests.upgrades.Ticking;
+import aroma1997.betterchests.upgrades.VoidUpgrade;
 import aroma1997.core.util.AromaRegistry;
 
 public enum Upgrade {
@@ -49,7 +50,7 @@ public enum Upgrade {
 	LIGHT(null, 1, true, false, Null.class, false, false),
 	BASIC(null, 0, false, false, Null.class, false, false),
 	COMPARATOR(null, 1, true, false, Null.class, false, false),
-	VOID(null, 1, true, true, Null.class, false, false),
+	VOID(null, 1, true, true, VoidUpgrade.class, false, true),
 	UNBREAKABLE(null, 1, true, true, Null.class, false, false),
 	PLAYER(UNBREAKABLE, 1, true, false, Null.class, false, false),
 	RAIN(null, 1, true, false, Rain.class, true, false),

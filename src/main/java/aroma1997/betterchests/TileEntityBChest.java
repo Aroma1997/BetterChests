@@ -402,8 +402,7 @@ public class TileEntityBChest extends TileEntity implements IBetterChest,
 
 	@Override
 	public ItemStack getStackInSlotOnClosing(int i) {
-		if (i < 0 || i >= items.length
-				|| isUpgradeInstalled(Upgrade.VOID.getItem())) {
+		if (i < 0 || i >= items.length) {
 			return null;
 		}
 		return items[i];
@@ -655,8 +654,7 @@ public class TileEntityBChest extends TileEntity implements IBetterChest,
 	@Override
 	public void setStackInSlotWithoutNotify(int i, ItemStack itemstack) {
 
-		if (i < 0 || i >= items.length
-				|| isUpgradeInstalled(Upgrade.VOID.getItem())) {
+		if (i < 0 || i >= items.length) {
 			return;
 		}
 		items[i] = itemstack;

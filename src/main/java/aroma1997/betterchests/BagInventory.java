@@ -56,8 +56,7 @@ public class BagInventory implements IBetterChest, IAdvancedInventory,
 
 	@Override
 	public ItemStack getStackInSlot(int par1) {
-		if (par1 >= items.length || par1 < 0
-				|| isUpgradeInstalled(Upgrade.VOID.getItem())) {
+		if (par1 >= items.length || par1 < 0) {
 			return null;
 		}
 		return items[par1];
@@ -278,9 +277,6 @@ public class BagInventory implements IBetterChest, IAdvancedInventory,
 
 	@Override
 	public void setStackInSlotWithoutNotify(int slot, ItemStack item) {
-		if (isUpgradeInstalled(Upgrade.VOID.getItem())) {
-			return;
-		}
 		items[slot] = item;
 
 		if (item != null && item.stackSize > getInventoryStackLimit()) {

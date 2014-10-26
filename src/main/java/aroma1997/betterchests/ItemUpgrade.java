@@ -154,10 +154,7 @@ public class ItemUpgrade extends Item implements IUpgrade {
 
 	@Override
 	public void onUpgradeInstalled(ItemStack item, IBetterChest chest) {
-		if (ItemUtil.areItemsSameMatching(item, Upgrade.VOID.getItem(),
-				ItemMatchCriteria.ID, ItemMatchCriteria.DAMAGE)) {
-			InvUtil.clearInventory(chest);
-		}
+		
 	}
 
 	@Override
