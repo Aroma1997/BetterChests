@@ -6,17 +6,21 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 import aroma1997.core.util.AromaRegistry;
 import aroma1997.core.util.registry.SpecialItemBlock;
+import aroma1997.core.util.registry.SpecialName;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class BetterChestsItems {
 
+	@SpecialName("betterChest")
 	@SpecialItemBlock(ItemBlockBChest.class)
 	public static BlockBChest chest = new BlockBChest();
 
+	@SpecialName("Upgrade")
 	public static ItemUpgrade upgrade = new ItemUpgrade();
 	
 	public static ItemFilter filter = new ItemFilter();
 
+	@SpecialName("Bag")
 	public static ItemBag bag = new ItemBag();
 
 	public static ItemBetterChestUpgrade upgradeChest = new ItemBetterChestUpgrade();
