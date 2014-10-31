@@ -58,6 +58,6 @@ item.betterchests:upgrade.TICKING.name=刷新升级
 
 
 info.betterchests:tooltip.nobag=该升级不能对口袋使用.
-info.betterchests:tooltip.maxamount=没个箱子最大升级次数:%s.
+info.betterchests:tooltip.maxamount=每个箱子最大升级次数:%s.
 info.betterchests:tooltip.requires=需要:%s.
 info.betterchests:tooltip.noupgrade=这并非有效升级.
