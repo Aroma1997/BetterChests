@@ -94,7 +94,8 @@ item.betterchests:upgrade.HARVESTING.name=收获升级
 item.betterchests:upgrade.ANIMAL.name=放牧升级
 item.betterchests:upgrade.AI.name=AI升级
 item.betterchests:upgrade.MINING.name=采掘升级
-item.betterchests:upgrade.KILLING.name=屏蔽升级
+item.betterchests:upgrade.KILLING.name=击杀升级
+item.betterchests:upgrade.BLOCKER.name=屏蔽升级
 item.betterchests:upgrade.LIGHTWEIGHT.name=轻质升级
 
 item.betterchests:chestUpgrade.name=可变升级
