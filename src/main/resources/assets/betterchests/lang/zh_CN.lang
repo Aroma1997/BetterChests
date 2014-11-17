@@ -1,6 +1,7 @@
 book.betterchests:name=更好箱子用户手册
 
 book.betterchests:chapter.general=一般信息
+book.betterchests:chapter.tools=工具信息
 book.betterchests:chapter.upgrades=升级信息
 book.betterchests:chapter.credits=制作组
 
@@ -11,12 +12,21 @@ book.betterchests:general.1=更好箱子是一个增加了可升级的可变箱�
 book.betterchests:general.2=用户手册并不会因模组升级而自动更新.如需手动更新它们,将其放入合成台参与一次合成即可.
 book.betterchests:general.3=如果你并不了解箱子,口袋或者其升级插件的合成表,推荐安装NEI或者G键合成模组.在本手册中并不会显示合成.
 
+
 book.betterchests:chest.1=可变箱子可以放置,并用来存放物品.默认它有九格大小的空间.拿着插件对着它右击可以进行升级.
 
 book.betterchests:bag.1=口变口袋是可变箱子的便携版本.手持口袋右击即可打开其界面.在合成台中将其与升级插件一起合成即可对口袋进行升级.
 book.betterchests:bag.2=你也可以设置一个快捷按键来随时打开口袋.默认按键为数字小键盘上的"+",你可以随时按需要在选项中更改.使用快捷键打开口袋时,口袋不需要非放入快捷栏不可,只要它在你的物品栏内就可以了.
 
-book.betterchests:upgrade.SLOT=容量升级:此升级插件能够额外增加九格容量.并可以多次使用
+book.betterchests:hammer.chest.1=如果你想从可变箱子上移除升级插件或暂时禁用它们,使用Aromic Hammer右击箱子即可.按住shift键右击将会移除一个升级插件.按住shift左击将会移除全部升级插件.右击可以禁用一个升级插件.
+book.betterchests:hammer.bag.1=如果你想从可变口袋上移除升级插件或暂时禁用它们,当你的背包里有Aromic Hammer时,只要拿着口袋shift右击即可.操作同可变箱子.
+book.betterchests:hammer.chest.2=手持Aromic Hammer按住shift右击箱子可以取出箱子内所有的物品.
+
+book.betterchests:upgrade.1=如果你的木箱子内有许多物品,你想将它升级为可变箱子却不想破坏它,那么对这个箱子使用可变升级即可达到目的.
+
+
+
+book.betterchests:upgrade.SLOT=容量升级:此升级插件能够额外增加九格容量.并可以多次使用.
 book.betterchests:upgrade.COBBLEGEN=造石升级:升级后,当箱子里放有至少一桶水和一桶岩浆时,会自动产生石头.
 book.betterchests:upgrade.REDSTONE=红石升级:升级后,箱子被打开时会发出红石信号.信号强度则取决于当前有多少人正开启该箱子.
 book.betterchests:upgrade.LIGHT=光照升级:升级后箱子发出和荧石一样强的光.
@@ -24,14 +34,32 @@ book.betterchests:upgrade.BASIC=升级托架:仅仅用于合成其他升级插�
 book.betterchests:upgrade.COMPARATOR=比较器升级:升级后,如果挨着箱子放置比较器并使得比较器朝外,比较器将会根据箱子里物品的数量发出强度不等的红石信号.
 book.betterchests:upgrade.VOID=虚空升级:太多圆石了?太多其他没用的东西?别再犹豫了,你只需要对箱子使用虚空升级即可,进入这种箱子的所有物品都会消失不见,是的,它就是用来删除物品用的.
 book.betterchests:upgrade.UNBREAKABLE=不毁升级:升级后,你的箱子将能够防火抗爆,并且再也不畏爬行者,TNT,核弹,末影龙甚至凋零的破坏.
-book.betterchests:upgrade.PLAYER=玩家升级:升级后,该箱子将只能由对其升级的玩家管理和使用.至于对别的玩家,我们只能说,这个箱子将不欢迎他们.
-book.betterchests:upgrade.RAIN=下雨升级:安装此升级后的箱子在淋雨时,会自动用箱子内的桶接水.
+book.betterchests:upgrade.PLAYER=玩家升级:升级后,该箱子将只能由对其升级的玩家管理和使用.至于对别的玩家,我们只能说,这个箱子不欢迎他们.
+book.betterchests:upgrade.RAIN=集雨升级:安装此升级插件后的箱子在淋雨时,会自动用箱子内的桶接水.
 book.betterchests:upgrade.ENERGY=能量升级:为其他可能需要供应能量的插件提供能量,除此外别无他用.
-book.betterchests:upgrade.FURNACE=熔炉升级:你是知道有这问题的,总是需要烧太多东西却没有足够多的熔炉.这个插件可以解决你的烦忧.
-book.betterchests:upgrade.COLLECTOR=收集升级:这个插件会使得箱子将掉落在其附近的物品吸进去.安装多次该升级插件能够提升吸引范围.
-book.betterchests:upgrade.TICKING=刷新升级:此升级会强制刷新箱子中的物品信息,就像在玩家的物品栏中一样.
+book.betterchests:upgrade.FURNACE=熔炉升级:总是需要烧太多东西却没有足够多的熔炉怎么?这个插件可以解决你的烦忧.
+book.betterchests:upgrade.COLLECTOR=收集升级:这个升级插件会使得箱子将掉落在其附近的物品吸进去.反复安装该升级插件能够提升吸引范围.
+book.betterchests:upgrade.TICKING=刷新升级:此升级插件会强制刷新箱子中的物品信息,就像在玩家的物品栏中一样.
+book.betterchests:upgrade.FEEDING=饲喂升级:这个升级插件将会使用箱子内的饲料饲喂7x3x7范围内的动物.当区域内实体过多时它会自动停止工作.
+book.betterchests:upgrade.PLAYERFOOD=玩家喂食升级:这个升级插件将会自动喂食携带有经这个插件升级的口袋的玩家.它会消耗此口袋内的食品.
+book.betterchests:upgrade.RESUPPLY=补给升级:这个升级插件会自动将口袋内的物品补给至你的背包.当然它仅在你的背包有空位时起效.和收集升级一起使用效果更佳!
+book.betterchests:upgrade.PLANTING=种植升级:这个升级插件会将箱子里任何的种子播种出去.你也许会想将它与收获升级一起使用.这个升级插件在和集雨升级一起使用并且箱子内含有一桶水时会保持周围耕地的灌溉.
+book.betterchests:upgrade.HARVESTING=收获升级:这个升级插件将自动收割周围的任何作物.反复安装该升级插件能够提升收割半径.
+book.betterchests:upgrade.ANIMAL=放牧升级:这个升级插件会自动的对周围的奶牛或哞菇进行挤奶,对周围的羊进行剃毛.
+book.betterchests:upgrade.AI=AI升级:同能量升级一样,这个升级插件没有任何功能.只是一些需要进行复杂工作的升级插件的必要插件.
+book.betterchests:upgrade.MINING=采掘升级:这个升级插件将会使用箱子内的工具破坏箱子内的方块,工具的附魔能够起效.
+book.betterchests:upgrade.KILLING=击杀升级:这个升级插件将会杀死所有7x3x7范围内的生物.对于动物,它会每种留下两个以免绝种.如果你同时安装了AI升级,被击杀的生物就能够掉落类似烈焰棒和末影珍珠等稀有物品.
+book.betterchests:upgrade.BLOCKER=屏蔽升级:这个升级插件能阻止其他箱子方块与它交互,每个安装的升级插件都会增加一格屏蔽格数.注意:屏蔽掉的格子仍能被升级组件和玩家访问.
+book.betterchests:upgrade.LIGHTWEIGHT=轻质升级:这个升级插件使得你的口袋轻如空气,几乎使你脱离地面,增加你40%的速度.
+
 
 book.betterchests:credits=感谢阅读本手册,如仍有疑问,可以访问mcf论坛的帖子(http://tinyurl.com/aroma1997)相询.
+
+
+
+gui.betterchests:upgrades.name=升级
+gui.betterchests:upgrades.warning=移除此升级插件将导致你失去一些容纳的物品!按住shift键右击移除一个升级插件.按住shift左击移除全部升级插件.
+gui.betterchests:filter.upgrade=升级:
 
 creativetab.betterchests:creativetab.name=更好箱子
 
@@ -40,6 +68,9 @@ inv.betterchests:bag.name=可变口袋
 
 tile.betterchests:chest.name=可变箱子
 item.betterchests:bag.name=可变口袋
+
+item.betterchests:filter.whitelist.name=白名单过滤器升级
+item.betterchests:filter.blacklist.name=黑名单过滤器升级
 
 item.betterchests:upgrade.SLOT.name=容量升级
 item.betterchests:upgrade.COBBLEGEN.name=造石升级
@@ -50,14 +81,37 @@ item.betterchests:upgrade.COMPARATOR.name=比较器升级
 item.betterchests:upgrade.VOID.name=虚空升级
 item.betterchests:upgrade.UNBREAKABLE.name=不毁升级
 item.betterchests:upgrade.PLAYER.name=玩家升级
-item.betterchests:upgrade.RAIN.name=下雨升级
+item.betterchests:upgrade.RAIN.name=集雨升级
 item.betterchests:upgrade.ENERGY.name=能量升级
 item.betterchests:upgrade.FURNACE.name=熔炉升级
 item.betterchests:upgrade.COLLECTOR.name=收集升级
 item.betterchests:upgrade.TICKING.name=刷新升级
+item.betterchests:upgrade.FEEDING.name=饲喂升级
+item.betterchests:upgrade.PLAYERFOOD.name=玩家喂食升级
+item.betterchests:upgrade.RESUPPLY.name=补给升级
+item.betterchests:upgrade.PLANTING.name=种植升级
+item.betterchests:upgrade.HARVESTING.name=收获升级
+item.betterchests:upgrade.ANIMAL.name=放牧升级
+item.betterchests:upgrade.AI.name=AI升级
+item.betterchests:upgrade.MINING.name=采掘升级
+item.betterchests:upgrade.KILLING.name=击杀升级
+item.betterchests:upgrade.BLOCKER.name=屏蔽升级
+item.betterchests:upgrade.LIGHTWEIGHT.name=轻质升级
+
+item.betterchests:chestUpgrade.name=可变升级
+
+
+death.attack.betterchests:interact.player=%s 不应该查看那个可变箱子.
 
 
 info.betterchests:tooltip.nobag=该升级不能对口袋使用.
-info.betterchests:tooltip.maxamount=没个箱子最大升级次数:%s.
+info.betterchests:tooltip.nochest=该升级不能对箱子使用.
+info.betterchests:tooltip.maxamount=每个箱子最大升级次数:%s.
+info.betterchests:tooltip.infinite=每个箱子最多只能安装一个这种升级.
 info.betterchests:tooltip.requires=需要:%s.
-info.betterchests:tooltip.noupgrade=这并非有效升级.
+info.betterchests:tooltip.openwith=使用 "%s" 打开. (在背包外)
+info.betterchests:tooltip.upgradesinstalled=已安装的升级:
+info.betterchests:tooltip.supportsfilter=支持过滤器升级
+info.betterchests:tooltip.filter.upgrade=专用升级: %s
+
+key.betterchests.openBag=打开可变口袋
