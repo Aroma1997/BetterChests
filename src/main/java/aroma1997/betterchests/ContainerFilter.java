@@ -40,5 +40,10 @@ public class ContainerFilter extends ContainerItem {
 	public int getAmountPerRow() {
 		return 3;
 	}
+	
+	@Override
+	public int getYOffset() {
+		return super.getXOffset() - 24;
+	}
 
 }
