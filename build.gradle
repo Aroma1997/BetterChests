@@ -37,6 +37,8 @@ if (ENV.BUILD_NUMBER)
 minecraft {
     version = "${config.mc_version}-${config.forge_version}"
     assetDir = "eclipse/assets"
+	
+	mappings = "snapshot_nodoc_20140930"
 }
 
 dependencies {
