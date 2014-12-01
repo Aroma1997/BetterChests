@@ -38,9 +38,8 @@ public class ItemBag extends AromicItem implements ISpecialGUIProvider {
 
 	public ItemBag() {
 		super();
-		setUnlocalizedName("betterchests:betterBag");
 		setMaxStackSize(1);
-		setUnlocalizedName(Reference.MOD_ID + ":bag");
+		setUnlocalizedName("betterchests:bag");
 		setCreativeTab(BetterChests.creativeTabBC);
 		registerModels();
 	}
@@ -74,10 +73,10 @@ public class ItemBag extends AromicItem implements ISpecialGUIProvider {
 		}
 	}
 
-	@Override
-	public String getItemStackDisplayName(ItemStack par1ItemStack) {
-		return StatCollector.translateToLocal("item.betterchests:bag.name");
-	}
+//	@Override
+//	public String getItemStackDisplayName(ItemStack par1ItemStack) {
+//		return StatCollector.translateToLocal("item.betterchests:bag.name");
+//	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@SideOnly(Side.CLIENT)
