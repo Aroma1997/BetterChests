@@ -9,6 +9,7 @@ import net.minecraft.world.World;
 import aroma1997.betterchests.EntityBag;
 import aroma1997.betterchests.InventoryFilter;
 import aroma1997.betterchests.Upgrade;
+import aroma1997.betterchests.UpgradeHelper;
 import aroma1997.betterchests.api.IBetterChest;
 import aroma1997.core.util.InvUtil;
 
@@ -20,7 +21,7 @@ public class Collector extends BasicUpgrade {
 			ItemStack item) {
 		if (inv.isUpgradeInstalled(Upgrade.COLLECTOR.getItem())) {
 			float radius = inv.getAmountUpgrade(Upgrade.COLLECTOR.getItem());
-			AxisAlignedBB bounds = AxisAlignedBB.getBoundingBox(inv.getXPos()
+			AxisAlignedBB bounds = AxisAlignedBB.fromBounds(inv.getXPos()
 					+ -0.5D, inv.getYPos() + 0.0D, inv.getZPos() + -0.5D,
 					inv.getXPos() + 0.5D, inv.getYPos() + 0.0D,
 					inv.getZPos() + 0.5D);
@@ -28,10 +29,10 @@ public class Collector extends BasicUpgrade {
 			List<EntityItem> list = world.getEntitiesWithinAABB(
 					EntityItem.class, bounds);
 			for (EntityItem e : list) {
-				if (e.getEntityItem() == null || !InventoryFilter.isItemAllowed(e.getEntityItem(), inv.getFiltersForUpgrade(item))) {
+				if (e.getEntityItem() == null || !UpgradeHelper.isItemAllowed(e.getEntityItem(), inv.getFiltersForUpgrade(item))) {
 					continue;
 				}
-				if (e.age >= 10 && e.isEntityAlive()) {
+				if (e.isEntityAlive()) {
 					e.motionX = (inv.getXPos() - e.posX) / 2;
 					e.motionY = (inv.getYPos() - e.posY) / 2;
 					e.motionZ = (inv.getZPos() - e.posZ) / 2;
@@ -43,7 +44,7 @@ public class Collector extends BasicUpgrade {
 				}
 			}
 
-			AxisAlignedBB boundsNew = AxisAlignedBB.getBoundingBox(
+			AxisAlignedBB boundsNew = AxisAlignedBB.fromBounds(
 					inv.getXPos() + -0.5D, inv.getYPos() - 1.0D, inv.getZPos()
 							+ -0.5D, inv.getXPos() + 0.5D,
 					inv.getYPos() + 0.5D, inv.getZPos() + 0.5D);
@@ -52,9 +53,9 @@ public class Collector extends BasicUpgrade {
 					EntityItem.class, boundsNew);
 
 			for (EntityItem e : listNew) {
-				if (e.age > 10 && e.isEntityAlive()
+				if (e.isEntityAlive()
 						&& !(e instanceof EntityBag)) {
-					if (e.getEntityItem() == null || !InventoryFilter.isItemAllowed(e.getEntityItem(), inv.getFiltersForUpgrade(item))) {
+					if (e.getEntityItem() == null || !UpgradeHelper.isItemAllowed(e.getEntityItem(), inv.getFiltersForUpgrade(item))) {
 						continue;
 					}
 					ItemStack itemBack = InvUtil.putIntoFirstSlot(inv,

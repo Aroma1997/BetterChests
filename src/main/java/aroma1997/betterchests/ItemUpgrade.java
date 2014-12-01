@@ -13,32 +13,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.IIcon;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import aroma1997.betterchests.api.IBetterChest;
 import aroma1997.betterchests.api.IUpgrade;
 import aroma1997.core.client.util.Colors;
 import aroma1997.core.inventories.ContainerBasic;
-import aroma1997.core.util.InvUtil;
-import aroma1997.core.util.ItemUtil;
-import aroma1997.core.util.ItemUtil.ItemMatchCriteria;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import aroma1997.core.items.AromicItem;
 
-public class ItemUpgrade extends Item implements IUpgrade {
+public class ItemUpgrade extends AromicItem implements IUpgrade {
 
 	public ItemUpgrade() {
 		super();
 		setCreativeTab(BetterChests.creativeTabBC);
 		setUnlocalizedName("betterchests:upgrades");
 		setHasSubtypes(true);
+		registerModels();
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
@@ -81,28 +78,16 @@ public class ItemUpgrade extends Item implements IUpgrade {
 		}
 	}
 
-	private IIcon[] itemIcons;
-
+//	@Override
+//	public String getItemStackDisplayName(ItemStack par1ItemStack) {
+//		return Upgrade.values()[par1ItemStack.getItemDamage()].getName();
+//	}
+	
 	@Override
-	@SideOnly(Side.CLIENT)
-	public void registerIcons(IIconRegister iconRegister) {
-		itemIcons = new IIcon[Upgrade.values().length];
-		for (int i = 0; i < itemIcons.length; i++) {
-			itemIcons[i] = iconRegister.registerIcon(Upgrade.values()[i]
-					.getTexture());
-		}
-	}
-
-	@SideOnly(Side.CLIENT)
-	@Override
-	public IIcon getIconFromDamage(int par1) {
-		return itemIcons[par1];
-	}
-
-	@Override
-	public String getItemStackDisplayName(ItemStack par1ItemStack) {
-		return Upgrade.values()[par1ItemStack.getItemDamage()].getName();
-	}
+    public String getUnlocalizedName(ItemStack stack)
+    {
+        return "item.betterchests:upgrade." + Upgrade.values()[stack.getItemDamage()];
+    }
 
 	@Override
 	public boolean canChestTakeUpgrade(ItemStack item) {

@@ -22,7 +22,7 @@ public class Animal extends BasicUpgrade {
 	public void updateChest(IBetterChest chest, int tick, World world,
 			ItemStack item) {
 		if (tick == 63) {
-			AxisAlignedBB bounds = AxisAlignedBB.getBoundingBox(chest.getXPos()
+			AxisAlignedBB bounds = AxisAlignedBB.fromBounds(chest.getXPos()
 					- Reference.Conf.FEED_RADIUS / 2, chest.getYPos()
 					- Reference.Conf.FEED_HEIGHT / 2, chest.getZPos()
 					- Reference.Conf.FEED_RADIUS / 2, chest.getXPos()
@@ -39,13 +39,11 @@ public class Animal extends BasicUpgrade {
 				if (entity instanceof IShearable
 						&& !(entity instanceof EntityMooshroom)) {
 					IShearable sheep = (IShearable) entity;
-					if (sheep.isShearable(null, world, (int) entity.posX,
-							(int) entity.posY, (int) entity.posZ)) {
+					if (sheep.isShearable(null, world, entity.getPosition())) {
 						// If I ever implement that it uses Shears, then this
 						// would be the place to damage it.
-						ArrayList<ItemStack> items = sheep.onSheared(null,
-								world, (int) entity.posX, (int) entity.posY,
-								(int) entity.posZ, 1);
+						ArrayList<ItemStack> items = (ArrayList<ItemStack>) sheep.onSheared(null,
+								world, entity.getPosition(), 1);
 						for (ItemStack wool : items) {
 							if (InvUtil.putIntoFirstSlot(chest, wool, false) != null)
 								break;

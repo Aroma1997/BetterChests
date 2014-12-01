@@ -14,17 +14,17 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
+import aroma1997.betterchests.api.IInventoryFilter;
 import aroma1997.core.client.inventories.GUIContainer;
 import aroma1997.core.inventories.AromaContainer;
 import aroma1997.core.inventories.ContainerBasic;
-import aroma1997.core.inventories.ContainerItem;
 import aroma1997.core.inventories.SlotGhost;
 import aroma1997.core.items.inventory.InventoryItem;
 import aroma1997.core.util.InvUtil.IFilter;
 import aroma1997.core.util.ItemUtil;
 import aroma1997.core.util.ItemUtil.ItemMatchCriteria;
 
-public class InventoryFilter extends InventoryItem {
+public class InventoryFilter extends InventoryItem implements IInventoryFilter {
 	
 	public static final int SLOT_UPGRADE = 9;
 
@@ -46,12 +46,12 @@ public class InventoryFilter extends InventoryItem {
 	}
 
 	@Override
-	public String getInventoryName() {
+	public String getName() {
 		return item.getUnlocalizedName() + ".name";
 	}
 
 	@Override
-	public boolean hasCustomInventoryName() {
+	public boolean hasCustomName() {
 		return false;
 	}
 	
@@ -73,35 +73,7 @@ public class InventoryFilter extends InventoryItem {
 		return !isWhitelist();
 	}
 	
-	public static boolean isItemAllowed(ItemStack item, List<InventoryFilter> list) {
-		if (list == null || list.isEmpty()) {
-			return true;
-		}
-		boolean hasWhitelist = false;
-		boolean isOnWhitelist = false;
-		
-		for (InventoryFilter filter : list) {
-			if (filter.isWhitelist()) {
-				hasWhitelist = true;
-			}
-			for (int i = 0; i < filter.getSizeInventory(); i++) {
-				if (i == SLOT_UPGRADE) continue;
-				if (ItemUtil.areItemsSameMatching(item, filter.getStackInSlot(i), ItemMatchCriteria.ID, ItemMatchCriteria.DAMAGE)) {
-					if (filter.isWhitelist()) {
-						isOnWhitelist = true;
-					}
-					else {
-						return false;
-					}
-				}
-			}
-		}
-		if (hasWhitelist) {
-			return isOnWhitelist;
-		}
-		return true;
-		
-	}
+
 	
 	@Override
 	public AromaContainer getContainer(EntityPlayer player, int i) {
@@ -116,15 +88,15 @@ public class InventoryFilter extends InventoryItem {
 	
 	public static class BCFilterFilter implements IFilter {
 		
-		private List<InventoryFilter> list;
+		private List<IInventoryFilter> list;
 		
-		public BCFilterFilter(List<InventoryFilter> list) {
+		public BCFilterFilter(List<IInventoryFilter> list) {
 			this.list = list;
 		}
 
 		@Override
 		public boolean isOk(ItemStack items) {
-			return isItemAllowed(items, list);
+			return UpgradeHelper.isItemAllowed(items, list);
 		}
 		
 	}

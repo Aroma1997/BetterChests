@@ -11,13 +11,14 @@ package aroma1997.betterchests.client;
 
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.client.MinecraftForgeClient;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fml.client.registry.RenderingRegistry;
 
 import org.lwjgl.input.Keyboard;
 
 import aroma1997.betterchests.BetterChestsItems;
 import aroma1997.betterchests.CommonProxy;
 import aroma1997.betterchests.TileEntityBChest;
-import cpw.mods.fml.client.registry.ClientRegistry;
 
 public class ClientProxy extends CommonProxy {
 

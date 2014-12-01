@@ -3,10 +3,10 @@ package aroma1997.betterchests.upgrades;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import aroma1997.betterchests.api.IBetterChest;
 import aroma1997.core.inventories.ContainerBasic;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public abstract class BasicUpgrade {
 

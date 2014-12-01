@@ -11,20 +11,20 @@ package aroma1997.betterchests;
 import java.util.HashMap;
 import java.util.List;
 
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.IIcon;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import aroma1997.betterchests.api.ItemUpgradeBasic;
 import aroma1997.core.inventories.AromaContainer;
 import aroma1997.core.inventories.ISpecialGUIProvider;
 import aroma1997.core.inventories.Inventories;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemFilter extends ItemUpgradeBasic implements ISpecialGUIProvider {
 
@@ -32,14 +32,14 @@ public class ItemFilter extends ItemUpgradeBasic implements ISpecialGUIProvider 
 		super();
 		setCreativeTab(BetterChests.creativeTabBC);
 		setMaxStackSize(1);
-		setNameAndTexture("betterchests:filter");
+		setUnlocalizedName("betterchests:filter");
 		setHasSubtypes(true);
+		registerModels();
 	}
 
 	@Override
 	public boolean onItemUse(ItemStack par1ItemStack,
-			EntityPlayer par2EntityPlayer, World par3World, int par4, int par5,
-			int par6, int par7, float par8, float par9, float par10) {
+			EntityPlayer par2EntityPlayer, World par3World, BlockPos pos, EnumFacing side, float par8, float par9, float par10) {
 		onItemRightClick(par1ItemStack, par3World, par2EntityPlayer);
 		return true;
 	}
@@ -121,23 +121,5 @@ public class ItemFilter extends ItemUpgradeBasic implements ISpecialGUIProvider 
 	public boolean supportsFilter(ItemStack stack, boolean inverted) {
 		return false;
 	}
-	
-	private IIcon[] icon;
-	
-    @SideOnly(Side.CLIENT)
-    @Override
-    public void registerIcons(IIconRegister iconregister)
-    {
-        icon = new IIcon[2];
-        icon[0] = iconregister.registerIcon(getIconString() + ".whitelist");
-        icon[1] = iconregister.registerIcon(getIconString() + ".blacklist");
-    }
-    
-    @SideOnly(Side.CLIENT)
-    @Override
-    public IIcon getIconFromDamage(int damage)
-    {
-        return icon[damage];
-    }
 
 }

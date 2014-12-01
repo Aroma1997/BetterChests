@@ -15,24 +15,23 @@ import java.util.ArrayList;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.Mod.EventHandler;
+import net.minecraftforge.fml.common.Mod.Instance;
+import net.minecraftforge.fml.common.SidedProxy;
+import net.minecraftforge.fml.common.event.FMLConstructionEvent;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.registry.EntityRegistry;
 
 import org.apache.logging.log4j.Logger;
 
 import aroma1997.core.log.LogHelperPre;
-import aroma1997.core.network.NetworkHelper;
-import aroma1997.core.network.PacketHandler;
+import aroma1997.core.modules.Module;
 import aroma1997.core.util.AromaRegistry;
 import aroma1997.core.util.ItemUtil;
 import aroma1997.core.version.VersionCheck;
-import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.Mod.EventHandler;
-import cpw.mods.fml.common.Mod.Instance;
-import cpw.mods.fml.common.SidedProxy;
-import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.event.FMLPostInitializationEvent;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.registry.EntityRegistry;
-import cpw.mods.fml.relauncher.Side;
 
 @Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, dependencies = "required-after:Aroma1997Core")
 public class BetterChests {
@@ -46,6 +45,11 @@ public class BetterChests {
 	public static CreativeTabs creativeTabBC = new CreativeTabBChest();
 
 	public static Logger logger;
+	
+	@EventHandler
+	public void construct(FMLConstructionEvent event) {
+		Module.registerModule(Module.WRENCH);
+	}
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
@@ -72,7 +76,7 @@ public class BetterChests {
 
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event) {
-
+		
 	}
 
 	public static ItemStack getHelpBook() {

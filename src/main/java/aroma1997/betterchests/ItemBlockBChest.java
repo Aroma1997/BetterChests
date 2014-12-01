@@ -11,6 +11,7 @@ package aroma1997.betterchests;
 
 import java.util.List;
 
+import aroma1997.core.items.AromicItemBlock;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -19,10 +20,11 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
 
-public class ItemBlockBChest extends ItemBlock {
+public class ItemBlockBChest extends AromicItemBlock {
 
 	public ItemBlockBChest(Block block) {
 		super(block);
+		registerModels();
 	}
 
 	@Override

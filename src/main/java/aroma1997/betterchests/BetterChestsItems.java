@@ -3,11 +3,11 @@ package aroma1997.betterchests;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import aroma1997.core.util.AromaRegistry;
 import aroma1997.core.util.registry.SpecialItemBlock;
 import aroma1997.core.util.registry.SpecialName;
-import cpw.mods.fml.common.registry.GameRegistry;
 
 public class BetterChestsItems {
 

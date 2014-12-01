@@ -14,8 +14,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import aroma1997.core.util.InvUtil;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
 public class EventListener {
 

@@ -15,14 +15,14 @@ import net.minecraft.client.model.ModelChest;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
 import aroma1997.betterchests.Reference;
 import aroma1997.betterchests.TileEntityBChest;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class BChestRenderer extends TileEntitySpecialRenderer {
@@ -98,10 +98,12 @@ public class BChestRenderer extends TileEntitySpecialRenderer {
 	}
 
 	@Override
-	public void renderTileEntityAt(TileEntity par1TileEntity, double par2,
-			double par4, double par6, float par8) {
-		renderTileEntityChestAt((TileEntityBChest) par1TileEntity, par2, par4,
+	public void renderTileEntityAt(TileEntity tile, double par2,
+			double par4, double par6, float par8,
+			int par9) {
+		renderTileEntityChestAt((TileEntityBChest) tile, par2, par4,
 				par6, par8);
+		
 	}
 
 }

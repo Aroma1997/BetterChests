@@ -11,11 +11,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import aroma1997.betterchests.Reference;
 import aroma1997.betterchests.Upgrade;
 import aroma1997.betterchests.api.IBetterChest;
 import aroma1997.core.coremod.CoreMod;
-import cpw.mods.fml.relauncher.ReflectionHelper;
 
 public class Killing extends BasicUpgrade {
 
@@ -23,7 +23,7 @@ public class Killing extends BasicUpgrade {
 	public void updateChest(IBetterChest chest, int tick, World world,
 			ItemStack item) {
 		if (chest.getLongTick() % 128 == 100) {
-			AxisAlignedBB bounds = AxisAlignedBB.getBoundingBox(chest.getXPos()
+			AxisAlignedBB bounds = AxisAlignedBB.fromBounds(chest.getXPos()
 					- Reference.Conf.FEED_RADIUS / 2, chest.getYPos()
 					- Reference.Conf.FEED_HEIGHT / 2, chest.getZPos()
 					- Reference.Conf.FEED_RADIUS / 2, chest.getXPos()

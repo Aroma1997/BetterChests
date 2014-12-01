@@ -8,10 +8,9 @@
  */
 package aroma1997.betterchests;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import aroma1997.core.client.inventories.GUIContainer;
-import aroma1997.core.inventories.ContainerBasic;
 
 /**
  * This is only here for NEI Plugin stuff.

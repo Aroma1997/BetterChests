@@ -16,7 +16,6 @@ import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
-import aroma1997.betterchests.UpgradeHelper;
 import aroma1997.core.client.util.Colors;
 import aroma1997.core.items.AromicItem;
 
@@ -46,7 +45,7 @@ public abstract class ItemUpgradeBasic extends AromicItem implements IUpgrade {
 	@Override
 	public void addInformation(ItemStack par1ItemStack,
 			EntityPlayer par2EntityPlayer, List par3List, boolean par4) {
-		if (par1ItemStack == null || !UpgradeHelper.isUpgrade(par1ItemStack))
+		if (par1ItemStack == null || !UpgradeHelperAPI.isUpgrade(par1ItemStack))
 			return;
 		List<ItemStack> requirements = getRequiredUpgrade(par1ItemStack);
 		if (requirements != null && !requirements.isEmpty()) {

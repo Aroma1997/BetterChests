@@ -14,7 +14,6 @@ import java.util.List;
 
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
-import aroma1997.betterchests.InventoryFilter;
 
 /**
  * This is implemented in the Bag and in the Chest.
@@ -128,6 +127,6 @@ public interface IBetterChest extends IInventory {
 	 * @param item
 	 * @return
 	 */
-	public List<InventoryFilter> getFiltersForUpgrade(ItemStack item);
+	public List<IInventoryFilter> getFiltersForUpgrade(ItemStack item);
 
 }

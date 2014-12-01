@@ -9,7 +9,6 @@
 
 package aroma1997.betterchests;
 
-import java.io.FilterInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -20,7 +19,12 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.util.IChatComponent;
+import net.minecraft.util.StatCollector;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import aroma1997.betterchests.api.IBetterChest;
+import aroma1997.betterchests.api.IInventoryFilter;
 import aroma1997.betterchests.api.IUpgrade;
 import aroma1997.core.client.inventories.GUIContainer;
 import aroma1997.core.inventories.ContainerBasic;
@@ -29,9 +33,8 @@ import aroma1997.core.inventories.IAdvancedInventory;
 import aroma1997.core.inventories.ISpecialInventory;
 import aroma1997.core.util.FileUtil;
 import aroma1997.core.util.ItemUtil;
+import aroma1997.core.util.ServerUtil;
 import aroma1997.core.util.ItemUtil.ItemMatchCriteria;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class BagInventory implements IBetterChest, IAdvancedInventory,
 		ISpecialInventory {
@@ -45,7 +48,7 @@ public class BagInventory implements IBetterChest, IAdvancedInventory,
 		if (item.getTagCompound() == null) {
 			item.setTagCompound(new NBTTagCompound());
 		}
-		readFromNBT(item.stackTagCompound);
+		readFromNBT(item.getTagCompound());
 	}
 
 	private ItemStack[] items;
@@ -106,8 +109,8 @@ public class BagInventory implements IBetterChest, IAdvancedInventory,
 	}
 
 	@Override
-	public String getInventoryName() {
-		return hasCustomInventoryName() ? customName
+	public String getName() {
+		return hasCustomName() ? customName
 				: "inv.betterchests:bag.name";
 	}
 
@@ -254,7 +257,7 @@ public class BagInventory implements IBetterChest, IAdvancedInventory,
 
 	public void onUpdate(EntityPlayer player) {
 		if (player.worldObj.isRemote) {
-			// this.readFromNBT(item.stackTagCompound);
+			// this.readFromNBT(item.getTagCompound());
 		}
 		if (tick-- <= 0) {
 			tick = 64;
@@ -310,23 +313,8 @@ public class BagInventory implements IBetterChest, IAdvancedInventory,
 	}
 
 	@Override
-	public boolean hasCustomInventoryName() {
-		return customName != null && customName.length() > 0;
-	}
-
-	@Override
 	public void markDirty() {
-		writeToNBT(item.stackTagCompound);
-
-	}
-
-	@Override
-	public void openInventory() {
-
-	}
-
-	@Override
-	public void closeInventory() {
+		writeToNBT(item.getTagCompound());
 
 	}
 
@@ -371,7 +359,7 @@ public class BagInventory implements IBetterChest, IAdvancedInventory,
 			if (ItemUtil.areItemsSameMatching(item, stack,
 					ItemMatchCriteria.ID, ItemMatchCriteria.DAMAGE)) {
 				return item.hasTagCompound()
-						&& item.stackTagCompound.hasKey("disabled");
+						&& item.getTagCompound().hasKey("disabled");
 			}
 		}
 		return false;
@@ -387,15 +375,15 @@ public class BagInventory implements IBetterChest, IAdvancedInventory,
 						if (!item.hasTagCompound()) {
 							item.setTagCompound(new NBTTagCompound());
 						}
-						item.stackTagCompound.setBoolean("disabled", true);
+						item.getTagCompound().setBoolean("disabled", true);
 						markDirty();
 						return;
 					} else {
 						if (item.hasTagCompound()
-								&& item.stackTagCompound.hasKey("disabled")) {
-							item.stackTagCompound.removeTag("disabled");
-							if (item.stackTagCompound.hasNoTags()) {
-								item.stackTagCompound = null;
+								&& item.getTagCompound().hasKey("disabled")) {
+							item.getTagCompound().removeTag("disabled");
+							if (item.getTagCompound().hasNoTags()) {
+								item.setTagCompound(null);
 							}
 						}
 						markDirty();
@@ -407,9 +395,9 @@ public class BagInventory implements IBetterChest, IAdvancedInventory,
 	}
 
 	@Override
-	public List<InventoryFilter> getFiltersForUpgrade(ItemStack item) {
+	public List<IInventoryFilter> getFiltersForUpgrade(ItemStack item) {
 		ItemStack filter = new ItemStack(BetterChestsItems.filter, 1, 0);
-		List<InventoryFilter> filterlist = new ArrayList<InventoryFilter>();
+		List<IInventoryFilter> filterlist = new ArrayList<IInventoryFilter>();
 		for (ItemStack upgrade : upgrades) {
 			if (ItemUtil.areItemsSameMatching(upgrade, filter,
 					ItemMatchCriteria.ID, ItemMatchCriteria.DAMAGE)) {
@@ -420,6 +408,45 @@ public class BagInventory implements IBetterChest, IAdvancedInventory,
 			}
 		}
 		return filterlist;
+	}
+
+	@Override
+	public void openInventory(EntityPlayer playerIn) {
+		
+	}
+
+	@Override
+	public void closeInventory(EntityPlayer playerIn) {
+		
+	}
+
+	@Override
+	public int getField(int id) {
+		return 0;
+	}
+
+	@Override
+	public void setField(int id, int value) {}
+
+	@Override
+	public int getFieldCount() {
+		return 0;
+	}
+
+	@Override
+	public void clearInventory() {
+		items = new ItemStack[items.length];
+		markDirty();
+	}
+
+	@Override
+	public boolean hasCustomName() {
+		return customName != null && customName.length() > 0;
+	}
+
+	@Override
+	public IChatComponent getDisplayName() {
+		return ServerUtil.getChatForString(StatCollector.translateToLocal(getName()));
 	}
 
 }

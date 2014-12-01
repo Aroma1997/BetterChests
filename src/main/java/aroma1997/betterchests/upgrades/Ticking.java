@@ -9,7 +9,9 @@ import org.apache.logging.log4j.Level;
 
 import aroma1997.betterchests.BetterChests;
 import aroma1997.betterchests.InventoryFilter;
+import aroma1997.betterchests.UpgradeHelper;
 import aroma1997.betterchests.api.IBetterChest;
+import aroma1997.betterchests.api.IInventoryFilter;
 import aroma1997.core.log.LogHelper;
 
 public class Ticking extends BasicUpgrade {
@@ -20,11 +22,11 @@ public class Ticking extends BasicUpgrade {
 		if (tick % 8 == 2) {
 			return;
 		}
-		List<InventoryFilter> list = chest.getFiltersForUpgrade(item);
+		List<IInventoryFilter> list = chest.getFiltersForUpgrade(item);
 		try {
 			for (int i = 0; i < chest.getSizeInventory(); i++) {
 				ItemStack t = chest.getStackInSlot(i);
-				if (t != null && InventoryFilter.isItemAllowed(t, list)) {
+				if (t != null && UpgradeHelper.isItemAllowed(t, list)) {
 					t.updateAnimation(world, null, i, true);
 				}
 			}

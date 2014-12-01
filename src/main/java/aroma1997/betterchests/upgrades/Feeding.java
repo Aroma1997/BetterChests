@@ -8,6 +8,7 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
 import aroma1997.betterchests.InventoryFilter;
 import aroma1997.betterchests.Reference;
+import aroma1997.betterchests.UpgradeHelper;
 import aroma1997.betterchests.api.IBetterChest;
 
 public class Feeding extends BasicUpgrade {
@@ -19,7 +20,7 @@ public class Feeding extends BasicUpgrade {
 		if (tick != 16 || world.isRemote) {
 			return;
 		}
-		AxisAlignedBB bounds = AxisAlignedBB.getBoundingBox(inv.getXPos()
+		AxisAlignedBB bounds = AxisAlignedBB.fromBounds(inv.getXPos()
 				- Reference.Conf.FEED_RADIUS / 2, inv.getYPos()
 				- Reference.Conf.FEED_HEIGHT / 2, inv.getZPos()
 				- Reference.Conf.FEED_RADIUS / 2, inv.getXPos()
@@ -41,7 +42,7 @@ public class Feeding extends BasicUpgrade {
 			int slot = -1;
 			for (int i = 0; i < inv.getSizeInventory(); i++) {
 				ItemStack feedingItem = inv.getStackInSlot(i);
-				if (feedingItem == null || InventoryFilter.isItemAllowed(feedingItem, inv.getFiltersForUpgrade(item))) {
+				if (feedingItem == null || UpgradeHelper.isItemAllowed(feedingItem, inv.getFiltersForUpgrade(item))) {
 					continue;
 				}
 				if (e.isBreedingItem(feedingItem)) {
@@ -53,7 +54,7 @@ public class Feeding extends BasicUpgrade {
 				continue;
 			}
 			if (e.getGrowingAge() == 0 && !e.isInLove()) {
-				e.func_146082_f(null);
+				e.setInLove(null);
 
 				inv.decrStackSize(slot, 1);
 			}

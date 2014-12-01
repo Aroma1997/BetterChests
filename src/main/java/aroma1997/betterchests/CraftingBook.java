@@ -15,6 +15,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.NBTTagString;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeHooks;
 
 public class CraftingBook implements IRecipe {
 
@@ -37,12 +38,10 @@ public class CraftingBook implements IRecipe {
 			if (tmp.getTagCompound() == null) {
 				return null;
 			}
-			if (((NBTTagString) tmp.getTagCompound().getTag("author"))
-					.func_150285_a_().equals("Aroma1997")
-					&& ((NBTTagString) tmp.getTagCompound().getTag("title"))
-							.func_150285_a_().contains("BetterChests")
+			if ((tmp.getTagCompound().getString("author").equals("Aroma1997")
+					&& tmp.getTagCompound().getString("title").contains("BetterChests")
 					|| tmp.getTagCompound().getString("id")
-							.equals("BetterChests")) {
+							.equals("BetterChests"))) {
 				if (item != null) {
 					return null;
 				}
@@ -65,6 +64,11 @@ public class CraftingBook implements IRecipe {
 	@Override
 	public ItemStack getRecipeOutput() {
 		return BetterChests.getHelpBook();
+	}
+
+	@Override
+	public ItemStack[] func_179532_b(InventoryCrafting inv) {
+		return ForgeHooks.defaultRecipeGetRemainingItems(inv);
 	}
 
 }

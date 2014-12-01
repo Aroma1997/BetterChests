@@ -11,7 +11,9 @@ package aroma1997.betterchests;
 
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
 public class EntityBag extends EntityItem {
 
@@ -29,12 +31,9 @@ public class EntityBag extends EntityItem {
 	}
 
 	@Override
-	public boolean combineItems(EntityItem par1EntityItem) {
-		return false;
-	}
-
-	@Override
-	public boolean isEntityInvulnerable() {
+	// Is invulnerable
+    public boolean func_180431_b(DamageSource p_180431_1_)
+    {
 		BagInventory inv = ItemBag.getInventory(getEntityItem());
 		if (inv == null
 				|| !inv.isUpgradeInstalled(Upgrade.UNBREAKABLE.getItem())) {
@@ -49,7 +48,7 @@ public class EntityBag extends EntityItem {
 		BagInventory inv = new BagInventory(getEntityItem());
 		if (inv != null
 				&& inv.isUpgradeInstalled(Upgrade.UNBREAKABLE.getItem())) {
-			this.age = 0;
+			setAgeToCreativeDespawnTime();
 		}
 	}
 

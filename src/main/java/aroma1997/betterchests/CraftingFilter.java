@@ -8,12 +8,13 @@
  */
 package aroma1997.betterchests;
 
-import aroma1997.core.util.ItemUtil;
-import aroma1997.core.util.ItemUtil.ItemMatchCriteria;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeHooks;
+import aroma1997.core.util.ItemUtil;
+import aroma1997.core.util.ItemUtil.ItemMatchCriteria;
 
 public class CraftingFilter implements IRecipe {
 
@@ -49,6 +50,11 @@ public class CraftingFilter implements IRecipe {
 	@Override
 	public ItemStack getRecipeOutput() {
 		return new ItemStack(BetterChestsItems.filter);
+	}
+
+	@Override
+	public ItemStack[] func_179532_b(InventoryCrafting inv) {
+		return ForgeHooks.defaultRecipeGetRemainingItems(inv);
 	}
 
 }

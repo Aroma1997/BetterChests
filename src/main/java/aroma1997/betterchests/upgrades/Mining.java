@@ -32,10 +32,9 @@ public class Mining extends BasicUpgrade {
 				if (t.canHarvestBlock(b, tS)) {
 					int fortune = EnchantmentHelper.getEnchantmentLevel(
 							Enchantment.fortune.effectId, tS);
-					ItemStack drop = new ItemStack(b.getItemDropped(
-							blS.getItemDamage(), new Random(), fortune),
+					ItemStack drop = new ItemStack(b.getItemDropped(b.getDefaultState(), new Random(), fortune),
 							b.quantityDroppedWithBonus(fortune, new Random()),
-							b.damageDropped(blS.getItemDamage()));
+							b.damageDropped(b.getDefaultState()));
 					if (InvUtil.putIntoFirstSlot(chest, drop, true) == null) {
 						InvUtil.putIntoFirstSlot(chest, drop, false);
 

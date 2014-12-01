@@ -13,6 +13,7 @@ import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeHooks;
 import aroma1997.betterchests.api.IUpgrade;
 
 public class CraftingBag implements IRecipe {
@@ -71,6 +72,11 @@ public class CraftingBag implements IRecipe {
 	@Override
 	public ItemStack getRecipeOutput() {
 		return null;
+	}
+
+	@Override
+	public ItemStack[] func_179532_b(InventoryCrafting inv) {
+		return ForgeHooks.defaultRecipeGetRemainingItems(inv);
 	}
 
 }

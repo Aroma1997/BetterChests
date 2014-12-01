@@ -14,6 +14,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import aroma1997.betterchests.api.IBetterChest;
 import aroma1997.betterchests.api.IUpgrade;
 import aroma1997.core.client.inventories.GUIAromaBasic;
@@ -23,8 +25,6 @@ import aroma1997.core.client.inventories.RenderHelper.Tex;
 import aroma1997.core.client.util.Colors;
 import aroma1997.core.inventories.AromaContainer;
 import aroma1997.core.util.InvUtil;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class ContainerUpgrades extends AromaContainer {
 

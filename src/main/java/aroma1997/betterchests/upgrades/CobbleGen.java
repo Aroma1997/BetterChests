@@ -8,7 +8,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import aroma1997.betterchests.InventoryFilter;
 import aroma1997.betterchests.Upgrade;
+import aroma1997.betterchests.UpgradeHelper;
 import aroma1997.betterchests.api.IBetterChest;
+import aroma1997.betterchests.api.IInventoryFilter;
 import aroma1997.core.util.InvUtil;
 import aroma1997.core.util.ItemUtil;
 import aroma1997.core.util.ItemUtil.ItemMatchCriteria;
@@ -42,12 +44,12 @@ public class CobbleGen extends BasicUpgrade {
 			if (bucketLava == -1 || bucketWater == -1) {
 				return;
 			}
-			List<InventoryFilter> list = inv.getFiltersForUpgrade(item);
-			if (InventoryFilter.isItemAllowed(new ItemStack(Blocks.cobblestone), list)) {
+			List<IInventoryFilter> list = inv.getFiltersForUpgrade(item);
+			if (UpgradeHelper.isItemAllowed(new ItemStack(Blocks.cobblestone), list)) {
 				InvUtil.putIntoFirstSlot(inv, new ItemStack(Blocks.cobblestone),
 					false);
 			}
-			else if (InventoryFilter.isItemAllowed(new ItemStack(Blocks.stone), list)) {
+			else if (UpgradeHelper.isItemAllowed(new ItemStack(Blocks.stone), list)) {
 				InvUtil.putIntoFirstSlot(inv, new ItemStack(Blocks.stone),
 						false);
 			}

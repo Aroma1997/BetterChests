@@ -15,6 +15,7 @@ import java.util.List;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import aroma1997.betterchests.api.IBetterChest;
+import aroma1997.betterchests.api.IInventoryFilter;
 import aroma1997.betterchests.api.IUpgrade;
 import aroma1997.core.log.LogHelper;
 import aroma1997.core.util.ItemUtil;
@@ -123,10 +124,10 @@ public class UpgradeHelper {
 	public static void enableUpgrade(ItemStack upgrade) {
 		if (isUpgrade(upgrade)) {
 			if (upgrade.hasTagCompound()
-					&& upgrade.stackTagCompound.getBoolean("disabled")) {
-				upgrade.stackTagCompound.removeTag("disabled");
-				if (upgrade.stackTagCompound.hasNoTags()) {
-					upgrade.stackTagCompound = null;
+					&& upgrade.getTagCompound().getBoolean("disabled")) {
+				upgrade.getTagCompound().removeTag("disabled");
+				if (upgrade.getTagCompound().hasNoTags()) {
+					upgrade.setTagCompound(null);
 				}
 			}
 		}
@@ -152,6 +153,36 @@ public class UpgradeHelper {
 			
 			return ItemUtil.areItemsSameMatching(item1c, item2c, ItemMatchCriteria.NBT);
 		}
+		
+	}
+	
+	public static boolean isItemAllowed(ItemStack item, List<IInventoryFilter> list) {
+		if (list == null || list.isEmpty()) {
+			return true;
+		}
+		boolean hasWhitelist = false;
+		boolean isOnWhitelist = false;
+		
+		for (IInventoryFilter filter : list) {
+			if (filter.isWhitelist()) {
+				hasWhitelist = true;
+			}
+			for (int i = 0; i < filter.getSizeInventory(); i++) {
+				if (i == InventoryFilter.SLOT_UPGRADE) continue;
+				if (ItemUtil.areItemsSameMatching(item, filter.getStackInSlot(i), ItemMatchCriteria.ID, ItemMatchCriteria.DAMAGE)) {
+					if (filter.isWhitelist()) {
+						isOnWhitelist = true;
+					}
+					else {
+						return false;
+					}
+				}
+			}
+		}
+		if (hasWhitelist) {
+			return isOnWhitelist;
+		}
+		return true;
 		
 	}
 
