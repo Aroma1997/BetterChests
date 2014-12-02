@@ -11,7 +11,7 @@ public final class UpgradeHelperAPI {
 	
 	public static boolean isUpgrade(ItemStack stack) {
 		try {
-			return (boolean) getUClass().getMethod("isUpgrade", ItemStack.class).invoke(null, stack);
+			return (Boolean) getUClass().getMethod("isUpgrade", ItemStack.class).invoke(null, stack);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -19,7 +19,7 @@ public final class UpgradeHelperAPI {
 	
 	public static boolean isItemAllowed(ItemStack item, List<IInventoryFilter> list) {
 		try {
-			return (boolean) getUClass().getMethod("isItemAllowed", ItemStack.class, List.class).invoke(null, item, list);
+			return (Boolean) getUClass().getMethod("isItemAllowed", ItemStack.class, List.class).invoke(null, item, list);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
