@@ -52,6 +52,9 @@ book.betterchests:upgrade.KILLING=Killing Upgrade: This Upgrade will kill living
 book.betterchests:upgrade.BLOCKER=Blocking Upgrade: This Upgrade will block other blocks from being able to interact with this chest. For each applied Upgrade, the amount of Slots that can not be accessed from other blocks increases by one. Note: Upgrades and Players can still access these slots.
 book.betterchests:upgrade.LIGHTWEIGHT=Lightweight Upgrade: This Upgrade makes your bag light as air, almost lifting you off the ground, increasing your movement speed by 40%.
 
+book.betterchests:upgrade.filter.1=Whitelist Filter Upgrade: This upgrade will support other upgrades with Item/Block information/specification to only use certain Items.
+book.betterchests:upgrade.filter.2=Blacklist Filter Upgrade: Same as the Whitelist Filter Upgrade, but it will just block some Items from being used by a specific Upgrade.
+
 
 book.betterchests:credits=Thank you for reading the User Manual. If you still have questions just ask them in the MCF thread at: http://tinyurl.com/aroma1997
 
