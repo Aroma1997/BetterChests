@@ -86,7 +86,7 @@ public class ItemUpgrade extends AromicItem implements IUpgrade {
 	@Override
     public String getUnlocalizedName(ItemStack stack)
     {
-        return "item.betterchests:upgrade." + Upgrade.values()[stack.getItemDamage()];
+        return "item.betterchests:upgrade." + Upgrade.values()[stack.getItemDamage()].toString().toLowerCase();
     }
 
 	@Override
