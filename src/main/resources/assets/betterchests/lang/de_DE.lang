@@ -58,29 +58,27 @@ inv.betterchests:bag.name=Verstellbarer Rucksack
 tile.betterchests:chest.name=Verstellbare Truhe
 item.betterchests:bag.name=Verstellbarer Rucksack
 
-item.betterchests:upgrade.SLOT.name=Slot-Upgrade
-item.betterchests:upgrade.COBBLEGEN.name=CobbleGen-Upgrade
-item.betterchests:upgrade.REDSTONE.name=Redstone-Upgrade
-item.betterchests:upgrade.LIGHT.name=Licht-Upgrade
-item.betterchests:upgrade.BASIC.name=Basis-Upgrade
-item.betterchests:upgrade.COMPARATOR.name=Komparator-Upgrade
-item.betterchests:upgrade.VOID.name=Leeren-Upgrade
-item.betterchests:upgrade.UNBREAKABLE.name=Unzerstörbar-Upgrade
-item.betterchests:upgrade.PLAYER.name=Spieler-Upgrade
-item.betterchests:upgrade.RAIN.name=Regen-Upgrade
-item.betterchests:upgrade.ENERGY.name=Energie-Upgrade
-item.betterchests:upgrade.FURNACE.name=Ofen-Upgrade
-item.betterchests:upgrade.COLLECTOR.name=Sammel-Upgrade
-item.betterchests:upgrade.TICKING.name=Tick-Upgrade
-item.betterchests:upgrade.FEEDING.name=Füttern Upgrade
-item.betterchests:upgrade.PLAYERFOOD.name=Spieler-Füttern Upgrade
-item.betterchests:upgrade.RESUPPLY.name=Nachfüllen-Upgrade
-item.betterchests:upgrade.PLANTING.name=Pflanzen-Upgrade
-item.betterchests:upgrade.HARVESTING.name=Ernten-Upgrade
-item.betterchests:upgrade.ANIMAL.name=Tiere-Upgrade
+item.betterchests:upgrade.slot.name=Slot-Upgrade
+item.betterchests:upgrade.cobblegen.name=CobbleGen-Upgrade
+item.betterchests:upgrade.redstone.name=Redstone-Upgrade
+item.betterchests:upgrade.light.name=Licht-Upgrade
+item.betterchests:upgrade.basic.name=Basis-Upgrade
+item.betterchests:upgrade.comparator.name=Komparator-Upgrade
+item.betterchests:upgrade.void.name=Leeren-Upgrade
+item.betterchests:upgrade.unbreakable.name=Unzerstörbar-Upgrade
+item.betterchests:upgrade.player.name=Spieler-Upgrade
+item.betterchests:upgrade.rain.name=Regen-Upgrade
+item.betterchests:upgrade.energy.name=Energie-Upgrade
+item.betterchests:upgrade.furnace.name=Ofen-Upgrade
+item.betterchests:upgrade.collector.name=Sammel-Upgrade
+item.betterchests:upgrade.ticking.name=Tick-Upgrade
+item.betterchests:upgrade.feeding.name=Füttern Upgrade
+item.betterchests:upgrade.playerfood.name=Spieler-Füttern Upgrade
+item.betterchests:upgrade.resupply.name=Nachfüllen-Upgrade
+item.betterchests:upgrade.planting.name=Pflanzen-Upgrade
+item.betterchests:upgrade.harvesting.name=Ernten-Upgrade
+item.betterchests:upgrade.animal.name=Tiere-Upgrade
 
-
-item.betterchests:upgrade.HAMMER.name=BetterChests Hammer
 
 item.betterchests:chestUpgrade.name=Einstellbar-Upgrade
 

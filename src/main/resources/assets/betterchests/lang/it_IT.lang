@@ -42,20 +42,20 @@ inv.betterchests:bag.name=Borsa Modificabile
 tile.betterchests:chest.name=Cassa Modificabile
 item.betterchests:bag.name=Borsa Modificabile
 
-item.betterchests:upgrade.SLOT.name=Miglioramento Capienza
-item.betterchests:upgrade.COBBLEGEN.name=Miglioramento GeneraPietrisco
-item.betterchests:upgrade.REDSTONE.name=Miglioramento Pietrarossa
-item.betterchests:upgrade.LIGHT.name=Miglioramento Luce
-item.betterchests:upgrade.BASIC.name=Miglioramento Base
-item.betterchests:upgrade.COMPARATOR.name=Miglioramento Comparatore
-item.betterchests:upgrade.VOID.name=Miglioramento Cancellatore
-item.betterchests:upgrade.UNBREAKABLE.name=Miglioramento Industrittibilità
-item.betterchests:upgrade.PLAYER.name=Miglioramento Giocatore
-item.betterchests:upgrade.RAIN.name=Miglioramento Pioggia
-item.betterchests:upgrade.ENERGY.name=Miglioramento Energetico
-item.betterchests:upgrade.FURNACE.name=Miglioramento Fornace
-item.betterchests:upgrade.COLLECTOR.name=Miglioramento Collezionatore
-item.betterchests:upgrade.TICKING.name=Miglioramento Aggiornatore
+item.betterchests:upgrade.slot.name=Miglioramento Capienza
+item.betterchests:upgrade.cobblegen.name=Miglioramento GeneraPietrisco
+item.betterchests:upgrade.redstone.name=Miglioramento Pietrarossa
+item.betterchests:upgrade.light.name=Miglioramento Luce
+item.betterchests:upgrade.basic.name=Miglioramento Base
+item.betterchests:upgrade.comparator.name=Miglioramento Comparatore
+item.betterchests:upgrade.void.name=Miglioramento Cancellatore
+item.betterchests:upgrade.unbreakable.name=Miglioramento Industrittibilità
+item.betterchests:upgrade.player.name=Miglioramento Giocatore
+item.betterchests:upgrade.rain.name=Miglioramento Pioggia
+item.betterchests:upgrade.energy.name=Miglioramento Energetico
+item.betterchests:upgrade.furnace.name=Miglioramento Fornace
+item.betterchests:upgrade.collector.name=Miglioramento Collezionatore
+item.betterchests:upgrade.ticking.name=Miglioramento Aggiornatore
 
 
 info.betterchests:tooltip.nobag=Questo Miglioramento non può essere inserito in una Borsa.
