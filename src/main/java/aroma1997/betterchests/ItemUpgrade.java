@@ -46,14 +46,15 @@ public class ItemUpgrade extends AromicItem implements IUpgrade {
 		if (upgrade.getRequirement() != null) {
 			par3List.add(StatCollector.translateToLocalFormatted(
 					"info.betterchests:tooltip.requires", Colors.YELLOW
-							+ upgrade.getRequirement().getName()));
+							+ upgrade.getRequirement().getItem()
+									.getUnlocalizedName()));
 		}
-		
 
 		if (upgrade.canUseFilter()) {
-			par3List.add(StatCollector.translateToLocal("info.betterchests:tooltip.supportsfilter"));
+			par3List.add(StatCollector
+					.translateToLocal("info.betterchests:tooltip.supportsfilter"));
 		}
-		
+
 		if (upgrade.getMaxAmount() != 0) {
 			par3List.add(StatCollector.translateToLocalFormatted(
 					"info.betterchests:tooltip.maxamount",
@@ -78,16 +79,17 @@ public class ItemUpgrade extends AromicItem implements IUpgrade {
 		}
 	}
 
-//	@Override
-//	public String getItemStackDisplayName(ItemStack par1ItemStack) {
-//		return Upgrade.values()[par1ItemStack.getItemDamage()].getName();
-//	}
-	
+	// @Override
+	// public String getItemStackDisplayName(ItemStack par1ItemStack) {
+	// return Upgrade.values()[par1ItemStack.getItemDamage()].getName();
+	// }
+
 	@Override
-    public String getUnlocalizedName(ItemStack stack)
-    {
-        return "item.betterchests:upgrade." + Upgrade.values()[stack.getItemDamage()].toString().toLowerCase();
-    }
+	public String getUnlocalizedName(ItemStack stack) {
+		return "item.betterchests:upgrade."
+				+ Upgrade.values()[stack.getItemDamage()].toString()
+						.toLowerCase();
+	}
 
 	@Override
 	public boolean canChestTakeUpgrade(ItemStack item) {
@@ -139,7 +141,7 @@ public class ItemUpgrade extends AromicItem implements IUpgrade {
 
 	@Override
 	public void onUpgradeInstalled(ItemStack item, IBetterChest chest) {
-		
+
 	}
 
 	@Override

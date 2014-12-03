@@ -20,7 +20,6 @@ import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.item.ItemTool;
-import net.minecraft.util.StatCollector;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.oredict.OreDictionary;
 import aroma1997.betterchests.upgrades.Animal;
@@ -44,31 +43,29 @@ import aroma1997.betterchests.upgrades.VoidUpgrade;
 import aroma1997.core.util.AromaRegistry;
 
 public enum Upgrade {
-	SLOT(null, 7, true, true, Null.class, false, false),
-	COBBLEGEN(null, 1, true, true, CobbleGen.class, true, true),
-	REDSTONE(null, 1, true, false, Null.class, false, false),
-	LIGHT(null, 1, true, false, Null.class, false, false),
-	BASIC(null, 0, false, false, Null.class, false, false),
-	COMPARATOR(null, 1, true, false, Null.class, false, false),
-	VOID(null, 1, true, true, VoidUpgrade.class, false, true),
-	UNBREAKABLE(null, 1, true, true, Null.class, false, false),
-	PLAYER(UNBREAKABLE, 1, true, false, Null.class, false, false),
-	RAIN(null, 1, true, false, Rain.class, true, false),
-	ENERGY(null, 1, true, true, Null.class, false, false),
-	FURNACE(ENERGY, 1, true, true, Furnace.class, true, true),
-	COLLECTOR(ENERGY, 8, true, true, Collector.class, true, true),
-	TICKING(ENERGY, 1, true, false, Ticking.class, true, true),
-	FEEDING(null, 1, true, false, Feeding.class, true, true),
-	PLAYERFOOD(null, 1, false, true, PlayerFeeding.class, true, true),
-	RESUPPLY(null, 1, false, true, Resupply.class, true, true),
-	PLANTING(ENERGY, 5, true, false, Planting.class, true, true),
-	HARVESTING(ENERGY, 5, true, false, Harvesting.class, true, true),
-	ANIMAL(ENERGY, 1, true, false, Animal.class, true, false),
-	AI(null, 1, true, true, Null.class, false, false),
-	MINING(AI, 1, true, false, Mining.class, true, true),
-	KILLING(ENERGY, 1, true, false, Killing.class, true, false),
-	BLOCKER(SLOT, 4, true, false, Blocking.class, false, false),
-	LIGHTWEIGHT(null, 1, false, true, LightWeight.class, true, false);
+	SLOT(null, 7, true, true, Null.class, false, false), COBBLEGEN(null, 1,
+			true, true, CobbleGen.class, true, true), REDSTONE(null, 1, true,
+			false, Null.class, false, false), LIGHT(null, 1, true, false,
+			Null.class, false, false), BASIC(null, 0, false, false, Null.class,
+			false, false), COMPARATOR(null, 1, true, false, Null.class, false,
+			false), VOID(null, 1, true, true, VoidUpgrade.class, false, true), UNBREAKABLE(
+			null, 1, true, true, Null.class, false, false), PLAYER(UNBREAKABLE,
+			1, true, false, Null.class, false, false), RAIN(null, 1, true,
+			false, Rain.class, true, false), ENERGY(null, 1, true, true,
+			Null.class, false, false), FURNACE(ENERGY, 1, true, true,
+			Furnace.class, true, true), COLLECTOR(ENERGY, 8, true, true,
+			Collector.class, true, true), TICKING(ENERGY, 1, true, false,
+			Ticking.class, true, true), FEEDING(null, 1, true, false,
+			Feeding.class, true, true), PLAYERFOOD(null, 1, false, true,
+			PlayerFeeding.class, true, true), RESUPPLY(null, 1, false, true,
+			Resupply.class, true, true), PLANTING(ENERGY, 5, true, false,
+			Planting.class, true, true), HARVESTING(ENERGY, 5, true, false,
+			Harvesting.class, true, true), ANIMAL(ENERGY, 1, true, false,
+			Animal.class, true, false), AI(null, 1, true, true, Null.class,
+			false, false), MINING(AI, 1, true, false, Mining.class, true, true), KILLING(
+			ENERGY, 1, true, false, Killing.class, true, false), BLOCKER(SLOT,
+			4, true, false, Blocking.class, false, false), LIGHTWEIGHT(null, 1,
+			false, true, LightWeight.class, true, false);
 
 	private final Upgrade requirement;
 
@@ -91,7 +88,7 @@ public enum Upgrade {
 		this.max = max;
 		this.canChest = canChest;
 		this.canBag = canBag;
-		this.disableable = disablable;
+		disableable = disablable;
 		this.filter = filter;
 
 		try {
@@ -99,11 +96,6 @@ public enum Upgrade {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
-
-	public String getName() {
-		return StatCollector.translateToLocal("item.betterchests:upgrade."
-				+ toString() + ".name");
 	}
 
 	public String getTexture() {
@@ -287,7 +279,7 @@ public enum Upgrade {
 	public boolean canBeDisabled() {
 		return disableable;
 	}
-	
+
 	public boolean canUseFilter() {
 		return filter;
 	}
