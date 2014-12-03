@@ -124,8 +124,9 @@ public class BlockBChest extends AromicBlockContainer {
 	@Override
     public int getLightValue(IBlockAccess world, BlockPos pos)
     {
-		return ((TileEntityBChest) world.getTileEntity(pos))
-				.getLightValue();
+		TileEntityBChest te = ((TileEntityBChest) world.getTileEntity(pos));
+		if (te != null) return te.getLightValue();
+		return super.getLightValue(world, pos);
 	}
 
 	@Override
