@@ -50,12 +50,12 @@ public class ItemBetterChestUpgrade extends AromicItem {
 				newchest.setStackInSlotWithoutNotify(i, tec.getStackInSlot(i));
 				tec.setInventorySlotContents(i, null);
 			}
-			Comparable facing = world.getBlockState(pos).getValue(BlockChest.FACING_PROP);
+			EnumFacing facing = (EnumFacing) world.getBlockState(pos).getValue(BlockChest.FACING_PROP);
 			world.setBlockState(pos, Blocks.air.getDefaultState(), 3);
 			tec.updateContainingBlockInfo();
 			tec.checkForAdjacentChests();
-			IBlockState state = BetterChestsItems.chest.getDefaultState();
-			state.withProperty(BlockChest.FACING_PROP, facing);
+			
+			IBlockState state = BetterChestsItems.chest.getStateFromMeta(facing.getIndex());
 			world.setBlockState(pos, state, 3);
 
 			world.setTileEntity(pos, newchest);
