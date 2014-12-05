@@ -6,7 +6,6 @@ import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
-import aroma1997.betterchests.InventoryFilter;
 import aroma1997.betterchests.Reference;
 import aroma1997.betterchests.UpgradeHelper;
 import aroma1997.betterchests.api.IBetterChest;
@@ -42,7 +41,9 @@ public class Feeding extends BasicUpgrade {
 			int slot = -1;
 			for (int i = 0; i < inv.getSizeInventory(); i++) {
 				ItemStack feedingItem = inv.getStackInSlot(i);
-				if (feedingItem == null || UpgradeHelper.isItemAllowed(feedingItem, inv.getFiltersForUpgrade(item))) {
+				if (feedingItem == null
+						|| !UpgradeHelper.isItemAllowed(feedingItem,
+								inv.getFiltersForUpgrade(item))) {
 					continue;
 				}
 				if (e.isBreedingItem(feedingItem)) {
