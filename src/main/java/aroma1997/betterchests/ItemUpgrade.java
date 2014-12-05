@@ -47,7 +47,7 @@ public class ItemUpgrade extends AromicItem implements IUpgrade {
 			par3List.add(StatCollector.translateToLocalFormatted(
 					"info.betterchests:tooltip.requires", Colors.YELLOW
 							+ upgrade.getRequirement().getItem()
-									.getUnlocalizedName()));
+									.getDisplayName()));
 		}
 
 		if (upgrade.canUseFilter()) {
