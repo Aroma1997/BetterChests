@@ -9,9 +9,7 @@
 
 package aroma1997.betterchests;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockChest;
-import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyDirection;
@@ -20,10 +18,8 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.MathHelper;
@@ -38,8 +34,9 @@ import aroma1997.core.inventories.Inventories;
 import aroma1997.core.util.WorldUtil;
 
 public class BlockBChest extends AromicBlockContainer {
-	
-	public static final PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
+
+	public static final PropertyDirection FACING = PropertyDirection.create(
+			"facing", EnumFacing.Plane.HORIZONTAL);
 
 	public BlockBChest() {
 		super(Material.rock);
@@ -49,7 +46,8 @@ public class BlockBChest extends AromicBlockContainer {
 		setLightOpacity(0);
 		disableStats();
 		setBlockBounds(0.0625F, 0.0F, 0.0625F, 0.9375F, 0.875F, 0.9375F);
-		this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
+		setDefaultState(blockState.getBaseState().withProperty(FACING,
+				EnumFacing.NORTH));
 	}
 
 	@Override
@@ -63,22 +61,20 @@ public class BlockBChest extends AromicBlockContainer {
 	}
 
 	@Override
-    public boolean isOpaqueCube()
-    {
-        return false;
-    }
+	public boolean isOpaqueCube() {
+		return false;
+	}
 
 	@Override
-    public boolean isFullCube()
-    {
-        return false;
-    }
+	public boolean isFullCube() {
+		return false;
+	}
 
 	@Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing side, float hitX, float hitY, float hitZ)
-    {
-		TileEntityBChest chest = (TileEntityBChest) world.getTileEntity(
-				pos);
+	public boolean onBlockActivated(World world, BlockPos pos,
+			IBlockState state, EntityPlayer player, EnumFacing side,
+			float hitX, float hitY, float hitZ) {
+		TileEntityBChest chest = (TileEntityBChest) world.getTileEntity(pos);
 		if (player.isSneaking() || chest == null) {
 			return false;
 		}
@@ -87,8 +83,7 @@ public class BlockBChest extends AromicBlockContainer {
 		}
 		if (!chest.isUseableByPlayer(player)) {
 
-			player
-					.attackEntityFrom(DamageSourceBChest.INSTANCE, 2.0F);
+			player.attackEntityFrom(DamageSourceBChest.INSTANCE, 2.0F);
 			return true;
 		}
 
@@ -107,8 +102,8 @@ public class BlockBChest extends AromicBlockContainer {
 	}
 
 	@Override
-    public int isProvidingWeakPower(IBlockAccess world, BlockPos pos, IBlockState state, EnumFacing side)
-    {
+	public int isProvidingWeakPower(IBlockAccess world, BlockPos pos,
+			IBlockState state, EnumFacing side) {
 		TileEntity te = world.getTileEntity(pos);
 		if (te == null)
 			return 0;
@@ -116,57 +111,53 @@ public class BlockBChest extends AromicBlockContainer {
 	}
 
 	@Override
-    public boolean shouldCheckWeakPower(IBlockAccess world, BlockPos pos, EnumFacing side)
-    {
+	public boolean shouldCheckWeakPower(IBlockAccess world, BlockPos pos,
+			EnumFacing side) {
 		return false;
 	}
 
 	@Override
-    public int getLightValue(IBlockAccess world, BlockPos pos)
-    {
+	public int getLightValue(IBlockAccess world, BlockPos pos) {
 		TileEntityBChest te = ((TileEntityBChest) world.getTileEntity(pos));
-		if (te != null) return te.getLightValue();
+		if (te != null)
+			return te.getLightValue();
 		return super.getLightValue(world, pos);
 	}
 
 	@Override
-	public void setBlockBoundsBasedOnState(IBlockAccess world,
-			BlockPos pos) {
+	public void setBlockBoundsBasedOnState(IBlockAccess world, BlockPos pos) {
 
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
-    public int getMixedBrightnessForBlock(IBlockAccess worldIn, BlockPos pos)
-    {
+	public int getMixedBrightnessForBlock(IBlockAccess worldIn, BlockPos pos) {
 		return 15;
 	}
 
 	@Override
-    public boolean canEntityDestroy(IBlockAccess world, BlockPos pos, Entity entity)
-    {
+	public boolean canEntityDestroy(IBlockAccess world, BlockPos pos,
+			Entity entity) {
 		return !((TileEntityBChest) world.getTileEntity(pos))
 				.isUpgradeInstalled(Upgrade.UNBREAKABLE.getItem())
 				&& !super.canEntityDestroy(world, pos, entity);
 	}
 
 	@Override
-    public int getComparatorInputOverride(World world, BlockPos pos)
-    {
+	public int getComparatorInputOverride(World world, BlockPos pos) {
 		return ((TileEntityBChest) world.getTileEntity(pos))
 				.getComparatorOutput();
 	}
 
 	@Override
-    public boolean canConnectRedstone(IBlockAccess world, BlockPos pos, EnumFacing side)
-    {
+	public boolean canConnectRedstone(IBlockAccess world, BlockPos pos,
+			EnumFacing side) {
 		return ((TileEntityBChest) world.getTileEntity(pos))
 				.isUpgradeInstalled(Upgrade.REDSTONE.getItem());
 	}
 
 	@Override
-    public void onBlockExploded(World world, BlockPos pos, Explosion explosion)
-    {
+	public void onBlockExploded(World world, BlockPos pos, Explosion explosion) {
 		if (((TileEntityBChest) world.getTileEntity(pos))
 				.isUpgradeInstalled(Upgrade.UNBREAKABLE.getItem())) {
 			return;
@@ -175,15 +166,14 @@ public class BlockBChest extends AromicBlockContainer {
 	}
 
 	@Override
-    public boolean isFlammable(IBlockAccess world, BlockPos pos, EnumFacing face)
-    {
+	public boolean isFlammable(IBlockAccess world, BlockPos pos, EnumFacing face) {
 		return false;
 	}
 
 	@Override
-    public float getPlayerRelativeBlockHardness(EntityPlayer player, World world, BlockPos pos)
-    {
-		if (world.isRemote) {
+	public float getPlayerRelativeBlockHardness(EntityPlayer player,
+			World world, BlockPos pos) {
+		if (world.isRemote || world.getTileEntity(pos) == null) {
 			return super.getPlayerRelativeBlockHardness(player, world, pos);
 		}
 		if (!((TileEntityBChest) world.getTileEntity(pos))
@@ -195,8 +185,7 @@ public class BlockBChest extends AromicBlockContainer {
 	}
 
 	@Override
-    public void breakBlock(World world, BlockPos pos, IBlockState state)
-    {
+	public void breakBlock(World world, BlockPos pos, IBlockState state) {
 		TileEntityBChest te = (TileEntityBChest) world.getTileEntity(pos);
 		if (te == null) {
 			super.breakBlock(world, pos, state);
@@ -225,18 +214,25 @@ public class BlockBChest extends AromicBlockContainer {
 	}
 
 	@Override
-    public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack)
-    {
-        EnumFacing enumfacing = EnumFacing.getHorizontal(MathHelper.floor_double((double)(placer.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3).getOpposite();
-        state = state.withProperty(BlockChest.FACING_PROP, enumfacing);
+	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state,
+			EntityLivingBase placer, ItemStack stack) {
+		EnumFacing enumfacing = EnumFacing
+				.getHorizontal(
+						MathHelper
+								.floor_double(placer.rotationYaw * 4.0F / 360.0F + 0.5D) & 3)
+				.getOpposite();
+		state = state.withProperty(BlockChest.FACING_PROP, enumfacing);
 
-        worldIn.setBlockState(pos, state, 3);
-    }
-	
-    public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer)
-    {
-        return this.getDefaultState().withProperty(BlockChest.FACING_PROP, placer.func_174811_aO());
-    }
+		worldIn.setBlockState(pos, state, 3);
+	}
+
+	@Override
+	public IBlockState onBlockPlaced(World worldIn, BlockPos pos,
+			EnumFacing facing, float hitX, float hitY, float hitZ, int meta,
+			EntityLivingBase placer) {
+		return getDefaultState().withProperty(BlockChest.FACING_PROP,
+				placer.func_174811_aO());
+	}
 
 	@Override
 	public boolean hasComparatorInputOverride() {
@@ -244,34 +240,30 @@ public class BlockBChest extends AromicBlockContainer {
 	}
 
 	@Override
-    public int isProvidingStrongPower(IBlockAccess world, BlockPos pos, IBlockState state, EnumFacing side)
-    {
+	public int isProvidingStrongPower(IBlockAccess world, BlockPos pos,
+			IBlockState state, EnumFacing side) {
 		return isProvidingWeakPower(world, pos, state, side);
 	}
-	
-	@Override
-    protected BlockState createBlockState()
-    {
-        return new BlockState(this, new IProperty[] {FACING});
-    }
-	
-	@Override
-    public IBlockState getStateFromMeta(int meta)
-    {
-        EnumFacing enumfacing = EnumFacing.getFront(meta);
-
-        if (enumfacing.getAxis() == EnumFacing.Axis.Y)
-        {
-            enumfacing = EnumFacing.NORTH;
-        }
-
-        return this.getDefaultState().withProperty(FACING, enumfacing);
-    }
 
 	@Override
-    public int getMetaFromState(IBlockState state)
-    {
-        return ((EnumFacing)state.getValue(FACING)).getIndex();
-    }
+	protected BlockState createBlockState() {
+		return new BlockState(this, new IProperty[] { FACING });
+	}
+
+	@Override
+	public IBlockState getStateFromMeta(int meta) {
+		EnumFacing enumfacing = EnumFacing.getFront(meta);
+
+		if (enumfacing.getAxis() == EnumFacing.Axis.Y) {
+			enumfacing = EnumFacing.NORTH;
+		}
+
+		return getDefaultState().withProperty(FACING, enumfacing);
+	}
+
+	@Override
+	public int getMetaFromState(IBlockState state) {
+		return ((EnumFacing) state.getValue(FACING)).getIndex();
+	}
 
 }

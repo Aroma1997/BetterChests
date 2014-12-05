@@ -14,6 +14,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.BlockPos;
@@ -50,15 +51,22 @@ public class ItemBetterChestUpgrade extends AromicItem {
 				newchest.setStackInSlotWithoutNotify(i, tec.getStackInSlot(i));
 				tec.setInventorySlotContents(i, null);
 			}
-			EnumFacing facing = (EnumFacing) world.getBlockState(pos).getValue(BlockChest.FACING_PROP);
+			EnumFacing facing = (EnumFacing) world.getBlockState(pos).getValue(
+					BlockChest.FACING_PROP);
 			world.setBlockState(pos, Blocks.air.getDefaultState(), 3);
 			tec.updateContainingBlockInfo();
 			tec.checkForAdjacentChests();
-			
-			IBlockState state = BetterChestsItems.chest.getStateFromMeta(facing.getIndex());
+			NBTTagCompound nbt = new NBTTagCompound();
+			newchest.writeToNBT(nbt);
+			IBlockState state = BetterChestsItems.chest.getStateFromMeta(facing
+					.getIndex());
 			world.setBlockState(pos, state, 3);
 
-			world.setTileEntity(pos, newchest);
+			TileEntity te1 = world.getTileEntity(pos);
+
+			te1.readFromNBT(nbt);
+			te1.setPos(pos);
+
 			if (!player.capabilities.isCreativeMode) {
 				stack.stackSize--;
 
