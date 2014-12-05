@@ -25,7 +25,6 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.nbt.NBTTagString;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
@@ -128,8 +127,8 @@ public class TileEntityBChest extends TileEntity implements IBetterChest,
 	public Packet getDescriptionPacket() {
 		NBTTagCompound nbt = new NBTTagCompound();
 		writeToNBT(nbt);
-		S35PacketUpdateTileEntity packet = new S35PacketUpdateTileEntity(
-				pos, worldObj.provider.getDimensionId(), nbt);
+		S35PacketUpdateTileEntity packet = new S35PacketUpdateTileEntity(pos,
+				worldObj.provider.getDimensionId(), nbt);
 		return packet;
 	}
 
@@ -156,12 +155,11 @@ public class TileEntityBChest extends TileEntity implements IBetterChest,
 
 		if (!MinecraftServer.getServer().isDedicatedServer()
 				&& par1EntityPlayer.getName().equalsIgnoreCase(
-						Minecraft.getMinecraft().thePlayer
-								.getName())) {
+						Minecraft.getMinecraft().thePlayer.getName())) {
 			return true;
 		}
 		if (ServerUtil.isPlayerAdmin(par1EntityPlayer) || player != null
-				&& player.equals(par1EntityPlayer.getUniqueID())) {
+				&& player.equals(par1EntityPlayer.getName())) {
 			return true;
 		}
 		return false;
@@ -185,7 +183,8 @@ public class TileEntityBChest extends TileEntity implements IBetterChest,
 		IUpgrade upgrade = (IUpgrade) itemUpgrade.getItem();
 
 		if (UpgradeHelper.canUpgradeGoInChest(this, itemUpgrade)) {
-			setAmountUpgrade(itemUpgrade, getAmountUpgradeExact(itemUpgrade) + 1);
+			setAmountUpgrade(itemUpgrade,
+					getAmountUpgradeExact(itemUpgrade) + 1);
 			if (ItemUtil.areItemsSameMatching(itemUpgrade,
 					Upgrade.PLAYER.getItem(), ItemMatchCriteria.ID,
 					ItemMatchCriteria.DAMAGE)) {
@@ -216,8 +215,7 @@ public class TileEntityBChest extends TileEntity implements IBetterChest,
 		}
 		items = new ItemStack[getSizeInventory()];
 		FileUtil.readFromNBT(this, nbt);
-		if (nbt.getTag("player") != null
-				&& nbt.getTag("player") instanceof NBTTagString) {
+		if (nbt.hasKey("player")) {
 			player = nbt.getString("player");
 		}
 		super.readFromNBT(nbt);
@@ -230,7 +228,7 @@ public class TileEntityBChest extends TileEntity implements IBetterChest,
 	public void writeToNBT(NBTTagCompound nbt) {
 		super.writeToNBT(nbt);
 		if (player != null) {
-			nbt.setString("playerUUID", player.toString());
+			nbt.setString("player", player);
 		}
 		FileUtil.writeToNBT(this, nbt);
 		NBTTagList list = new NBTTagList();
@@ -262,7 +260,7 @@ public class TileEntityBChest extends TileEntity implements IBetterChest,
 		if (!isUpgradeInstalled(Upgrade.COMPARATOR.getItem())) {
 			return 0;
 		}
-		return Container.calcRedstoneFromInventory((TileEntity)this);
+		return Container.calcRedstoneFromInventory((TileEntity) this);
 	}
 
 	public ItemStack[] getItems() {
@@ -302,80 +300,79 @@ public class TileEntityBChest extends TileEntity implements IBetterChest,
 
 	@SuppressWarnings("rawtypes")
 	private void doNormalChestUpdate() {
-        int i = this.pos.getX();
-        int j = this.pos.getY();
-        int k = this.pos.getZ();
-        ++this.ticksSinceSync;
-        float f;
+		int i = pos.getX();
+		int j = pos.getY();
+		int k = pos.getZ();
+		++ticksSinceSync;
+		float f;
 
-        if (!this.worldObj.isRemote && this.numUsingPlayers != 0 && (this.ticksSinceSync + i + j + k) % 200 == 0)
-        {
-            this.numUsingPlayers = 0;
-            f = 5.0F;
-            List list = this.worldObj.getEntitiesWithinAABB(EntityPlayer.class, new AxisAlignedBB((double)((float)i - f), (double)((float)j - f), (double)((float)k - f), (double)((float)(i + 1) + f), (double)((float)(j + 1) + f), (double)((float)(k + 1) + f)));
-            Iterator iterator = list.iterator();
+		if (!worldObj.isRemote && numUsingPlayers != 0
+				&& (ticksSinceSync + i + j + k) % 200 == 0) {
+			numUsingPlayers = 0;
+			f = 5.0F;
+			List list = worldObj.getEntitiesWithinAABB(EntityPlayer.class,
+					new AxisAlignedBB(i - f, j - f, k - f, i + 1 + f,
+							j + 1 + f, k + 1 + f));
+			Iterator iterator = list.iterator();
 
-            while (iterator.hasNext())
-            {
-                EntityPlayer entityplayer = (EntityPlayer)iterator.next();
+			while (iterator.hasNext()) {
+				EntityPlayer entityplayer = (EntityPlayer) iterator.next();
 
-                if (entityplayer.openContainer instanceof ContainerChest)
-                {
-                    IInventory iinventory = ((ContainerChest)entityplayer.openContainer).getLowerChestInventory();
+				if (entityplayer.openContainer instanceof ContainerChest) {
+					IInventory iinventory = ((ContainerChest) entityplayer.openContainer)
+							.getLowerChestInventory();
 
-                    if (iinventory == this || iinventory instanceof InventoryLargeChest && ((InventoryLargeChest)iinventory).isPartOfLargeChest(this))
-                    {
-                        ++this.numUsingPlayers;
-                    }
-                }
-            }
-        }
+					if (iinventory == this
+							|| iinventory instanceof InventoryLargeChest
+							&& ((InventoryLargeChest) iinventory)
+									.isPartOfLargeChest(this)) {
+						++numUsingPlayers;
+					}
+				}
+			}
+		}
 
-        this.prevLidAngle = this.lidAngle;
-        f = 0.1F;
-        double d2;
+		prevLidAngle = lidAngle;
+		f = 0.1F;
+		double d2;
 
-        if (this.numUsingPlayers > 0 && this.lidAngle == 0.0F)
-        {
-            double d1 = (double)i + 0.5D;
-            d2 = (double)k + 0.5D;
+		if (numUsingPlayers > 0 && lidAngle == 0.0F) {
+			double d1 = i + 0.5D;
+			d2 = k + 0.5D;
 
-            this.worldObj.playSoundEffect(d1, (double)j + 0.5D, d2, "random.chestopen", 0.5F, this.worldObj.rand.nextFloat() * 0.1F + 0.9F);
-        }
+			worldObj.playSoundEffect(d1, j + 0.5D, d2, "random.chestopen",
+					0.5F, worldObj.rand.nextFloat() * 0.1F + 0.9F);
+		}
 
-        if (this.numUsingPlayers == 0 && this.lidAngle > 0.0F || this.numUsingPlayers > 0 && this.lidAngle < 1.0F)
-        {
-            float f1 = this.lidAngle;
+		if (numUsingPlayers == 0 && lidAngle > 0.0F || numUsingPlayers > 0
+				&& lidAngle < 1.0F) {
+			float f1 = lidAngle;
 
-            if (this.numUsingPlayers > 0)
-            {
-                this.lidAngle += f;
-            }
-            else
-            {
-                this.lidAngle -= f;
-            }
+			if (numUsingPlayers > 0) {
+				lidAngle += f;
+			} else {
+				lidAngle -= f;
+			}
 
-            if (this.lidAngle > 1.0F)
-            {
-                this.lidAngle = 1.0F;
-            }
+			if (lidAngle > 1.0F) {
+				lidAngle = 1.0F;
+			}
 
-            float f2 = 0.5F;
+			float f2 = 0.5F;
 
-            if (this.lidAngle < f2 && f1 >= f2)
-            {
-                d2 = (double)i + 0.5D;
-                double d0 = (double)k + 0.5D;
+			if (lidAngle < f2 && f1 >= f2) {
+				d2 = i + 0.5D;
+				double d0 = k + 0.5D;
 
-                this.worldObj.playSoundEffect(d2, (double)j + 0.5D, d0, "random.chestclosed", 0.5F, this.worldObj.rand.nextFloat() * 0.1F + 0.9F);
-            }
+				worldObj.playSoundEffect(d2, j + 0.5D, d0,
+						"random.chestclosed", 0.5F,
+						worldObj.rand.nextFloat() * 0.1F + 0.9F);
+			}
 
-            if (this.lidAngle < 0.0F)
-            {
-                this.lidAngle = 0.0F;
-            }
-        }
+			if (lidAngle < 0.0F) {
+				lidAngle = 0.0F;
+			}
+		}
 	}
 
 	@Override
@@ -549,16 +546,14 @@ public class TileEntityBChest extends TileEntity implements IBetterChest,
 	@Override
 	public void openInventory(EntityPlayer player) {
 		numUsingPlayers++;
-		worldObj.addBlockEvent(pos, getBlockType(), 1,
-				numUsingPlayers);
+		worldObj.addBlockEvent(pos, getBlockType(), 1, numUsingPlayers);
 		worldObj.notifyNeighborsOfStateChange(pos, getBlockType());
 	}
 
 	@Override
 	public void closeInventory(EntityPlayer player) {
 		numUsingPlayers--;
-		worldObj.addBlockEvent(pos, getBlockType(), 1,
-				numUsingPlayers);
+		worldObj.addBlockEvent(pos, getBlockType(), 1, numUsingPlayers);
 		worldObj.notifyNeighborsOfStateChange(pos, getBlockType());
 		worldObj.notifyNeighborsOfStateChange(pos.offset(EnumFacing.DOWN),
 				getBlockType());
@@ -647,7 +642,8 @@ public class TileEntityBChest extends TileEntity implements IBetterChest,
 								&& item.getTagCompound().hasKey("disabled")) {
 							item.getTagCompound().removeTag("disabled");
 							if (item.getTagCompound().hasNoTags()) {
-								item.setTagCompound(null);;
+								item.setTagCompound(null);
+								;
 							}
 						}
 						markDirty();
@@ -678,14 +674,12 @@ public class TileEntityBChest extends TileEntity implements IBetterChest,
 	}
 
 	@Override
-	public boolean canInsertItem(int slot, ItemStack stack,
-			EnumFacing side) {
+	public boolean canInsertItem(int slot, ItemStack stack, EnumFacing side) {
 		return slot >= getAmountUpgrade(Upgrade.BLOCKER.getItem()) * 9;
 	}
 
 	@Override
-	public boolean canExtractItem(int slot, ItemStack stack,
-			EnumFacing side) {
+	public boolean canExtractItem(int slot, ItemStack stack, EnumFacing side) {
 		return canInsertItem(slot, stack, side);
 	}
 
@@ -711,7 +705,8 @@ public class TileEntityBChest extends TileEntity implements IBetterChest,
 	}
 
 	@Override
-	public void setField(int id, int value) {}
+	public void setField(int id, int value) {
+	}
 
 	@Override
 	public int getFieldCount() {
@@ -720,12 +715,13 @@ public class TileEntityBChest extends TileEntity implements IBetterChest,
 
 	@Override
 	public void clearInventory() {
-		
+
 	}
 
 	@Override
 	public IChatComponent getDisplayName() {
-		return ServerUtil.getChatForString(StatCollector.translateToLocal(getName()));
+		return ServerUtil.getChatForString(StatCollector
+				.translateToLocal(getName()));
 	}
 
 }
