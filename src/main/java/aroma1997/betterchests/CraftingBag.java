@@ -57,7 +57,8 @@ public class CraftingBag implements IRecipe {
 		upgrade = UpgradeHelper.getDefaultItem(upgrade);
 		BagInventory inv = ItemBag.getInventory(item);
 		if (UpgradeHelper.canUpgradeGoInChest(inv, upgrade)) {
-			inv.setAmountUpgrade(upgrade, inv.getAmountUpgradeExact(upgrade) + 1);
+			inv.setAmountUpgrade(upgrade,
+					inv.getAmountUpgradeExact(upgrade) + 1);
 		} else {
 			return null;
 		}
@@ -75,7 +76,7 @@ public class CraftingBag implements IRecipe {
 	}
 
 	@Override
-	public ItemStack[] func_179532_b(InventoryCrafting inv) {
+	public ItemStack[] getRemainingItems(InventoryCrafting inv) {
 		return ForgeHooks.defaultRecipeGetRemainingItems(inv);
 	}
 

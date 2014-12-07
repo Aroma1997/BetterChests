@@ -33,8 +33,8 @@ import aroma1997.core.inventories.IAdvancedInventory;
 import aroma1997.core.inventories.ISpecialInventory;
 import aroma1997.core.util.FileUtil;
 import aroma1997.core.util.ItemUtil;
-import aroma1997.core.util.ServerUtil;
 import aroma1997.core.util.ItemUtil.ItemMatchCriteria;
+import aroma1997.core.util.ServerUtil;
 
 public class BagInventory implements IBetterChest, IAdvancedInventory,
 		ISpecialInventory {
@@ -110,8 +110,7 @@ public class BagInventory implements IBetterChest, IAdvancedInventory,
 
 	@Override
 	public String getName() {
-		return hasCustomName() ? customName
-				: "inv.betterchests:bag.name";
+		return hasCustomName() ? customName : "inv.betterchests:bag.name";
 	}
 
 	@Override
@@ -412,12 +411,12 @@ public class BagInventory implements IBetterChest, IAdvancedInventory,
 
 	@Override
 	public void openInventory(EntityPlayer playerIn) {
-		
+
 	}
 
 	@Override
 	public void closeInventory(EntityPlayer playerIn) {
-		
+
 	}
 
 	@Override
@@ -426,7 +425,8 @@ public class BagInventory implements IBetterChest, IAdvancedInventory,
 	}
 
 	@Override
-	public void setField(int id, int value) {}
+	public void setField(int id, int value) {
+	}
 
 	@Override
 	public int getFieldCount() {
@@ -434,7 +434,7 @@ public class BagInventory implements IBetterChest, IAdvancedInventory,
 	}
 
 	@Override
-	public void clearInventory() {
+	public void clear() {
 		items = new ItemStack[items.length];
 		markDirty();
 	}
@@ -446,7 +446,8 @@ public class BagInventory implements IBetterChest, IAdvancedInventory,
 
 	@Override
 	public IChatComponent getDisplayName() {
-		return ServerUtil.getChatForString(StatCollector.translateToLocal(getName()));
+		return ServerUtil.getChatForString(StatCollector
+				.translateToLocal(getName()));
 	}
 
 }

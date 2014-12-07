@@ -52,7 +52,7 @@ public class ItemBetterChestUpgrade extends AromicItem {
 				tec.setInventorySlotContents(i, null);
 			}
 			EnumFacing facing = (EnumFacing) world.getBlockState(pos).getValue(
-					BlockChest.FACING_PROP);
+					BlockChest.FACING);
 			world.setBlockState(pos, Blocks.air.getDefaultState(), 3);
 			tec.updateContainingBlockInfo();
 			tec.checkForAdjacentChests();

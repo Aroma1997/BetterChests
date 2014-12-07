@@ -28,7 +28,7 @@ public class EventListenerClient {
 
 	@SubscribeEvent
 	public void tick(ClientTickEvent event) {
-		if (ClientProxy.openBag.getIsKeyPressed() && !pressedBefore
+		if (ClientProxy.openBag.isPressed() && !pressedBefore
 				&& Minecraft.getMinecraft().theWorld != null) {
 			int i = InvUtil
 					.getFirstItem(Minecraft.getMinecraft().thePlayer.inventory,
@@ -37,7 +37,7 @@ public class EventListenerClient {
 				Inventories.sendItemInventoryOpen(i);
 			}
 		}
-		pressedBefore = ClientProxy.openBag.getIsKeyPressed();
+		pressedBefore = ClientProxy.openBag.isPressed();
 	}
 
 	@SubscribeEvent

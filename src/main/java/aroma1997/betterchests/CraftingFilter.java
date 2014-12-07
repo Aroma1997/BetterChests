@@ -29,12 +29,13 @@ public class CraftingFilter implements IRecipe {
 		for (int i = 0; i < craftinggrid.getSizeInventory(); i++) {
 			ItemStack item = craftinggrid.getStackInSlot(i);
 			if (item != null) {
-				if (result != null) return null;
-				if (ItemUtil.areItemsSameMatching(item, getRecipeOutput(), ItemMatchCriteria.ID)) {
+				if (result != null)
+					return null;
+				if (ItemUtil.areItemsSameMatching(item, getRecipeOutput(),
+						ItemMatchCriteria.ID)) {
 					result = item.copy();
 					result.setItemDamage(result.getItemDamage() == 0 ? 1 : 0);
-				}
-				else {
+				} else {
 					return null;
 				}
 			}
@@ -53,7 +54,7 @@ public class CraftingFilter implements IRecipe {
 	}
 
 	@Override
-	public ItemStack[] func_179532_b(InventoryCrafting inv) {
+	public ItemStack[] getRemainingItems(InventoryCrafting inv) {
 		return ForgeHooks.defaultRecipeGetRemainingItems(inv);
 	}
 

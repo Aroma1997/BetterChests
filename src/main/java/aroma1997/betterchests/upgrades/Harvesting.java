@@ -13,7 +13,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
-import aroma1997.betterchests.InventoryFilter;
 import aroma1997.betterchests.Reference;
 import aroma1997.betterchests.UpgradeHelper;
 import aroma1997.betterchests.api.IBetterChest;
@@ -45,12 +44,13 @@ public class Harvesting extends BasicUpgrade {
 		Block block = state.getBlock();
 		if (block != null && block instanceof IGrowable) {
 			IGrowable gr = (IGrowable) block;
-			if (!gr.isStillGrowing(world, pos, state, false)) {
-				List<ItemStack> items = (List<ItemStack>) block.getDrops(world, pos,
-						state, 0);
+			if (!gr.canGrow(world, pos, state, world.isRemote)) {
+				List<ItemStack> items = block.getDrops(world, pos, state, 0);
 				boolean b = false;
 				for (ItemStack itemGet : items) {
-					if (InvUtil.putIntoFirstSlot(chest, itemGet, true) != null && UpgradeHelper.isItemAllowed(itemGet, chest.getFiltersForUpgrade(item))) {
+					if (InvUtil.putIntoFirstSlot(chest, itemGet, true) != null
+							&& UpgradeHelper.isItemAllowed(itemGet,
+									chest.getFiltersForUpgrade(item))) {
 						b = true;
 						break;
 					}
@@ -65,16 +65,20 @@ public class Harvesting extends BasicUpgrade {
 		} else if (block != null
 				&& (block instanceof BlockMelon || block instanceof BlockPumpkin)) {
 			ItemStack itemS = new ItemStack(block.getItemDropped(state,
-					world.rand, 0), block.quantityDropped(state, 0, world.rand),
+					world.rand, 0),
+					block.quantityDropped(state, 0, world.rand),
 					block.damageDropped(state));
-			if (InvUtil.putIntoFirstSlot(chest, itemS, true) == null && UpgradeHelper.isItemAllowed(itemS, chest.getFiltersForUpgrade(item))) {
+			if (InvUtil.putIntoFirstSlot(chest, itemS, true) == null
+					&& UpgradeHelper.isItemAllowed(itemS,
+							chest.getFiltersForUpgrade(item))) {
 				InvUtil.putIntoFirstSlot(chest, itemS, false);
 				world.setBlockToAir(pos);
 			}
 		} else if (block != null
 				&& (block instanceof BlockCactus || block instanceof BlockReed)) {
 			int i = 0;
-			while (world.getBlockState(pos.offset(EnumFacing.UP, i + 1)).getBlock() == block) {
+			while (world.getBlockState(pos.offset(EnumFacing.UP, i + 1))
+					.getBlock() == block) {
 				i++;
 			}
 			if (i > 2) {
@@ -82,7 +86,9 @@ public class Harvesting extends BasicUpgrade {
 				ItemStack itemS = new ItemStack(block.getItemDropped(state,
 						world.rand, 0), block.quantityDropped(state, 0,
 						world.rand), block.damageDropped(state));
-				if (InvUtil.putIntoFirstSlot(chest, itemS, true) == null && UpgradeHelper.isItemAllowed(itemS, chest.getFiltersForUpgrade(item))) {
+				if (InvUtil.putIntoFirstSlot(chest, itemS, true) == null
+						&& UpgradeHelper.isItemAllowed(itemS,
+								chest.getFiltersForUpgrade(item))) {
 					InvUtil.putIntoFirstSlot(chest, itemS, false);
 					world.setBlockToAir(pos.offset(EnumFacing.UP, i));
 				}

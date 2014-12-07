@@ -13,7 +13,6 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
 public class EntityBag extends EntityItem {
 
@@ -32,11 +31,11 @@ public class EntityBag extends EntityItem {
 
 	@Override
 	// Is invulnerable
-    public boolean func_180431_b(DamageSource p_180431_1_)
-    {
+	public boolean isEntityInvulnerable(DamageSource damagesource) {
 		BagInventory inv = ItemBag.getInventory(getEntityItem());
 		if (inv == null
-				|| !inv.isUpgradeInstalled(Upgrade.UNBREAKABLE.getItem())) {
+				|| !inv.isUpgradeInstalled(Upgrade.UNBREAKABLE.getItem())
+				|| damagesource == DamageSource.outOfWorld) {
 			return false;
 		}
 		return true;

@@ -221,7 +221,7 @@ public class BlockBChest extends AromicBlockContainer {
 						MathHelper
 								.floor_double(placer.rotationYaw * 4.0F / 360.0F + 0.5D) & 3)
 				.getOpposite();
-		state = state.withProperty(BlockChest.FACING_PROP, enumfacing);
+		state = state.withProperty(BlockChest.FACING, enumfacing);
 
 		worldIn.setBlockState(pos, state, 3);
 	}
@@ -230,8 +230,8 @@ public class BlockBChest extends AromicBlockContainer {
 	public IBlockState onBlockPlaced(World worldIn, BlockPos pos,
 			EnumFacing facing, float hitX, float hitY, float hitZ, int meta,
 			EntityLivingBase placer) {
-		return getDefaultState().withProperty(BlockChest.FACING_PROP,
-				placer.func_174811_aO());
+		return getDefaultState().withProperty(BlockChest.FACING,
+				placer.getHorizontalFacing());
 	}
 
 	@Override

@@ -38,7 +38,7 @@ minecraft {
     version = "${config.mc_version}-${config.forge_version}"
     assetDir = "eclipse/assets"
 	
-	mappings = "snapshot_nodoc_20140930"
+	mappings = "snapshot_nodoc_20141130"
 }
 
 dependencies {

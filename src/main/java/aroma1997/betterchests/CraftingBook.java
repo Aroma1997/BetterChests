@@ -13,7 +13,6 @@ import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemEditableBook;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.nbt.NBTTagString;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
 
@@ -39,9 +38,9 @@ public class CraftingBook implements IRecipe {
 				return null;
 			}
 			if ((tmp.getTagCompound().getString("author").equals("Aroma1997")
-					&& tmp.getTagCompound().getString("title").contains("BetterChests")
-					|| tmp.getTagCompound().getString("id")
-							.equals("BetterChests"))) {
+					&& tmp.getTagCompound().getString("title")
+							.contains("BetterChests") || tmp.getTagCompound()
+					.getString("id").equals("BetterChests"))) {
 				if (item != null) {
 					return null;
 				}
@@ -67,7 +66,7 @@ public class CraftingBook implements IRecipe {
 	}
 
 	@Override
-	public ItemStack[] func_179532_b(InventoryCrafting inv) {
+	public ItemStack[] getRemainingItems(InventoryCrafting inv) {
 		return ForgeHooks.defaultRecipeGetRemainingItems(inv);
 	}
 

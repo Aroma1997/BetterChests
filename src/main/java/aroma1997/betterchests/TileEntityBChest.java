@@ -260,7 +260,7 @@ public class TileEntityBChest extends TileEntity implements IBetterChest,
 		if (!isUpgradeInstalled(Upgrade.COMPARATOR.getItem())) {
 			return 0;
 		}
-		return Container.calcRedstoneFromInventory((TileEntity) this);
+		return Container.calcRedstone(this);
 	}
 
 	public ItemStack[] getItems() {
@@ -714,8 +714,9 @@ public class TileEntityBChest extends TileEntity implements IBetterChest,
 	}
 
 	@Override
-	public void clearInventory() {
-
+	public void clear() {
+		items = new ItemStack[items.length];
+		markDirty();
 	}
 
 	@Override
