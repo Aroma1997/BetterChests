@@ -27,6 +27,7 @@ import net.minecraftforge.fml.common.registry.EntityRegistry;
 
 import org.apache.logging.log4j.Logger;
 
+import aroma1997.core.items.AromicCreativeTab;
 import aroma1997.core.log.LogHelperPre;
 import aroma1997.core.modules.Module;
 import aroma1997.core.util.AromaRegistry;
@@ -42,10 +43,12 @@ public class BetterChests {
 	@SidedProxy(clientSide = "aroma1997.betterchests.client.ClientProxy", serverSide = "aroma1997.betterchests.CommonProxy")
 	public static CommonProxy proxy;
 
-	public static CreativeTabs creativeTabBC = new CreativeTabBChest();
+	public static CreativeTabs creativeTabBC = new AromicCreativeTab(
+			"betterchests:creativetab.name", new ItemStack(
+					BetterChestsItems.chest));
 
 	public static Logger logger;
-	
+
 	@EventHandler
 	public void construct(FMLConstructionEvent event) {
 		Module.registerModule(Module.WRENCH);
@@ -76,7 +79,7 @@ public class BetterChests {
 
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event) {
-		
+
 	}
 
 	public static ItemStack getHelpBook() {
