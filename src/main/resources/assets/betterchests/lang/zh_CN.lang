@@ -61,7 +61,7 @@ gui.betterchests:upgrades.name=升级
 gui.betterchests:upgrades.warning=移除此升级插件将导致你失去一些容纳的物品!按住shift键右击移除一个升级插件.按住shift左击移除全部升级插件.
 gui.betterchests:filter.upgrade=升级:
 
-creativetab.betterchests:creativetab.name=更好箱子
+itemGroup.betterchests:creativetab.name=更好箱子
 
 inv.betterchests:chest.name=可变箱子
 inv.betterchests:bag.name=可变口袋

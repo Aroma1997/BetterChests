@@ -50,7 +50,7 @@ book.betterchests:credits=Danke, dass Du das Benutzerhandbuch gelesen hast. Soll
 gui.betterchests:upgrades.name=Upgrades
 gui.betterchests:upgrades.warning=Upgrades aus dieser Kiste zu entfernen kann dazu führen, dass einige der Items darin verloren gehen. Shift-Rechts-Clicke um ein Upgrade zu entfernen, Shift-Links-Clicke um alle Upgrades dieser Sorte zu entfernen.
 
-creativetab.betterchests:creativetab.name=BetterChests
+itemGroup.betterchests:creativetab.name=BetterChests
 
 inv.betterchests:chest.name=Verstellbare Truhe
 inv.betterchests:bag.name=Verstellbarer Rucksack

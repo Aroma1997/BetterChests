@@ -17,7 +17,7 @@ public class BetterChestsItems {
 
 	@SpecialName("Upgrade")
 	public static ItemUpgrade upgrade = new ItemUpgrade();
-	
+
 	public static ItemFilter filter = new ItemFilter();
 
 	@SpecialName("Bag")
@@ -38,11 +38,15 @@ public class BetterChestsItems {
 						chest));
 		GameRegistry.addRecipe(new CraftingBag());
 		Upgrade.generateRecipes();
-		AromaRegistry.registerShapedAromicRecipe(new ItemStack(filter), false, " H ", "PUP", " P ", 'H', new ItemStack(Blocks.hopper), 'P', new ItemStack(Items.paper), 'U', new ItemStack(upgrade, 1, Upgrade.BASIC.ordinal()));
+		AromaRegistry.registerShapedAromicRecipe(new ItemStack(filter), false,
+				" H ", "PUP", " P ", 'H', new ItemStack(Blocks.hopper), 'P',
+				new ItemStack(Items.paper), 'U', new ItemStack(upgrade, 1,
+						Upgrade.BASIC.ordinal()));
 		GameRegistry.addRecipe(new CraftingFilter());
 		AromaRegistry.registerShapelessAromicRecipe(BetterChests.getHelpBook(),
 				false, Upgrade.BASIC.getItem(), new ItemStack(Items.book));
 		GameRegistry.addRecipe(new CraftingBook());
+		BetterChests.creativeTabBC.setStack(new ItemStack(chest));
 	}
 
 }

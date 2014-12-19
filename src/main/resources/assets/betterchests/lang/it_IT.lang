@@ -34,7 +34,7 @@ book.betterchests:upgrade.TICKING=Miglioramento Aggiornatore: Questo miglioramen
 
 book.betterchests:credits=Grazie per aver letto il Manuale Utente. Se hai ancora domande chiedi al thread di MCF qui: http://tinyurl.com/aroma1997
 
-creativetab.betterchests:creativetab.name=BetterChests
+itemGroup.betterchests:creativetab.name=BetterChests
 
 inv.betterchests:chest.name=Cassa Modificabile
 inv.betterchests:bag.name=Borsa Modificabile

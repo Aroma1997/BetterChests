@@ -12,7 +12,6 @@ package aroma1997.betterchests;
 import java.io.File;
 import java.util.ArrayList;
 
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Mod;
@@ -43,9 +42,8 @@ public class BetterChests {
 	@SidedProxy(clientSide = "aroma1997.betterchests.client.ClientProxy", serverSide = "aroma1997.betterchests.CommonProxy")
 	public static CommonProxy proxy;
 
-	public static CreativeTabs creativeTabBC = new AromicCreativeTab(
-			"betterchests:creativetab.name", new ItemStack(
-					BetterChestsItems.chest));
+	public static AromicCreativeTab creativeTabBC = new AromicCreativeTab(
+			"betterchests:creativetab.name");
 
 	public static Logger logger;
 

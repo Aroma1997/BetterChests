@@ -59,7 +59,7 @@ book.betterchests:credits=Спасибо за прочтение руковод�
 gui.betterchests:upgrades.name=Улучшения
 gui.betterchests:upgrades.warning=Снятие улучшений с этого сундука может привести к потере некоторых из предметов. Shift-ПКМ, чтобы снять одно улучшение. Shift-ЛКМ, чтобы снять все улучшения.
 
-creativetab.betterchests:creativetab.name=BetterChests
+itemGroup.betterchests:creativetab.name=BetterChests
 
 inv.betterchests:chest.name=Регулируемый сундук
 inv.betterchests:bag.name=Регулируемый мешочек

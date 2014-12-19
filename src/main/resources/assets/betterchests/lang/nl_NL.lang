@@ -52,7 +52,7 @@ book.betterchests:credits=Bedankt voor het lezen van de Gebruikershandleiding. A
 gui.betterchests:upgrades.name=Upgrades
 gui.betterchests:upgrades.warning=Het verwijderen van upgrades van deze kist kan veroorzaken dat je spullen verliest uit de kist. Shift-Rechts klikken om één upgrade te verwijderen, Shift-links klikken om za allemaal te verwijderen.
 
-creativetab.betterchests:creativetab.name=BetterChests
+itemGroup.betterchests:creativetab.name=BetterChests
 
 inv.betterchests:chest.name=Aanpasbare Kist
 inv.betterchests:bag.name=Aanpasbare Rugzak
