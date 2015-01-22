@@ -23,7 +23,8 @@ public class PlayerFeeding extends BasicUpgrade {
 			if (!player.getFoodStats().needFood()) {
 				return;
 			}
-			int slot = InvUtil.getFirstItem(inv, ItemFood.class, null, new BCFilterFilter(chest.getFiltersForUpgrade(item)));
+			int slot = InvUtil.getFirstItem(inv, ItemFood.class, null,
+					new BCFilterFilter(chest.getFiltersForUpgrade(item)));
 			if (slot == -1) {
 				return;
 			}
@@ -32,11 +33,18 @@ public class PlayerFeeding extends BasicUpgrade {
 				return;
 			}
 			ItemFood food = (ItemFood) itemStack.getItem();
-			if (20 - player.getFoodStats().getFoodLevel() >= food.getHealAmount(itemStack)
+			if (20 - player.getFoodStats().getFoodLevel() >= food
+					.getHealAmount(itemStack)
 					|| player.getFoodStats().getFoodLevel() <= 17
 					&& player.getHealth() <= player.getMaxHealth() - 1.0F
 					|| player.getFoodStats().getFoodLevel() <= 6) {
-				inv.setInventorySlotContents(slot, food.onItemUseFinish(itemStack, world, player));
+				ItemStack ret = food.onItemUseFinish(itemStack, world, player);
+				if (ret == null || ret.stackSize == 0) {
+					inv.setInventorySlotContents(slot, null);
+				} else {
+					inv.setInventorySlotContents(slot, ret);
+				}
+
 			}
 		}
 	}
