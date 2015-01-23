@@ -13,9 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
@@ -24,6 +22,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import org.apache.logging.log4j.Level;
 import org.lwjgl.input.Keyboard;
 
 import aroma1997.betterchests.api.IUpgrade;
@@ -31,10 +30,12 @@ import aroma1997.betterchests.client.ClientProxy;
 import aroma1997.core.inventories.AromaContainer;
 import aroma1997.core.inventories.ISpecialGUIProvider;
 import aroma1997.core.inventories.Inventories;
-import aroma1997.core.items.AromicItem;
+import aroma1997.core.items.inventory.ItemInventory;
 import aroma1997.core.items.wrench.ItemWrench;
+import aroma1997.core.log.LogHelper;
 
-public class ItemBag extends AromicItem implements ISpecialGUIProvider {
+public class ItemBag extends ItemInventory<BagInventory> implements
+		ISpecialGUIProvider {
 
 	public ItemBag() {
 		super();
@@ -45,23 +46,33 @@ public class ItemBag extends AromicItem implements ISpecialGUIProvider {
 	}
 
 	@Override
-	public boolean onItemUse(ItemStack par1ItemStack,
-			EntityPlayer par2EntityPlayer, World par3World, BlockPos pos, EnumFacing side, float par8, float par9, float par10) {
-		onItemRightClick(par1ItemStack, par3World, par2EntityPlayer);
+	public int getMaxItemUseDuration(ItemStack stack) {
+		return 1;
+	}
+
+	@Override
+	public boolean onItemUseFirst(ItemStack par1ItemStack,
+			EntityPlayer par2EntityPlayer, World par3World, BlockPos pos,
+			EnumFacing side, float par8, float par9, float par10) {
+
+		if (par3World.isRemote) {
+			Inventories
+					.sendItemInventoryOpen(par2EntityPlayer.inventory.currentItem);
+		}
 		return true;
 	}
 
 	@Override
 	public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World,
 			EntityPlayer thePlayer) {
-		if (par2World.isRemote) {
-			Inventories.sendItemInventoryOpen(thePlayer.inventory.currentItem);
-		}
+		// This is disabled, because it causes the server to change the
+		// ItemStack after the Inventory is opened, which basically messes up
+		// the Inventory.
 		return par1ItemStack;
 	}
 
-	public static BagInventory getInventory(ItemStack item) {
-		return BagInventory.getInvForItem(item);
+	public static BagInventory getBagInventory(ItemStack stack) {
+		return BetterChestsItems.bag.getInventory(stack);
 	}
 
 	@Override
@@ -71,12 +82,11 @@ public class ItemBag extends AromicItem implements ISpecialGUIProvider {
 			BagInventory inv = getInventory(par1ItemStack);
 			inv.onUpdate((EntityPlayer) par3Entity);
 		}
+		if (par2World.isRemote)
+			return;
+		LogHelper.log(Level.INFO, System.identityHashCode(par1ItemStack) + " "
+				+ par1ItemStack.stackSize);
 	}
-
-//	@Override
-//	public String getItemStackDisplayName(ItemStack par1ItemStack) {
-//		return StatCollector.translateToLocal("item.betterchests:bag.name");
-//	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@SideOnly(Side.CLIENT)
@@ -92,10 +102,11 @@ public class ItemBag extends AromicItem implements ISpecialGUIProvider {
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	static void addInfo(ItemStack item, List list) {
-		BagInventory inv = getInventory(item);
+		BagInventory inv = getBagInventory(item);
 		ArrayList<ItemStack> upgrades = inv.getUpgrades();
 		if (upgrades.size() > 0) {
-			list.add(StatCollector.translateToLocal("info.betterchests:tooltip.upgradesinstalled"));
+			list.add(StatCollector
+					.translateToLocal("info.betterchests:tooltip.upgradesinstalled"));
 		}
 		for (ItemStack entry : upgrades) {
 			if (!UpgradeHelper.isUpgrade(entry)) {
@@ -138,6 +149,11 @@ public class ItemBag extends AromicItem implements ISpecialGUIProvider {
 			return new ContainerUpgrades(inv, player);
 		}
 		return inv.getContainer(player, i);
+	}
+
+	@Override
+	protected BagInventory generateInventory(ItemStack item) {
+		return new BagInventory(item);
 	}
 
 }

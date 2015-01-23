@@ -19,7 +19,7 @@ public class PlayerFeeding extends BasicUpgrade {
 		}
 		if (chest != null && chest instanceof BagInventory) {
 			BagInventory inv = (BagInventory) chest;
-			EntityPlayer player = inv.getPlayer();
+			EntityPlayer player = (EntityPlayer) inv.getEntity();
 			if (!player.getFoodStats().needFood()) {
 				return;
 			}

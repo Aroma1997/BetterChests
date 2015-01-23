@@ -1,5 +1,6 @@
 package aroma1997.betterchests.upgrades;
 
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
@@ -20,7 +21,8 @@ public class PotionUpgrade extends BasicUpgrade {
 			ItemStack item) {
 		if (tick == 52 && chest instanceof BagInventory) {
 			BagInventory b = (BagInventory) chest;
-			b.getPlayer().addPotionEffect(new PotionEffect(effect.id, 200, 1));
+			((EntityPlayer) b.getEntity()).addPotionEffect(new PotionEffect(
+					effect.id, 200, 1));
 		}
 
 	}

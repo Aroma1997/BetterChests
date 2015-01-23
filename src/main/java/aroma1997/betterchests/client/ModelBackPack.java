@@ -58,7 +58,7 @@ public class ModelBackPack extends ModelBase {
 
 	public void renderFromItem(Entity entity, float f, float f1, float f2,
 			float f3, float f4, float f5, ItemStack item) {
-		BagInventory inv = ItemBag.getInventory(item);
+		BagInventory inv = ItemBag.getBagInventory(item);
 		GL11.glColor4f(0.5F, 0.5F, 0.5F, 1.0F);
 		render(entity, f, f1, f2, f3, f4, f5);
 		int slots = inv.getAmountUpgrade(Upgrade.SLOT.getItem());

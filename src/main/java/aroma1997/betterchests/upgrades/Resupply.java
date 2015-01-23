@@ -18,13 +18,15 @@ public class Resupply extends BasicUpgrade {
 		}
 		if (chest != null && chest instanceof BagInventory) {
 			BagInventory inv = (BagInventory) chest;
-			EntityPlayer player = inv.getPlayer();
+			EntityPlayer player = (EntityPlayer) inv.getEntity();
 			for (int i = 0; i < player.inventory.getSizeInventory(); i++) {
 				ItemStack itemStack = player.inventory.getStackInSlot(i);
 				if (itemStack == null) {
 					continue;
 				}
-				ItemStack get = InvUtil.getFirstItem(inv, itemStack, true, null, new BCFilterFilter(inv.getFiltersForUpgrade(item)));
+				ItemStack get = InvUtil.getFirstItem(inv, itemStack, true,
+						null,
+						new BCFilterFilter(inv.getFiltersForUpgrade(item)));
 				if (get == null) {
 					continue;
 				}

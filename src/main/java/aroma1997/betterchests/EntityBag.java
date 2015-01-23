@@ -18,21 +18,31 @@ public class EntityBag extends EntityItem {
 
 	public EntityBag(World par1World) {
 		super(par1World);
+		init();
 	}
 
 	public EntityBag(World par1World, double par2, double par4, double par6) {
 		super(par1World, par2, par4, par6);
+		init();
 	}
 
 	public EntityBag(World par1World, double par2, double par4, double par6,
 			ItemStack par8ItemStack) {
 		super(par1World, par2, par4, par6, par8ItemStack);
+		init();
+	}
+
+	private void init() {
+		BagInventory inv = ItemBag.getBagInventory(getEntityItem());
+		if (inv != null) {
+			inv.setEntity(this);
+		}
 	}
 
 	@Override
 	// Is invulnerable
 	public boolean isEntityInvulnerable(DamageSource damagesource) {
-		BagInventory inv = ItemBag.getInventory(getEntityItem());
+		BagInventory inv = ItemBag.getBagInventory(getEntityItem());
 		if (inv == null
 				|| !inv.isUpgradeInstalled(Upgrade.UNBREAKABLE.getItem())
 				|| damagesource == DamageSource.outOfWorld) {
