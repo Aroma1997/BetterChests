@@ -27,6 +27,7 @@ import aroma1997.betterchests.upgrades.BasicUpgrade;
 import aroma1997.betterchests.upgrades.Blocking;
 import aroma1997.betterchests.upgrades.CobbleGen;
 import aroma1997.betterchests.upgrades.Collector;
+import aroma1997.betterchests.upgrades.Energy;
 import aroma1997.betterchests.upgrades.Feeding;
 import aroma1997.betterchests.upgrades.Furnace;
 import aroma1997.betterchests.upgrades.Harvesting;
@@ -43,29 +44,35 @@ import aroma1997.betterchests.upgrades.VoidUpgrade;
 import aroma1997.core.util.AromaRegistry;
 
 public enum Upgrade {
-	SLOT(null, 7, true, true, Null.class, false, false), COBBLEGEN(null, 1,
-			true, true, CobbleGen.class, true, true), REDSTONE(null, 1, true,
-			false, Null.class, false, false), LIGHT(null, 1, true, false,
-			Null.class, false, false), BASIC(null, 0, false, false, Null.class,
-			false, false), COMPARATOR(null, 1, true, false, Null.class, false,
-			false), VOID(null, 1, true, true, VoidUpgrade.class, false, true), UNBREAKABLE(
-			null, 1, true, true, Null.class, false, false), PLAYER(UNBREAKABLE,
-			1, true, false, Null.class, false, false), RAIN(null, 1, true,
-			false, Rain.class, true, false), ENERGY(null, 1, true, true,
-			Null.class, false, false), FURNACE(ENERGY, 1, true, true,
-			Furnace.class, true, true), COLLECTOR(ENERGY, 8, true, true,
-			Collector.class, true, true), TICKING(ENERGY, 1, true, false,
-			Ticking.class, true, true), FEEDING(null, 1, true, false,
-			Feeding.class, true, true), PLAYERFOOD(null, 1, false, true,
-			PlayerFeeding.class, true, true), RESUPPLY(null, 1, false, true,
-			Resupply.class, true, true), PLANTING(ENERGY, 5, true, false,
-			Planting.class, true, true), HARVESTING(ENERGY, 5, true, false,
-			Harvesting.class, true, true), ANIMAL(ENERGY, 1, true, false,
-			Animal.class, true, false), AI(null, 1, true, true, Null.class,
-			false, false), MINING(AI, 1, true, false, Mining.class, true, true), KILLING(
-			ENERGY, 1, true, false, Killing.class, true, false), BLOCKER(SLOT,
-			4, true, false, Blocking.class, false, false), LIGHTWEIGHT(null, 1,
-			false, true, LightWeight.class, true, false);
+	SLOT(null, 7, true, true, Null.class, false, false, false),
+	COBBLEGEN(null, 1, true, true, CobbleGen.class, true, true, false),
+	REDSTONE(null, 1, true, false, Null.class, false, false, false),
+	LIGHT(null, 1, true, false, Null.class, false, false, false),
+	BASIC(null, 0, false, false, Null.class, false, false, false),
+	COMPARATOR(null, 1, true, false, Null.class, false, false, false),
+	VOID(null, 1, true, true, VoidUpgrade.class, false, true, false),
+	UNBREAKABLE(null, 1, true, true, Null.class, false, false, false),
+	PLAYER(UNBREAKABLE, 1, true, false, Null.class, false, false, false),
+	RAIN(null, 1, true, false, Rain.class, true, false, false),
+	ENERGY(null, 1, true, true, Energy.class, false, true, false),
+	FURNACE(null, 1, true, true, Furnace.class, true, true, true),
+	COLLECTOR(null, 8, true, true, Collector.class, true, true, true),
+	TICKING(null, 1, true, false, Ticking.class, true, true, true),
+	FEEDING(null, 1, true, false, Feeding.class, true, true, false),
+	PLAYERFOOD(null, 1, false, true, PlayerFeeding.class, true, true, false),
+	RESUPPLY(null, 1, false, true, Resupply.class, true, true, false),
+	PLANTING(null, 5, true, false, Planting.class, true, true, true), // TODO:
+																		// Energy
+	HARVESTING(null, 5, true, false, Harvesting.class, true, true, true), // TODO:
+																			// Energy
+	ANIMAL(null, 1, true, false, Animal.class, true, false, true), // TODO:
+																	// Energy
+	AI(null, 1, true, true, Null.class, false, false, false),
+	MINING(AI, 1, true, false, Mining.class, true, true, false),
+	KILLING(null, 1, true, false, Killing.class, true, false, true), // TODO:
+																		// Energy
+	BLOCKER(SLOT, 4, true, false, Blocking.class, false, false, false),
+	LIGHTWEIGHT(null, 1, false, true, LightWeight.class, true, false, false);
 
 	private final Upgrade requirement;
 
@@ -81,15 +88,20 @@ public enum Upgrade {
 
 	private final boolean filter;
 
+	private final boolean power;
+
+	private ItemStack stack;
+
 	private Upgrade(Upgrade requirement, int max, boolean canChest,
 			boolean canBag, Class<? extends BasicUpgrade> claSS,
-			boolean disablable, boolean filter) {
+			boolean disablable, boolean filter, boolean power) {
 		this.requirement = requirement;
 		this.max = max;
 		this.canChest = canChest;
 		this.canBag = canBag;
 		disableable = disablable;
 		this.filter = filter;
+		this.power = power;
 
 		try {
 			upgrade = claSS.newInstance();
@@ -269,7 +281,9 @@ public enum Upgrade {
 	}
 
 	public ItemStack getItem() {
-		return new ItemStack(BetterChestsItems.upgrade, 1, ordinal());
+		if (stack == null)
+			stack = new ItemStack(BetterChestsItems.upgrade, 1, ordinal());
+		return stack;
 	}
 
 	public BasicUpgrade getUpgrade() {
@@ -282,5 +296,9 @@ public enum Upgrade {
 
 	public boolean canUseFilter() {
 		return filter;
+	}
+
+	public boolean requiresPower() {
+		return power;
 	}
 }

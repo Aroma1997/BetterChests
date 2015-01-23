@@ -52,6 +52,14 @@ public class Reference {
 		public static final int PLANTS_RANGE_MULTIPLIER = 2;
 
 		public static final int FISHING_RANGE = 1;
+
+		public static final int ENERGY_FUEL_MULTIPLIER = 10;
+
+		public static final int ENERGY_SMELTING = 2000;
+
+		public static final int ENERGY_COLLECTOR = 5;
+
+		public static final int ENERGY_TICKING = 3200;
 	}
 
 }

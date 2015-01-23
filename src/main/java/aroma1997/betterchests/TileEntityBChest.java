@@ -12,15 +12,12 @@ package aroma1997.betterchests;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
-import net.minecraft.inventory.ContainerChest;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
-import net.minecraft.inventory.InventoryLargeChest;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -44,6 +41,7 @@ import aroma1997.betterchests.api.IBetterChest;
 import aroma1997.betterchests.api.IInventoryFilter;
 import aroma1997.betterchests.api.IUpgrade;
 import aroma1997.core.client.inventories.GUIContainer;
+import aroma1997.core.client.inventories.SpecialImagesBase.EnergyBar;
 import aroma1997.core.inventories.AromaContainer;
 import aroma1997.core.inventories.AromaSlot;
 import aroma1997.core.inventories.ContainerBasic;
@@ -51,6 +49,7 @@ import aroma1997.core.inventories.IAdvancedInventory;
 import aroma1997.core.inventories.ISpecialInventory;
 import aroma1997.core.inventories.Inventories;
 import aroma1997.core.items.wrench.IAromaWrenchable;
+import aroma1997.core.misc.EnergyObject;
 import aroma1997.core.util.FileUtil;
 import aroma1997.core.util.ItemUtil;
 import aroma1997.core.util.ItemUtil.ItemMatchCriteria;
@@ -64,8 +63,6 @@ public class TileEntityBChest extends TileEntity implements IBetterChest,
 
 	private String player;
 
-	private int tick;
-
 	private long longTick;
 
 	public EntityPlayer fplayer;
@@ -74,8 +71,9 @@ public class TileEntityBChest extends TileEntity implements IBetterChest,
 
 	private ArrayList<ItemStack> upgrades = new ArrayList<ItemStack>();
 
+	public EnergyObject energy = generateNewEObject();
+
 	public TileEntityBChest() {
-		tick = new Random().nextInt(64);
 		items = new ItemStack[27];
 	}
 
@@ -113,14 +111,9 @@ public class TileEntityBChest extends TileEntity implements IBetterChest,
 		if (worldObj.isRemote) {
 			return;
 		}
-		UpgradeHelper.updateChest(this, tick, worldObj);
+		UpgradeHelper.updateChest(this, (int) (longTick % 64), worldObj);
 
 		longTick++;
-		if (tick-- <= 0) {
-			tick = 64;
-			markDirty();
-		}
-		;
 	}
 
 	@Override
@@ -218,6 +211,7 @@ public class TileEntityBChest extends TileEntity implements IBetterChest,
 		if (nbt.hasKey("player")) {
 			player = nbt.getString("player");
 		}
+		energy.readFromNBT(nbt);
 		super.readFromNBT(nbt);
 		if (worldObj != null && worldObj.isRemote) {
 			worldObj.markBlockForUpdate(pos);
@@ -238,6 +232,7 @@ public class TileEntityBChest extends TileEntity implements IBetterChest,
 			list.appendTag(upgradesbt);
 		}
 		nbt.setTag("upgrades", list);
+		energy.saveToNBT(nbt);
 	}
 
 	private void onUpgradeInserted(EntityPlayer player) {
@@ -318,14 +313,10 @@ public class TileEntityBChest extends TileEntity implements IBetterChest,
 			while (iterator.hasNext()) {
 				EntityPlayer entityplayer = (EntityPlayer) iterator.next();
 
-				if (entityplayer.openContainer instanceof ContainerChest) {
-					IInventory iinventory = ((ContainerChest) entityplayer.openContainer)
-							.getLowerChestInventory();
+				if (entityplayer.openContainer instanceof ContainerBasic) {
+					IInventory iinventory = ((ContainerBasic) entityplayer.openContainer).inv;
 
-					if (iinventory == this
-							|| iinventory instanceof InventoryLargeChest
-							&& ((InventoryLargeChest) iinventory)
-									.isPartOfLargeChest(this)) {
+					if (iinventory == this) {
 						++numUsingPlayers;
 					}
 				}
@@ -340,8 +331,9 @@ public class TileEntityBChest extends TileEntity implements IBetterChest,
 			double d1 = i + 0.5D;
 			d2 = k + 0.5D;
 
-			worldObj.playSoundEffect(d1, j + 0.5D, d2, "random.chestopen",
-					0.5F, worldObj.rand.nextFloat() * 0.1F + 0.9F);
+			worldObj.playSoundEffect(d1, j + 0.5D, d2,
+					"betterchests:chest.bchestopen", 0.5F,
+					worldObj.rand.nextFloat() * 0.1F + 0.9F);
 		}
 
 		if (numUsingPlayers == 0 && lidAngle > 0.0F || numUsingPlayers > 0
@@ -365,7 +357,7 @@ public class TileEntityBChest extends TileEntity implements IBetterChest,
 				double d0 = k + 0.5D;
 
 				worldObj.playSoundEffect(d2, j + 0.5D, d0,
-						"random.chestclosed", 0.5F,
+						"betterchests:chest.bchestclose", 0.5F,
 						worldObj.rand.nextFloat() * 0.1F + 0.9F);
 			}
 
@@ -434,6 +426,9 @@ public class TileEntityBChest extends TileEntity implements IBetterChest,
 	public boolean receiveClientEvent(int par1, int par2) {
 		if (par1 == 1) {
 			numUsingPlayers = par2;
+			return true;
+		} else if (par1 == 2) {
+			getEnergyObject().setCurrent(par2);
 			return true;
 		} else {
 			return super.receiveClientEvent(par1, par2);
@@ -723,6 +718,38 @@ public class TileEntityBChest extends TileEntity implements IBetterChest,
 	public IChatComponent getDisplayName() {
 		return ServerUtil.getChatForString(StatCollector
 				.translateToLocal(getName()));
+	}
+
+	@Override
+	public EnergyObject getEnergyObject() {
+		return energy;
+	}
+
+	public static EnergyObject generateNewEObject() {
+		if (Config.INSTANCE.useEnergy) {
+			return new EnergyObject().setMax(16000).setPerCall(6400);
+		} else {
+			return new EnergyObject.CreativeEnergyObject()
+					.setMax(Integer.MAX_VALUE);
+		}
+	}
+
+	@SideOnly(Side.CLIENT)
+	@Override
+	public float getProgress(Object object) {
+		float f = 0.0F;
+		if (object instanceof EnergyBar) {
+			f = (getEnergyObject().getCurrent() / (float) getEnergyObject()
+					.getMax());
+		} else {
+			f = getProgress();
+		}
+		return f;
+	}
+
+	@Override
+	public float getProgress() {
+		return 0;
 	}
 
 }

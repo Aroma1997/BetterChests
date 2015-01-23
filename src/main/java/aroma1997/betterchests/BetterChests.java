@@ -9,11 +9,9 @@
 
 package aroma1997.betterchests;
 
-import java.io.File;
 import java.util.ArrayList;
 
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -55,14 +53,10 @@ public class BetterChests {
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		logger = LogHelperPre.genNewLogger(Reference.MOD_ID);
-		Configuration config = new Configuration(new File(new File(
-				event.getModConfigurationDirectory(), "aroma1997"),
-				Reference.MOD_ID + ".cfg"));
-		config.load();
+
+		Config.INSTANCE.load();
+
 		AromaRegistry.register(BetterChestsItems.class);
-		if (config.hasChanged()) {
-			config.save();
-		}
 		EntityRegistry.registerGlobalEntityID(EntityBag.class,
 				"betterchests:bag", EntityRegistry.findGlobalUniqueEntityId());
 		new EventListener();

@@ -33,7 +33,7 @@ public class EventListener {
 			for (int i = 0; i < player.inventory.getSizeInventory(); i++) {
 				ItemStack stack = player.inventory.getStackInSlot(i);
 				if (stack != null && stack.getItem() instanceof ItemBag) {
-					BagInventory inv = ItemBag.getInventory(stack);
+					BagInventory inv = ItemBag.getBagInventory(stack);
 					if (inv.isUpgradeInstalled(Upgrade.COLLECTOR.getItem())
 							&& inv.isUpgradeDisabled(Upgrade.COLLECTOR
 									.getItem())) {
@@ -43,7 +43,7 @@ public class EventListener {
 				}
 			}
 			if (c != -1) {
-				BagInventory inv = ItemBag.getInventory(player.inventory
+				BagInventory inv = ItemBag.getBagInventory(player.inventory
 						.getStackInSlot(c));
 				ItemStack ret = InvUtil.putIntoFirstSlot(inv, item, false);
 				if (ret == null) {

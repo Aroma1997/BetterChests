@@ -7,7 +7,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
 import aroma1997.betterchests.EntityBag;
-import aroma1997.betterchests.InventoryFilter;
+import aroma1997.betterchests.Reference;
 import aroma1997.betterchests.Upgrade;
 import aroma1997.betterchests.UpgradeHelper;
 import aroma1997.betterchests.api.IBetterChest;
@@ -19,7 +19,9 @@ public class Collector extends BasicUpgrade {
 	@Override
 	public void updateChest(IBetterChest inv, int tick, World world,
 			ItemStack item) {
-		if (inv.isUpgradeInstalled(Upgrade.COLLECTOR.getItem())) {
+		if (tick % 4 == 1) {
+			if (inv.getEnergyObject().getMaxRequest() < Reference.Conf.ENERGY_COLLECTOR)
+				return;
 			float radius = inv.getAmountUpgrade(Upgrade.COLLECTOR.getItem());
 			AxisAlignedBB bounds = AxisAlignedBB.fromBounds(inv.getXPos()
 					+ -0.5D, inv.getYPos() + 0.0D, inv.getZPos() + -0.5D,
@@ -29,7 +31,9 @@ public class Collector extends BasicUpgrade {
 			List<EntityItem> list = world.getEntitiesWithinAABB(
 					EntityItem.class, bounds);
 			for (EntityItem e : list) {
-				if (e.getEntityItem() == null || !UpgradeHelper.isItemAllowed(e.getEntityItem(), inv.getFiltersForUpgrade(item))) {
+				if (e.getEntityItem() == null
+						|| !UpgradeHelper.isItemAllowed(e.getEntityItem(),
+								inv.getFiltersForUpgrade(item))) {
 					continue;
 				}
 				if (e.isEntityAlive()) {
@@ -44,22 +48,29 @@ public class Collector extends BasicUpgrade {
 				}
 			}
 
-			AxisAlignedBB boundsNew = AxisAlignedBB.fromBounds(
-					inv.getXPos() + -0.5D, inv.getYPos() - 1.0D, inv.getZPos()
-							+ -0.5D, inv.getXPos() + 0.5D,
-					inv.getYPos() + 0.5D, inv.getZPos() + 0.5D);
+			AxisAlignedBB boundsNew = AxisAlignedBB.fromBounds(inv.getXPos()
+					+ -0.5D, inv.getYPos() - 1.0D, inv.getZPos() + -0.5D,
+					inv.getXPos() + 0.5D, inv.getYPos() + 0.5D,
+					inv.getZPos() + 0.5D);
 			boundsNew = boundsNew.expand(0.2D, 0.2D, 0.2D);
 			List<EntityItem> listNew = world.getEntitiesWithinAABB(
 					EntityItem.class, boundsNew);
 
+			int maxEnergy = inv.getEnergyObject().getMaxRequest();
+			final int maxEnergyDefault = maxEnergy;
+
 			for (EntityItem e : listNew) {
-				if (e.isEntityAlive()
-						&& !(e instanceof EntityBag)) {
-					if (e.getEntityItem() == null || !UpgradeHelper.isItemAllowed(e.getEntityItem(), inv.getFiltersForUpgrade(item))) {
+				if (e.isEntityAlive() && !(e instanceof EntityBag)) {
+					if (maxEnergy < Reference.Conf.ENERGY_COLLECTOR)
+						break;
+					if (e.getEntityItem() == null
+							|| !UpgradeHelper.isItemAllowed(e.getEntityItem(),
+									inv.getFiltersForUpgrade(item))) {
 						continue;
 					}
 					ItemStack itemBack = InvUtil.putIntoFirstSlot(inv,
 							e.getEntityItem(), false);
+					maxEnergy -= Reference.Conf.ENERGY_COLLECTOR;
 					if (itemBack == null) {
 						world.removeEntity(e);
 					} else {
@@ -67,6 +78,7 @@ public class Collector extends BasicUpgrade {
 					}
 				}
 			}
+			inv.getEnergyObject().remove(maxEnergyDefault - maxEnergy);
 
 		}
 	}

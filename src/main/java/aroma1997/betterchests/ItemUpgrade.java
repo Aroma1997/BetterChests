@@ -43,6 +43,10 @@ public class ItemUpgrade extends AromicItem implements IUpgrade {
 	public void addInformation(ItemStack par1ItemStack,
 			EntityPlayer par2EntityPlayer, List par3List, boolean par4) {
 		Upgrade upgrade = Upgrade.values()[par1ItemStack.getItemDamage()];
+		if (upgrade.requiresPower())
+			par3List.add(Colors.YELLOW
+					+ StatCollector
+							.translateToLocalFormatted("info.betterchests:tooltip.requirespower"));
 		if (upgrade.getRequirement() != null) {
 			par3List.add(StatCollector.translateToLocalFormatted(
 					"info.betterchests:tooltip.requires", Colors.YELLOW

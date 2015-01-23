@@ -22,6 +22,7 @@ import aroma1997.core.client.inventories.GUIAromaBasic;
 import aroma1997.core.client.inventories.GUIAutoLayout;
 import aroma1997.core.client.inventories.RenderHelper;
 import aroma1997.core.client.inventories.RenderHelper.Tex;
+import aroma1997.core.client.inventories.SpecialImagesBase.EnergyBar;
 import aroma1997.core.client.util.Colors;
 import aroma1997.core.inventories.AromaContainer;
 import aroma1997.core.util.InvUtil;
@@ -34,7 +35,7 @@ public class ContainerUpgrades extends AromaContainer {
 
 	private int upgrades = 0;
 
-	private static final int bufferX = 9;
+	private static final int bufferX = 18;
 
 	private static final int bufferY = 18;
 
@@ -59,6 +60,7 @@ public class ContainerUpgrades extends AromaContainer {
 		GUIAutoLayout gui = new GUIAutoLayout(this);
 		gui.setXSize(9 * 18 + bufferX * 2);
 		gui.setYSize(upgrades / 9 * 18 + bufferY * 2 + 45);
+		gui.addSpecialImage(new EnergyBar(0, -1, chest));
 		return gui;
 	}
 

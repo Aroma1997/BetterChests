@@ -14,6 +14,8 @@ import java.util.List;
 
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
+import aroma1997.core.inventories.IProgressable;
+import aroma1997.core.misc.EnergyObject;
 
 /**
  * This is implemented in the Bag and in the Chest.
@@ -21,7 +23,7 @@ import net.minecraft.item.ItemStack;
  * @author Aroma1997
  * 
  */
-public interface IBetterChest extends IInventory {
+public interface IBetterChest extends IInventory, IProgressable {
 
 	/**
 	 * The position
@@ -91,6 +93,7 @@ public interface IBetterChest extends IInventory {
 	 * 
 	 * @return
 	 */
+	@Deprecated
 	public boolean hasEnergy();
 
 	/**
@@ -110,6 +113,7 @@ public interface IBetterChest extends IInventory {
 
 	/**
 	 * Checks if this Upgrade is disabled.
+	 * 
 	 * @param stack
 	 * @return
 	 */
@@ -117,16 +121,20 @@ public interface IBetterChest extends IInventory {
 
 	/**
 	 * Disables or enables this Upgrade.
+	 * 
 	 * @param stack
 	 * @param value
 	 */
 	public void setUpgradeDisabled(ItemStack stack, boolean value);
-	
+
 	/**
 	 * This will return a list of filterUpgrades for this Upgrade.
+	 * 
 	 * @param item
 	 * @return
 	 */
 	public List<IInventoryFilter> getFiltersForUpgrade(ItemStack item);
+
+	public EnergyObject getEnergyObject();
 
 }

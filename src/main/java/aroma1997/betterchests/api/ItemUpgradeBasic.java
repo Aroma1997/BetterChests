@@ -48,6 +48,10 @@ public abstract class ItemUpgradeBasic extends AromicItem implements IUpgrade {
 		if (par1ItemStack == null || !UpgradeHelperAPI.isUpgrade(par1ItemStack))
 			return;
 		List<ItemStack> requirements = getRequiredUpgrade(par1ItemStack);
+		if (requiresPower(par1ItemStack))
+			par3List.add(Colors.ORANGE
+					+ StatCollector
+							.translateToLocalFormatted("info.betterchests:tooltip.requirespower"));
 		if (requirements != null && !requirements.isEmpty()) {
 			for (ItemStack req : requirements) {
 				par3List.add(StatCollector.translateToLocalFormatted(
@@ -55,30 +59,35 @@ public abstract class ItemUpgradeBasic extends AromicItem implements IUpgrade {
 								+ req.getItem().getItemStackDisplayName(req)));
 			}
 		}
-		IUpgrade upgrade = (IUpgrade) par1ItemStack.getItem();
-		int max = upgrade.getMaxUpgrades(par1ItemStack);
+		int max = getMaxUpgrades(par1ItemStack);
 		if (max != 0) {
 			if (max == -1) {
-				par3List.add(StatCollector.translateToLocal("info.betterchests:tooltip.infinite"));
-			}
-			else {
+				par3List.add(StatCollector
+						.translateToLocal("info.betterchests:tooltip.infinite"));
+			} else {
 				par3List.add(StatCollector.translateToLocalFormatted(
 						"info.betterchests:tooltip.maxamount",
-						upgrade.getMaxUpgrades(par1ItemStack)));
+						getMaxUpgrades(par1ItemStack)));
 			}
 		}
-		if (upgrade.supportsFilter(par1ItemStack, false) || upgrade.supportsFilter(par1ItemStack, true)) {
-			par3List.add(StatCollector.translateToLocal("info.betterchests:tooltip.supportsfilter"));
+		if (supportsFilter(par1ItemStack, false)
+				|| supportsFilter(par1ItemStack, true)) {
+			par3List.add(StatCollector
+					.translateToLocal("info.betterchests:tooltip.supportsfilter"));
 		}
-		if (!upgrade.canBagTakeUpgrade(par1ItemStack)
-				&& !upgrade.canChestTakeUpgrade(par1ItemStack)) {
-		} else if (!upgrade.canChestTakeUpgrade(par1ItemStack)) {
+		if (!canBagTakeUpgrade(par1ItemStack)
+				&& !canChestTakeUpgrade(par1ItemStack)) {
+		} else if (!canChestTakeUpgrade(par1ItemStack)) {
 			par3List.add(StatCollector
 					.translateToLocal("info.betterchests:tooltip.nochest"));
-		} else if (!upgrade.canBagTakeUpgrade(par1ItemStack)) {
+		} else if (!canBagTakeUpgrade(par1ItemStack)) {
 			par3List.add(StatCollector
 					.translateToLocal("info.betterchests:tooltip.nobag"));
 		}
+	}
+
+	public boolean requiresPower(ItemStack stack) {
+		return false;
 	}
 
 }
