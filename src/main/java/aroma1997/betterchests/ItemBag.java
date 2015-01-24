@@ -33,6 +33,7 @@ import aroma1997.core.inventories.Inventories;
 import aroma1997.core.items.inventory.ItemInventory;
 import aroma1997.core.items.wrench.ItemWrench;
 import aroma1997.core.log.LogHelper;
+import aroma1997.core.util.ServerUtil;
 
 public class ItemBag extends ItemInventory<BagInventory> implements
 		ISpecialGUIProvider {
@@ -68,6 +69,14 @@ public class ItemBag extends ItemInventory<BagInventory> implements
 		// This is disabled, because it causes the server to change the
 		// ItemStack after the Inventory is opened, which basically messes up
 		// the Inventory.
+		if (par2World.isRemote) {
+			thePlayer
+					.addChatMessage(ServerUtil
+							.getChatForString("This does not work currently. (Missing Forge hook)"));
+			thePlayer
+					.addChatMessage(ServerUtil
+							.getChatForString("To open the bag, please right-click with it on a block or use the key to open it."));
+		}
 		return par1ItemStack;
 	}
 
