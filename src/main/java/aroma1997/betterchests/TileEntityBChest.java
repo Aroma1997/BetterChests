@@ -726,12 +726,14 @@ public class TileEntityBChest extends TileEntity implements IBetterChest,
 	}
 
 	public static EnergyObject generateNewEObject() {
+		EnergyObject e;
 		if (Config.INSTANCE.useEnergy) {
-			return new EnergyObject().setMax(128000).setPerCall(6400);
+			e = new EnergyObject();
 		} else {
-			return new EnergyObject.CreativeEnergyObject()
-					.setMax(Integer.MAX_VALUE);
+			e = new EnergyObject.CreativeEnergyObject();
 		}
+		e.setMax(128000);
+		return e;
 	}
 
 	@SideOnly(Side.CLIENT)
