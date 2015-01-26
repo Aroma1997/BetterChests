@@ -10,18 +10,20 @@
 package aroma1997.betterchests;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import aroma1997.betterchests.api.IBetterChest;
+import aroma1997.core.inventories.AromaContainer;
+import aroma1997.core.inventories.AromaSlot;
+import aroma1997.core.util.InvUtil;
+import aroma1997.core.util.WorldUtil;
 
-public class SlotUpgrades extends Slot {
+public class SlotUpgrades extends AromaSlot {
 
 	private IBetterChest chest;
 
 	private ItemStack item;
+
+	private ContainerUpgrades container;
 
 	public SlotUpgrades(IBetterChest chest, ItemStack item, int posX, int posY) {
 		super(null, -1, posX, posY);
@@ -85,6 +87,7 @@ public class SlotUpgrades extends Slot {
 		ret.stackSize = Math.min(upgrades, par1);
 		chest.setAmountUpgrade(item, chest.getAmountUpgradeExact(item)
 				- ret.stackSize);
+		onSlotChanged();
 		// item.stackSize -= ret.stackSize;
 		if (ret.stackSize <= 0) {
 			return null;
@@ -95,6 +98,48 @@ public class SlotUpgrades extends Slot {
 	@Override
 	public boolean canTakeStack(EntityPlayer par1EntityPlayer) {
 		return false;
+	}
+
+	@Override
+	public ItemStack slotClicked(AromaContainer container, int slot, int par2,
+			int par3, EntityPlayer player) {
+
+		if (par3 == 1) {
+			if (par2 == 1) {
+				ItemStack stack = getStack().copy();
+				decrStackSize(1);
+				stack.stackSize = 1;
+				UpgradeHelper.enableUpgrade(stack);
+				if (InvUtil.putIntoFirstSlot(
+						((ContainerUpgrades) container).player.inventory,
+						stack, false) != null) {
+					WorldUtil.dropItemsRandom(
+							((ContainerUpgrades) container).player.worldObj,
+							stack, ((ContainerUpgrades) container).player
+									.getPosition());
+				}
+			} else if (par2 == 0) {
+				ItemStack stack = getStack().copy();
+				decrStackSize(getStack().stackSize);
+				UpgradeHelper.enableUpgrade(stack);
+				stack = InvUtil.putIntoFirstSlot(
+						((ContainerUpgrades) container).player.inventory,
+						stack, false);
+				if (stack != null) {
+					WorldUtil.dropItemsRandom(
+							((ContainerUpgrades) container).player.worldObj,
+							stack, ((ContainerUpgrades) container).player
+									.getPosition());
+				}
+
+			}
+
+		} else if (par3 == 0 && (par2 == 0 || par2 == 1)) {
+			chest.setUpgradeDisabled(getStack(),
+					!chest.isUpgradeDisabled(getStack()));
+		}
+
+		return null;
 	}
 
 	/**
