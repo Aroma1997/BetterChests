@@ -1,3 +1,12 @@
+/**
+ * The code of BetterChests and all related materials like textures is copyrighted material.
+ * It may only be redistributed or used for Commercial purposes with the permission of Aroma1997.
+ * 
+ * All Rights reserved (c) by Aroma1997
+ * 
+ * See https://github.com/Aroma1997/BetterChests/blob/master/LICENSE.md for more information.
+ */
+
 package aroma1997.betterchests.upgrades;
 
 import net.minecraft.block.Block;
@@ -34,8 +43,10 @@ public class Planting extends BasicUpgrade {
 		int xcoord = chest.getXCoord() + num / doubleRange - range;
 		int zcoord = chest.getZCoord() + num % doubleRange - range;
 		int ycoord = chest.getYCoord();
-		int slot = InvUtil.getFirstItem(chest, IPlantable.class, null, new BCFilterFilter(chest.getFiltersForUpgrade(item)));
-		doBlock(chest, tick, world, item, new BlockPos(xcoord, ycoord - 1, zcoord), slot);
+		int slot = InvUtil.getFirstItem(chest, IPlantable.class, null,
+				new BCFilterFilter(chest.getFiltersForUpgrade(item)));
+		doBlock(chest, tick, world, item, new BlockPos(xcoord, ycoord - 1,
+				zcoord), slot);
 	}
 
 	private static void doBlock(IBetterChest chest, int tick, World world,
@@ -60,7 +71,8 @@ public class Planting extends BasicUpgrade {
 					|| blockAbove instanceof BlockTallGrass
 					|| blockAbove instanceof BlockFlower
 					|| blockAbove.getBlock().isReplaceable(world, posUp)) {
-				world.setBlockState(pos, Blocks.farmland.getStateFromMeta(hydrate ? 10 : 0));
+				world.setBlockState(pos,
+						Blocks.farmland.getStateFromMeta(hydrate ? 10 : 0));
 				world.setBlockToAir(posUp);
 			}
 		}
@@ -68,12 +80,12 @@ public class Planting extends BasicUpgrade {
 		block = state.getBlock();
 		if (block instanceof BlockFarmland) {
 			if (Blocks.farmland.getMetaFromState(state) <= 2 && hydrate) {
-				world.setBlockState(pos, Blocks.farmland.getStateFromMeta(10), 2);
+				world.setBlockState(pos, Blocks.farmland.getStateFromMeta(10),
+						2);
 			}
 		}
-		if (block.canSustainPlant(world, pos,
-				EnumFacing.UP, (IPlantable) pl)) {
-			
+		if (block.canSustainPlant(world, pos, EnumFacing.UP, (IPlantable) pl)) {
+
 			IBlockState stateNew = world.getBlockState(posUp);
 			Block blockAboveNew = stateNew.getBlock();
 			if (WorldUtil.isBlockAir(blockAboveNew)
@@ -81,10 +93,9 @@ public class Planting extends BasicUpgrade {
 				if (itemPlant == null || itemPlant.stackSize <= 0) {
 					return;
 				}
-				IBlockState plant = ((IPlantable)pl).getPlant(world, posUp);
+				IBlockState plant = ((IPlantable) pl).getPlant(world, posUp);
 				if (plant.getBlock().canPlaceBlockAt(world, posUp)) {
-					world.setBlockState(posUp,
-							plant, 3);
+					world.setBlockState(posUp, plant, 3);
 					chest.decrStackSize(slot, 1);
 				}
 			}

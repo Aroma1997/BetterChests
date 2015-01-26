@@ -1,3 +1,12 @@
+/**
+ * The code of BetterChests and all related materials like textures is copyrighted material.
+ * It may only be redistributed or used for Commercial purposes with the permission of Aroma1997.
+ * 
+ * All Rights reserved (c) by Aroma1997
+ * 
+ * See https://github.com/Aroma1997/BetterChests/blob/master/LICENSE.md for more information.
+ */
+
 package aroma1997.betterchests.upgrades;
 
 import java.util.List;
@@ -20,7 +29,7 @@ public class Collector extends BasicUpgrade {
 	public void updateChest(IBetterChest inv, int tick, World world,
 			ItemStack item) {
 		if (tick % 4 == 1) {
-			if (inv.getEnergyObject().getMaxRequest() < Reference.Conf.ENERGY_COLLECTOR)
+			if (inv.getEnergyObject().getCurrent() < Reference.Conf.ENERGY_COLLECTOR)
 				return;
 			float radius = inv.getAmountUpgrade(Upgrade.COLLECTOR.getItem());
 			AxisAlignedBB bounds = AxisAlignedBB.fromBounds(inv.getXPos()
@@ -56,12 +65,9 @@ public class Collector extends BasicUpgrade {
 			List<EntityItem> listNew = world.getEntitiesWithinAABB(
 					EntityItem.class, boundsNew);
 
-			int maxEnergy = inv.getEnergyObject().getMaxRequest();
-			final int maxEnergyDefault = maxEnergy;
-
 			for (EntityItem e : listNew) {
 				if (e.isEntityAlive() && !(e instanceof EntityBag)) {
-					if (maxEnergy < Reference.Conf.ENERGY_COLLECTOR)
+					if (inv.getEnergyObject().getCurrent() < Reference.Conf.ENERGY_COLLECTOR)
 						break;
 					if (e.getEntityItem() == null
 							|| !UpgradeHelper.isItemAllowed(e.getEntityItem(),
@@ -70,7 +76,9 @@ public class Collector extends BasicUpgrade {
 					}
 					ItemStack itemBack = InvUtil.putIntoFirstSlot(inv,
 							e.getEntityItem(), false);
-					maxEnergy -= Reference.Conf.ENERGY_COLLECTOR;
+					inv.getEnergyObject().setCurrent(
+							inv.getEnergyObject().getCurrent()
+									- Reference.Conf.ENERGY_COLLECTOR);
 					if (itemBack == null) {
 						world.removeEntity(e);
 					} else {
@@ -78,7 +86,6 @@ public class Collector extends BasicUpgrade {
 					}
 				}
 			}
-			inv.getEnergyObject().remove(maxEnergyDefault - maxEnergy);
 
 		}
 	}

@@ -1,3 +1,12 @@
+/**
+ * The code of BetterChests and all related materials like textures is copyrighted material.
+ * It may only be redistributed or used for Commercial purposes with the permission of Aroma1997.
+ * 
+ * All Rights reserved (c) by Aroma1997
+ * 
+ * See https://github.com/Aroma1997/BetterChests/blob/master/LICENSE.md for more information.
+ */
+
 package aroma1997.betterchests.upgrades;
 
 import java.util.Random;
@@ -21,7 +30,8 @@ public class Mining extends BasicUpgrade {
 		if (tick != 38) {
 			return;
 		}
-		int block = InvUtil.getFirstItem(chest, ItemBlock.class, null, new BCFilterFilter(chest.getFiltersForUpgrade(item)));
+		int block = InvUtil.getFirstItem(chest, ItemBlock.class, null,
+				new BCFilterFilter(chest.getFiltersForUpgrade(item)));
 		if (block != -1) {
 			int tool = InvUtil.getFirstItem(chest, ItemTool.class);
 			if (tool != -1) {
@@ -32,7 +42,8 @@ public class Mining extends BasicUpgrade {
 				if (t.canHarvestBlock(b, tS)) {
 					int fortune = EnchantmentHelper.getEnchantmentLevel(
 							Enchantment.fortune.effectId, tS);
-					ItemStack drop = new ItemStack(b.getItemDropped(b.getDefaultState(), new Random(), fortune),
+					ItemStack drop = new ItemStack(b.getItemDropped(
+							b.getDefaultState(), new Random(), fortune),
 							b.quantityDroppedWithBonus(fortune, new Random()),
 							b.damageDropped(b.getDefaultState()));
 					if (InvUtil.putIntoFirstSlot(chest, drop, true) == null) {

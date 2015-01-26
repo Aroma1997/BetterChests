@@ -1,3 +1,12 @@
+/**
+ * The code of BetterChests and all related materials like textures is copyrighted material.
+ * It may only be redistributed or used for Commercial purposes with the permission of Aroma1997.
+ * 
+ * All Rights reserved (c) by Aroma1997
+ * 
+ * See https://github.com/Aroma1997/BetterChests/blob/master/LICENSE.md for more information.
+ */
+
 package aroma1997.betterchests.upgrades;
 
 import java.util.ArrayList;
@@ -42,8 +51,8 @@ public class Animal extends BasicUpgrade {
 					if (sheep.isShearable(null, world, entity.getPosition())) {
 						// If I ever implement that it uses Shears, then this
 						// would be the place to damage it.
-						ArrayList<ItemStack> items = (ArrayList<ItemStack>) sheep.onSheared(null,
-								world, entity.getPosition(), 1);
+						ArrayList<ItemStack> items = (ArrayList<ItemStack>) sheep
+								.onSheared(null, world, entity.getPosition(), 1);
 						for (ItemStack wool : items) {
 							if (InvUtil.putIntoFirstSlot(chest, wool, false) != null)
 								break;

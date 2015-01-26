@@ -1,3 +1,12 @@
+/**
+ * The code of BetterChests and all related materials like textures is copyrighted material.
+ * It may only be redistributed or used for Commercial purposes with the permission of Aroma1997.
+ * 
+ * All Rights reserved (c) by Aroma1997
+ * 
+ * See https://github.com/Aroma1997/BetterChests/blob/master/LICENSE.md for more information.
+ */
+
 package aroma1997.betterchests.upgrades;
 
 import java.util.List;
@@ -22,19 +31,14 @@ public class Ticking extends BasicUpgrade {
 		if (tick % 8 == 2) {
 			return;
 		}
-		if (chest.getEnergyObject().getMaxRequest() < Reference.Conf.ENERGY_TICKING)
+		if (chest.getEnergyObject().getCurrent() < Reference.Conf.ENERGY_TICKING)
 			return;
 		List<IInventoryFilter> list = chest.getFiltersForUpgrade(item);
-		int maxEnergy = chest.getEnergyObject().getMaxRequest();
-		final int maxEnergyDefault = maxEnergy;
 		try {
 			for (int i = 0; i < chest.getSizeInventory(); i++) {
-				if (maxEnergy < Reference.Conf.ENERGY_TICKING)
-					break;
 				ItemStack t = chest.getStackInSlot(i);
 				if (t != null && UpgradeHelper.isItemAllowed(t, list)) {
 					t.updateAnimation(world, null, i, true);
-					maxEnergy -= Reference.Conf.ENERGY_TICKING;
 				}
 			}
 		} catch (NullPointerException e) {
@@ -49,7 +53,9 @@ public class Ticking extends BasicUpgrade {
 					+ " y=" + chest.getYCoord() + " z=" + chest.getZCoord(), e);
 			chest.setUpgradeDisabled(item, true);
 		} finally {
-			chest.getEnergyObject().remove(maxEnergyDefault - maxEnergy);
+			chest.getEnergyObject().setCurrent(
+					chest.getEnergyObject().getCurrent()
+							- Reference.Conf.ENERGY_TICKING);
 		}
 
 	}
