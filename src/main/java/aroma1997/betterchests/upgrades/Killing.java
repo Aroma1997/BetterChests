@@ -31,7 +31,8 @@ public class Killing extends BasicUpgrade {
 	@Override
 	public void updateChest(IBetterChest chest, int tick, World world,
 			ItemStack item) {
-		if (chest.getLongTick() % 128 == 100) {
+		if (chest.getLongTick() % 128 == 100
+				&& chest.getEnergyObject().getCurrent() >= Reference.Conf.ENERGY_KILLING) {
 			AxisAlignedBB bounds = AxisAlignedBB.fromBounds(chest.getXPos()
 					- Reference.Conf.FEED_RADIUS / 2, chest.getYPos()
 					- Reference.Conf.FEED_HEIGHT / 2, chest.getZPos()
@@ -43,6 +44,7 @@ public class Killing extends BasicUpgrade {
 					EntityLiving.class, bounds);
 			Map<Class<? extends EntityLiving>, Integer> map = new HashMap<Class<? extends EntityLiving>, Integer>();
 			boolean ai = chest.isUpgradeInstalled(Upgrade.AI.getItem());
+			boolean didSomething = false;
 			for (EntityLiving e : entities) {
 				if (e == null || !e.isEntityAlive()) {
 					continue;
@@ -66,6 +68,7 @@ public class Killing extends BasicUpgrade {
 											CoreMod.runtimeDeobfuscationEnabled ? "field_70718_bc"
 													: "recentlyHit");
 						}
+						didSomething = true;
 						e.attackEntityFrom(DamageSource.generic, 20.0F);
 					}
 				} else {
@@ -78,8 +81,14 @@ public class Killing extends BasicUpgrade {
 										CoreMod.runtimeDeobfuscationEnabled ? "field_70718_bc"
 												: "recentlyHit");
 					}
+					didSomething = true;
 					e.attackEntityFrom(DamageSource.generic, 20.0F);
 				}
+			}
+			if (didSomething) {
+				chest.getEnergyObject().setCurrent(
+						chest.getEnergyObject().getCurrent()
+								- Reference.Conf.ENERGY_KILLING);
 			}
 		}
 	}

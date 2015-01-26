@@ -61,16 +61,12 @@ public enum Upgrade {
 	FEEDING(null, 1, true, false, Feeding.class, true, true, false),
 	PLAYERFOOD(null, 1, false, true, PlayerFeeding.class, true, true, false),
 	RESUPPLY(null, 1, false, true, Resupply.class, true, true, false),
-	PLANTING(null, 5, true, false, Planting.class, true, true, true), // TODO:
-																		// Energy
-	HARVESTING(null, 5, true, false, Harvesting.class, true, true, true), // TODO:
-																			// Energy
-	ANIMAL(null, 1, true, false, Animal.class, true, false, true), // TODO:
-																	// Energy
+	PLANTING(null, 5, true, false, Planting.class, true, true, true),
+	HARVESTING(null, 5, true, false, Harvesting.class, true, true, true),
+	ANIMAL(null, 1, true, false, Animal.class, true, false, true),
 	AI(null, 1, true, true, Null.class, false, false, false),
 	MINING(AI, 1, true, false, Mining.class, true, true, false),
-	KILLING(null, 1, true, false, Killing.class, true, false, true), // TODO:
-																		// Energy
+	KILLING(null, 1, true, false, Killing.class, true, false, true),
 	BLOCKER(SLOT, 4, true, false, Blocking.class, false, false, false),
 	LIGHTWEIGHT(null, 1, false, true, LightWeight.class, true, false, false);
 

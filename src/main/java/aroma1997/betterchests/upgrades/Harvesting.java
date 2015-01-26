@@ -32,6 +32,8 @@ public class Harvesting extends BasicUpgrade {
 	@Override
 	public void updateChest(IBetterChest chest, int tick, World world,
 			ItemStack item) {
+		if (chest.getEnergyObject().getCurrent() < Reference.Conf.ENERGY_HARVESTING)
+			return;
 		int range = Reference.Conf.PLANTS_RANGE_MULTIPLIER * item.stackSize;
 		int doubleRange = range * 2 + 1;
 
@@ -44,7 +46,6 @@ public class Harvesting extends BasicUpgrade {
 		if (!InvUtil.hasSpace(chest))
 			return;
 		doBlock(chest, tick, world, item, new BlockPos(xcoord, ycoord, zcoord));
-
 	}
 
 	private static void doBlock(IBetterChest chest, int tick, World world,
@@ -69,6 +70,9 @@ public class Harvesting extends BasicUpgrade {
 						InvUtil.putIntoFirstSlot(chest, itemGet, false);
 					}
 					world.setBlockToAir(pos);
+					chest.getEnergyObject().setCurrent(
+							chest.getEnergyObject().getCurrent()
+									- Reference.Conf.ENERGY_HARVESTING);
 				}
 			}
 		} else if (block != null
@@ -82,6 +86,9 @@ public class Harvesting extends BasicUpgrade {
 							chest.getFiltersForUpgrade(item))) {
 				InvUtil.putIntoFirstSlot(chest, itemS, false);
 				world.setBlockToAir(pos);
+				chest.getEnergyObject().setCurrent(
+						chest.getEnergyObject().getCurrent()
+								- Reference.Conf.ENERGY_HARVESTING);
 			}
 		} else if (block != null
 				&& (block instanceof BlockCactus || block instanceof BlockReed)) {
@@ -100,6 +107,9 @@ public class Harvesting extends BasicUpgrade {
 								chest.getFiltersForUpgrade(item))) {
 					InvUtil.putIntoFirstSlot(chest, itemS, false);
 					world.setBlockToAir(pos.offset(EnumFacing.UP, i));
+					chest.getEnergyObject().setCurrent(
+							chest.getEnergyObject().getCurrent()
+									- Reference.Conf.ENERGY_HARVESTING);
 				}
 			}
 		}

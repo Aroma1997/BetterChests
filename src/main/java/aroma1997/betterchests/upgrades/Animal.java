@@ -30,7 +30,8 @@ public class Animal extends BasicUpgrade {
 	@Override
 	public void updateChest(IBetterChest chest, int tick, World world,
 			ItemStack item) {
-		if (tick == 63) {
+		if (tick == 63
+				|| chest.getEnergyObject().getCurrent() >= Reference.Conf.ENERGY_ANIMAL) {
 			AxisAlignedBB bounds = AxisAlignedBB.fromBounds(chest.getXPos()
 					- Reference.Conf.FEED_RADIUS / 2, chest.getYPos()
 					- Reference.Conf.FEED_HEIGHT / 2, chest.getZPos()
@@ -40,6 +41,8 @@ public class Animal extends BasicUpgrade {
 					+ Reference.Conf.FEED_RADIUS / 2);
 			List<EntityAnimal> list = world.getEntitiesWithinAABB(
 					EntityAnimal.class, bounds);
+
+			boolean didSomething = false;
 
 			for (EntityAnimal entity : list) {
 				if (entity == null || !entity.isEntityAlive()
@@ -53,6 +56,7 @@ public class Animal extends BasicUpgrade {
 						// would be the place to damage it.
 						ArrayList<ItemStack> items = (ArrayList<ItemStack>) sheep
 								.onSheared(null, world, entity.getPosition(), 1);
+						didSomething = true;
 						for (ItemStack wool : items) {
 							if (InvUtil.putIntoFirstSlot(chest, wool, false) != null)
 								break;
@@ -66,6 +70,7 @@ public class Animal extends BasicUpgrade {
 								Items.milk_bucket), false) == null) {
 							InvUtil.getFirstItem(chest, new ItemStack(
 									Items.bucket), false);
+							didSomething = true;
 						}
 					}
 					if (entity instanceof EntityMooshroom) {
@@ -76,10 +81,16 @@ public class Animal extends BasicUpgrade {
 									Items.mushroom_stew), false) == null) {
 								InvUtil.getFirstItem(chest, new ItemStack(
 										Items.bowl), false);
+								didSomething = true;
 							}
 						}
 					}
 				}
+			}
+			if (didSomething) {
+				chest.getEnergyObject().setCurrent(
+						chest.getEnergyObject().getCurrent()
+								- Reference.Conf.ENERGY_ANIMAL);
 			}
 		}
 	}

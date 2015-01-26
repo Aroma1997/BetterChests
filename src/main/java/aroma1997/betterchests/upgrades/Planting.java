@@ -84,6 +84,8 @@ public class Planting extends BasicUpgrade {
 						2);
 			}
 		}
+		if (chest.getEnergyObject().getCurrent() < Reference.Conf.ENERGY_PLANTING)
+			return;
 		if (block.canSustainPlant(world, pos, EnumFacing.UP, (IPlantable) pl)) {
 
 			IBlockState stateNew = world.getBlockState(posUp);
@@ -97,6 +99,9 @@ public class Planting extends BasicUpgrade {
 				if (plant.getBlock().canPlaceBlockAt(world, posUp)) {
 					world.setBlockState(posUp, plant, 3);
 					chest.decrStackSize(slot, 1);
+					chest.getEnergyObject().setCurrent(
+							chest.getEnergyObject().getCurrent()
+									- Reference.Conf.ENERGY_PLANTING);
 				}
 			}
 		}

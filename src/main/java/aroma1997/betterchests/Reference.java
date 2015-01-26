@@ -37,6 +37,9 @@ public class Reference {
 
 	public static final String VERSION;
 
+	/**
+	 * Some static values. Subject to change.
+	 */
 	public static class Conf {
 
 		public static final float RAIN_THINGY = 0.8F;
@@ -60,6 +63,14 @@ public class Reference {
 		public static final int ENERGY_COLLECTOR = 5;
 
 		public static final int ENERGY_TICKING = 3200;
+
+		public static final int ENERGY_HARVESTING = 10;
+
+		public static final int ENERGY_PLANTING = 10;
+
+		public static final int ENERGY_ANIMAL = 100;
+
+		public static final int ENERGY_KILLING = 100;
 	}
 
 }
