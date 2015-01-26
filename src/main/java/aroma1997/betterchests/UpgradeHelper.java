@@ -46,6 +46,11 @@ public class UpgradeHelper {
 		}
 	}
 
+	public static boolean canBeDisabled(ItemStack stack) {
+		return UpgradeHelper.isUpgrade(stack)
+				&& ((IUpgrade) stack.getItem()).canBeDisabled(stack);
+	}
+
 	public static boolean isRequirement(ItemStack req, ItemStack up) {
 		if (!isUpgrade(req) || !isUpgrade(up)) {
 			return false;
@@ -132,48 +137,61 @@ public class UpgradeHelper {
 			}
 		}
 	}
-	
+
 	public static boolean canUpgradeGoInChest(IBetterChest chest, ItemStack item) {
-		if (item == null || chest == null || !isUpgrade(item)) return false;
+		if (item == null || chest == null || !isUpgrade(item))
+			return false;
 		IUpgrade upgrade = (IUpgrade) item.getItem();
-		return ((chest instanceof TileEntityBChest && upgrade.canChestTakeUpgrade(item)) || (chest instanceof BagInventory && upgrade.canBagTakeUpgrade(item))) && areRequirementsInstalled(chest, item) && (upgrade.getMaxUpgrades(item) > chest.getAmountUpgrade(item) || (upgrade.getMaxUpgrades(item) == -1 && chest.getAmountUpgradeExact(item) == 0));
+		return ((chest instanceof TileEntityBChest && upgrade
+				.canChestTakeUpgrade(item)) || (chest instanceof BagInventory && upgrade
+				.canBagTakeUpgrade(item)))
+				&& areRequirementsInstalled(chest, item)
+				&& (upgrade.getMaxUpgrades(item) > chest.getAmountUpgrade(item) || (upgrade
+						.getMaxUpgrades(item) == -1 && chest
+						.getAmountUpgradeExact(item) == 0));
 	}
-	
-	public static ItemMatchCriteria BC_NBT = new ItemMatchCriteria(BetterChestsNBT.class);
-	
+
+	public static ItemMatchCriteria BC_NBT = new ItemMatchCriteria(
+			BetterChestsNBT.class);
+
 	public static class BetterChestsNBT implements ICompareItems {
 
 		@Override
 		public boolean checkFor(ItemStack item1, ItemStack item2) {
-			if (item1 == null || item2 == null) return false;
+			if (item1 == null || item2 == null)
+				return false;
 			ItemStack item1c = item1.copy();
 			ItemStack item2c = item2.copy();
 			enableUpgrade(item1c);
 			enableUpgrade(item2c);
-			
-			return ItemUtil.areItemsSameMatching(item1c, item2c, ItemMatchCriteria.NBT);
+
+			return ItemUtil.areItemsSameMatching(item1c, item2c,
+					ItemMatchCriteria.NBT);
 		}
-		
+
 	}
-	
-	public static boolean isItemAllowed(ItemStack item, List<IInventoryFilter> list) {
+
+	public static boolean isItemAllowed(ItemStack item,
+			List<IInventoryFilter> list) {
 		if (list == null || list.isEmpty()) {
 			return true;
 		}
 		boolean hasWhitelist = false;
 		boolean isOnWhitelist = false;
-		
+
 		for (IInventoryFilter filter : list) {
 			if (filter.isWhitelist()) {
 				hasWhitelist = true;
 			}
 			for (int i = 0; i < filter.getSizeInventory(); i++) {
-				if (i == InventoryFilter.SLOT_UPGRADE) continue;
-				if (ItemUtil.areItemsSameMatching(item, filter.getStackInSlot(i), ItemMatchCriteria.ID, ItemMatchCriteria.DAMAGE)) {
+				if (i == InventoryFilter.SLOT_UPGRADE)
+					continue;
+				if (ItemUtil.areItemsSameMatching(item,
+						filter.getStackInSlot(i), ItemMatchCriteria.ID,
+						ItemMatchCriteria.DAMAGE)) {
 					if (filter.isWhitelist()) {
 						isOnWhitelist = true;
-					}
-					else {
+					} else {
 						return false;
 					}
 				}
@@ -183,7 +201,7 @@ public class UpgradeHelper {
 			return isOnWhitelist;
 		}
 		return true;
-		
+
 	}
 
 }

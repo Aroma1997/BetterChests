@@ -105,6 +105,8 @@ public class SlotUpgrades extends AromaSlot {
 			int par3, EntityPlayer player) {
 
 		if (par3 == 1) {
+			if (UpgradeHelper.isRequirement(getStack(), chest))
+				return null;
 			if (par2 == 1) {
 				ItemStack stack = getStack().copy();
 				decrStackSize(1);
@@ -134,7 +136,8 @@ public class SlotUpgrades extends AromaSlot {
 
 			}
 
-		} else if (par3 == 0 && (par2 == 0 || par2 == 1)) {
+		} else if (par3 == 0 && (par2 == 0 || par2 == 1)
+				&& UpgradeHelper.canBeDisabled(getStack())) {
 			chest.setUpgradeDisabled(getStack(),
 					!chest.isUpgradeDisabled(getStack()));
 		}
