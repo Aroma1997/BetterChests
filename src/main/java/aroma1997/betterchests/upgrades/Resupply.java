@@ -40,9 +40,9 @@ public class Resupply extends BasicUpgrade {
 					continue;
 				}
 
-				if (itemStack.stackSize + get.stackSize > itemStack
-						.getMaxStackSize()) {
-					int over = itemStack.getMaxStackSize()
+				if (itemStack.stackSize + get.stackSize > (int) (itemStack
+						.getMaxStackSize() / 2.0F + 0.5F)) {
+					int over = (int) (itemStack.getMaxStackSize() / 2.0F + 0.5F)
 							- itemStack.stackSize;
 					if (over > 0) {
 						get.stackSize -= over;
