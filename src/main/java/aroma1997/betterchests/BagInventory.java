@@ -17,20 +17,25 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import aroma1997.betterchests.api.IBetterChest;
 import aroma1997.betterchests.api.IInventoryFilter;
+import aroma1997.core.client.inventories.SpecialImagesBase.EnergyBar;
+import aroma1997.core.inventories.IProgressable;
 import aroma1997.core.items.inventory.InventoryItem;
 import aroma1997.core.misc.EnergyObject;
 import aroma1997.core.util.ItemUtil;
 import aroma1997.core.util.ItemUtil.ItemMatchCriteria;
 
-public class BagInventory extends InventoryItem implements IBetterChest {
+public class BagInventory extends InventoryItem implements IBetterChest,
+		IProgressable {
 
 	public BagInventory(ItemStack item) {
 		super(item);
 	}
 
-	private EnergyObject energy = TileEntityBChest.generateNewEObject();
+	private EnergyObject energy;
 
 	private Entity e;
 
@@ -67,7 +72,14 @@ public class BagInventory extends InventoryItem implements IBetterChest {
 	}
 
 	@Override
+	@SideOnly(Side.CLIENT)
 	public float getProgress(Object object) {
+
+		if (object instanceof EnergyBar) {
+			return (float) getEnergyObject().getCurrent()
+					/ (float) getEnergyObject().getMax();
+		}
+
 		return getProgress();
 	}
 
@@ -239,6 +251,9 @@ public class BagInventory extends InventoryItem implements IBetterChest {
 
 	@Override
 	public EnergyObject getEnergyObject() {
+		if (energy == null) {
+			energy = TileEntityBChest.generateNewEObject();
+		}
 		return energy;
 	}
 
@@ -260,6 +275,7 @@ public class BagInventory extends InventoryItem implements IBetterChest {
 			ItemStack item = ItemStack.loadItemStackFromNBT(upgradenbt);
 			upgrades.add(item);
 		}
+		getEnergyObject().readFromNBT(nbt);
 		super.readFromNBT(nbt);
 	}
 
@@ -272,6 +288,7 @@ public class BagInventory extends InventoryItem implements IBetterChest {
 			item.writeToNBT(upgradesbt);
 			list.appendTag(upgradesbt);
 		}
+		getEnergyObject().saveToNBT(nbt);
 		nbt.setTag("upgrades", list);
 	}
 
