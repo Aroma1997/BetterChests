@@ -25,7 +25,7 @@ public class Config {
 		Configuration cfg = Conf.getConfig(Reference.MOD_ID);
 		cfg.load();
 		useEnergy = cfg.getBoolean("useEnergy", Configuration.CATEGORY_GENERAL,
-				true, "If some Upgrades use energy or not.");
+				false, "If some Upgrades use energy or not.");
 		if (cfg.hasChanged()) {
 			cfg.save();
 		}
