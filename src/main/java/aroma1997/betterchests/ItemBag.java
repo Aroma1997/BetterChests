@@ -22,7 +22,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import org.apache.logging.log4j.Level;
 import org.lwjgl.input.Keyboard;
 
 import aroma1997.betterchests.api.IUpgrade;
@@ -32,7 +31,6 @@ import aroma1997.core.inventories.ISpecialGUIProvider;
 import aroma1997.core.inventories.Inventories;
 import aroma1997.core.items.inventory.ItemInventory;
 import aroma1997.core.items.wrench.ItemWrench;
-import aroma1997.core.log.LogHelper;
 import aroma1997.core.util.ServerUtil;
 
 public class ItemBag extends ItemInventory<BagInventory> implements
@@ -93,8 +91,6 @@ public class ItemBag extends ItemInventory<BagInventory> implements
 		}
 		if (par2World.isRemote)
 			return;
-		LogHelper.log(Level.INFO, System.identityHashCode(par1ItemStack) + " "
-				+ par1ItemStack.stackSize);
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
