@@ -19,12 +19,11 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import aroma1997.betterchests.api.ItemUpgradeBasic;
 import aroma1997.core.inventories.AromaContainer;
 import aroma1997.core.inventories.ISpecialGUIProvider;
 import aroma1997.core.inventories.Inventories;
+import aroma1997.core.util.ServerUtil;
 
 public class ItemFilter extends ItemUpgradeBasic implements ISpecialGUIProvider {
 
@@ -39,16 +38,37 @@ public class ItemFilter extends ItemUpgradeBasic implements ISpecialGUIProvider 
 
 	@Override
 	public boolean onItemUse(ItemStack par1ItemStack,
-			EntityPlayer par2EntityPlayer, World par3World, BlockPos pos, EnumFacing side, float par8, float par9, float par10) {
+			EntityPlayer par2EntityPlayer, World par3World, BlockPos pos,
+			EnumFacing side, float par8, float par9, float par10) {
 		onItemRightClick(par1ItemStack, par3World, par2EntityPlayer);
+		return true;
+	}
+
+	@Override
+	public boolean onItemUseFirst(ItemStack par1ItemStack,
+			EntityPlayer par2EntityPlayer, World par3World, BlockPos pos,
+			EnumFacing side, float par8, float par9, float par10) {
+
+		if (par3World.isRemote) {
+			Inventories
+					.sendItemInventoryOpen(par2EntityPlayer.inventory.currentItem);
+		}
 		return true;
 	}
 
 	@Override
 	public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World,
 			EntityPlayer thePlayer) {
+		// This is disabled, because it causes the server to change the
+		// ItemStack after the Inventory is opened, which basically messes up
+		// the Inventory.
 		if (par2World.isRemote) {
-			Inventories.sendItemInventoryOpen(thePlayer.inventory.currentItem);
+			thePlayer
+					.addChatMessage(ServerUtil
+							.getChatForString("This does not work currently. (Missing Forge hook)"));
+			thePlayer
+					.addChatMessage(ServerUtil
+							.getChatForString("To open the filter, please right-click with it on a block to open it."));
 		}
 		return par1ItemStack;
 	}
@@ -72,13 +92,13 @@ public class ItemFilter extends ItemUpgradeBasic implements ISpecialGUIProvider 
 	public boolean canBeDisabled(ItemStack stack) {
 		return false;
 	}
-	
+
 	@Override
 	public AromaContainer getContainer(EntityPlayer player, int i) {
 		InventoryFilter inv = getInventory(player.inventory.getStackInSlot(i));
 		return inv.getContainer(player, i);
 	}
-	
+
 	private static HashMap<ItemStack, InventoryFilter> invs = new HashMap<ItemStack, InventoryFilter>();
 
 	public static InventoryFilter getInventory(ItemStack item) {
@@ -89,13 +109,13 @@ public class ItemFilter extends ItemUpgradeBasic implements ISpecialGUIProvider 
 		}
 		return invs.get(item);
 	}
-	
+
 	@Override
-    public String getUnlocalizedName(ItemStack item)
-    {
-        return super.getUnlocalizedName(item) + (item.getItemDamage() == 0 ? ".whitelist" : ".blacklist");
-    }
-	
+	public String getUnlocalizedName(ItemStack item) {
+		return super.getUnlocalizedName(item)
+				+ (item.getItemDamage() == 0 ? ".whitelist" : ".blacklist");
+	}
+
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public void getSubItems(Item par1, CreativeTabs par2CreativeTabs,
@@ -104,16 +124,19 @@ public class ItemFilter extends ItemUpgradeBasic implements ISpecialGUIProvider 
 			par3List.add(new ItemStack(par1, 1, i));
 		}
 	}
-	
+
 	@Override
 	public void addInformation(ItemStack par1ItemStack,
 			EntityPlayer par2EntityPlayer, List par3List, boolean par4) {
 		super.addInformation(par1ItemStack, par2EntityPlayer, par3List, par4);
-		
+
 		InventoryFilter inv = getInventory(par1ItemStack);
-		
+
 		if (inv.getStackInSlot(InventoryFilter.SLOT_UPGRADE) != null) {
-			par3List.add(StatCollector.translateToLocalFormatted("info.betterchests:tooltip.filter.upgrade", inv.getStackInSlot(InventoryFilter.SLOT_UPGRADE).getDisplayName()));
+			par3List.add(StatCollector.translateToLocalFormatted(
+					"info.betterchests:tooltip.filter.upgrade", inv
+							.getStackInSlot(InventoryFilter.SLOT_UPGRADE)
+							.getDisplayName()));
 		}
 	}
 
