@@ -11,6 +11,7 @@ package aroma1997.betterchests;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import aroma1997.betterchests.api.IBetterChest;
 import aroma1997.core.inventories.AromaContainer;
 import aroma1997.core.inventories.AromaSlot;
@@ -58,7 +59,7 @@ public class SlotUpgrades extends AromaSlot {
 	@Override
 	public ItemStack getStack() {
 		ItemStack stack = item.copy();
-		stack.stackSize = chest.getAmountUpgradeExact(item);
+		stack.stackSize = chest.getAmountUpgrade(item);
 		if (stack.stackSize <= 0) {
 			return null;
 		}
@@ -138,8 +139,13 @@ public class SlotUpgrades extends AromaSlot {
 
 		} else if (par3 == 0 && (par2 == 0 || par2 == 1)
 				&& UpgradeHelper.canBeDisabled(getStack())) {
-			chest.setUpgradeDisabled(getStack(),
-					!chest.isUpgradeDisabled(getStack()));
+			if (FMLCommonHandler.instance().getEffectiveSide().isClient())
+				return null;
+			if (chest.isUpgradeDisabled(getStack())) {
+				chest.setUpgradeDisabled(getStack(), false);
+			} else {
+				chest.setUpgradeDisabled(getStack(), true);
+			}
 		}
 
 		return null;
