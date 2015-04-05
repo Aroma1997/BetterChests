@@ -50,7 +50,7 @@ public class EventListenerClient {
 	}
 
 	@SubscribeEvent
-	public void renderPlayer(RenderPlayerEvent.Specials.Post event) {
+	public void renderPlayer(RenderPlayerEvent.Post event) {
 
 		int i = InvUtil.getFirstItem(event.entityPlayer.inventory,
 				ItemBag.class);
@@ -60,7 +60,12 @@ public class EventListenerClient {
 
 		GL11.glPushMatrix();
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+		GL11.glTranslatef(0.0F, 1.45F, 0.0F);
+		GL11.glRotatef(180.F, 0.0F, 0.0F, 1.0F);
+		GL11.glRotatef(event.entityPlayer.renderYawOffset - 180.0F, 0.0F, 1.0F,
+				0.0F);
 		if (event.entityPlayer.isSneaking()) {
+			GL11.glTranslatef(0.0F, 0.25F, 0.0F);
 			GL11.glRotatef(28.6F, 1.0F, 0.0F, 0.0F);
 		}
 		GL11.glTranslatef(0.0F, -0.03F, 0.0F);
