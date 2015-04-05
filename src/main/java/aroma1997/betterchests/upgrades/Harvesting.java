@@ -115,7 +115,7 @@ public class Harvesting extends BasicUpgrade {
 			}
 		} else if (block != null
 				&& state.getProperties().containsKey(BlockNetherWart.AGE)) {
-			if ((int) state.getValue(BlockNetherWart.AGE) >= 3) {
+			if ((Integer) state.getValue(BlockNetherWart.AGE) >= 3) {
 				List<ItemStack> drops = block.getDrops(world, pos, state, 0);
 				boolean isOK = true;
 				for (ItemStack drop : drops) {
