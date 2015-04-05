@@ -14,6 +14,7 @@ import java.util.List;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockCactus;
 import net.minecraft.block.BlockMelon;
+import net.minecraft.block.BlockNetherWart;
 import net.minecraft.block.BlockPumpkin;
 import net.minecraft.block.BlockReed;
 import net.minecraft.block.IGrowable;
@@ -110,6 +111,24 @@ public class Harvesting extends BasicUpgrade {
 					chest.getEnergyObject().setCurrent(
 							chest.getEnergyObject().getCurrent()
 									- Reference.Conf.ENERGY_HARVESTING);
+				}
+			}
+		} else if (block != null
+				&& state.getProperties().containsKey(BlockNetherWart.AGE)) {
+			if ((int) state.getValue(BlockNetherWart.AGE) >= 3) {
+				List<ItemStack> drops = block.getDrops(world, pos, state, 0);
+				boolean isOK = true;
+				for (ItemStack drop : drops) {
+					if (InvUtil.putIntoFirstSlot(chest, drop, true) != null) {
+						isOK = false;
+						break;
+					}
+				}
+				if (isOK) {
+					world.setBlockToAir(pos);
+					for (ItemStack drop : drops) {
+						InvUtil.putIntoFirstSlot(chest, drop, false);
+					}
 				}
 			}
 		}
