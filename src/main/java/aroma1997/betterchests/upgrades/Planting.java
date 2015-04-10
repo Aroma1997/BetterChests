@@ -83,9 +83,7 @@ public class Planting extends BasicUpgrade {
 						ycoord + 1, zcoord)) {
 					world.setBlock(xcoord, ycoord + 1, zcoord,
 							((IPlantable) pl).getPlant(world, xcoord,
-									ycoord + 1, zcoord), ((IPlantable) pl)
-									.getPlantMetadata(world, xcoord, ycoord,
-											zcoord), 3);
+									ycoord + 1, zcoord), itemPlant.getItemDamage(), 3);
 					chest.decrStackSize(slot, 1);
 				}
 			}
