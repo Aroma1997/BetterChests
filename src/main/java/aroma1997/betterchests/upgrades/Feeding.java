@@ -41,7 +41,7 @@ public class Feeding extends BasicUpgrade {
 			int slot = -1;
 			for (int i = 0; i < inv.getSizeInventory(); i++) {
 				ItemStack feedingItem = inv.getStackInSlot(i);
-				if (feedingItem == null || InventoryFilter.isItemAllowed(feedingItem, inv.getFiltersForUpgrade(item))) {
+				if (feedingItem == null || !InventoryFilter.isItemAllowed(feedingItem, inv.getFiltersForUpgrade(item))) {
 					continue;
 				}
 				if (e.isBreedingItem(feedingItem)) {
