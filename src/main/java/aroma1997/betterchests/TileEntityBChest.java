@@ -157,7 +157,7 @@ public class TileEntityBChest extends TileEntity implements IBetterChest,
 			return true;
 		}
 		if (ServerUtil.isPlayerAdmin(par1EntityPlayer) || player != null
-				&& player.equals(par1EntityPlayer.getUniqueID())) {
+				&& player.equals(par1EntityPlayer.getCommandSenderName())) {
 			return true;
 		}
 		return false;
@@ -226,7 +226,7 @@ public class TileEntityBChest extends TileEntity implements IBetterChest,
 	public void writeToNBT(NBTTagCompound nbt) {
 		super.writeToNBT(nbt);
 		if (player != null) {
-			nbt.setString("playerUUID", player.toString());
+			nbt.setString("player", player);
 		}
 		FileUtil.writeToNBT(this, nbt);
 		NBTTagList list = new NBTTagList();
