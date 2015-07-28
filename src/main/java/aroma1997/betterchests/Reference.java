@@ -50,7 +50,7 @@ public class Reference {
 
 		public static final double FEED_HEIGHT = 3.0D;
 
-		public static final int FEED_ENTITIES_TO_STOP = 50;
+		public static final int FEED_ENTITIES_TO_STOP = 25;
 
 		public static final int PLANTS_RANGE_MULTIPLIER = 2;
 
