@@ -98,7 +98,7 @@ public class Harvesting extends BasicUpgrade {
 					.getBlock() == block) {
 				i++;
 			}
-			if (i > 2) {
+			if (i >= 2) {
 				state = world.getBlockState(pos.offset(EnumFacing.UP, i));
 				ItemStack itemS = new ItemStack(block.getItemDropped(state,
 						world.rand, 0), block.quantityDropped(state, 0,
