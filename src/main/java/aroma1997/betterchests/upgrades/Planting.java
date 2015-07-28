@@ -10,12 +10,10 @@
 package aroma1997.betterchests.upgrades;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockFarmland;
 import net.minecraft.block.BlockFlower;
 import net.minecraft.block.BlockTallGrass;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockPos;
@@ -24,7 +22,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
 import aroma1997.betterchests.InventoryFilter.BCFilterFilter;
 import aroma1997.betterchests.Reference;
-import aroma1997.betterchests.Upgrade;
 import aroma1997.betterchests.api.IBetterChest;
 import aroma1997.core.util.InvUtil;
 import aroma1997.core.util.WorldUtil;
@@ -62,28 +59,32 @@ public class Planting extends BasicUpgrade {
 		BlockPos posUp = pos.offset(EnumFacing.UP);
 		ItemStack itemPlant = chest.getStackInSlot(slot);
 		Item pl = itemPlant.getItem();
-		boolean hydrate = chest.isUpgradeInstalled(Upgrade.RAIN.getItem())
-				&& InvUtil.getFirstItem(chest,
-						new ItemStack(Items.water_bucket), true) != null;
+		// boolean hydrate = chest.isUpgradeInstalled(Upgrade.RAIN.getItem())
+		// && InvUtil.getFirstItem(chest,
+		// new ItemStack(Items.water_bucket), true) != null;
 		if (block == Blocks.dirt || block == Blocks.grass) {
 			IBlockState blockAbove = world.getBlockState(posUp);
 			if (WorldUtil.isBlockAir(world, posUp)
 					|| blockAbove instanceof BlockTallGrass
 					|| blockAbove instanceof BlockFlower
 					|| blockAbove.getBlock().isReplaceable(world, posUp)) {
-				world.setBlockState(pos,
-						Blocks.farmland.getStateFromMeta(hydrate ? 10 : 0));
+				world.setBlockState(pos, Blocks.farmland.getStateFromMeta(/*
+																		 * hydrate
+																		 * ? 7 :
+																		 */0));
 				world.setBlockToAir(posUp);
 			}
 		}
 		state = world.getBlockState(pos);
 		block = state.getBlock();
-		if (block instanceof BlockFarmland) {
-			if (Blocks.farmland.getMetaFromState(state) <= 2 && hydrate) {
-				world.setBlockState(pos, Blocks.farmland.getStateFromMeta(10),
-						2);
-			}
-		}
+		// if (block instanceof BlockFarmland) {
+		// if (((Integer) state.getValue(BlockFarmland.MOISTURE)).intValue() < 7
+		// && hydrate) {
+		// world.setBlockState(pos,
+		// state.withProperty(BlockFarmland.MOISTURE, 7), 2);
+		// System.out.println(pos);
+		// }
+		// }
 		if (chest.getEnergyObject().getCurrent() < Reference.Conf.ENERGY_PLANTING)
 			return;
 		if (block.canSustainPlant(world, pos, EnumFacing.UP, (IPlantable) pl)) {
