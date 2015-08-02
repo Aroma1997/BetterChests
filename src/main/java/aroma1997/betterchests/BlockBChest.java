@@ -74,13 +74,15 @@ public class BlockBChest extends AromicBlockContainer {
 	public boolean onBlockActivated(World world, BlockPos pos,
 			IBlockState state, EntityPlayer player, EnumFacing side,
 			float hitX, float hitY, float hitZ) {
-		TileEntityBChest chest = (TileEntityBChest) world.getTileEntity(pos);
-		if (player.isSneaking() || chest == null) {
+		TileEntity te = world.getTileEntity(pos);
+		if (player.isSneaking() || te == null
+				|| !(te instanceof TileEntityBChest)) {
 			return false;
 		}
 		if (world.isRemote) {
 			return true;
 		}
+		TileEntityBChest chest = (TileEntityBChest) te;
 		if (!chest.isUseableByPlayer(player)) {
 
 			player.attackEntityFrom(DamageSourceBChest.INSTANCE, 2.0F);
@@ -105,7 +107,7 @@ public class BlockBChest extends AromicBlockContainer {
 	public int isProvidingWeakPower(IBlockAccess world, BlockPos pos,
 			IBlockState state, EnumFacing side) {
 		TileEntity te = world.getTileEntity(pos);
-		if (te == null)
+		if (te == null || !(te instanceof TileEntityBChest))
 			return 0;
 		return ((TileEntityBChest) te).getRedstoneOutput();
 	}
@@ -119,7 +121,7 @@ public class BlockBChest extends AromicBlockContainer {
 	@Override
 	public int getLightValue(IBlockAccess world, BlockPos pos) {
 		TileEntityBChest te = ((TileEntityBChest) world.getTileEntity(pos));
-		if (te != null)
+		if (te != null && !(te instanceof TileEntityBChest))
 			return te.getLightValue();
 		return super.getLightValue(world, pos);
 	}
@@ -173,7 +175,8 @@ public class BlockBChest extends AromicBlockContainer {
 	@Override
 	public float getPlayerRelativeBlockHardness(EntityPlayer player,
 			World world, BlockPos pos) {
-		if (world.isRemote || world.getTileEntity(pos) == null) {
+		TileEntity te = world.getTileEntity(pos);
+		if (world.isRemote || te == null || !(te instanceof TileEntityBChest)) {
 			return super.getPlayerRelativeBlockHardness(player, world, pos);
 		}
 		if (!((TileEntityBChest) world.getTileEntity(pos))
@@ -187,7 +190,7 @@ public class BlockBChest extends AromicBlockContainer {
 	@Override
 	public void breakBlock(World world, BlockPos pos, IBlockState state) {
 		TileEntityBChest te = (TileEntityBChest) world.getTileEntity(pos);
-		if (te == null) {
+		if (te == null || !(te instanceof TileEntityBChest)) {
 			super.breakBlock(world, pos, state);
 			return;
 		}
