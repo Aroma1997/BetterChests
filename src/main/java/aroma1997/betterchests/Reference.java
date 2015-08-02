@@ -60,17 +60,17 @@ public class Reference {
 
 		public static final int ENERGY_SMELTING = 2000;
 
-		public static final int ENERGY_COLLECTOR = 5;
+		public static final int ENERGY_COLLECTOR = 50;
 
 		public static final int ENERGY_TICKING = 3200;
 
-		public static final int ENERGY_HARVESTING = 10;
+		public static final int ENERGY_HARVESTING = 50;
 
-		public static final int ENERGY_PLANTING = 10;
+		public static final int ENERGY_PLANTING = 50;
 
-		public static final int ENERGY_ANIMAL = 100;
+		public static final int ENERGY_ANIMAL = 1000;
 
-		public static final int ENERGY_KILLING = 100;
+		public static final int ENERGY_KILLING = 1000;
 	}
 
 }
