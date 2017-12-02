@@ -1,0 +1,35 @@
+{
+	"type" : "aroma1997core:shaped_recipe",
+	"pattern" : [
+		" W ",
+		"WUW",
+		" W "
+	],
+	"key" : {
+		"W" : {
+			"type" : "aroma1997core:multi",
+			"parts" : [
+				{
+					"type" : "aroma1997core:stack",
+					"item" : "minecraft:wheat"
+				},
+				{
+					"type" : "aroma1997core:stack",
+					"item" : "minecraft:carrot"
+				},
+				{
+					"type" : "aroma1997core:stack",
+					"item" : "minecraft:wheat_seeds"
+				}
+			]
+		},
+		"U" : {
+			"type" : "aroma1997core:stack",
+			"item" : "betterchests:crafting"
+		}
+	},
+	"result" : {
+		"item" : "betterchests:upgrade",
+		"data" : 13
+	}
+}

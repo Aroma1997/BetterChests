@@ -1,13 +1,12 @@
 [
 {
-  "modid": "BetterChests",
+  "modid": "betterchests",
   "name": "BetterChests",
-  "description": "This mod was created during ModJam, August 2013 by Aroma1997. This mod adds a new type of chests, that is mostly adjustable. You can put some upgrades into the chest and personalize the chest to how you want it to be. For example with a Cobble-Gen-Upgrade or a Furnace Upgrade",
+  "description": "This mod adds chests to minecraft, that are better than normal chests because they can be upgraded. It also adds better backpacks, that are better than normal backpacks, because they can be upgraded.",
   "mcversion": "${mcversion}",
   "version": "${version}",
-  "url": "https://github.com/Aroma1997/BetterChests",
-  "updateUrl": "",
-  "authors": ["Aroma1997", "Noisyboy", "TechMac"],
-  "credits": "Code by Aroma1997, Textures by Noisyboy and TechMac"
+  "url": "http://www.minecraftforum.net/topic/1679684-",
+  "authors": ["Aroma1997", "c0_0ry"],
+  "credits": "Code by Aroma1997, Textures by c0_0ry"
 }
 ]

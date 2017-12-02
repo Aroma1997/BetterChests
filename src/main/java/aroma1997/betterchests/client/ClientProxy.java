@@ -1,40 +1,58 @@
-/**
- * The code of BetterChests and all related materials like textures is copyrighted material.
- * It may only be redistributed or used for Commercial purposes with the permission of Aroma1997.
- * 
- * All Rights reserved (c) by Aroma1997
- * 
- * See https://github.com/Aroma1997/BetterChests/blob/master/LICENSE.md for more information.
- */
-
 package aroma1997.betterchests.client;
-
-import net.minecraft.client.settings.KeyBinding;
-import net.minecraftforge.client.MinecraftForgeClient;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
-import net.minecraftforge.fml.client.registry.RenderingRegistry;
 
 import org.lwjgl.input.Keyboard;
 
-import aroma1997.betterchests.BetterChestsItems;
-import aroma1997.betterchests.CommonProxy;
-import aroma1997.betterchests.TileEntityBChest;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.block.model.BuiltInModel;
+import net.minecraft.client.renderer.block.model.ItemOverrideList;
+import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.item.Item;
+import net.minecraft.util.ResourceLocation;
 
+import net.minecraftforge.client.ForgeHooksClient;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+
+import aroma1997.core.client.models.CustomModelLoader;
+import aroma1997.core.inventory.InvUtil;
+import aroma1997.core.util.registry.TickRegistry;
+import aroma1997.betterchests.BetterChests;
+import aroma1997.betterchests.BlocksItemsBetterChests;
+import aroma1997.betterchests.CommonProxy;
+import aroma1997.betterchests.bag.ItemBBag;
+import aroma1997.betterchests.chest.TileEntityBChest;
+import aroma1997.betterchests.client.model.ModelFilter;
+import aroma1997.betterchests.client.model.TESRBChest;
+import aroma1997.betterchests.network.PacketOpenBag;
+@SideOnly(Side.CLIENT)
 public class ClientProxy extends CommonProxy {
 
-	public static KeyBinding openBag;
+	public static KeyBinding keyBind;
+	private boolean pressed;
 
 	@Override
-	public void registerRenderers() {
-		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityBChest.class, // "betterChest",
-				new BChestRenderer());
-
-		MinecraftForgeClient.registerItemRenderer(BetterChestsItems.bag,
-				new BagRenderer());
-		openBag = new KeyBinding("key.betterchests.openBag", Keyboard.KEY_ADD,
-				"key.categories.inventory");
-		ClientRegistry.registerKeyBinding(openBag);
-		new EventListenerClient();
+	public void preInit() {
+		CustomModelLoader.INSTANCE.registerModel(new ResourceLocation("betterchests:models/block/betterchest"), (a, b, c) -> new BuiltInModel(TESRBChest.TRANSFORMS, ItemOverrideList.NONE));
+		CustomModelLoader.INSTANCE.registerModel(new ResourceLocation("betterchests:models/item/filter"), new ModelFilter());
+		keyBind = new KeyBinding("betterchests:keybind.openbag", Keyboard.KEY_ADD, "betterchests:keybind.category");
 	}
 
+	@Override
+	public void init() {
+		new ClientEventListener();
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityBChest.class, TESRBChest.INSTANCE);
+		ForgeHooksClient.registerTESRItemStack(Item.getItemFromBlock(BlocksItemsBetterChests.betterchest), 0, TileEntityBChest.class);
+
+		TickRegistry.CLIENT.addContinuousCallback(() -> {
+			if (!pressed && keyBind.isPressed() && Minecraft.getMinecraft().world != null) {
+				//Open bag
+				int idx = InvUtil.findInInvInternal(Minecraft.getMinecraft().player.inventory, null, stack -> stack.getItem() instanceof ItemBBag);
+				if (idx != -1) {
+					BetterChests.instance.ph.sendPacketToPlayers(new PacketOpenBag(idx));
+				}
+			}
+			pressed = keyBind.isPressed();
+		});
+	}
 }

@@ -1,0 +1,30 @@
+{
+	"type" : "aroma1997core:shaped_recipe",
+	"pattern" : [
+		"QLQ",
+		"QUQ",
+		" D "
+	],
+	"key" : {
+		"Q" : {
+			"type" : "aroma1997core:ore_dict",
+			"ore" : "gemQuartz"
+		},
+		"L" : {
+			"type" : "aroma1997core:stack",
+			"item" : "minecraft:lever"
+		},
+		"D" : {
+			"type" : "aroma1997core:stack",
+			"item" : "minecraft:dispenser"
+		},
+		"U" : {
+			"type" : "aroma1997core:stack",
+			"item" : "betterchests:crafting"
+		}
+	},
+	"result" : {
+		"item" : "betterchests:directionalupgrade",
+		"data" : 0
+	}
+}

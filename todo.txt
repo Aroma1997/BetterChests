@@ -1,0 +1,18 @@
+Intended to be implemented before release:
+Block placer Upgrade (Implemented, No texture yet)
+Block breaker Upgrade (Implemented, No texture yet)
+
+Will be implemented after first release:
+Player Upgrade (Not implemented yet, Texture available)
+Item charging Upgrade (Not implemented yet, No texture yet)
+Ejector Upgrade (Not implemented yet, No texture yet)
+Pulling Upgrade (Not implemented yet, No texture yet)
+
+Will maybe be implemented in a second major release:
+Adjustable tank blocks (Not implemented yet, No model yet, No texture yet)
+Fluid tank for GUI (Implemented, No texture yet, doesn't have to be 16x16)
+
+Will probably not get implemented anymore:
+Light upgrade (Not implemented yet, Texture available)
+Lightweight Upgrade (Not implemented yet, Texture available)
+Mining upgrade (replaced by block breaker and placer upgrade) (Not implemented yet, Texture available)

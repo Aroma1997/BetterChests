@@ -1,12 +1,17 @@
-BetterChests
-============
+# BetterChests Mod
+This mod adds chests to minecraft, that are better than normal chests because they can be upgraded. It also adds better backpacks, that are better than normal backpacks, because they can be upgraded.
 
-To compile the mod do the following steps:
-1. Download the latest deobfuscated version of Aroma1997Core and put it into the lib folder (you may have to create it)
-2. Run the command gradlew build
-3. Done.
+It also has a plugin API. To use the plugin API, you can just add BetterChests to the dependency block in your build.gradle file.
+```
+repositories {
+	maven {
+		name = "aroma"
+		url = "http://files.aroma1997.org/maven/"
+	}
+}
 
-
-
-
-To work with this mod, you now need Aroma1997Core.
+dependencies {
+	compile "aroma1997.core:BetterChests-${MCVERSION}:${MODVERSION}:api"
+	runtime "aroma1997.core:BetterChests-${MCVERSION}:${MODVERSION}:deobf"
+}
+```

@@ -1,0 +1,25 @@
+{
+	"type" : "aroma1997core:shaped_recipe",
+	"pattern" : [
+		" H ",
+		"PUP",
+		" P "
+	],
+	"key" : {
+		"H" : {
+			"type" : "aroma1997core:stack",
+			"item" : "minecraft:hopper"
+		},
+		"P" : {
+			"type" : "aroma1997core:ore_dict",
+			"ore" : "paper"
+		},
+		"U" : {
+			"type" : "aroma1997core:stack",
+			"item" : "betterchests:crafting"
+		}
+	},
+	"result" : {
+		"item" : "betterchests:filter"
+	}
+}

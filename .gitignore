@@ -1,8 +1,9 @@
 .gradle
 .settings
+.idea
 build
 bin
 eclipse
-lib
+libs
 .classpath
 .project

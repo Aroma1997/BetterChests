@@ -1,0 +1,23 @@
+{
+	"type" : "aroma1997core:shaped_recipe",
+	"pattern" : [
+		"WWW",
+		"WUW",
+		"WWW"
+	],
+	"key" : {
+		"W" : {
+			"type" : "aroma1997core:stack",
+			"item" : "minecraft:cobblestone_wall",
+			"data" : 0
+		},
+		"U" : {
+			"type" : "aroma1997core:stack",
+			"item" : "betterchests:crafting"
+		}
+	},
+	"result" : {
+		"item" : "betterchests:upgrade",
+		"data" : 12
+	}
+}

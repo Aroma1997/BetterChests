@@ -1,0 +1,22 @@
+{
+	"type" : "aroma1997core:shaped_recipe",
+	"pattern" : [
+		"OOO",
+		"OUO",
+		"OOO"
+	],
+	"key" : {
+		"O" : {
+			"type" : "aroma1997core:ore_dict",
+			"ore" : "obsidian"
+		},
+		"U" : {
+			"type" : "aroma1997core:stack",
+			"item" : "betterchests:crafting"
+		}
+	},
+	"result" : {
+		"item" : "betterchests:upgrade",
+		"data" : 5
+	}
+}

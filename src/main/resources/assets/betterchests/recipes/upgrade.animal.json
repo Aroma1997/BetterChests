@@ -1,0 +1,26 @@
+{
+	"type" : "aroma1997core:shaped_recipe",
+	"pattern" : [
+		" S ",
+		"BUB",
+		" S "
+	],
+	"key" : {
+		"S" : {
+			"type" : "aroma1997core:stack",
+			"item" : "minecraft:shears"
+		},
+		"B" : {
+			"type" : "aroma1997core:stack",
+			"item" : "minecraft:bucket"
+		},
+		"U" : {
+			"type" : "aroma1997core:stack",
+			"item" : "betterchests:crafting"
+		}
+	},
+	"result" : {
+		"item" : "betterchests:upgrade",
+		"data" : 17
+	}
+}

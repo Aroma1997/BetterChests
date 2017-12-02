@@ -1,0 +1,22 @@
+{
+	"type" : "aroma1997core:shaped_recipe",
+	"pattern" : [
+		"FFF",
+		"FUF",
+		"FFF"
+	],
+	"key" : {
+		"F" : {
+			"type" : "aroma1997core:class",
+			"class" : "net.minecraft.item.ItemFood"
+		},
+		"U" : {
+			"type" : "aroma1997core:stack",
+			"item" : "betterchests:crafting"
+		}
+	},
+	"result" : {
+		"item" : "betterchests:upgrade",
+		"data" : 14
+	}
+}

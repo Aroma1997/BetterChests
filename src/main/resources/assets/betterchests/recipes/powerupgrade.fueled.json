@@ -1,0 +1,25 @@
+{
+	"type" : "aroma1997core:shaped_recipe",
+	"pattern" : [
+		"BFB",
+		"FUF"
+	],
+	"key" : {
+		"B" : {
+			"type" : "aroma1997core:ore_dict",
+			"ore" : "blockCoal"
+		},
+		"F" : {
+			"type" : "aroma1997core:stack",
+			"item" : "minecraft:furnace"
+		},
+		"U" : {
+			"type" : "aroma1997core:stack",
+			"item" : "betterchests:crafting"
+		}
+	},
+	"result" : {
+		"item" : "betterchests:powerupgrade",
+		"data" : 2
+	}
+}

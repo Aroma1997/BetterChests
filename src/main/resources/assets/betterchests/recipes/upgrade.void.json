@@ -1,0 +1,25 @@
+{
+	"type" : "aroma1997core:shaped_recipe",
+	"pattern" : [
+		" E ",
+		"RUR"
+	],
+	"key" : {
+		"E" : {
+			"type" : "aroma1997core:ore_dict",
+			"ore" : "enderpearl"
+		},
+		"R" : {
+			"type" : "aroma1997core:ore_dict",
+			"ore" : "dustRedstone"
+		},
+		"U" : {
+			"type" : "aroma1997core:stack",
+			"item" : "betterchests:crafting"
+		}
+	},
+	"result" : {
+		"item" : "betterchests:upgrade",
+		"data" : 4
+	}
+}

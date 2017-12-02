@@ -1,0 +1,26 @@
+{
+	"type" : "aroma1997core:shaped_recipe",
+	"pattern" : [
+		"WIW",
+		"ISI",
+		"WIW"
+	],
+	"key" : {
+		"W" : {
+			"type" : "aroma1997core:ore_dict",
+			"ore" : "plankWood"
+		},
+		"I" : {
+			"type" : "aroma1997core:stack",
+			"item" : "minecraft:iron_bars"
+		},
+		"S" : {
+			"type" : "aroma1997core:ore_dict",
+			"ore" : "stickWood"
+		}
+	},
+	"result" : {
+		"item" : "betterchests:crafting",
+		"count" : 8
+	}
+}

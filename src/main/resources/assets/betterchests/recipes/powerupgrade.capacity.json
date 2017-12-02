@@ -1,0 +1,30 @@
+{
+	"type" : "aroma1997core:shaped_recipe",
+	"pattern" : [
+		"BCB",
+		"RUR",
+		"BCB"
+	],
+	"key" : {
+		"B" : {
+			"type" : "aroma1997core:ore_dict",
+			"ore" : "blockCoal"
+		},
+		"C" : {
+			"type" : "aroma1997core:stack",
+			"item" : "minecraft:repeater"
+		},
+		"R" : {
+			"type" : "aroma1997core:ore_dict",
+			"ore" : "dustRedstone"
+		},
+		"U" : {
+			"type" : "aroma1997core:stack",
+			"item" : "betterchests:crafting"
+		}
+	},
+	"result" : {
+		"item" : "betterchests:powerupgrade",
+		"data" : 0
+	}
+}

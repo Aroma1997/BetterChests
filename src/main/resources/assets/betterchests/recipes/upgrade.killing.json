@@ -1,0 +1,22 @@
+{
+	"type" : "aroma1997core:shaped_recipe",
+	"pattern" : [
+		" S ",
+		"SUS",
+		" S "
+	],
+	"key" : {
+		"S" : {
+			"type" : "aroma1997core:class",
+			"class" : "net.minecraft.item.ItemSword"
+		},
+		"U" : {
+			"type" : "aroma1997core:stack",
+			"item" : "betterchests:crafting"
+		}
+	},
+	"result" : {
+		"item" : "betterchests:upgrade",
+		"data" : 16
+	}
+}

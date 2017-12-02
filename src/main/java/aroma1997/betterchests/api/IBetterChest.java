@@ -1,140 +1,21 @@
-/**
- * The code of BetterChests and all related materials like textures is copyrighted material.
- * It may only be redistributed or used for Commercial purposes with the permission of Aroma1997.
- * 
- * All Rights reserved (c) by Aroma1997
- * 
- * See https://github.com/Aroma1997/BetterChests/blob/master/LICENSE.md for more information.
- */
-
 package aroma1997.betterchests.api;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
-import aroma1997.core.inventories.IProgressable;
-import aroma1997.core.misc.EnergyObject;
+import net.minecraft.util.EnumFacing;
 
 /**
- * This is implemented in the Bag and in the Chest.
- * 
- * @author Aroma1997
- * 
+ * This interface is implemented on all Upgradable Blocks, that represent an Inventory like a BetterChest or BetterBag.
+ * To access the inventory internally via upgrades, you have to make sure to only access slots returned by
+ * {@link #getSlotsForFace(EnumFacing)} with the side null. Internally, you can ignore
+ * {@link #canExtractItem(int, ItemStack, EnumFacing)} and {@link #canInsertItem(int, ItemStack, EnumFacing)}
  */
-public interface IBetterChest extends IInventory, IProgressable {
+public interface IBetterChest extends IUpgradableBlock, ISidedInventory {
 
 	/**
-	 * The position
-	 * 
-	 * @return x-coord
+	 * Returns a Filter object containing all filters for the given upgrade.
+	 * @param stack The upgrade to get the filter for.
+	 * @return A Filter for this upgrade.
 	 */
-	public double getXPos();
-
-	/**
-	 * The position
-	 * 
-	 * @return y-coord
-	 */
-	public double getYPos();
-
-	/**
-	 * The position
-	 * 
-	 * @return z-coord
-	 */
-	public double getZPos();
-
-	public int getXCoord();
-
-	public int getYCoord();
-
-	public int getZCoord();
-
-	/**
-	 * How many of the Upgrades are installed. This is ignoring NBT data of the
-	 * stack.
-	 * 
-	 * @param upgrade
-	 *            The upgrade to check.
-	 * @return
-	 */
-	public int getAmountUpgrade(ItemStack upgrade);
-
-	/**
-	 * How many of the Upgrades are installed.
-	 * 
-	 * @param upgrade
-	 *            The upgrade to check.
-	 * @return
-	 */
-	public int getAmountUpgradeExact(ItemStack upgrade);
-
-	/**
-	 * If the Amount of Upgrades installed is greater than 0
-	 * 
-	 * @param upgrade
-	 *            The Upgrade to check
-	 * @return
-	 */
-	public boolean isUpgradeInstalled(ItemStack upgrade);
-
-	/**
-	 * Set the Amount of an Upgrade
-	 * 
-	 * @param upgrade
-	 * @param amount
-	 */
-	public void setAmountUpgrade(ItemStack upgrade, int amount);
-
-	/**
-	 * If the Chest has Energy. For Energy-Relying Upgrades.
-	 * 
-	 * @return
-	 */
-	@Deprecated
-	public boolean hasEnergy();
-
-	/**
-	 * Getter for the Upgrade list
-	 * 
-	 * @return The list of Upgrades
-	 */
-	public ArrayList<ItemStack> getUpgrades();
-
-	/**
-	 * Getter for the long tick. This will increase by 1 every tick. (Used to
-	 * have a greater tick than 64)
-	 * 
-	 * @return The long tick
-	 */
-	public long getLongTick();
-
-	/**
-	 * Checks if this Upgrade is disabled.
-	 * 
-	 * @param stack
-	 * @return
-	 */
-	public boolean isUpgradeDisabled(ItemStack stack);
-
-	/**
-	 * Disables or enables this Upgrade.
-	 * 
-	 * @param stack
-	 * @param value
-	 */
-	public void setUpgradeDisabled(ItemStack stack, boolean value);
-
-	/**
-	 * This will return a list of filterUpgrades for this Upgrade.
-	 * 
-	 * @param item
-	 * @return
-	 */
-	public List<IInventoryFilter> getFiltersForUpgrade(ItemStack item);
-
-	public EnergyObject getEnergyObject();
-
+	IFilter getFilterFor(ItemStack stack);
 }

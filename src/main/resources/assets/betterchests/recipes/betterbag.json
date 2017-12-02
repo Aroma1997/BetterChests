@@ -1,0 +1,30 @@
+{
+	"type" : "aroma1997core:shaped_recipe",
+	"pattern" : [
+		"SWS",
+		"LCL",
+		"SWS"
+	],
+	"key" : {
+		"S" : {
+			"type" : "aroma1997core:ore_dict",
+			"ore" : "string"
+		},
+		"W" : {
+			"type" : "aroma1997core:stack",
+			"item" : "minecraft:wool",
+			"data" : 32767
+		},
+		"L" : {
+			"type" : "aroma1997core:ore_dict",
+			"ore" : "leather"
+		},
+		"C" : {
+			"type" : "aroma1997core:stack",
+			"item" : "betterchests:betterchest"
+		}
+	},
+	"result" : {
+		"item" : "betterchests:betterbag"
+	}
+}

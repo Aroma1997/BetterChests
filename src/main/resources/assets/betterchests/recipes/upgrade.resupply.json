@@ -1,0 +1,25 @@
+{
+	"type" : "aroma1997core:shaped_recipe",
+	"pattern" : [
+		"CUC",
+		" H "
+	],
+	"key" : {
+		"C" : {
+			"type" : "aroma1997core:ore_dict",
+			"ore" : "chest"
+		},
+		"H" : {
+			"type" : "aroma1997core:stack",
+			"item" : "minecraft:hopper"
+		},
+		"U" : {
+			"type" : "aroma1997core:stack",
+			"item" : "betterchests:crafting"
+		}
+	},
+	"result" : {
+		"item" : "betterchests:upgrade",
+		"data" : 15
+	}
+}

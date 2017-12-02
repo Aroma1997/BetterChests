@@ -1,0 +1,21 @@
+{
+	"type" : "aroma1997core:shaped_recipe",
+	"pattern" : [
+		"CCC",
+		"CWC",
+		"CCC"
+	],
+	"key" : {
+		"C" : {
+			"type" : "aroma1997core:ore_dict",
+			"ore" : "cobblestone"
+		},
+		"W" : {
+			"type" : "aroma1997core:ore_dict",
+			"ore" : "plankWood"
+		}
+	},
+	"result" : {
+		"item" : "betterchests:chestupgrade"
+	}
+}

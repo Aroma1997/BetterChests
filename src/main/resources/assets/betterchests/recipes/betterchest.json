@@ -1,0 +1,21 @@
+{
+	"type" : "aroma1997core:shaped_recipe",
+	"pattern" : [
+		"SSS",
+		"SCS",
+		"SSS"
+	],
+	"key" : {
+		"S" : {
+			"type" : "aroma1997core:ore_dict",
+			"ore" : "cobblestone"
+		},
+		"C" : {
+			"type" : "aroma1997core:ore_dict",
+			"ore" : "chestWood"
+		}
+	},
+	"result" : {
+		"item" : "betterchests:betterchest"
+	}
+}

@@ -1,0 +1,34 @@
+{
+	"type" : "aroma1997core:shaped_recipe",
+	"pattern" : [
+		"ZDZ",
+		"QUQ",
+		"ZGZ"
+	],
+	"key" : {
+		"Z" : {
+			"type" : "aroma1997core:stack",
+			"item" : "minecraft:rotten_flesh"
+		},
+		"D" : {
+			"type" : "aroma1997core:ore_dict",
+			"ore" : "gemDiamond"
+		},
+		"Q" : {
+			"type" : "aroma1997core:ore_dict",
+			"ore" : "gemQuartz"
+		},
+		"G" : {
+			"type" : "aroma1997core:ore_dict",
+			"ore" : "ingotGold"
+		},
+		"U" : {
+			"type" : "aroma1997core:stack",
+			"item" : "betterchests:crafting"
+		}
+	},
+	"result" : {
+		"item" : "betterchests:dummyupgrade",
+		"data" : 0
+	}
+}

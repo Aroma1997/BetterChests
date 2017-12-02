@@ -1,0 +1,25 @@
+{
+	"type" : "aroma1997core:shaped_recipe",
+	"pattern" : [
+		"ICI",
+		" S ",
+		" S "
+	],
+	"key" : {
+		"I" : {
+			"type" : "aroma1997core:ore_dict",
+			"ore" : "ingotIron"
+		},
+		"C" : {
+			"type" : "aroma1997core:ore_dict",
+			"ore" : "chest"
+		},
+		"S" : {
+			"type" : "aroma1997core:ore_dict",
+			"ore" : "stickWood"
+		}
+	},
+	"result" : {
+		"item" : "betterchests:chestpickup"
+	}
+}

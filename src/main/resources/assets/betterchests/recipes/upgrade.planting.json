@@ -1,0 +1,26 @@
+{
+	"type" : "aroma1997core:shaped_recipe",
+	"pattern" : [
+		"SHS",
+		"HUH",
+		"SHS"
+	],
+	"key" : {
+		"S" : {
+			"type" : "aroma1997core:class",
+			"class" : "net.minecraftforge.common.IPlantable"
+		},
+		"H" : {
+			"type" : "aroma1997core:class",
+			"class" : "net.minecraft.item.ItemHoe"
+		},
+		"U" : {
+			"type" : "aroma1997core:stack",
+			"item" : "betterchests:crafting"
+		}
+	},
+	"result" : {
+		"item" : "betterchests:upgrade",
+		"data" : 10
+	}
+}

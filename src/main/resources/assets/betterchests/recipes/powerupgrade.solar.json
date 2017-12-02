@@ -1,0 +1,25 @@
+{
+	"type" : "aroma1997core:shaped_recipe",
+	"pattern" : [
+		"SSS",
+		"GUG"
+	],
+	"key" : {
+		"S" : {
+			"type" : "aroma1997core:stack",
+			"item" : "minecraft:daylight_detector"
+		},
+		"G" : {
+			"type" : "aroma1997core:ore_dict",
+			"ore" : "dustGlowstone"
+		},
+		"U" : {
+			"type" : "aroma1997core:stack",
+			"item" : "betterchests:crafting"
+		}
+	},
+	"result" : {
+		"item" : "betterchests:powerupgrade",
+		"data" : 1
+	}
+}

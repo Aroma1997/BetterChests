@@ -1,0 +1,23 @@
+{
+	"type" : "aroma1997core:shapeless_recipe",
+	"ingredients" : [
+		{
+			"type" : "aroma1997core:multi",
+			"parts" : [
+				{
+					"type" : "aroma1997core:stack",
+					"item" : "betterchests:upgrade",
+					"data" : 32767
+				},
+				{
+					"type" : "aroma1997core:stack",
+					"item" : "betterchests:powerupgrade",
+					"data" : 32767
+				}
+			]
+		}
+	],
+	"result" : {
+		"item" : "betterchests:crafting"
+	}
+}

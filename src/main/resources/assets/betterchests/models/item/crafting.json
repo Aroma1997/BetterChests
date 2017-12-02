@@ -1,0 +1,6 @@
+{
+	"parent" : "aroma1997core:item/default",
+	"textures" : {
+		"layer0" : "betterchests:items/basicupgrade"
+	}
+}

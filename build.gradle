@@ -1,75 +1,161 @@
 buildscript {
-    repositories {
-        mavenCentral()
-        maven {
-            name = "forge"
-            url = "http://files.minecraftforge.net/maven"
-        }
-        maven {
-            name = "sonatype"
-            url = "https://oss.sonatype.org/content/repositories/snapshots/"
-        }
-    }
-    dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
-    }
+	repositories {
+		jcenter()
+		maven {
+			name = "forge"
+			url = "http://files.minecraftforge.net/maven"
+		}
+	}
+	dependencies {
+		classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
+	}
 }
+
+plugins {
+	id "com.matthewprenger.cursegradle" version "1.0.9"
+}
+
+apply plugin: 'maven'
+apply plugin: 'net.minecraftforge.gradle.forge'
 
 ext.configFile = file "build.properties"
 
 configFile.withReader {
-    def prop = new Properties()
-    prop.load(it)
-    project.ext.config = new ConfigSlurper().parse prop
+	def prop = new Properties()
+	prop.load(it)
+	project.ext.config = new ConfigSlurper().parse prop
 }
-
-apply plugin: 'forge'
-
-ENV = System.getenv()
 
 version = config.mod_version
 group = config.mod_group
 archivesBaseName = config.mod_name
 
-if (ENV.BUILD_NUMBER)
-	version = "${config.mod_version}.b${ENV.BUILD_NUMBER}"
+if (System.getenv().BUILD_NUMBER)
+	version = "${config.mod_version}.b${System.getenv().BUILD_NUMBER}"
 
 minecraft {
-    version = "${config.mc_version}-${config.forge_version}"
-    assetDir = "eclipse/assets"
+	version = "${config.mc_version}-${config.forge_version}"
+	runDir = "run"
 	
-	mappings = "snapshot_nodoc_20141130"
+	mappings = "${config.mcp_version}"
+	makeObfSourceJar = false
+}
+
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
+
+repositories {
+	maven {
+		name = "aroma"
+		url = "http://files.aroma1997.org/maven/"
+	}
+	maven {
+		name = "ic2"
+		url = "http://maven.ic2.player.to/"
+	}
 }
 
 dependencies {
-	compile fileTree(dir:'lib',include:'*.jar')
+	//core
+	compile "aroma1997.core:Aroma1997Core-${config.mc_version}:+:deobf"
+	compile "net.industrial-craft:industrialcraft-2:${config.ic2_version}:api"
+}
+
+reobfJar {
+	//Instead of setting the accepted mc version to the one we're compiling against, we're setting it to the first one (lowest one) we accept.
+	//Forge does the fuzzy detection then.
+	getPreTransformers().add(0, new net.minecraftforge.gradle.user.patcherUser.forge.McVersionTransformer(getAvailableMinecraftVersions()[0]))
 }
 
 processResources
 {
-    from(sourceSets.main.resources.srcDirs) {
-        include 'mcmod.info'
+	from(sourceSets.main.resources.srcDirs) {
+		include 'mcmod.info'
 		include '**/reference.properties'
 
-        expand 'version': version, 'mcversion': config.mc_version
-    }
+		expand 'version': version, 'mcversion': config.mc_version
+	}
 
-    from(sourceSets.main.resources.srcDirs) {
-        exclude 'mcmod.info'
+	from(sourceSets.main.resources.srcDirs) {
+		exclude 'mcmod.info'
 		exclude '**/reference.properties'
-    }
+	}
+}
+
+task apiJar(type: Jar) {
+	from sourceSets.main.output, sourceSets.main.allSource
+	include "aroma1997/betterchests/api/**"
+
+	appendix = config.mc_version
+	classifier = 'api'
+}
+
+task deobfJar(type: Jar) {
+	from sourceSets.main.output
+	appendix = config.mc_version
+	classifier = 'deobf'
 }
 
 jar {
 	appendix = config.mc_version
 }
 
-task deobfJar(type: Jar) {
-    from sourceSets.main.output
-	appendix = config.mc_version
-    classifier = 'deobf'
+artifacts {
+	archives deobfJar
+	archives apiJar
 }
 
-artifacts {
-        archives deobfJar
+uploadArchives {
+	repositories {
+		if (project.hasProperty('maven_dir')) {
+			mavenDeployer {
+				repository(url: "file://${maven_dir}")
+				
+			}
+		} else {
+			println 'Archives upload disabled, gradle.properties is missing.'
+		}
+	}
+}
+
+curseforge {
+	apiKey = project.hasProperty('curseforge_apikey') ? project.curseforge_apikey : '0'
+	project {
+		id = config.curse_project_id
+		changelog = "N/A"
+		changelogType = 'html'
+		releaseType = version.contains('b') ? 'beta' : 'release'
+		addArtifact deobfJar
+		relations {
+			requiredLibrary 'aroma1997core'
+		}
+		getAvailableMinecraftVersions().each { ver -> addGameVersion ver }
+	}
+}
+
+task signJar(dependsOn: ['deobfJar', 'jar', 'apiJar']){
+	doLast {
+		// Skip the task if our secret data isn't available
+		if (project.hasProperty('signingKeystore')) {
+			ant.signjar(
+				destDir: "$buildDir/libs",
+				jar: "$buildDir/libs/*.jar",
+				alias: signingAlias,
+				storetype: "jks",
+				keystore: signingKeystore,
+				storepass: signingStorepass
+			)
+		} else {
+			println("Skipping jar signing. Signing keystore isn't available.")
+		}
+	}
+}
+build.dependsOn signJar
+
+def getAvailableMinecraftVersions() {
+	if (!config.availableMcVersions) {
+		return [ config.mc_version ]
+	} else {
+		return config.availableMcVersions.split(',')
+	}
 }

@@ -1,131 +1,90 @@
-/**
- * The code of BetterChests and all related materials like textures is copyrighted material.
- * It may only be redistributed or used for Commercial purposes with the permission of Aroma1997.
- * 
- * All Rights reserved (c) by Aroma1997
- * 
- * See https://github.com/Aroma1997/BetterChests/blob/master/LICENSE.md for more information.
- */
-
 package aroma1997.betterchests.api;
 
-import java.util.List;
+import java.util.Collection;
 
-import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.inventory.Container;
+import javax.annotation.Nullable;
+
 import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 /**
- * Implement this Interface in your Item and it'll be accepted by BetterChest.
- * You can also have a Multi-Item, where the Upgrades have a different metadata.
- * 
+ * This interface needs to be implemented on the item class for each upgrade.
+ *
  * @author Aroma1997
- * 
  */
 public interface IUpgrade {
 
 	/**
-	 * If the Upgrade can be put on a Chest.
-	 * 
-	 * @param item
-	 *            The Upgrade to Check.
-	 * @return
+	 * Returns a list of upgrade, that need to be installed in a Upgradable Block for this upgrade to be installed.
+	 *
+	 * @param stack The upgrade ItemStack.
+	 * @return a list of required Upgrades.
 	 */
-	public boolean canChestTakeUpgrade(ItemStack item);
+	Collection<ItemStack> getRequiredUpgrades(ItemStack stack);
 
 	/**
-	 * If the Upgrade can be Put on a Bag.
-	 * 
-	 * @param item
-	 *            The item to check
-	 * @return
+	 * Returns whether the requirements for this upgrade are installed. This should take things into account like
+	 * required upgrade, but not upgrade count.
+	 * @param chest The Upgradable Block the upgrade is in.
+	 * @param stack The actual Upgrade.
+	 * @return Whether the chest meets the criteria for the upgrade.
 	 */
-	public boolean canBagTakeUpgrade(ItemStack item);
+	default boolean areRequirementsMet(IUpgradableBlock chest, ItemStack stack) {
+		return getRequiredUpgrades(stack).stream().allMatch(chest::isUpgradeInstalled) &&
+				getCompatibleTypes(stack).contains(chest.getUpgradableBlockType());
+	}
 
 	/**
-	 * Get the list of Upgrades Required for this Upgrade.
-	 * 
-	 * @param item
-	 *            The Upgrade to check.
-	 * @return
+	 * Returns whether this upgrade can be installed in the given Upgradable Block. This should take into account,
+	 * whether the required Upgrades are installed, the UpgradableBlockType matchesStack the upgrade, the maximum amount of
+	 * this type of upgrade into the Block and specific upgrade-related things.
+	 *
+	 * @param chest The Upgradable Block the upgrade will be inserted into.
+	 * @param stack The actual Upgrade.
+	 * @return Whether the upgrade can be installed into the Upgradable Block.
 	 */
-	public List<ItemStack> getRequiredUpgrade(ItemStack item);
+	default boolean canBePutInChest(IUpgradableBlock chest, ItemStack stack) {
+		return chest.getAmountUpgrades(stack) < getMaxAmountUpgrades(stack) &&
+				areRequirementsMet(chest, stack);
+	}
 
 	/**
-	 * Called, whenerever the Chest gets ticked
-	 * 
-	 * @param chest
-	 *            The Adjustable Chest or the Bag
-	 * @param tick
-	 *            The tick (counts from 0 to 64)
-	 * @param world
-	 *            The world
-	 * @param item
-	 *            The Upgrade
+	 * Returns a list of UpgradableBlockTypes this upgrade is compatible to.
+	 * @param stack The actual Upgrade
+	 * @return a list of compatible UpgradableBlockTypes
 	 */
-	public void update(IBetterChest chest, int tick, World world, ItemStack item);
+	Collection<UpgradableBlockType> getCompatibleTypes(ItemStack stack);
 
 	/**
-	 * The Max amount of Upgrades per Chest/Bag.
-	 * 
-	 * @param item
-	 *            The Upgrade to Check.
-	 * @return
+	 * This method will be called once a tick. Similar to {@link net.minecraft.util.ITickable#update()}
+	 * @param chest The Upgradable Block the upgrade is in.
+	 * @param stack The actual Upgrade.
 	 */
-	public int getMaxUpgrades(ItemStack item);
-
-	// /**
-	// * The name of The Upgrade.
-	// *
-	// * @param item
-	// * The Upgrade to check
-	// * @return The localized(!!) name of the Upgrade
-	// */
-	// public String getName(ItemStack item);
+	void update(IUpgradableBlock chest, ItemStack stack);
 
 	/**
-	 * Called when the Upgrade is installed.
-	 * 
-	 * @param item
-	 *            The Upgrade
-	 * @param chest
-	 *            The Chest/Bag
+	 * Returns whether this upgrade can be disabled. Disabled Upgrades won't get @link{#update}d
+	 * @param stack The actual Upgrade.
+	 * @return Whether the upgrade can be disabled.
 	 */
-	public void onUpgradeInstalled(ItemStack item, IBetterChest chest);
+	boolean canBeDisabled(ItemStack stack);
 
 	/**
-	 * The GUI's rendering
-	 * 
-	 * @param gui
-	 *            The gui
-	 * @param container
-	 *            The Container
-	 * @param item
-	 *            The upgrade
+	 * This method will be called to alter some functionality of the Upgradable Block.
+	 * For information on what exactly you can change, you can take a look at {@link ChestModifier}.
+	 * {@link ChestModifier} also contains information about what type the return value will be used as. (int, ...)
+	 * Returning null should be the default behaviour. Null represents the neutral element. (0 for sums, 1 for
+	 * multiplications etc.)
+	 * @param chest The Upgradable Block the upgrade is in.
+	 * @param modifier The ChestModifier the return value should be for.
+	 * @param stack The actual Upgrade.
+	 * @return A Number representing a ChestModifier or null for default behaviour.
 	 */
-	@SideOnly(Side.CLIENT)
-	public void drawGuiContainerForegroundLayer(GuiContainer gui,
-			Container container, int par1, int par2, ItemStack item);
+	@Nullable Number getChestModifier(IUpgradableBlock chest, ChestModifier modifier, ItemStack stack);
 
 	/**
-	 * USed to check if the upgrade can be disabled in the {@link}
-	 * ContainerUpgrades
-	 * 
-	 * @param stack
-	 *            The upgrade
-	 * @return if it can be disabled.
+	 * Returns the maximum amount of upgrade of this type the chest can have.
+	 * @param stack The actual upgrade.
+	 * @return The maximum amount of Upgrades per chest.
 	 */
-	public boolean canBeDisabled(ItemStack stack);
-	
-	/**
-	 * If this Upgrade can use the filter Upgrade.
-	 * @param stack The upgrade
-	 * @param inverted If the Filter is inverted (false = Whitelist, true = Blacklist)
-	 * @return
-	 */
-	public boolean supportsFilter(ItemStack stack, boolean inverted);
-
+	int getMaxAmountUpgrades(ItemStack stack);
 }

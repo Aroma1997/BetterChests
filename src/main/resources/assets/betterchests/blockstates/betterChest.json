@@ -1,8 +1,9 @@
 {
     "variants": {
-        "facing=north": { "model": "betterchests:betterChest" },
-        "facing=south": { "model": "betterchests:betterChest", "y": 180 },
-        "facing=west":  { "model": "betterchests:betterChest", "y": 270 },
-        "facing=east":  { "model": "betterchests:betterChest", "y": 90 }
+		"normal": {"model": "betterchests:betterchest"},
+		"direction=north": { "model": "betterchests:betterchest" },
+		"direction=south": { "model": "betterchests:betterchest" },
+		"direction=east": { "model": "betterchests:betterchest" },
+		"direction=west": { "model": "betterchests:betterchest" }
     }
 }
