@@ -54,5 +54,6 @@ public class ClientProxy extends CommonProxy {
 			}
 			pressed = keyBind.isPressed();
 		});
+		ClientRegistry.registerKeyBinding(keyBind);
 	}
 }
