@@ -21,7 +21,7 @@ public class UpgradeBreeding extends BasicUpgrade {
 	static final double RADIUS = 3;
 
 	public UpgradeBreeding() {
-		super(true, 1, UpgradableBlockType.CHEST.array);
+		super(true, 1, new UpgradableBlockType[]{UpgradableBlockType.CHEST, UpgradableBlockType.BARREL});
 	}
 
 	@Override

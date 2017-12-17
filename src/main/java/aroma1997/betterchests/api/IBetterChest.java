@@ -12,10 +12,4 @@ import net.minecraft.util.EnumFacing;
  */
 public interface IBetterChest extends IUpgradableBlock, ISidedInventory {
 
-	/**
-	 * Returns a Filter object containing all filters for the given upgrade.
-	 * @param stack The upgrade to get the filter for.
-	 * @return A Filter for this upgrade.
-	 */
-	IFilter getFilterFor(ItemStack stack);
 }

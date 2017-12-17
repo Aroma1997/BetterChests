@@ -5,5 +5,5 @@ import aroma1997.betterchests.api.IBetterChest;
 
 public interface IBetterChestInternal extends IBetterChest, IUpgradableBlockInternal, IInventoryPartContainer {
 
-	public InventoryPartChest getChestPart();
+	InventoryPartChest getChestPart();
 }

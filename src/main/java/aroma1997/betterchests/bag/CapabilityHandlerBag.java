@@ -18,7 +18,7 @@ public class CapabilityHandlerBag implements ICapabilityProvider {
 	}
 
 	protected ICapabilityProvider getActualProvider() {
-		return ItemBBag.getInventoryFor(stack, null);
+		return ((ItemBBagBase<?>)stack.getItem()).getInventoryFor(stack, null);
 	}
 
 	@Override

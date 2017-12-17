@@ -22,7 +22,7 @@ import aroma1997.betterchests.upgrades.BasicUpgrade;
 
 public class UpgradePlanting extends BasicUpgrade {
 	public UpgradePlanting() {
-		super(true, 5, UpgradableBlockType.CHEST.array);
+		super(true, 5, new UpgradableBlockType[]{UpgradableBlockType.CHEST, UpgradableBlockType.BARREL});
 	}
 
 	@Override

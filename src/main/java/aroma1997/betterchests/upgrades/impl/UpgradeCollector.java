@@ -33,7 +33,7 @@ public class UpgradeCollector extends BasicUpgrade {
 	@Override
 	public void update(IUpgradableBlock chest, ItemStack stack) {
 		if (!UpgradeHelper.INSTANCE.isFirstUpgrade(chest, stack) || UpgradeHelper.INSTANCE.getFrequencyTick(chest, stack, 5) != 0
-				|| chest.getWorldObj().isRemote) {
+				|| chest.getWorldObj().isRemote || !hasUpgradeOperationCost(chest)) {
 			return;
 		}
 
@@ -53,9 +53,12 @@ public class UpgradeCollector extends BasicUpgrade {
 		for (EntityItem entity : entities) {
 			ItemStack entityStack = entity.getItem();
 			if (UpgradeHelper.INSTANCE.getInventory(entityStack, entity) == null && hasUpgradeOperationCost(chest)) {
-				entity.setItem(InvUtil.putStackInInventoryInternal(entityStack, inv, false));
-				drawUpgradeOperationCode(chest);
-				inv.markDirty();
+				ItemStack over = InvUtil.putStackInInventoryInternal(entityStack, inv, false);
+				entity.setItem(over);
+				if (over.getCount() != entityStack.getCount()) {
+					drawUpgradeOperationCode(chest);
+					inv.markDirty();
+				}
 			}
 		}
 

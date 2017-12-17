@@ -1,7 +1,3 @@
-Intended to be implemented before release:
-Block placer Upgrade (Implemented, No texture yet)
-Block breaker Upgrade (Implemented, No texture yet)
-
 Will be implemented after first release:
 Player Upgrade (Not implemented yet, Texture available)
 Item charging Upgrade (Not implemented yet, No texture yet)

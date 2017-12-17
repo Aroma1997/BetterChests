@@ -1,0 +1,12 @@
+{
+	"parent": "block/cube",
+	"textures": {
+		"particle": "betterchests:blocks/betterbarrel_side",
+		"down": "betterchests:blocks/betterbarrel_side",
+		"up": "betterchests:blocks/betterbarrel_side",
+		"north": "betterchests:blocks/betterbarrel_front",
+		"east": "betterchests:blocks/betterbarrel_side",
+		"south": "betterchests:blocks/betterbarrel_front",
+		"west": "betterchests:blocks/betterbarrel_side"
+	}
+}

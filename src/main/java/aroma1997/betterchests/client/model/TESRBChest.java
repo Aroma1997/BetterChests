@@ -55,16 +55,14 @@ public class TESRBChest extends TileEntitySpecialRenderer<TileEntityBChest> {
 	);
 
 	private ModelChest model = new ModelChest();
-	private ResourceLocation texture = new ResourceLocation("betterchests:textures/block/betterchest_te.png");
-
-
+	private ResourceLocation texture = new ResourceLocation("betterchests:textures/blocks/betterchest.png");
 
 	private TESRBChest() {}
 
 	@Override
 	public void render(TileEntityBChest te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
 		GL11.glPushMatrix();
-		bindTexture(new ResourceLocation("betterchests:textures/block/betterchest.png"));
+		bindTexture(texture);
 
 		GlStateManager.translate((float)x, (float)y + 1.0F, (float)z + 1.0F);
 		GlStateManager.scale(1.0F, -1.0F, -1.0F);

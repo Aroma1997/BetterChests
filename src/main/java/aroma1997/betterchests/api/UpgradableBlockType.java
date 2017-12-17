@@ -16,7 +16,18 @@ public enum UpgradableBlockType {
 	 * A upgradable backpack.
 	 * Must implement the interfaces {@link IBetterChest} and {@link IMobileUpgradableBlock}
 	 */
-	BAG;
+	BAG,
+	/**
+	 * A upgradable chest, that can only hold one kind of Item.
+	 * Must implement the interface {@link IBetterChest}
+	 */
+	BARREL,
+
+	/**
+	 * A upgradable backpack, that can only hold one kind of Item.
+	 * Must implement the interface {@link IBetterChest}
+	 */
+	PORTABLE_BARREL;
 
 	/**
 	 * A array just containing the current UpgradableBlockType.
@@ -28,8 +39,12 @@ public enum UpgradableBlockType {
 	 */
 	public static final UpgradableBlockType[] VALUES = values();
 	/**
+	 * All upgradableBlockTypes, that are normal inventories that can hold multiple different items like chests.
+	 */
+	public static final UpgradableBlockType[] NORMAL_INVENTORIES = {CHEST, BAG};
+	/**
 	 * All upgradableBlockTypes, that are inventories.
 	 * (As stated above, more may follow)
 	 */
-	public static final UpgradableBlockType[] INVENTORIES = {CHEST, BAG};
+	public static final UpgradableBlockType[] INVENTORIES = {CHEST, BAG, BARREL, PORTABLE_BARREL};
 }

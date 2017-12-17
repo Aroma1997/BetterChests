@@ -12,8 +12,12 @@ public class InventoryPartChest extends InventoryPartBase {
 	private static final int MAX_SIZE = 90;
 	private static final int DEFAULT_SIZE = 27;
 
+	public InventoryPartChest(IUpgradableBlockInternal container, int size) {
+		super(container, "inventory", size);
+	}
+
 	public InventoryPartChest(IUpgradableBlockInternal container) {
-		super(container, "inventory", MAX_SIZE);
+		this(container, MAX_SIZE);
 	}
 
 	protected IUpgradableBlockInternal getChest() {
@@ -34,6 +38,7 @@ public class InventoryPartChest extends InventoryPartBase {
 		int size = DEFAULT_SIZE + UpgradeHelper.INSTANCE.intSum(getChest(), ChestModifier.SIZE);
 		return Math.min(size, MAX_SIZE);
 	}
+
 	public int getAccessibleBegin() {
 		int size = UpgradeHelper.INSTANCE.intSum(getChest(), ChestModifier.SIZE_BEGIN);
 		return Math.max(size, 0);

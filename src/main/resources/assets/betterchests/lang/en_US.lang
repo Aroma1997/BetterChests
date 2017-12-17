@@ -4,9 +4,14 @@ betterchests:tooltip.maxUpgrades=Maximum upgrades per chest: %s
 betterchests:tooltip.requiredUpgrades=Required Upgrades:
 betterchests:tooltip.compatible.chest=Can be put on a BetterChest
 betterchests:tooltip.compatible.bag=Can be put on a BetterBackpack
+betterchests:tooltip.compatible.barrel=Can be put on a BetterBarrel
+betterchests:tooltip.compatible.portable_barrel=Can be put on a Better Portable Barrel
 betterchests:tooltip.requiresPower=Requires %sFE power per operation.
 betterchests:tooltip.providesPower=Provides %sFE power per tick.
 betterchests:tooltip.capacitorincrease=Increases power capacity by %sFE
+betterchests:tooltip.betterbag.keybind=Can be opened with the %s key.
+betterchests:tooltip.portablebarrel.content=Contains: %s
+betterchests:tooltip.portablebarrel.amount=Amount: %s
 
 betterchests:tooltip.directionalupgrade.north=Current side: North
 betterchests:tooltip.directionalupgrade.east=Current side: East
@@ -26,7 +31,6 @@ betterchests:damagesource.killingUpgrade=%s was slain by a Killing Upgrade in a 
 betterchests:inventorypart.upgrades=Upgrades
 betterchests:inventorypart.filter=Filter
 betterchests:keybind.openbag=Open BetterBackpack
-betterchests:keybind.openbag.tooltip=Can be opened with the %s key.
 betterchests:keybind.category=Betterchests
 
 betterchests:gui.upgrades.energy.desc=Power:
@@ -47,9 +51,11 @@ betterchests:gui.filter.info.restrictupgrade=Filters can be restricted to indivi
 
 #Blocks
 tile.betterchests:betterchest.name=BetterChest
+tile.betterchests:betterbarrel.name=BetterBarrel
 
 #Items
 item.betterchests:betterbag.name=BetterBackpack
+item.betterchests:betterportablebarrel.name=Better Portable Barrel
 item.betterchests:filter.whitelist.name=Whitelist Filter
 item.betterchests:filter.blacklist.name=Blacklist Filter
 

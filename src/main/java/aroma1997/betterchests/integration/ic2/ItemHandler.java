@@ -63,7 +63,7 @@ public class ItemHandler implements IBackupElectricItemManager {
 	public String getToolTip(ItemStack stack) {
 		IUpgradableBlock block = UpgradeHelper.INSTANCE.getInventory(stack, null);
 		IEnergyStorage storage = block.getEnergyStorage();
-		return LocalizationHelper.localizeFormatted("betterchests:gui.energy.tooltip", storage.getEnergyStored(), storage.getMaxEnergyStored());
+		return LocalizationHelper.localizeFormatted("betterchests:gui.upgrades.energy.tooltip", storage.getEnergyStored(), storage.getMaxEnergyStored());
 	}
 
 	@Override

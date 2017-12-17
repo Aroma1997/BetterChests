@@ -106,4 +106,11 @@ public interface IUpgradableBlock extends ICapabilityProvider {
 	 * @return The UpgradableBlock's FakePlayer or null if it doesn't have one.
 	 */
 	@Nullable EntityPlayerMP getFakePlayer();
+
+	/**
+	 * Returns a Filter object containing all filters for the given upgrade.
+	 * @param stack The upgrade to get the filter for.
+	 * @return A Filter for this upgrade.
+	 */
+	IFilter getFilterFor(ItemStack stack);
 }

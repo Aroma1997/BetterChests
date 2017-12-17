@@ -11,6 +11,7 @@ import aroma1997.betterchests.api.ChestModifier;
 import aroma1997.betterchests.api.IUpgradableBlock;
 import aroma1997.betterchests.api.IUpgrade;
 import aroma1997.betterchests.bag.ItemBBag;
+import aroma1997.betterchests.bag.ItemBPortableBarrel;
 
 public enum UpgradeHelper implements aroma1997.betterchests.api.UpgradeHelper.IUpgradeHelper {
 	INSTANCE;
@@ -98,7 +99,9 @@ public enum UpgradeHelper implements aroma1997.betterchests.api.UpgradeHelper.IU
 	@Override
 	public IUpgradableBlock getInventory(ItemStack stack, Entity containerEntity) {
 		if (stack.getItem() instanceof ItemBBag) {
-			return ItemBBag.getInventoryFor(stack, containerEntity);
+			return BlocksItemsBetterChests.betterbag.getInventoryFor(stack, containerEntity);
+		} else if (stack.getItem() instanceof ItemBPortableBarrel) {
+			return BlocksItemsBetterChests.betterportablebarrel.getInventoryFor(stack, containerEntity);
 		} else {
 			return null;
 		}

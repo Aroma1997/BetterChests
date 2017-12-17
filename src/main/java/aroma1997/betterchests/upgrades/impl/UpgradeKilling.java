@@ -29,7 +29,7 @@ public class UpgradeKilling extends BasicUpgrade {
 	private static final int ANIMALS_TO_KEEP_ALIVE = 2;
 
 	public UpgradeKilling() {
-		super(true, 1, UpgradableBlockType.CHEST.array);
+		super(true, 1, new UpgradableBlockType[]{UpgradableBlockType.CHEST, UpgradableBlockType.BARREL});
 	}
 
 	@Override

@@ -27,8 +27,8 @@ public class EntityBag extends EntityItem {
 		return source != DamageSource.OUT_OF_WORLD && hasHardnessInstalled();
 	}
 
-	protected InventoryBBag getInv() {
-		return ItemBBag.getInventoryFor(getItem(), this);
+	protected BasicBagInventory getInv() {
+		return ((ItemBBagBase<?>)getItem().getItem()).getInventoryFor(getItem(), this);
 	}
 
 	@Override

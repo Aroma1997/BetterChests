@@ -4,25 +4,20 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.stream.StreamSupport;
 
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagInt;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 
 import net.minecraftforge.common.util.Constants.NBT;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 
-import aroma1997.core.container.ContainerBase;
+import aroma1997.core.block.te.TileEntityBase;
 import aroma1997.core.inventory.IInventoryPartContainer;
 import aroma1997.core.inventory.inventorypart.InventoryPartBase;
 import aroma1997.core.network.AutoEncode;
-import aroma1997.core.network.packets.PacketTeUpdate;
 import aroma1997.betterchests.api.IUpgradableBlock;
 import aroma1997.betterchests.api.IUpgrade;
-import aroma1997.betterchests.container.ContainerUpgrades;
 
 public class InventoryPartUpgrades extends InventoryPartBase {
 
@@ -71,8 +66,8 @@ public class InventoryPartUpgrades extends InventoryPartBase {
 	}
 
 	@Override
-	public void markDirty() {
-		super.markDirty();
+	public void markDirtyInternal() {
+		super.markDirtyInternal();
 
 		for (int i = 0; i < getSizeInventory(); i++) {
 			if (getStackInSlot(i).isEmpty()) {
@@ -81,14 +76,17 @@ public class InventoryPartUpgrades extends InventoryPartBase {
 		}
 
 		if (getChest().getWorldObj().isRemote) return;
-		for (EntityPlayer player : FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().getPlayers()) {
-			if (player.openContainer != null && player.openContainer instanceof ContainerBase && ((ContainerBase<?>)player.openContainer).inventory == container && !(player.openContainer instanceof ContainerUpgrades)) {
-				player.closeScreen();
-			}
-		}
+//		for (EntityPlayer player : FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().getPlayers()) {
+//			if (player.openContainer != null && player.openContainer instanceof ContainerBase && ((ContainerBase<?>)player.openContainer).inventory == container && !(player.openContainer instanceof ContainerUpgrades)) {
+//				player.closeScreen();
+//			}
+//		}
 
-		if (getChest() instanceof TileEntity) {
-			new PacketTeUpdate((TileEntity)getChest()).sendPacket();
+		if (getChest() instanceof TileEntityBase) {
+			((TileEntityBase)getChest()).sendUpdates();
+		}
+		if (getChest() instanceof IBetterChestInternal) {
+			((IBetterChestInternal)getChest()).getChestPart().markDirtyInternal();
 		}
 	}
 

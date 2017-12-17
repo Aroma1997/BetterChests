@@ -31,12 +31,17 @@ public enum ChestModifier {
 	COMPARATOR,
 	/**
 	 * This determines the hardness of the block against explosions and similar.
-	 * The return type is used as a float.
+	 * The return type is used as a float boolean.
 	 */
 	HARDNESS,
 	/**
 	 * This modifies the size of the block's internal energy storage.
 	 * The return type is used as a integer.
 	 */
-	ENERGY_CAPACITY;
+	ENERGY_CAPACITY,
+	/**
+	 * This modifies whether barrels remember their items in them if the barrel is empty.
+	 * The return type is used as a float boolean.
+	 */
+	ACCEPTANCE_LOCK;
 }

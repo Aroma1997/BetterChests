@@ -26,7 +26,7 @@ public class UpgradeCobbestone extends BasicUpgrade {
 	public static final Predicate<ItemStack> lava = getFluidPredicate(FluidRegistry.LAVA);
 
 	public UpgradeCobbestone() {
-		super(true, 1, UpgradableBlockType.INVENTORIES);
+		super(true, 1, UpgradableBlockType.NORMAL_INVENTORIES);
 	}
 
 	@Override

@@ -30,7 +30,7 @@ public class ItemChestPickup extends AromicItem {
 	@Override
 	public EnumActionResult onItemUseFirst(EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand) {
 		if (world.isRemote) {
-			return EnumActionResult.PASS;
+			return EnumActionResult.SUCCESS;
 		}
 		if (canDoDrop(player, world, pos)) {
 			ItemStack drop = getDrop(pos, world);

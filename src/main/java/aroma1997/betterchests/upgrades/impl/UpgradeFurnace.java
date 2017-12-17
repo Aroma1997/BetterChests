@@ -14,7 +14,7 @@ import aroma1997.betterchests.upgrades.BasicUpgrade;
 
 public class UpgradeFurnace extends BasicUpgrade {
 	public UpgradeFurnace() {
-		super(true, 1, UpgradableBlockType.INVENTORIES);
+		super(true, 1, UpgradableBlockType.NORMAL_INVENTORIES);
 	}
 
 	@Override

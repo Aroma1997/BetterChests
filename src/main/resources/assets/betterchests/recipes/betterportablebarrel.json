@@ -1,0 +1,25 @@
+{
+	"type" : "aroma1997core:shaped_recipe",
+	"pattern" : [
+		"FFF",
+		"SCS",
+		"FFF"
+	],
+	"key" : {
+		"F" : {
+			"type" : "aroma1997core:ore_dict",
+			"ore" : "cobblestone"
+		},
+		"S" : {
+			"type" : "aroma1997core:ore_dict",
+			"ore" : "stickWood"
+		},
+		"C" : {
+			"type" : "aroma1997core:stack",
+			"item" : "betterchests:betterbag"
+		}
+	},
+	"result" : {
+		"item" : "betterchests:betterportablebarrel"
+	}
+}

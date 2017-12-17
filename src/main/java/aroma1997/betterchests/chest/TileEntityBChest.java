@@ -2,37 +2,17 @@ package aroma1997.betterchests.chest;
 
 import java.lang.reflect.Field;
 import java.util.function.Predicate;
-import java.util.stream.StreamSupport;
 
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.Container;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.SoundCategory;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.World;
 
-import net.minecraftforge.energy.IEnergyStorage;
-
-import aroma1997.core.block.te.TileEntityInventory;
-import aroma1997.core.block.te.element.EnergyElement;
-import aroma1997.core.block.te.element.FakePlayerElement;
-import aroma1997.core.block.te.element.RedstoneEmitterElement;
 import aroma1997.core.container.IGuiProvider;
-import aroma1997.core.inventory.inventorypart.InventoryPartBase;
-import aroma1997.core.network.AutoEncode;
-import aroma1997.core.network.AutoEncode.GuiEncode;
 import aroma1997.core.network.NetworkHelper;
 import aroma1997.core.network.packets.PacketTeUpdate;
-import aroma1997.core.util.ItemUtil;
-import aroma1997.core.util.Util;
-import aroma1997.betterchests.UpgradeHelper;
-import aroma1997.betterchests.api.ChestModifier;
-import aroma1997.betterchests.api.IFilter;
 import aroma1997.betterchests.api.UpgradableBlockType;
 import aroma1997.betterchests.client.gui.GuiBChest;
 import aroma1997.betterchests.client.gui.GuiUpgrades;
@@ -40,107 +20,22 @@ import aroma1997.betterchests.container.ContainerBChest;
 import aroma1997.betterchests.container.ContainerUpgrades;
 import aroma1997.betterchests.inventories.IBetterChestInternal;
 import aroma1997.betterchests.inventories.InventoryPartChest;
-import aroma1997.betterchests.inventories.InventoryPartFilter;
-import aroma1997.betterchests.inventories.InventoryPartUpgrades;
 
-public class TileEntityBChest extends TileEntityInventory implements IBetterChestInternal, IGuiProvider, ITickable {
+public class TileEntityBChest extends TileEntityUpgradableBlockBase implements IBetterChestInternal, IGuiProvider, ITickable {
 
 	private final InventoryPartChest chestInv;
-	@AutoEncode
-	private final InventoryPartUpgrades upgradeInv;
-	@AutoEncode
-	private final InventoryPartFilter filterInv;
-
-	protected final FakePlayerElement fakePlayer;
-
-	protected final RedstoneEmitterElement redstoneEmitter;
 
 	private static final Predicate<Field> updatePredicate = NetworkHelper.getForName("angle").or(NetworkHelper.getForName("prevAngle")).or(NetworkHelper.getForName("numPlayers"));
 	public float angle, prevAngle;
 	public int numPlayers;
 
-	private int tickCount = Util.getRandom().nextInt();
-
-	@GuiEncode
-	public final EnergyElement energy;
-
 	public TileEntityBChest() {
 		chestInv = new InventoryPartChest(this);
-		upgradeInv = new InventoryPartUpgrades(this);
-		filterInv = new InventoryPartFilter(this);
-
-		energy = addElement(new EnergyElement(this, 0, Integer.MAX_VALUE, 0) {
-			@Override
-			public int getMaxEnergyStored() {
-				return UpgradeHelper.INSTANCE.getPowerCapacity(TileEntityBChest.this);
-			}
-		});
-		fakePlayer = addElement(new FakePlayerElement(this));
-
-		comparator.setRedstoneLookup(() -> UpgradeHelper.INSTANCE.intSumFirst(this, ChestModifier.COMPARATOR, 0));
-
-		redstoneEmitter = addElement(new RedstoneEmitterElement(this));
-		redstoneEmitter.setRedstoneLookup(() -> UpgradeHelper.INSTANCE.intSumFirst(this, ChestModifier.REDSTONE, 0));
 	}
-
-	private Vec3d posPrecise;
 
 	@Override
 	public UpgradableBlockType getUpgradableBlockType() {
 		return UpgradableBlockType.CHEST;
-	}
-
-	@Override
-	public Vec3d getPositionPrecise() {
-		if (posPrecise == null) {
-			posPrecise = new Vec3d(getPos()).add(new Vec3d(0.5, 0.5, 0.5));
-		}
-		return posPrecise;
-	}
-
-	@Override
-	public BlockPos getPosition() {
-		return pos;
-	}
-
-	@Override
-	public World getWorldObj() {
-		return world;
-	}
-
-	@Override
-	public Iterable<ItemStack> getUpgrades() {
-		return upgradeInv;
-	}
-
-	@Override
-	public int getAmountUpgrades(ItemStack stack) {
-		return (int) StreamSupport.stream(upgradeInv.spliterator(), false).filter(other -> ItemUtil.areItemsSameMatchingIdDamage(stack, other)).count();
-	}
-
-	@Override
-	public boolean isUpgradeDisabled(ItemStack stack) {
-		return upgradeInv.isUpgradeDisabled(stack);
-	}
-
-	@Override
-	public void setUpgradeDisabled(ItemStack stack, boolean targetVal) {
-		upgradeInv.setUpgradeDisabled(stack, targetVal);
-	}
-
-	@Override
-	public IEnergyStorage getEnergyStorage() {
-		return energy;
-	}
-
-	@Override
-	public InventoryPartUpgrades getUpgradePart() {
-		return upgradeInv;
-	}
-
-	@Override
-	public InventoryPartFilter getFilterPart() {
-		return filterInv;
 	}
 
 	@Override
@@ -167,24 +62,11 @@ public class TileEntityBChest extends TileEntityInventory implements IBetterChes
 	@Override
 	public void update() {
 		super.update();
-		tickCount++;
-		upgradeInv.tick();
 		updateAngle();
-	}
-
-	@Override
-	public int getTickCount() {
-		return tickCount;
-	}
-
-	@Override
-	public EntityPlayerMP getFakePlayer() {
-		return fakePlayer.getFakePlayer();
 	}
 
 	private void updateAngleForClient() {
 		new PacketTeUpdate(this, updatePredicate).sendPacket();
-		markDirty();
 	}
 
 	private void updateAngle() {
@@ -244,24 +126,15 @@ public class TileEntityBChest extends TileEntityInventory implements IBetterChes
 
 	@Override
 	public void openInventory(EntityPlayer player) {
-		for (InventoryPartBase part : getParts()) {
-			part.openInventory(player);
-		}
+		super.openInventory(player);
 		numPlayers++;
 		updateAngleForClient();
 	}
 
 	@Override
 	public void closeInventory(EntityPlayer player) {
-		for (InventoryPartBase part : getParts()) {
-			part.closeInventory(player);
-		}
+		super.closeInventory(player);
 		numPlayers--;
 		updateAngleForClient();
-	}
-
-	@Override
-	public IFilter getFilterFor(ItemStack stack) {
-		return filterInv.getFilterForUpgrade(stack);
 	}
 }

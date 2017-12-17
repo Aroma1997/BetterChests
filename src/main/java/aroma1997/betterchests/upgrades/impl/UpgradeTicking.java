@@ -13,7 +13,7 @@ import aroma1997.betterchests.upgrades.DummyUpgradeType;
 
 public class UpgradeTicking extends BasicUpgrade {
 	public UpgradeTicking() {
-		super(true, 1, UpgradableBlockType.INVENTORIES,
+		super(true, 1, UpgradableBlockType.NORMAL_INVENTORIES,
 				() -> Collections.singletonList(DummyUpgradeType.AI.getStack()));
 	}
 

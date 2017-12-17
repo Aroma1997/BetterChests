@@ -19,12 +19,10 @@ import aroma1997.betterchests.inventories.InventoryPartChest;
 public class InventoryBBag extends BasicBagInventory implements IBetterChestInternal, IMobileUpgradableBlock {
 
 	protected final InventoryPartChest chestInv;
-	protected final Entity entity;
 
 	public InventoryBBag(Entity entity, ItemStack stack) {
-		super(stack);
+		super(entity, stack);
 		chestInv = new InventoryPartChest(this);
-		this.entity = entity;
 		load();
 	}
 
@@ -54,10 +52,6 @@ public class InventoryBBag extends BasicBagInventory implements IBetterChestInte
 	@Override
 	public UpgradableBlockType getUpgradableBlockType() {
 		return UpgradableBlockType.BAG;
-	}
-
-	public void tick() {
-		getUpgradePart().tick();
 	}
 
 	@Override

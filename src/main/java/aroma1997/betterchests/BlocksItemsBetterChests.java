@@ -4,6 +4,8 @@ import aroma1997.core.item.AromicItem;
 import aroma1997.core.util.registry.AutoRegister;
 import aroma1997.core.util.registry.HasItemBlock;
 import aroma1997.betterchests.bag.ItemBBag;
+import aroma1997.betterchests.bag.ItemBPortableBarrel;
+import aroma1997.betterchests.chest.BlockBBarrel;
 import aroma1997.betterchests.chest.BlockBetterChest;
 import aroma1997.betterchests.chest.ItemChestPickup;
 import aroma1997.betterchests.chest.ItemChestUpgrade;
@@ -20,6 +22,10 @@ public class BlocksItemsBetterChests {
 	@AutoRegister
 	@HasItemBlock
 	public static BlockBetterChest betterchest = new BlockBetterChest();
+
+	@AutoRegister
+	@HasItemBlock
+	public static BlockBBarrel betterbarrel = new BlockBBarrel();
 
 	@AutoRegister
 	public static ItemChestUpgrade chestupgrade = new ItemChestUpgrade();
@@ -43,9 +49,11 @@ public class BlocksItemsBetterChests {
 	public static ItemBBag betterbag = new ItemBBag();
 
 	@AutoRegister
+	public static ItemBPortableBarrel betterportablebarrel = new ItemBPortableBarrel();
+
+	@AutoRegister
 	public static ItemFilter filter = new ItemFilter();
 
 	@AutoRegister
 	public static AromicItem crafting = (AromicItem) new AromicItem().setUnlocalizedName("betterchests:crafting").setCreativeTab(BetterChests.creativeTab);
-
 }

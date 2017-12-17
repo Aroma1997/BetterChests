@@ -10,7 +10,7 @@ import aroma1997.betterchests.upgrades.BasicUpgrade;
 
 public class UpgradeComparator extends BasicUpgrade {
 	public UpgradeComparator() {
-		super(false, 1, UpgradableBlockType.CHEST.array);
+		super(false, 1, new UpgradableBlockType[]{UpgradableBlockType.CHEST, UpgradableBlockType.BARREL});
 	}
 
 	@Override

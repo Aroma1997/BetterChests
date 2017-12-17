@@ -21,8 +21,11 @@ import aroma1997.betterchests.BetterChests;
 import aroma1997.betterchests.BlocksItemsBetterChests;
 import aroma1997.betterchests.CommonProxy;
 import aroma1997.betterchests.bag.ItemBBag;
+import aroma1997.betterchests.chest.TileEntityBBarrel;
 import aroma1997.betterchests.chest.TileEntityBChest;
 import aroma1997.betterchests.client.model.ModelFilter;
+import aroma1997.betterchests.client.model.ModelPortableBarrel;
+import aroma1997.betterchests.client.model.TESRBBarrel;
 import aroma1997.betterchests.client.model.TESRBChest;
 import aroma1997.betterchests.network.PacketOpenBag;
 @SideOnly(Side.CLIENT)
@@ -35,6 +38,7 @@ public class ClientProxy extends CommonProxy {
 	public void preInit() {
 		CustomModelLoader.INSTANCE.registerModel(new ResourceLocation("betterchests:models/block/betterchest"), (a, b, c) -> new BuiltInModel(TESRBChest.TRANSFORMS, ItemOverrideList.NONE));
 		CustomModelLoader.INSTANCE.registerModel(new ResourceLocation("betterchests:models/item/filter"), new ModelFilter());
+		CustomModelLoader.INSTANCE.registerModel(new ResourceLocation("betterchests:models/item/betterportablebarrel"), new ModelPortableBarrel());
 		keyBind = new KeyBinding("betterchests:keybind.openbag", Keyboard.KEY_ADD, "betterchests:keybind.category");
 	}
 
@@ -42,6 +46,7 @@ public class ClientProxy extends CommonProxy {
 	public void init() {
 		new ClientEventListener();
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityBChest.class, TESRBChest.INSTANCE);
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityBBarrel.class, TESRBBarrel.INSTANCE);
 		ForgeHooksClient.registerTESRItemStack(Item.getItemFromBlock(BlocksItemsBetterChests.betterchest), 0, TileEntityBChest.class);
 
 		TickRegistry.CLIENT.addContinuousCallback(() -> {

@@ -24,13 +24,20 @@ public class UpgradeVoid extends BasicUpgrade {
 		if (chest instanceof IBetterChest) {
 			IBetterChest inv = (IBetterChest) chest;
 			int[] availableSlots = inv.getSlotsForFace(null);
-			IFilter filter = inv.getFilterFor(stack);
-			int idx = UpgradeHelper.INSTANCE.getFrequencyTick(chest, stack, availableSlots.length);
+			if (inv.getUpgradableBlockType() == UpgradableBlockType.BARREL || inv.getUpgradableBlockType() == UpgradableBlockType.PORTABLE_BARREL) {
+				if (inv.decrStackSize(availableSlots[availableSlots.length - 1], Integer.MAX_VALUE).isEmpty()) {
+					drawUpgradeOperationCode(chest);
+					inv.markDirty();
+				}
+			} else {
+				IFilter filter = inv.getFilterFor(stack);
+				int idx = UpgradeHelper.INSTANCE.getFrequencyTick(chest, stack, availableSlots.length);
 
-			if (filter.matchesStack(inv.getStackInSlot(idx))) {
-				inv.setInventorySlotContents(idx, ItemStack.EMPTY);
-				drawUpgradeOperationCode(chest);
-				inv.markDirty();
+				if (filter.matchesStack(inv.getStackInSlot(idx))) {
+					inv.setInventorySlotContents(idx, ItemStack.EMPTY);
+					drawUpgradeOperationCode(chest);
+					inv.markDirty();
+				}
 			}
 		}
 	}

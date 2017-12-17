@@ -17,7 +17,7 @@ import aroma1997.betterchests.upgrades.BasicUpgrade;
 
 public class UpgradeResupply extends BasicUpgrade {
 	public UpgradeResupply() {
-		super(true, 1, UpgradableBlockType.BAG.array);
+		super(true, 1, new UpgradableBlockType[]{UpgradableBlockType.BAG, UpgradableBlockType.PORTABLE_BARREL});
 	}
 
 	@Override

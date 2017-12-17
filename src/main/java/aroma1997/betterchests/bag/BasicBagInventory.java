@@ -1,5 +1,6 @@
 package aroma1997.betterchests.bag;
 
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -24,6 +25,7 @@ public abstract class BasicBagInventory extends ItemInventory implements IMobile
 
 	private final InventoryPartUpgrades upgradeInv;
 	private final InventoryPartFilter filterInv;
+	private int currentTime;
 
 	private final IEnergyStorage external = new IEnergyStorage() {
 		@Override
@@ -60,8 +62,11 @@ public abstract class BasicBagInventory extends ItemInventory implements IMobile
 	@GuiEncode
 	private int energy;
 
-	public BasicBagInventory(ItemStack stack) {
+	protected final Entity entity;
+
+	public BasicBagInventory(Entity entity, ItemStack stack) {
 		super(stack);
+		this.entity = entity;
 		upgradeInv = new InventoryPartUpgrades(this);
 		filterInv = new InventoryPartFilter(this);
 	}
@@ -107,7 +112,7 @@ public abstract class BasicBagInventory extends ItemInventory implements IMobile
 
 	@Override
 	public int getTickCount() {
-		return (int) getWorldObj().getWorldTime();
+		return currentTime;
 	}
 
 	@Override
@@ -183,5 +188,15 @@ public abstract class BasicBagInventory extends ItemInventory implements IMobile
 	@Override
 	public boolean canReceive() {
 		return true;
+	}
+
+	public void tick() {
+		currentTime++;
+		getUpgradePart().tick();
+	}
+
+	@Override
+	public Entity getEntity() {
+		return entity;
 	}
 }
