@@ -58,7 +58,7 @@ repositories {
 dependencies {
 	//core
 	compile "aroma1997.core:Aroma1997Core-${config.mc_version}:+:deobf"
-	compile "net.industrial-craft:industrialcraft-2:${config.ic2_version}:api"
+	provided "net.industrial-craft:industrialcraft-2:${config.ic2_version}:api"
 }
 
 reobfJar {
