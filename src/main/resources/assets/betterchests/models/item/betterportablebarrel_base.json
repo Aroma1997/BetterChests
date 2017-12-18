@@ -1,7 +1,7 @@
 {
 	"parent" : "aroma1997core:item/default",
 	"textures" : {
-		"layer0" : "betterchests:blocks/betterbarrel_front"
+		"layer0" : "betterchests:items/portablebarrel_front"
 	},
 	"display" : {
 		"gui": {
