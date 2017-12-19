@@ -10,6 +10,9 @@ import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+
 import aroma1997.core.inventory.ItemInventory;
 import aroma1997.core.inventory.inventorypart.InventoryPartBase;
 import aroma1997.core.inventory.inventorypart.InventoryPartClass;
@@ -45,6 +48,7 @@ public class InventoryFilter extends ItemInventory {
 	}
 
 	@Override
+	@SideOnly(Side.CLIENT)
 	public Gui getGui(EntityPlayer player, short id) {
 		return new GuiFilter(new ContainerFilter(this, player));
 	}

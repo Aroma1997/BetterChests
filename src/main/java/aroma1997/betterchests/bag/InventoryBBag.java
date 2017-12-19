@@ -5,6 +5,9 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+
 import aroma1997.core.container.ContainerBase;
 import aroma1997.betterchests.api.IFilter;
 import aroma1997.betterchests.api.IMobileUpgradableBlock;
@@ -36,6 +39,7 @@ public class InventoryBBag extends BasicBagInventory implements IBetterChestInte
 	}
 
 	@Override
+	@SideOnly(Side.CLIENT)
 	public Gui getGui(EntityPlayer player, short id) {
 		switch(id) {
 		case 1:

@@ -6,6 +6,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
 
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+
 import aroma1997.betterchests.api.IFilter;
 import aroma1997.betterchests.api.UpgradableBlockType;
 import aroma1997.betterchests.client.gui.GuiBarrel;
@@ -42,6 +45,7 @@ public class InventoryBPortableBarrel extends BasicBagInventory implements IBett
 	}
 
 	@Override
+	@SideOnly(Side.CLIENT)
 	public Gui getGui(EntityPlayer player, short id) {
 		switch (id) {
 		case 1:
