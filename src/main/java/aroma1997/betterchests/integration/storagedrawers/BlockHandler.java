@@ -110,7 +110,7 @@ public class BlockHandler {
 				}
 			} else {
 				int diff = amount - totalAmount;
-				ItemStack stack = buffer.copy();
+				ItemStack stack = getBuffer().copy();
 				stack.setCount(diff);
 				InvUtil.putStackInInventoryFirst(stack, part, true, false, false, null);
 			}
@@ -140,6 +140,14 @@ public class BlockHandler {
 		@Override
 		public boolean isEmpty() {
 			return barrel.getChestPart().isEmpty();
+		}
+
+		private ItemStack getBuffer() {
+			if (isEmpty()) {
+				return buffer;
+			} else {
+				return barrel.getChestPart().getDummy();
+			}
 		}
 	}
 }
