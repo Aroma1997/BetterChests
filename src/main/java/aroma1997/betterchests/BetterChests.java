@@ -56,6 +56,9 @@ public class BetterChests {
 		if (Loader.isModLoaded("ic2")) {
 			Util.forceLoadClass("aroma1997.betterchests.integration.ic2.Ic2Integration");
 		}
+		if (Loader.isModLoaded("storagedrawers")) {
+			Util.forceLoadClass("aroma1997.betterchests.integration.storagedrawers.StorageDrawersIntegration");
+		}
 	}
 
 	@EventHandler

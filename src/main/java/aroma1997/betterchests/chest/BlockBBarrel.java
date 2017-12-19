@@ -1,5 +1,7 @@
 package aroma1997.betterchests.chest;
 
+import com.jaquadro.minecraft.storagedrawers.api.storage.INetworked;
+
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -11,6 +13,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
+import net.minecraftforge.fml.common.Optional.Interface;
+
 import aroma1997.core.container.ContainerHelper;
 import aroma1997.core.inventory.InvUtil;
 import aroma1997.core.util.ItemUtil;
@@ -18,7 +22,8 @@ import aroma1997.core.util.WorldUtil;
 import aroma1997.betterchests.api.IUpgrade;
 import aroma1997.betterchests.inventories.InventoryPartBarrel;
 
-public class BlockBBarrel extends BlockChestBase {
+@Interface(iface = "com.jaquadro.minecraft.storagedrawers.api.storage.INetworked", modid = "storagedrawers")
+public class BlockBBarrel extends BlockChestBase implements INetworked {
 	public BlockBBarrel() {
 		super(Material.ROCK);
 		setUnlocalizedName("betterchests:betterbarrel");

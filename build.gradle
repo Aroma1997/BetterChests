@@ -53,12 +53,20 @@ repositories {
 		name = "ic2"
 		url = "http://maven.ic2.player.to/"
 	}
+	maven {
+		name = "storagedrawers"
+		url = "https://dl.bintray.com/jaquadro/dev/"
+	}
 }
 
 dependencies {
 	//core
 	compile "aroma1997.core:Aroma1997Core-${config.mc_version}:+:deobf"
 	provided "net.industrial-craft:industrialcraft-2:${config.ic2_version}:api"
+	
+	deobfCompile "com.jaquadro.minecraft.storagedrawers:StorageDrawers:${config.storagedrawers_version}:api"
+	runtime "com.jaquadro.minecraft.storagedrawers:StorageDrawers:${config.storagedrawers_version}"
+	runtime "com.jaquadro.minecraft.chameleon:Chameleon:${config.chameleon_version}"
 }
 
 reobfJar {

@@ -12,7 +12,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import aroma1997.core.block.te.TileEntityBase;
 import aroma1997.core.block.te.element.EnergyElement;
 import aroma1997.core.block.te.element.TileEntityElementBase;
-import aroma1997.betterchests.chest.TileEntityBChest;
+import aroma1997.betterchests.api.IUpgradableBlock;
 
 import ic2.api.energy.EnergyNet;
 import ic2.api.energy.tile.IEnergyEmitter;
@@ -30,8 +30,8 @@ public class BlockHandler {
 
 	@SubscribeEvent
 	public void initTe(AttachCapabilitiesEvent<TileEntity> event) {
-		if (event.getObject() instanceof TileEntityBChest) {
-			TileEntityBChest chest = (TileEntityBChest) event.getObject();
+		if (event.getObject() instanceof IUpgradableBlock && event.getObject() instanceof TileEntityBase) {
+			TileEntityBase chest = (TileEntityBase) event.getObject();
 			chest.addElement(new IC2EnergyElement(chest));
 		}
 	}
@@ -81,7 +81,6 @@ public class BlockHandler {
 		public World getWorldObj() {
 			return getParent().getWorld();
 		}
-
 		private EnergyElement getEnergyElement() {
 			return getParent().getElement(EnergyElement.class);
 		}
