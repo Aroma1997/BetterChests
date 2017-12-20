@@ -1,9 +1,0 @@
-{
-    "variants": {
-		"normal": {"model": "betterchests:betterchest"},
-		"direction=north": { "model": "betterchests:betterchest" },
-		"direction=south": { "model": "betterchests:betterchest" },
-		"direction=east": { "model": "betterchests:betterchest" },
-		"direction=west": { "model": "betterchests:betterchest" }
-    }
-}
