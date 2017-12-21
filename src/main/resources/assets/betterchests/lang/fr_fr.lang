@@ -1,0 +1,94 @@
+#Infobulles
+betterchests:tooltip.maxUpgrades=Améliorations max. par coffre: %s
+betterchests:tooltip.requiredUpgrades=Améliorations requises:
+betterchests:tooltip.compatible.chest=Peut être mise sur un Coffre amélioré
+betterchests:tooltip.compatible.bag=Peut être mise sur un Sac à dos amélioré
+betterchests:tooltip.compatible.barrel=Peut être mise sur un Baril amélioré
+betterchests:tooltip.compatible.portable_barrel=Peut être mise sur un Baril de poche amélioré
+betterchests:tooltip.requiresPower=Requiert %sFE par opération.
+betterchests:tooltip.providesPower=Produit %sFE par tick.
+betterchests:tooltip.capacitorincrease=Augmente la capacité en énergie de %sFE
+betterchests:tooltip.betterbag.keybind=Peut être ouvert avec la clé %s.
+betterchests:tooltip.portablebarrel.content=Contient: %s
+betterchests:tooltip.portablebarrel.amount=Quantité: %s
+
+betterchests:tooltip.directionalupgrade.north=Côté actuel: Nord
+betterchests:tooltip.directionalupgrade.east=Côté actuel: Est
+betterchests:tooltip.directionalupgrade.south=Côté actuel: Sud
+betterchests:tooltip.directionalupgrade.west=Côté actuel: Ouest
+betterchests:tooltip.directionalupgrade.up=Côté actuel: Haut
+betterchests:tooltip.directionalupgrade.down=Côté actuel: Bas
+betterchests:tooltip.directionalupgrade.null=Côtés actuels: Tous
+
+#Onglet menu créatif
+itemGroup.betterchests:creativetab=BetterChests
+
+#Damagesource
+betterchests:damagesource.killingUpgrade=%s à été tué par l'amélioration d'attaque d'un coffre amélioré
+
+#GUI
+betterchests:inventorypart.upgrades=Améliorations
+betterchests:inventorypart.filter=Filtres
+betterchests:keybind.openbag=Ouvrir sac à dos amélioré
+betterchests:keybind.category=Betterchests
+
+betterchests:gui.upgrades.energy.desc=Énergie:
+betterchests:gui.upgrades.energy.tooltip=%s / %sFE
+betterchests:gui.upgrades.info.disable=Certaines améliorations peuvent être désactivées avec un clic molette dessus.
+betterchests:gui.upgrades.info.power=Certaines améliorations ont besoin d'énergie pour fonctionner. L'énergie peut être fournie par des améliorations ou via des câbles.
+betterchests:gui.upgrades.info.filter=Si une amélioration ne marche pas comme prévu, essayez d'y ajouter un filtre.
+
+betterchests:gui.filter.isBlacklist.true=Mode liste noire
+betterchests:gui.filter.isBlacklist.false=Mode liste blanche
+betterchests:gui.filter.checkdamage.true=Comparer les dommages
+betterchests:gui.filter.checkdamage.false=Ne pas comparer les dommages
+betterchests:gui.filter.checkdamage.desc=Meta
+betterchests:gui.filter.checknbt.true=Comparer les données NBT
+betterchests:gui.filter.checknbt.false=Ne pas comparer les données NBT
+betterchests:gui.filter.checknbt.desc=NBT
+betterchests:gui.filter.info.restrictupgrade=Les filtres peuvent être restreints individuellement par amélioration en la mettant sur l'emplacement de droite.
+
+#Blocs
+tile.betterchests:betterchest.name=Coffre amélioré
+tile.betterchests:betterbarrel.name=Baril amélioré
+
+#Objets
+item.betterchests:betterbag.name=Sac à dos amélioré
+item.betterchests:betterportablebarrel.name=Baril de poche amélioré
+item.betterchests:filter.whitelist.name=Filtre: liste blanche
+item.betterchests:filter.blacklist.name=Filtre: liste noire
+
+item.betterchests:chestupgrade.name=Amélioration de coffre en bois vers coffre améliorable
+
+item.betterchests:chestpickup.name=Outil de démontage pour coffre amélioré
+
+item.betterchests:crafting.name=Boiter d'amélioration
+
+item.betterchests:upgrade.slot.name=Amélioration: stockage
+item.betterchests:upgrade.cobblegen.name=Amélioration: génération de pierre taillée
+item.betterchests:upgrade.redstone.name=Amélioration: redstone (nb. joueurs)
+item.betterchests:upgrade.comparator.name=Amélioration: comparateur (nb. objets)
+item.betterchests:upgrade.void.name=Amélioration: vidage auto
+item.betterchests:upgrade.unbreakable.name=Amélioration: coffre incassable
+item.betterchests:upgrade.water.name=Amélioration: eau
+item.betterchests:upgrade.smelting.name=Amélioration: cuisson
+item.betterchests:upgrade.ticking.name=Amélioration: horloge interne
+item.betterchests:upgrade.collector.name=Amélioration: collecteur d'objets
+item.betterchests:upgrade.planting.name=Amélioration: argriculture (Plantation)
+item.betterchests:upgrade.harvesting.name=Amélioration: argriculture (Récolte)
+item.betterchests:upgrade.blocking.name=Amélioration: blocage
+item.betterchests:upgrade.breeding.name=Amélioration: reproduction animale
+item.betterchests:upgrade.feeding.name=Amélioration: nourriture
+item.betterchests:upgrade.resupply.name=Amélioration: restock
+item.betterchests:upgrade.killing.name=Amélioration: attaque
+item.betterchests:upgrade.animal.name=Amélioration: animaux
+
+item.betterchests:powerupgrade.capacitor.name=Amélioration: stockage d'énergie
+item.betterchests:powerupgrade.solar.name=Amélioration: panneaux solaires intégrés
+item.betterchests:powerupgrade.fueled.name=Amélioration: énergie fossile
+item.betterchests:powerupgrade.creative.name=Amélioration: énergie infinie
+
+item.betterchests:dummyupgrade.ai.name=Amélioration: IA
+
+item.betterchests:directionalupgrade.placer.name=Amélioration: placeur de blocs
+item.betterchests:directionalupgrade.breaker.name=Amélioration: casseur de blocs
