@@ -43,7 +43,7 @@ public class ItemChestUpgrade extends AromicItem {
 			TileEntityBChest newte = new TileEntityBChest();
 			world.setTileEntity(pos, newte);
 			for (int i = 0; i < items.length; i++) {
-				newte.setInventorySlotContents(i, items[i]);
+				newte.getChestPart().setInventorySlotContents(i, items[i]);
 			}
 			world.notifyBlockUpdate(pos, state, newState, 1);
 			return EnumActionResult.SUCCESS;
