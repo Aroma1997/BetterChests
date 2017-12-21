@@ -82,6 +82,7 @@ item.betterchests:upgrade.feeding.name=Feeding Upgrade
 item.betterchests:upgrade.resupply.name=Resupply Upgrade
 item.betterchests:upgrade.killing.name=Killing Upgrade
 item.betterchests:upgrade.animal.name=Animal Upgrade
+item.betterchests:upgrade.charging.name=Charging Upgrade
 
 item.betterchests:powerupgrade.capacitor.name=Capacitor Energy Upgrade
 item.betterchests:powerupgrade.solar.name=Solar Energy Upgrade

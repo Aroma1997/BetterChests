@@ -8,6 +8,7 @@ import aroma1997.betterchests.BlocksItemsBetterChests;
 import aroma1997.betterchests.upgrades.impl.UpgradeAnimal;
 import aroma1997.betterchests.upgrades.impl.UpgradeBlocking;
 import aroma1997.betterchests.upgrades.impl.UpgradeBreeding;
+import aroma1997.betterchests.upgrades.impl.UpgradeCharging;
 import aroma1997.betterchests.upgrades.impl.UpgradeCobbestone;
 import aroma1997.betterchests.upgrades.impl.UpgradeCollector;
 import aroma1997.betterchests.upgrades.impl.UpgradeComparator;
@@ -42,7 +43,8 @@ public enum UpgradeType implements Supplier<BasicUpgrade> {
 	FEEDING(new UpgradeFeeding()),
 	RESUPPLY(new UpgradeResupply()),
 	KILLING(new UpgradeKilling()),
-	ANIMAL(new UpgradeAnimal());
+	ANIMAL(new UpgradeAnimal()),
+	CHARGING(new UpgradeCharging());
 
 	final BasicUpgrade impl;
 

@@ -1,6 +1,5 @@
 Will be implemented after first release:
 Player Upgrade (Not implemented yet, Texture available)
-Item charging Upgrade (Not implemented yet, No texture yet)
 Ejector Upgrade (Not implemented yet, No texture yet)
 Pulling Upgrade (Not implemented yet, No texture yet)
 
