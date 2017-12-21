@@ -11,6 +11,7 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumFacing;
 
 import net.minecraftforge.common.util.Constants.NBT;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 
 import aroma1997.core.block.te.TileEntityBase;
 import aroma1997.core.inventory.IInventoryPartContainer;
@@ -75,7 +76,7 @@ public class InventoryPartUpgrades extends InventoryPartBase {
 			}
 		}
 
-		if (getChest().getWorldObj().isRemote) return;
+		if (FMLCommonHandler.instance().getEffectiveSide().isClient()) return;
 //		for (EntityPlayer player : FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().getPlayers()) {
 //			if (player.openContainer != null && player.openContainer instanceof ContainerBase && ((ContainerBase<?>)player.openContainer).inventory == container && !(player.openContainer instanceof ContainerUpgrades)) {
 //				player.closeScreen();
