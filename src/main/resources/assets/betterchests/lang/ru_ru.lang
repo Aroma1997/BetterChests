@@ -1,0 +1,100 @@
+############################################################################
+#Translation done by kellixon
+############################################################################
+
+
+#Tooltips
+betterchests:tooltip.maxUpgrades=Максимум обновлений на сундук: %s
+betterchests:tooltip.requiredUpgrades=Требуемые обновления:
+betterchests:tooltip.compatible.chest=Можно поставить на Лучший сундук
+betterchests:tooltip.compatible.bag=Можно поставить на Лучший рюкзак
+betterchests:tooltip.compatible.barrel=Можно поставить на Лучшую бочку
+betterchests:tooltip.compatible.portable_barrel=Можно поставить на Лучшую переносную бочку
+betterchests:tooltip.requiresPower=Требуется %sFE энергии за операцию.
+betterchests:tooltip.providesPower=Обеспечивает %sFE энергии за тик.
+betterchests:tooltip.capacitorincrease=Увеличивает мощность на %sFE
+betterchests:tooltip.betterbag.keybind=Можно открыть с помощью клавиши %s.
+betterchests:tooltip.portablebarrel.content=Содержит: %s
+betterchests:tooltip.portablebarrel.amount=Количество: %s
+ 
+betterchests:tooltip.directionalupgrade.north=Текущая сторона: Север
+betterchests:tooltip.directionalupgrade.east=Текущая сторона: Восток
+betterchests:tooltip.directionalupgrade.south=Текущая сторона: Юг
+betterchests:tooltip.directionalupgrade.west=Текущая сторона: Запад
+betterchests:tooltip.directionalupgrade.up=Текущая сторона: Верх
+betterchests:tooltip.directionalupgrade.down=Текущая сторона: Низ
+betterchests:tooltip.directionalupgrade.null=Текущая сторона: Все
+ 
+#Creativetab
+itemGroup.betterchests:creativetab=BetterChests
+ 
+#Damagesource
+betterchests:damagesource.killingUpgrade=%s был убит с помощью Обновления: "Убийство" из Лучшего сундука
+ 
+#Gui
+betterchests:inventorypart.upgrades=Обновления
+betterchests:inventorypart.filter=Фильтр
+betterchests:keybind.openbag=Открыть Лучший рюкзак
+betterchests:keybind.category=Betterchests
+ 
+betterchests:gui.upgrades.energy.desc=Энергия:
+betterchests:gui.upgrades.energy.tooltip=%sFE / %sFE
+betterchests:gui.upgrades.info.disable=Некоторые обновления можно отключить, щелкнув на них средней клавишей мыши.
+betterchests:gui.upgrades.info.power=Некоторые обновления требуют питание для работы. Питание может быть обеспечено обновлениями или наружными кабелями.
+betterchests:gui.upgrades.info.filter=Если обновление не работает должным образом, попробуйте добавить к нему фильтр.
+ 
+betterchests:gui.filter.isBlacklist.true=Режим черного списка
+betterchests:gui.filter.isBlacklist.false=Режим белого списка
+betterchests:gui.filter.checkdamage.true=Сравнить повреждения
+betterchests:gui.filter.checkdamage.false=Не сравнивать повреждения
+betterchests:gui.filter.checkdamage.desc=Мета
+betterchests:gui.filter.checknbt.true=Сравнить NBT
+betterchests:gui.filter.checknbt.false=Не сравнивать NBT
+betterchests:gui.filter.checknbt.desc=NBT
+betterchests:gui.filter.info.restrictupgrade=Фильтры могут быть ограничены отдельными обновлениями, выбрав обновление в крайнем правом слоте.
+ 
+#Blocks
+tile.betterchests:betterchest.name=Лучший сундук
+tile.betterchests:betterbarrel.name=Лучшая бочка
+ 
+#Items
+item.betterchests:betterbag.name=Лучший рюкзак
+item.betterchests:betterportablebarrel.name=Лучшая переносная бочка
+item.betterchests:filter.whitelist.name=Фильтр белого списка
+item.betterchests:filter.blacklist.name=Фильтр черного списка
+ 
+item.betterchests:chestupgrade.name=Обновление: "Из обычного сундука в Лучший сундук"
+ 
+item.betterchests:chestpickup.name=Инструмент для взятия сундука
+ 
+item.betterchests:crafting.name=Корпус обновления
+ 
+item.betterchests:upgrade.slot.name=Обновление: "Размер"
+item.betterchests:upgrade.cobblegen.name=Обновление: "Генератор булыжника"
+item.betterchests:upgrade.redstone.name=Обновление: "Редстоун (кол-во игроков)"
+item.betterchests:upgrade.comparator.name=Обновление: "Компаратор (кол-во предметов)"
+item.betterchests:upgrade.void.name=Обновление: "Пустота"
+item.betterchests:upgrade.unbreakable.name=Обновление: "Нерушимость"
+item.betterchests:upgrade.water.name=Обновление: "Вода"
+item.betterchests:upgrade.smelting.name=Обновление: "Плавка"
+item.betterchests:upgrade.ticking.name=Обновление: "Тикинг"
+item.betterchests:upgrade.collector.name=Обновление: "Собирание"
+item.betterchests:upgrade.planting.name=Обновление: "Фермерство (посадка)"
+item.betterchests:upgrade.harvesting.name=Обновление: "Фермерство (уборка)"
+item.betterchests:upgrade.blocking.name=Обновление: "Блокировка"
+item.betterchests:upgrade.breeding.name=Обновление: "Разведение"
+item.betterchests:upgrade.feeding.name=Обновление: "Кормление"
+item.betterchests:upgrade.resupply.name=Обновление: "Пополнение"
+item.betterchests:upgrade.killing.name=Обновление: "Убийство"
+item.betterchests:upgrade.animal.name=Обновление: "Животное"
+item.betterchests:upgrade.charging.name=Обновление: "Зарядка"
+ 
+item.betterchests:powerupgrade.capacitor.name=Обновление: "Энергия конденсатора"
+item.betterchests:powerupgrade.solar.name=Обновление: "Солнечная энергия"
+item.betterchests:powerupgrade.fueled.name=Обновление: "Топливная энергия"
+item.betterchests:powerupgrade.creative.name=Обновление: "Творческая энергия"
+ 
+item.betterchests:dummyupgrade.ai.name=Обновление: "AI"
+ 
+item.betterchests:directionalupgrade.placer.name=Обновление: "Размещение"
+item.betterchests:directionalupgrade.breaker.name=Обновление: "Разрушение"
