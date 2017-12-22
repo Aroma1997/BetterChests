@@ -10,7 +10,9 @@ import net.minecraft.inventory.Container;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.SoundCategory;
 
-import aroma1997.core.container.IGuiProvider;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+
 import aroma1997.core.network.NetworkHelper;
 import aroma1997.core.network.packets.PacketTeUpdate;
 import aroma1997.betterchests.api.UpgradableBlockType;
@@ -21,7 +23,7 @@ import aroma1997.betterchests.container.ContainerUpgrades;
 import aroma1997.betterchests.inventories.IBetterChestInternal;
 import aroma1997.betterchests.inventories.InventoryPartChest;
 
-public class TileEntityBChest extends TileEntityUpgradableBlockBase implements IBetterChestInternal, IGuiProvider, ITickable {
+public class TileEntityBChest extends TileEntityUpgradableBlockBase implements IBetterChestInternal, ITickable {
 
 	private final InventoryPartChest chestInv;
 
@@ -47,6 +49,7 @@ public class TileEntityBChest extends TileEntityUpgradableBlockBase implements I
 	}
 
 	@Override
+	@SideOnly(Side.CLIENT)
 	public Gui getGui(EntityPlayer player, short id) {
 		switch (id) {
 		case 1: return new GuiUpgrades(new ContainerUpgrades(this, player));

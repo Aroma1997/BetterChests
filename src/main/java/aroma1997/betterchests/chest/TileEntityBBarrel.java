@@ -5,6 +5,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
 
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+
 import aroma1997.core.network.AutoEncode;
 import aroma1997.betterchests.api.IFilter;
 import aroma1997.betterchests.api.UpgradableBlockType;
@@ -33,6 +36,7 @@ public class TileEntityBBarrel extends TileEntityUpgradableBlockBase implements 
 	}
 
 	@Override
+	@SideOnly(Side.CLIENT)
 	public Gui getGui(EntityPlayer player, short id) {
 		return new GuiUpgrades(new ContainerUpgrades(this, player));
 	}
