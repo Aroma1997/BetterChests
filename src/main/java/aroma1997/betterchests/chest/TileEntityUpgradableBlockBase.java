@@ -2,6 +2,7 @@ package aroma1997.betterchests.chest;
 
 import java.util.stream.StreamSupport;
 
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ITickable;
@@ -102,6 +103,18 @@ public abstract class TileEntityUpgradableBlockBase extends TileEntityInventory 
 	}
 
 	@Override
+	public void openInventory(EntityPlayer player) {
+		super.openInventory(player);
+		markDirty();
+	}
+
+	@Override
+	public void closeInventory(EntityPlayer player) {
+		super.closeInventory(player);
+		markDirty();
+	}
+
+	@Override
 	public IEnergyStorage getEnergyStorage() {
 		return energy;
 	}
@@ -133,6 +146,7 @@ public abstract class TileEntityUpgradableBlockBase extends TileEntityInventory 
 		return fakePlayer.getFakePlayer();
 	}
 
+	@Override
 	public IFilter getFilterFor(ItemStack stack) {
 		return filterInv.getFilterForUpgrade(stack);
 	}
