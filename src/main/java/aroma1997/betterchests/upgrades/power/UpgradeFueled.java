@@ -32,7 +32,7 @@ public class UpgradeFueled extends PowerBaseUpgrade {
 		IBetterChest inv = (IBetterChest) chest;
 		IFilter filter = inv.getFilterFor(stack);
 
-		int slot = InvUtil.findInInvInternal(inv, null, test -> TileEntityFurnace.getItemBurnTime(test) > 0 && filter.matchesStack(stack));
+		int slot = InvUtil.findInInvInternal(inv, null, test -> TileEntityFurnace.getItemBurnTime(test) > 0 && filter.matchesStack(test));
 		if (slot != -1) {
 			ItemStack current = inv.getStackInSlot(slot);
 			int provided = TileEntityFurnace.getItemBurnTime(current) * Config.INSTANCE.energyFueled;
