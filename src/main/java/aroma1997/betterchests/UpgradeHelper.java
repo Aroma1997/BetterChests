@@ -32,11 +32,7 @@ public enum UpgradeHelper implements aroma1997.betterchests.api.UpgradeHelper.IU
 	}
 
 	public int getPowerCapacity(IUpgradableBlock block) {
-		int sum = intSum(block, ChestModifier.ENERGY_CAPACITY);
-		if (sum <= 0) {
-			sum = 1000;
-		}
-		return sum;
+		return intSum(block, ChestModifier.ENERGY_CAPACITY) + 50000;
 	}
 
 	public int intSumCapped(IUpgradableBlock block, ChestModifier modifier, int min, int max) {
