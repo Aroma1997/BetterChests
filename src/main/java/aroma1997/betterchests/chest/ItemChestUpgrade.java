@@ -46,6 +46,8 @@ public class ItemChestUpgrade extends AromicItem {
 				newte.getChestPart().setInventorySlotContents(i, items[i]);
 			}
 			world.notifyBlockUpdate(pos, state, newState, 1);
+			ItemStack heldItem = player.getHeldItem(hand);
+			heldItem.setCount(heldItem.getCount() - 1);
 			return EnumActionResult.SUCCESS;
 		}
 		return EnumActionResult.PASS;
