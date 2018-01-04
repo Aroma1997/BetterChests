@@ -65,6 +65,7 @@ public class BetterChests {
 	public void postInit(FMLPostInitializationEvent event) {
 		PlantHarvestHelper.INSTANCE.finishLoading();
 		OreDictionary.registerOre("chest", BlocksItemsBetterChests.betterchest);
+		OreDictionary.registerOre("drawerBasic", BlocksItemsBetterChests.betterbarrel);
 	}
 
 	@EventHandler
