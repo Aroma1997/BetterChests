@@ -25,7 +25,7 @@ import aroma1997.core.util.registry.AromaAutoRegistry;
 import aroma1997.betterchests.network.PacketOpenBag;
 import aroma1997.betterchests.upgrades.impl.plant.PlantHarvestHelper;
 
-@Mod(modid = Reference.MOD_ID, name = Reference.MOD_ID, certificateFingerprint = "dfbfe4c473253d8c5652417689848f650b2cbe32")
+@Mod(modid = Reference.MOD_ID, name = Reference.MOD_ID, dependencies = "required-after:aroma1997core", certificateFingerprint = "dfbfe4c473253d8c5652417689848f650b2cbe32")
 public class BetterChests {
 
 	public static final AromicCreativeTab creativeTab = new AromicCreativeTab("betterchests:creativetab", () -> new ItemStack(BlocksItemsBetterChests.betterchest));
