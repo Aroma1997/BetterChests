@@ -33,7 +33,7 @@ public enum Config {
 	public final int energyTicking = 1000;
 	@ConfigLimitInt(min = 0)
 	@ConfigEntry(category = CATEGORY_ENERGY)
-	public final int energyCollector = 1000;
+	public final int energyCollector = 100;
 	@ConfigLimitInt(min = 0)
 	@ConfigEntry(category = CATEGORY_ENERGY)
 	public final int energyPlanting = 1000;
