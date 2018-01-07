@@ -129,7 +129,7 @@ public class BlockHandler {
 
 		@Override
 		public boolean canItemBeStored(@Nonnull ItemStack itemPrototype, Predicate<ItemStack> matchPredicate) {
-			return barrel.getChestPart().isItemValidForSlot(0, itemPrototype);
+			return barrel.getChestPart().canInsertItem(0, itemPrototype, null);
 		}
 
 		@Override
