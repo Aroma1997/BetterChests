@@ -24,7 +24,11 @@ public class ItemBBag extends ItemBBagBase<InventoryBBag> {
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
 		super.addInformation(stack, world, tooltip, flag);
-		tooltip.add(LocalizationHelper.localizeFormatted("betterchests:tooltip.betterbag.keybind", Keyboard.getKeyName(ClientProxy.keyBind.getKeyCode())));
+
+		int keycode = ClientProxy.keyBind.getKeyCode();
+		if (keycode >= 0 && keycode < Keyboard.KEYBOARD_SIZE) {
+			tooltip.add(LocalizationHelper.localizeFormatted("betterchests:tooltip.betterbag.keybind", Keyboard.getKeyName(keycode)));
+		}
 	}
 
 	@Override
