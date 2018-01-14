@@ -34,7 +34,7 @@ betterchests:damagesource.killingUpgrade=%s был убит с помощью О
 #Gui
 betterchests:inventorypart.upgrades=Обновления
 betterchests:inventorypart.filter=Фильтр
-betterchests:keybind.openbag=Открыть Лучший рюкзак
+betterchests.keybind.openbag=Открыть Лучший рюкзак
 betterchests:keybind.category=Betterchests
  
 betterchests:gui.upgrades.energy.desc=Энергия:

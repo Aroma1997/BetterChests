@@ -39,7 +39,7 @@ public class ClientProxy extends CommonProxy {
 		CustomModelLoader.INSTANCE.registerModel(new ResourceLocation("betterchests:models/block/betterchest"), (a, b, c) -> new BuiltInModel(TESRBChest.TRANSFORMS, ItemOverrideList.NONE));
 		CustomModelLoader.INSTANCE.registerModel(new ResourceLocation("betterchests:models/item/filter"), new ModelFilter());
 		CustomModelLoader.INSTANCE.registerModel(new ResourceLocation("betterchests:models/item/betterportablebarrel"), new ModelPortableBarrel());
-		keyBind = new KeyBinding("betterchests:keybind.openbag", Keyboard.KEY_ADD, "betterchests:keybind.category");
+		keyBind = new KeyBinding("betterchests.keybind.openbag", Keyboard.KEY_ADD, "betterchests:keybind.category");
 	}
 
 	@Override

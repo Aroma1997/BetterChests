@@ -34,7 +34,7 @@ betterchests:damagesource.killingUpgrade=%s was slain by a Killing Upgrade in a 
 #Gui
 betterchests:inventorypart.upgrades=Upgrades
 betterchests:inventorypart.filter=Filter
-betterchests:keybind.openbag=Open BetterBackpack
+betterchests.keybind.openbag=Open BetterBackpack
 betterchests:keybind.category=Betterchests
 
 betterchests:gui.upgrades.energy.desc=Power:

@@ -34,7 +34,7 @@ betterchests:damagesource.killingUpgrade=%s à été tué par l'amélioration d'
 #GUI
 betterchests:inventorypart.upgrades=Améliorations
 betterchests:inventorypart.filter=Filtres
-betterchests:keybind.openbag=Ouvrir sac à dos amélioré
+betterchests.keybind.openbag=Ouvrir sac à dos amélioré
 betterchests:keybind.category=Betterchests
 
 betterchests:gui.upgrades.energy.desc=Énergie:
