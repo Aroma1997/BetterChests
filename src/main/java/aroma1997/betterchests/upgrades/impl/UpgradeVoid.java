@@ -31,7 +31,7 @@ public class UpgradeVoid extends BasicUpgrade {
 				}
 			} else {
 				IFilter filter = inv.getFilterFor(stack);
-				int idx = UpgradeHelper.INSTANCE.getFrequencyTick(chest, stack, availableSlots.length);
+				int idx = availableSlots[UpgradeHelper.INSTANCE.getFrequencyTick(chest, stack, availableSlots.length)];
 
 				if (filter.matchesStack(inv.getStackInSlot(idx))) {
 					inv.setInventorySlotContents(idx, ItemStack.EMPTY);
