@@ -97,7 +97,7 @@ public class BlockBBarrel extends BlockChestBase implements INetworked {
 				}
 			}
 			if (gottenAmount > 0) {
-				Vec3d vec = new Vec3d(pos);
+				Vec3d vec = new Vec3d(pos).addVector(.5, .5, .5);
 				vec = vec.add(player.getPositionVector().subtract(vec).normalize());
 				ItemStack drop = stack.copy();
 				drop.setCount(gottenAmount);
