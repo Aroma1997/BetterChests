@@ -86,7 +86,7 @@ public class BlockBBarrel extends BlockChestBase implements INetworked {
 			TileEntityBBarrel chest = (TileEntityBBarrel)te;
 			InventoryPartBarrel part = chest.getChestPart();
 			ItemStack stack = part.getDummy();
-			int targetAmount = player.isSneaking() ? 1 : stack.getMaxStackSize();
+			int targetAmount = !player.isSneaking() ? 1 : stack.getMaxStackSize();
 			int gottenAmount = 0;
 			for (int i = 0; i < part.getSizeInventory() && !part.isEmpty(); i++) {
 				if (ItemUtil.areItemsSameMatchingIdDamageNbt(stack, part.getStackInSlot(i))) {
