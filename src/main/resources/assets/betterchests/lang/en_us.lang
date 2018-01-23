@@ -10,6 +10,7 @@ betterchests:tooltip.compatible.chest=Can be put on a BetterChest
 betterchests:tooltip.compatible.bag=Can be put on a BetterBackpack
 betterchests:tooltip.compatible.barrel=Can be put on a BetterBarrel
 betterchests:tooltip.compatible.portable_barrel=Can be put on a Better Portable Barrel
+betterchests:tooltip.compatible.tank=Can be put on a BetterTank
 betterchests:tooltip.requiresPower=Requires %sFE power per operation.
 betterchests:tooltip.providesPower=Provides %sFE power per tick.
 betterchests:tooltip.capacitorincrease=Increases power capacity by %sFE
@@ -56,6 +57,7 @@ betterchests:gui.filter.info.restrictupgrade=Filters can be restricted to indivi
 #Blocks
 tile.betterchests:betterchest.name=BetterChest
 tile.betterchests:betterbarrel.name=BetterBarrel
+tile.betterchests:bettertank.name=BetterTank
 
 #Items
 item.betterchests:betterbag.name=BetterBackpack

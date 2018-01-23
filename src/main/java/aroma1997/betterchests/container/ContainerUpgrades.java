@@ -45,7 +45,7 @@ public class ContainerUpgrades extends ContainerBase<IUpgradableBlockInternal> {
 			Slot slot = getSlot(slotId);
 			if (slot.inventory == inventory) {
 				ItemStack stack = slot.getStack();
-				if (slot.inventory == inventory && stack.getItem() instanceof IUpgrade && ((IUpgrade) stack.getItem()).canBeDisabled(stack)) {
+				if (stack.getItem() instanceof IUpgrade && ((IUpgrade) stack.getItem()).canBeDisabled(stack)) {
 					inventory.getUpgradePart().setUpgradeDisabled(slot.getStack(), !inventory.getUpgradePart().isUpgradeDisabled(slot.getStack()));
 				}
 				return ItemStack.EMPTY;

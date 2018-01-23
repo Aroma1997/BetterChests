@@ -27,7 +27,10 @@ import aroma1997.betterchests.client.model.ModelFilter;
 import aroma1997.betterchests.client.model.ModelPortableBarrel;
 import aroma1997.betterchests.client.model.TESRBBarrel;
 import aroma1997.betterchests.client.model.TESRBChest;
+import aroma1997.betterchests.client.model.TESRBTank;
 import aroma1997.betterchests.network.PacketOpenBag;
+import aroma1997.betterchests.tank.TileEntityBTank;
+
 @SideOnly(Side.CLIENT)
 public class ClientProxy extends CommonProxy {
 
@@ -47,6 +50,7 @@ public class ClientProxy extends CommonProxy {
 		new ClientEventListener();
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityBChest.class, TESRBChest.INSTANCE);
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityBBarrel.class, TESRBBarrel.INSTANCE);
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityBTank.class, TESRBTank.INSTANCE);
 		ForgeHooksClient.registerTESRItemStack(Item.getItemFromBlock(BlocksItemsBetterChests.betterchest), 0, TileEntityBChest.class);
 
 		TickRegistry.CLIENT.addContinuousCallback(() -> {

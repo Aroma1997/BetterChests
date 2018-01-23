@@ -10,6 +10,7 @@ public enum ChestModifier {
 	/**
 	 * This modifies the size of the Upgradable Block.
 	 * For Inventories, this increases the amount of slots the inventory has.
+	 * For fluid tanks, this increases the size of the fluid tank.
 	 * The return type is used as integer.
 	 */
 	SIZE,

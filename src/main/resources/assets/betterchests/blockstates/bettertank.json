@@ -1,0 +1,9 @@
+{
+    "variants": {
+		"normal": {"model": "betterchests:bettertank"},
+		"direction=north": { "model": "betterchests:bettertank" , "y": 0},
+		"direction=south": { "model": "betterchests:bettertank", "y": 180 },
+		"direction=east": { "model": "betterchests:bettertank", "y": 90 },
+		"direction=west": { "model": "betterchests:bettertank", "y": 270 }
+    }
+}

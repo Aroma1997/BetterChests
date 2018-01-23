@@ -4,13 +4,14 @@ import net.minecraft.item.ItemStack;
 
 import aroma1997.betterchests.api.ChestModifier;
 import aroma1997.betterchests.api.IBetterChest;
+import aroma1997.betterchests.api.IBetterTank;
 import aroma1997.betterchests.api.IUpgradableBlock;
 import aroma1997.betterchests.api.UpgradableBlockType;
 import aroma1997.betterchests.upgrades.BasicUpgrade;
 
 public class UpgradeComparator extends BasicUpgrade {
 	public UpgradeComparator() {
-		super(false, 1, new UpgradableBlockType[]{UpgradableBlockType.CHEST, UpgradableBlockType.BARREL});
+		super(false, 1, UpgradableBlockType.BLOCKS);
 	}
 
 	@Override
@@ -26,6 +27,9 @@ public class UpgradeComparator extends BasicUpgrade {
 					ratio += ((float)currentStack.getCount()) / (Math.min(currentStack.getMaxStackSize(), inv.getInventoryStackLimit()));
 				}
 				return Math.ceil(ratio / availableSlots.length * 15);
+			} else if (chest instanceof IBetterTank) {
+				IBetterTank inv = (IBetterTank) chest;
+				return 15F * (float)inv.getTank().getFluidAmount() / inv.getTank().getCapacity() * 16;
 			}
 		default:
 			return null;

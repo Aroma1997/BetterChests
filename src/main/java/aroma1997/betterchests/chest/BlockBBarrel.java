@@ -27,7 +27,6 @@ public class BlockBBarrel extends BlockChestBase implements INetworked {
 	public BlockBBarrel() {
 		super(Material.ROCK);
 		setUnlocalizedName("betterchests:betterbarrel");
-		setHardness(2.5F);
 	}
 
 	@Override

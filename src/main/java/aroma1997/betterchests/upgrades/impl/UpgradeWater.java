@@ -5,12 +5,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 
 import aroma1997.core.util.ItemUtil;
 import aroma1997.betterchests.Config;
 import aroma1997.betterchests.api.IBetterChest;
+import aroma1997.betterchests.api.IBetterTank;
 import aroma1997.betterchests.api.IUpgradableBlock;
 import aroma1997.betterchests.api.UpgradableBlockType;
 import aroma1997.betterchests.api.UpgradeHelper;
@@ -78,6 +80,11 @@ public class UpgradeWater extends BasicUpgrade {
 					inv.markDirty();
 					break;
 				}
+			}
+		} else if (chest instanceof IBetterTank) {
+			FluidTank tank = ((IBetterTank)chest).getTank();
+			if (tank.getFluidAmount() >= 2000 && tank.getFluid().getFluid() == FluidRegistry.WATER) {
+				tank.fill(new FluidStack(FluidRegistry.WATER, 1000), true);
 			}
 		}
 

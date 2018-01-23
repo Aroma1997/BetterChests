@@ -1,0 +1,25 @@
+{
+	"type" : "aroma1997core:shaped_recipe",
+	"pattern" : [
+		"FBF",
+		"BCB",
+		"FBF"
+	],
+	"key" : {
+		"F" : {
+			"type" : "aroma1997core:ore_dict",
+			"ore" : "cobblestone"
+		},
+		"B" : {
+			"type" : "aroma1997core:stack",
+			"item" : "minecraft:bucket"
+		},
+		"C" : {
+			"type" : "aroma1997core:stack",
+			"item" : "betterchests:betterchest"
+		}
+	},
+	"result" : {
+		"item" : "betterchests:bettertank"
+	}
+}

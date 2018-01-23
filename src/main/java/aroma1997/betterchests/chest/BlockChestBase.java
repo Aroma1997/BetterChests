@@ -6,17 +6,23 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 
 import aroma1997.core.block.AromicBlockContainer;
+import aroma1997.core.container.ContainerHelper;
+import aroma1997.core.inventory.InvUtil;
 import aroma1997.betterchests.BetterChests;
 import aroma1997.betterchests.UpgradeHelper;
 import aroma1997.betterchests.api.ChestModifier;
 import aroma1997.betterchests.api.IUpgradableBlock;
+import aroma1997.betterchests.api.IUpgrade;
 
 public abstract class BlockChestBase extends AromicBlockContainer {
 
@@ -25,6 +31,31 @@ public abstract class BlockChestBase extends AromicBlockContainer {
 	protected BlockChestBase(Material materialIn) {
 		super(materialIn);
 		setCreativeTab(BetterChests.creativeTab);
+		setHardness(2.5F);
+	}
+
+	@Override
+	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+		TileEntity te = world.getTileEntity(pos);
+		if (te != null && te instanceof TileEntityUpgradableBlockBase) {
+			TileEntityUpgradableBlockBase chest = (TileEntityUpgradableBlockBase) te;
+			ItemStack currentItem = player.getHeldItem(hand);
+			if (currentItem.getItem() instanceof IUpgrade) {
+				IUpgrade upgrade = (IUpgrade) currentItem.getItem();
+				ItemStack toPut = currentItem.copy();
+				toPut.setCount(1);
+				if (upgrade.canBePutInChest(chest, toPut)) {
+					if (InvUtil.putStackInInventoryFirst(toPut, chest.getUpgradePart(), false, false, false, null).isEmpty()) {
+						currentItem.setCount(currentItem.getCount() - 1);
+						chest.markDirty();
+						return true;
+					}
+				}
+			}
+			ContainerHelper.openGui(chest, player, (short) (player.isSneaking() ? 1 : 0));
+		}
+
+		return true;
 	}
 
 	@Override

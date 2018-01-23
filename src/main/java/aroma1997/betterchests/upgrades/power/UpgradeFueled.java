@@ -16,7 +16,7 @@ import aroma1997.betterchests.api.UpgradeHelper;
 public class UpgradeFueled extends PowerBaseUpgrade {
 
 	public UpgradeFueled() {
-		super(true, 8, UpgradableBlockType.VALUES);
+		super(true, 8, UpgradableBlockType.INVENTORIES);
 	}
 
 	@Override

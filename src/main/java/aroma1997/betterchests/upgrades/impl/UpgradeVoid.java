@@ -4,6 +4,7 @@ import net.minecraft.item.ItemStack;
 
 import aroma1997.betterchests.Config;
 import aroma1997.betterchests.api.IBetterChest;
+import aroma1997.betterchests.api.IBetterTank;
 import aroma1997.betterchests.api.IFilter;
 import aroma1997.betterchests.api.IUpgradableBlock;
 import aroma1997.betterchests.api.UpgradableBlockType;
@@ -39,6 +40,9 @@ public class UpgradeVoid extends BasicUpgrade {
 					inv.markDirty();
 				}
 			}
+		} else if (chest instanceof IBetterTank) {
+			IBetterTank tank = (IBetterTank) chest;
+			tank.getTank().drain(Integer.MAX_VALUE, true);
 		}
 	}
 

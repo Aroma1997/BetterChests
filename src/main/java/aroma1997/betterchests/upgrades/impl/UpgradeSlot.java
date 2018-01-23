@@ -17,7 +17,16 @@ public class UpgradeSlot extends BasicUpgrade {
 	public Number getChestModifier(IUpgradableBlock chest, ChestModifier modifier, ItemStack stack) {
 		switch (modifier) {
 		case SIZE:
-			return chest.getUpgradableBlockType() == UpgradableBlockType.BARREL  || chest.getUpgradableBlockType() == UpgradableBlockType.PORTABLE_BARREL ? 32 : 9;
+			switch (chest.getUpgradableBlockType()) {
+			case BAG:
+			case CHEST:
+				return 9;
+			case BARREL:
+			case PORTABLE_BARREL:
+				return 32;
+			case TANK:
+				return 8000;
+			}
 		default:
 			return null;
 		}

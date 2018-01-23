@@ -10,6 +10,7 @@ import aroma1997.betterchests.chest.BlockBetterChest;
 import aroma1997.betterchests.chest.ItemChestPickup;
 import aroma1997.betterchests.chest.ItemChestUpgrade;
 import aroma1997.betterchests.filter.ItemFilter;
+import aroma1997.betterchests.tank.BlockBTank;
 import aroma1997.betterchests.upgrades.DirectionalUpgrade;
 import aroma1997.betterchests.upgrades.DummyUpgradeType;
 import aroma1997.betterchests.upgrades.ItemUpgrade;
@@ -26,6 +27,10 @@ public class BlocksItemsBetterChests {
 	@AutoRegister
 	@HasItemBlock
 	public static BlockBBarrel betterbarrel = new BlockBBarrel();
+
+	@AutoRegister
+	@HasItemBlock
+	public static BlockBTank bettertank = new BlockBTank();
 
 	@AutoRegister
 	public static ItemChestUpgrade chestupgrade = new ItemChestUpgrade();

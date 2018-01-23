@@ -22,12 +22,16 @@ public enum UpgradableBlockType {
 	 * Must implement the interface {@link IBetterChest}
 	 */
 	BARREL,
-
 	/**
 	 * A upgradable backpack, that can only hold one kind of Item.
 	 * Must implement the interface {@link IBetterChest}
 	 */
-	PORTABLE_BARREL;
+	PORTABLE_BARREL,
+	/**
+	 * A upgradable fluid tank, that can hold a single fluid.
+	 * Must implement the interface {@link IBetterTank}
+	 */
+	TANK;
 
 	/**
 	 * A array just containing the current UpgradableBlockType.
@@ -47,4 +51,14 @@ public enum UpgradableBlockType {
 	 * (As stated above, more may follow)
 	 */
 	public static final UpgradableBlockType[] INVENTORIES = {CHEST, BAG, BARREL, PORTABLE_BARREL};
+
+	/**
+	 * All upgradableBlockTypes, that represent a fluid tank.
+	 */
+	public static final UpgradableBlockType[] TANKS = {TANK};
+
+	/**
+	 * All upgradableBlockTypes, that represent blocks, that are placed in-world.
+	 */
+	public static final UpgradableBlockType[] BLOCKS = {CHEST, BARREL, TANK};
 }
