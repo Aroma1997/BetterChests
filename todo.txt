@@ -3,10 +3,6 @@ Player Upgrade (Not implemented yet, Texture available)
 Ejector Upgrade (Not implemented yet, No texture yet)
 Pulling Upgrade (Not implemented yet, No texture yet)
 
-Will maybe be implemented in a second major release:
-Adjustable tank blocks (Not implemented yet, No model yet, No texture yet)
-Fluid tank for GUI (Implemented, No texture yet, doesn't have to be 16x16)
-
 Will probably not get implemented anymore:
 Light upgrade (Not implemented yet, Texture available)
 Lightweight Upgrade (Not implemented yet, Texture available)
