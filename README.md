@@ -11,7 +11,7 @@ repositories {
 }
 
 dependencies {
-	compile "aroma1997.core:BetterChests-${MCVERSION}:${MODVERSION}:api"
-	runtime "aroma1997.core:BetterChests-${MCVERSION}:${MODVERSION}:deobf"
+	compile "aroma1997.betterchests:BetterChests-${MCVERSION}:${MODVERSION}:api"
+	runtime "aroma1997.betterchests:BetterChests-${MCVERSION}:${MODVERSION}:deobf"
 }
 ```
