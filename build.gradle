@@ -13,6 +13,7 @@ buildscript {
 
 plugins {
 	id "com.matthewprenger.cursegradle" version "1.0.10"
+	id "se.bjurr.gitchangelog.git-changelog-gradle-plugin" version "1.55"
 }
 
 apply plugin: 'maven'
@@ -126,22 +127,6 @@ uploadArchives {
 	}
 }
 
-curseforge {
-	apiKey = project.hasProperty('curseforge_apikey') ? project.curseforge_apikey : '0'
-	project {
-		id = config.curse_project_id
-		changelog = "N/A"
-		changelogType = 'html'
-		releaseType = version.contains('b') ? 'beta' : 'release'
-		addArtifact deobfJar
-		addArtifact apiJar
-		relations {
-			requiredLibrary 'aroma1997core'
-		}
-		getAvailableMinecraftVersions().each { ver -> addGameVersion ver }
-	}
-}
-
 task signJar(dependsOn: ['deobfJar', 'jar', 'apiJar']){
 	doLast {
 		// Skip the task if our secret data isn't available
@@ -166,5 +151,69 @@ def getAvailableMinecraftVersions() {
 		return [ config.mc_version ]
 	} else {
 		return config.availableMcVersions.split(',')
+	}
+}
+
+def TEMPORARY_CHANGELOG_FILE = file('changelog/currentchangelog.htm')
+def FINISHED_CHANGELOG_FILE = file('changelog/fullchangelog.htm')
+task changelog(type: se.bjurr.gitchangelog.plugin.gradle.GitChangelogTask) {
+	doFirst {
+		//Get current commit.
+		def stdOut = new ByteArrayOutputStream();
+		exec {
+			commandLine "git", "rev-parse", "HEAD"
+			standardOutput = stdOut
+		}
+		toCommit = stdOut.toString().trim()
+
+		//Get previous commit
+		def prevCommitFile = file('changelog/lastcommit.txt')
+		if (!prevCommitFile.exists()) {
+			fromCommit = toCommit
+		} else {
+			fromCommit = prevCommitFile.text.trim()
+		}
+		println "Generating changelog from commit " + fromCommit + " to commit " + toCommit
+	}
+	file = TEMPORARY_CHANGELOG_FILE
+	templateContent = file('changelog/changelog.mustache').getText('UTF-8');
+	untaggedName = "Release ${project.version}"
+
+	doLast {
+		//Save current commit as previous commit
+		def prevCommitFile = file('changelog/lastcommit.txt')
+		prevCommitFile.text = toCommit
+
+		//Concate changelogs if something changed
+		if (!fromCommit.equals(toCommit)) {
+			//Concat changelogs
+			if (FINISHED_CHANGELOG_FILE.exists()) {
+				FINISHED_CHANGELOG_FILE.text = TEMPORARY_CHANGELOG_FILE.text + FINISHED_CHANGELOG_FILE.text
+			} else {
+				totalChangelogFile.text = TEMPORARY_CHANGELOG_FILE.text
+			}
+		} else {
+			//Create empty file, because we might need a file for other tasks
+			if (!FINISHED_CHANGELOG_FILE.exists()) {
+				FINISHED_CHANGELOG_FILE.text = ""
+			}
+		}
+	}
+}
+build.dependsOn changelog
+
+curseforge {
+	apiKey = project.hasProperty('curseforge_apikey') ? project.curseforge_apikey : '0'
+	project {
+		id = config.curse_project_id
+		changelog = "N/A"
+		changelogType = 'html'
+		releaseType = version.contains('b') ? 'beta' : 'release'
+		addArtifact deobfJar
+		addArtifact apiJar
+		relations {
+			requiredLibrary 'aroma1997core'
+		}
+		getAvailableMinecraftVersions().each { ver -> addGameVersion ver }
 	}
 }
