@@ -206,7 +206,7 @@ curseforge {
 	apiKey = project.hasProperty('curseforge_apikey') ? project.curseforge_apikey : '0'
 	project {
 		id = config.curse_project_id
-		changelog = "N/A"
+		changelog = FINISHED_CHANGELOG_FILE
 		changelogType = 'html'
 		releaseType = version.contains('b') ? 'beta' : 'release'
 		addArtifact deobfJar
