@@ -23,7 +23,7 @@ public class UpgradeWater extends BasicUpgrade {
 	private final FluidStack water = new FluidStack(FluidRegistry.WATER, Fluid.BUCKET_VOLUME);
 
 	public UpgradeWater() {
-		super(true, 1, UpgradableBlockType.NORMAL_INVENTORIES);
+		super(true, 1, new UpgradableBlockType[]{ UpgradableBlockType.CHEST, UpgradableBlockType.BAG, UpgradableBlockType.TANK});
 	}
 
 
