@@ -1,33 +1,35 @@
 package aroma1997.betterchests.client;
 
+import java.lang.reflect.Field;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
-import org.lwjgl.opengl.GL11;
-
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.client.renderer.entity.RenderLivingBase;
+import net.minecraft.client.renderer.entity.layers.LayerRenderer;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 
-import net.minecraftforge.client.event.RenderPlayerEvent;
+import net.minecraftforge.client.event.RenderLivingEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import aroma1997.core.coremod.MCPNames;
 import aroma1997.core.util.LocalizationHelper;
 import aroma1997.betterchests.api.IUpgrade;
 import aroma1997.betterchests.api.UpgradableBlockType;
-import aroma1997.betterchests.bag.ItemBBag;
-
-
-import static aroma1997.core.client.models.ModelHelper.ONE_PIXEL;
 @SideOnly(Side.CLIENT)
 public class ClientEventListener {
+
+	static Set<Integer> entitiesWithBag = Collections.emptySet();
+	/** Render layer for entites with attached jetpacks as chestplates */
+	private LayerBag render;
+	/** {@link RenderLivingBase#layerRenderers}, because Mojang removed the ability to easily remove from it */
+	private static Field renderLayers;
 
 	public ClientEventListener() {
 		MinecraftForge.EVENT_BUS.register(this);
@@ -61,42 +63,28 @@ public class ClientEventListener {
 	}
 
 	@SubscribeEvent
-	public void renderPlayer(RenderPlayerEvent.Post event) {
-		EntityPlayer player = event.getEntityPlayer();
+	@SideOnly(Side.CLIENT)
+	public void render(RenderLivingEvent.Pre<EntityLivingBase> event) throws NoSuchFieldException {
+		EntityLivingBase entity = event.getEntity();
 
-		ItemStack bag = getBagInInv(player);
-
-		if (!bag.isEmpty()) {
-			GL11.glPushMatrix();
-
-			GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-			GL11.glTranslatef(0.0F, 17 * ONE_PIXEL, 0.0F);
-			GL11.glRotatef( - player.renderYawOffset, 0.0F, 1.0F, 0.0F);
-			GL11.glTranslatef(0.0F, 0.0F, -4 * ONE_PIXEL);
-			if (player.isSneaking()) {
-				GL11.glTranslatef(0, -5 * ONE_PIXEL, 0);
-				GL11.glRotatef(28.6F, 1.0F, 0.0F, 0.0F);
-				GL11.glTranslatef(0, 0, -3 * ONE_PIXEL);
+		if (entitiesWithBag.contains(entity.getEntityId())) {
+			render = new LayerBag();
+			if (renderLayers == null) {
+				renderLayers = RenderLivingBase.class.getDeclaredField(MCPNames.field("field_177097_h"));
+				renderLayers.setAccessible(true);
 			}
-
-			Minecraft.getMinecraft().getRenderItem().renderItem(bag, TransformType.FIXED);
-			GL11.glPopMatrix();
+			event.getRenderer().addLayer(render);
 		}
 	}
 
-	private ItemStack getBagInInv(EntityPlayer player) {
-		InventoryPlayer inv = player.inventory;
-		for (int i = 0; i < inv.getSizeInventory(); i++) {
-			ItemStack stack = inv.getStackInSlot(i);
-			if (stack == player.getHeldItemOffhand() || stack == player.getHeldItemMainhand() || stack == player.getItemStackFromSlot(EntityEquipmentSlot.HEAD)) {
-				continue;
-			}
-
-			if (stack.getItem() instanceof ItemBBag) {
-				return stack;
-			}
+	@SubscribeEvent
+	@SideOnly(Side.CLIENT)
+	public void renderPost(RenderLivingEvent.Post<EntityLivingBase> event) throws IllegalAccessException {
+		if (render != null) {
+			boolean success = ((List<LayerRenderer<?>>)renderLayers.get(event.getRenderer())).remove(render);
+			assert success;
+			render = null;
 		}
-		return ItemStack.EMPTY;
 	}
 
 }

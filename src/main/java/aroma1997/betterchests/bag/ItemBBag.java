@@ -1,8 +1,10 @@
 package aroma1997.betterchests.bag;
 
-import java.util.List;
-
 import org.lwjgl.input.Keyboard;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
@@ -13,11 +15,26 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import aroma1997.core.util.LocalizationHelper;
+import aroma1997.core.util.registry.TickRegistry;
+import aroma1997.betterchests.BetterChests;
 import aroma1997.betterchests.client.ClientProxy;
+import aroma1997.betterchests.network.PacketBagInfo;
 
 public class ItemBBag extends ItemBBagBase<InventoryBBag> {
+
+	private static final Set<Integer> entitiesWithBags = new HashSet<>();
+	private static final Set<Integer> prevEntitiesWithBags = new HashSet<>();
+
 	public ItemBBag() {
 		setUnlocalizedName("betterchests:betterbag");
+		TickRegistry.SERVER.addContinuousCallback(() -> {
+			if (!entitiesWithBags.equals(prevEntitiesWithBags)) {
+				BetterChests.instance.ph.sendPacketToPlayers(new PacketBagInfo(entitiesWithBags));
+				prevEntitiesWithBags.clear();
+				prevEntitiesWithBags.addAll(entitiesWithBags);
+			}
+			entitiesWithBags.clear();
+		});
 	}
 
 	@Override
@@ -34,5 +51,13 @@ public class ItemBBag extends ItemBBagBase<InventoryBBag> {
 	@Override
 	protected InventoryBBag getNewInstance(Entity entity, ItemStack stack) {
 		return new InventoryBBag(entity, stack);
+	}
+
+	@Override
+	public void onUpdate(ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected) {
+		super.onUpdate(stack, world, entity, itemSlot, isSelected);
+		if (!isSelected && !world.isRemote) {
+			entitiesWithBags.add(entity.getEntityId());
+		}
 	}
 }

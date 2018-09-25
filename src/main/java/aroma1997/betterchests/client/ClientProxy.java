@@ -2,6 +2,8 @@ package aroma1997.betterchests.client;
 
 import org.lwjgl.input.Keyboard;
 
+import java.util.Set;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.BuiltInModel;
 import net.minecraft.client.renderer.block.model.ItemOverrideList;
@@ -64,5 +66,10 @@ public class ClientProxy extends CommonProxy {
 			pressed = keyBind.isPressed();
 		});
 		ClientRegistry.registerKeyBinding(keyBind);
+	}
+
+	@Override
+	public void assignEntitiesWithBag(Set<Integer> entitiesWithBag) {
+		ClientEventListener.entitiesWithBag = entitiesWithBag;
 	}
 }

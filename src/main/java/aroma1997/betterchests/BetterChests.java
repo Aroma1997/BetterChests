@@ -22,6 +22,7 @@ import aroma1997.core.network.NetworkHelper;
 import aroma1997.core.network.PacketHandler;
 import aroma1997.core.util.Util;
 import aroma1997.core.util.registry.AromaAutoRegistry;
+import aroma1997.betterchests.network.PacketBagInfo;
 import aroma1997.betterchests.network.PacketOpenBag;
 import aroma1997.betterchests.upgrades.impl.plant.PlantHarvestHelper;
 
@@ -51,6 +52,7 @@ public class BetterChests {
 		proxy.init();
 		ph = NetworkHelper.getPacketHandler(Reference.MOD_ID);
 		ph.registerMessage(PacketOpenBag.class, PacketOpenBag.class, 0, Side.SERVER);
+		ph.registerMessage(PacketBagInfo.class, PacketBagInfo.class, 1, Side.CLIENT);
 		aroma1997.betterchests.api.UpgradeHelper.INSTANCE = UpgradeHelper.INSTANCE;
 
 		if (Loader.isModLoaded("ic2")) {
